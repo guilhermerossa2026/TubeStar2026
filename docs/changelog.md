@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-30
+- Desinscrições e bônus de renda por inscritos deixaram de usar divisão inteira: agora há perda real de inscritos (com piso de zero) e o bônus cresce de forma suave.
 - Opções de views "por view" ao postar agora conferem o dinheiro antes, como os pacotes fixos (evitava game over por compra barata).
 - Custo "por view" agora é cobrado só nas views compradas (antes, em todas as views do vídeo para sempre); views extras do SecondTime viraram bônus sem custo.
 - Tela de postar mais robusta: resposta inválida da internet não fecha o jogo, falha na busca mostra a imagem "sem internet", cliques rápidos nas setas mantêm a última imagem e o handler da imagem é removido ao fechar.

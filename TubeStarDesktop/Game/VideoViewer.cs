@@ -223,11 +223,11 @@ namespace TubeStar
         {
             if (!channel.IsRivalChannel && !payedView)
             {
-                int chance = (channel.Subscribers / video.Views) * 100;
+                int chance = (int)Math.Min(100.0, channel.Subscribers * 100.0 / Math.Max(1, video.Views));
                 if (!Player.Current.ChallengeMode) chance = chance / 2;
                 if (RandomHelpers.Chance(25) && GetUnsubscriptionChance(channel) && RandomHelpers.Chance(chance))
                 {
-                    channel.Subscribers -= numViews;
+                    channel.Subscribers = Math.Max(0, channel.Subscribers - numViews);
                     return true;
                 }
             }
@@ -304,7 +304,7 @@ namespace TubeStar
             if (Player.Current.ChallengeMode)
                 income = income / 2;
 
-            var extraIncome = Math.Sqrt(channel.Subscribers / (Player.Current.ChallengeMode ? 20000 : 1000)) * 0.01;
+            var extraIncome = Math.Sqrt(Math.Max(0, channel.Subscribers) /(Player.Current.ChallengeMode ? 20000.0 : 1000.0)) * 0.01;
             extraIncome = Math.Min(extraIncome, Player.Current.ChallengeMode ? 0.25 : 0.50);
             income += extraIncome;
 

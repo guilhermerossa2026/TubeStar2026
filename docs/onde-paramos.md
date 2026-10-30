@@ -19,9 +19,10 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 2b | Tela de postar: tratar erro/resposta inválida da busca, aviso sem internet/chave, cliques rápidos nas setas, remover handler `OnImageFetched` | ✅ feito |
 | 3 | Bugs de cobrança em `VideoViewer.cs` (SecondTime usa `numViews` na linha 145; CostPerView cobrado em todas as views, linha 138) | ✅ feito |
 | 3b | Opções de views "por view" conferem o dinheiro antes de comprar (evita game over por compra barata) | ✅ feito |
-| 4 | Ramo de 50% que nunca acontece em `CategoryHelpers.cs:83` | ⏭️ **próximo** |
-| 5 | Desinscrição e bônus de inscritos com divisão inteira (`VideoViewer.cs:224` e `:305`) | pendente |
-| 6 | Trocar a simulação view a view por cálculo direto (`VideoViewer.cs`, risco alto) | pendente |
+| 4 | Ramo de 50% que nunca acontece em `CategoryHelpers.cs:83` | ❌ não era bug: `RandomVideoCategory` sorteia de novo a cada leitura, então o 2º `if` é uma segunda chance real |
+| 5 | Desinscrição e bônus de inscritos com divisão inteira (`VideoViewer.cs:224` e `:305`) | ✅ feito |
+| novo | `RandomHelpers.Chance(p)` dá 1 ponto a mais (5% vira 6%); afeta o jogo todo | a discutir |
+| 6 | Trocar a simulação view a view por cálculo direto (`VideoViewer.cs`, risco alto) | ⏭️ **próximo** |
 | 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | pendente |
 | 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | pendente |
 | 9 | A tela de vídeos para de ser recriada inteira a cada dia | pendente |

@@ -27,6 +27,15 @@ TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-sour
 - GameJolt está desativado (código morto).
 - Mods: `TubeStar.exe RIVALMOD "<xml>"` troca os rivais (é o que o `ModLauncher` faz).
 
+## Economia de tokens
+
+Detalhes na skill `economia-de-tokens`. Em resumo:
+- Ler só o necessário: buscar com Grep/Glob e ler apenas o trecho, sem reler o que já foi lido.
+- Dividir tarefas grandes em passos.
+- Para tarefas simples, usar subagentes leves (programador, testador).
+- Manter este arquivo curto.
+- Resumir antes de trocar de assunto.
+
 ## Estilo visual
 
 Tema escuro estilo YouTube: fundo `#0F0F0F`, cabeçalhos `#1F1F1F`, campos `#141414`/`#1A1A1A`, hover `#262626`/`#2D2D2D`, destaque em vermelho YouTube. Não usar `LightGray`/`DodgerBlue`.

@@ -23,9 +23,6 @@ namespace TubeStar
             UpdateLoginButton();
             Refresh();
             CheckVersion();
-
-            UpdateDialog dialog = new UpdateDialog();
-            dialog.ShowDialog();
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)

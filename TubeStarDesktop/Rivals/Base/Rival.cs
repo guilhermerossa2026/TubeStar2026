@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using System.Xml.Serialization;
 
 namespace TubeStar
@@ -93,58 +90,6 @@ namespace TubeStar
                 video.SetErrorImage();
 
                 Channel.Videos.Add(video);
-            }
-            catch { }
-        }
-
-        private void DoAddNewVideo(List<YouTubeSearchEntry> entries)
-        {
-            try
-            {
-                var randCount = RandomHelpers.RandomInt(entries.Count);
-
-                int attempt = 0;
-                bool found = false;
-                while (true)
-                {
-                    var videoId = entries[randCount].Id.VideoId;
-                    if (!UsedVideos.Contains(videoId))
-                    {
-                        found = true;
-                        break;
-                    }
-
-                    randCount = RandomHelpers.RandomInt(entries.Count);
-
-                    attempt++;
-                    if (attempt == 5)
-                        break;
-                }
-
-                if (found)
-                {
-                    UsedVideos.Add(entries[randCount].Id.VideoId);
-
-                    Video video = new Video();
-                    video.Name = entries[randCount].Snippet.Title;
-                    video.Category = VideoCategory.Cats;
-                    video.YouTubeVideoId = entries[randCount].Id.VideoId;
-                    video.GenerateRivalQuality(ShootingSkill, PostProductionSkill);
-
-                    var photoUri = YouTubeAPI.GetPhotoUri(entries[randCount].Id.VideoId);
-                    WebClientHelpers.DownloadImage(photoUri, (stream) =>
-                    {
-                        if (stream != null)
-                        {
-                            video.ExternalSetImageBytes(StreamHelpers.StreamToBytes(stream));
-                        }
-                    }, () =>
-                    {
-                        video.SetErrorImage();
-                    });
-
-                    Channel.Videos.Add(video);
-                }
             }
             catch { }
         }

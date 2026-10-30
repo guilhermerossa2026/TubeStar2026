@@ -1,0 +1,446 @@
+<title>TubeStar Novo Visual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --page:#0a0a0a; --page-text:#f1f1f1; --page-muted:#9a9a9a; --page-line:#2a2a2a; --page-accent:#ff2d2d;
+}
+*{box-sizing:border-box}
+html{background:var(--page)}
+body{margin:0;background:var(--page);color:var(--page-text);font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;font-variant-numeric:tabular-nums;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:20px;padding-bottom:40px;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #fff;outline-offset:2px;box-shadow:0 0 0 4px var(--page-accent)}
+.wrap{max-width:1240px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--page-muted);font-size:13px;margin:0 0 14px}
+.picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.picker a{padding:6px 10px;border:1px solid var(--page-line);border-radius:8px;background:#141414;font-size:12px;font-weight:500;color:#ddd}
+.picker a:hover{background:#222}
+.picker a[aria-current="true"]{background:var(--page-accent);border-color:var(--page-accent);color:#fff}
+.stage{max-width:100%;overflow-x:auto;border-radius:14px;border:1px solid var(--page-line);background:#000;-webkit-overflow-scrolling:touch}
+
+/* ===== TOKENS (V1 Studio) ===== */
+#app{
+  --bg:#0f0f0f; --panel:#1f1f1f; --panel2:#141414; --hover:#262626; --line:#2d2d2d;
+  --text:#f1f1f1; --muted:#aaaaaa; --accent:#ff0000; --accent-text:#fff;
+  --c-gain:#3ea66b; --c-twitch:#9b7bd6; --c-loss:#e5534b;
+  --r:10px; --font:Inter,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+/* ===== JANELA ===== */
+.win{width:1200px;height:768px;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;display:flex;position:relative;overflow:hidden}
+.win *{scrollbar-width:thin}
+.side{width:196px;background:var(--panel2);border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:8px;padding:4px 8px 14px;font-weight:600;font-size:17px}
+.logo i{width:30px;height:22px;background:var(--accent);border-radius:6px;display:grid;place-items:center}
+.nav{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);color:var(--muted);font-weight:500;border:1px solid transparent}
+.nav:hover{background:var(--hover);color:var(--text)}
+.nav[aria-current="page"]{background:var(--panel);color:var(--text);border-color:var(--line)}
+.nav[aria-current="page"] svg{color:var(--accent)}
+.nav svg{width:20px;height:20px;flex:none}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.hd{height:64px;flex:none;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line);position:relative;z-index:8}
+.ddwrap{position:relative}
+.chsel{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid transparent;border-radius:var(--r);padding:4px 10px 4px 6px;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.chsel:hover,.chsel.open{background:var(--hover);border-color:var(--line)}
+.chsel b{display:block;font-weight:600;font-size:15px;white-space:nowrap}
+.chsel small{color:var(--muted);font-size:12px;white-space:nowrap}
+.caret{color:var(--muted);font-size:11px}
+.dd{position:absolute;top:calc(100% + 6px);left:0;width:340px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 12px 32px rgba(0,0,0,.65);padding:6px}
+.dd .it{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left}
+.dd .it:hover{background:var(--hover)}
+.dd .it.on{background:var(--panel2)}
+.dd hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+.stat{padding:4px 12px;border-left:1px solid var(--line);white-space:nowrap;position:relative}
+.stat small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.stat b{font-size:16px;font-weight:600}
+.sp{flex:1}
+.body{flex:1;overflow:auto;padding:18px}
+h2{font-weight:600;font-size:19px;margin:0 0 4px}
+h3{font-weight:600;font-size:14px;margin:0 0 10px}
+.lead{color:var(--muted);margin:0 0 14px;font-size:13px}
+.muted{color:var(--muted)}
+.xs{font-size:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;min-width:0}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.g21{grid-template-columns:2fr 1fr}.g12{grid-template-columns:1fr 2fr}
+.row{display:flex;align-items:center;gap:10px}
+.btn{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--hover);color:var(--text);padding:8px 14px;border-radius:var(--r);cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{filter:brightness(1.2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.btn.big{padding:12px 22px;font-size:16px}
+.btn.sm{padding:3px 9px;font-size:12px}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500}
+.btn.ghost:hover{color:var(--c-loss);border-color:var(--c-loss);filter:none}
+.btn[disabled],.btn.off{opacity:.45;cursor:not-allowed}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.gain{color:var(--c-gain);border-color:var(--c-gain)}
+.pill.loss{color:var(--c-loss);border-color:var(--c-loss)}
+.pill.tw{color:var(--c-twitch);border-color:var(--c-twitch)}
+.pill.red{color:var(--accent);border-color:var(--accent)}
+.pill.soft{color:var(--text)}
+.up{color:var(--c-gain)}.down{color:var(--c-loss)}.tw{color:var(--c-twitch)}
+.bar{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.bar.gain>i{background:var(--c-gain)}.bar.soft>i{background:var(--text)}
+.kpi small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.kpi b{font-weight:600;font-size:22px}
+.kpi span{font-size:12px;margin-left:6px}
+.thumb{aspect-ratio:16/9;border-radius:8px;position:relative;display:grid;place-items:center;overflow:hidden}
+.thumb svg{width:34px;height:34px;opacity:.85}
+.thumb em{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.8);font-style:normal;font-size:11px;padding:1px 5px;border-radius:4px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);font-weight:600}
+.tbl td{padding:7px 10px;border-bottom:1px solid var(--line)}
+.tbl tr:hover td{background:var(--hover)}
+.tbl .me td{background:color-mix(in srgb,var(--accent) 18%,var(--panel));border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);font-weight:700}
+.tbl.mini td,.tbl.mini th{padding:5px 8px;font-size:13px}
+.tbl.mini th{font-size:11px}
+.num{text-align:right}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tab{padding:10px 16px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px}
+.tab.on{color:var(--text);border-color:var(--accent)}
+.tab.soon{color:var(--c-twitch)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--muted);cursor:pointer}
+.chip:hover{background:var(--hover);color:var(--text)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.off{opacity:.4;cursor:not-allowed}
+.chip.match{border-color:var(--c-gain)}
+.field{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;color:var(--text);font:inherit}
+label.l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin:0 0 6px;text-transform:uppercase;letter-spacing:.05em}
+.sec{margin-top:16px}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;z-index:9}
+.modal .card{width:480px;background:var(--panel)}
+.ico{width:38px;height:38px;border-radius:var(--r);display:grid;place-items:center;background:var(--panel2);border:1px solid var(--line);flex:none}
+.ico svg{width:20px;height:20px}
+.lvl{display:flex;gap:3px}.lvl i{width:16px;height:6px;background:var(--panel2);border:1px solid var(--line);border-radius:2px}.lvl i.f{background:var(--text);border-color:var(--text)}
+.step{display:flex;flex-direction:column;gap:2px;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel2);flex:1;min-width:0;font-size:12px}
+.step b{font-size:13px}
+.step.done{border-color:var(--c-gain)}.step.cur{border-color:var(--accent)}.step.lock{opacity:.5}
+.tl{display:flex;height:34px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.tl i{flex:1;border-right:1px solid var(--bg);display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;color:#000}
+.hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+/* ajuda */
+.help{position:relative;width:18px;height:18px;border-radius:50%;border:1px solid var(--muted);background:transparent;color:var(--muted);font:inherit;font-size:11px;font-weight:700;line-height:1;padding:0;cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle;text-transform:none;letter-spacing:0;flex:none}
+.help:hover,.help:focus,.help.open{border-color:var(--text);color:var(--text)}
+.help .tip{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);width:230px;background:#303030;color:var(--text);border:1px solid #444;border-radius:8px;padding:8px 10px;font-size:12px;font-weight:400;line-height:1.4;text-align:left;text-transform:none;letter-spacing:0;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.6);cursor:default}
+.help.r .tip{left:auto;right:-8px;transform:none}
+.help:focus .tip,.help.open .tip{display:block}
+@media (hover:hover){.help:hover .tip{display:block}}
+/* videos */
+.vcard{padding:10px}
+.vcard .t{display:block;margin:8px 0 4px;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-size:12px}
+.cm svg{width:14px;height:14px}
+/* criar */
+.pick{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);background:var(--panel2);border-radius:var(--r);padding:10px 12px;cursor:pointer;font:inherit;color:var(--text);text-align:left;width:100%}
+.pick:hover{background:var(--hover)}
+.pick.on{border-color:var(--accent)}
+.tpick{border:2px solid transparent;border-radius:10px;padding:0;background:none;cursor:pointer;color:inherit}
+.tpick.on{border-color:var(--accent)}
+.preview{position:sticky;top:0;align-self:start}
+/* inicial */
+.start{flex:1;display:grid;place-items:center;text-align:center;padding:30px;position:relative}
+.start h1{font-weight:600;font-size:62px;margin:10px 0 4px;letter-spacing:-.02em}
+.start .menu{display:flex;flex-direction:column;gap:12px;width:300px;margin:26px auto 0}
+.start .menu .btn{justify-content:center}
+.play{width:92px;height:64px;background:var(--accent);border-radius:18px;display:grid;place-items:center;margin:0 auto}
+.play svg{width:34px;height:34px;color:#fff}
+@media (max-width:600px){body{padding-top:12px}.picker a{padding:7px 10px}}
+</style>
+
+<div class="wrap">
+  <h1>TubeStar: estudo do novo visual</h1>
+  <p class="sub">Prévia do novo visual (V1 Studio). Dados de exemplo.</p>
+  <nav class="picker" id="spick" aria-label="Tela"></nav>
+  <div class="stage"><div id="app"></div></div>
+</div>
+
+<script>
+(function(){
+var SCREENS=[['inicial','Título'],['principal','Principal'],['agenda','Agenda'],['videos','Meus vídeos'],['novocanal','Novo canal'],['criar','Criar vídeo'],['postar','Postar vídeo'],['loja','Loja'],['top','Top TubeStars'],['rival','Perfil do rival'],['resumo','Resumo do dia'],['relatorio','Relatório semanal'],['universidade','Universidade'],['funcionarios','Funcionários']];
+
+/* estado simples da prévia */
+var st={cur:0,menu:false,filt:0,dest:0,cat:2,thumbs:false,thumb:-1,tipo:1,iscas:[0],inv:2,promo:1,nicho:2,title:'Testei 5 microfones baratos: qual vale a pena?',nn:'Meu novo canal',posted:false};
+
+var CH=[{n:'Canal Estrela',nic:'Tecnologia',subs:'48,3 mil',views:'1,24 mi',gan:'US$ 4.920,60',rpm:'3,42',vids:72,spk:[2.8,2.9,3.0,2.9,3.1,3.2,3.1,3.3,3.42]},
+{n:'Estrela Games',nic:'Games',subs:'12,1 mil',views:'382 mil',gan:'US$ 810,20',rpm:'2,14',vids:31,spk:[1.9,2.0,1.9,2.0,2.1,2.0,2.1,2.1,2.14]},
+{n:'Vida de Estrela',nic:'Vlog/Lifestyle',subs:'3,4 mil',views:'41 mil',gan:'US$ 96,40',rpm:'1,78',vids:12,spk:[1.5,1.6,1.7,1.6,1.7,1.8,1.7,1.8,1.78]}];
+
+var NICHOS=[['Games','2,10','Alta'],['Vlog/Lifestyle','1,80','Média'],['Tecnologia','3,40','Alta'],['Humor','1,60','Média'],['Educação','2,80','Média'],['Finanças','6,50','Alta'],['Fitness/Saúde','2,40','Média'],['Culinária','2,00','Baixa'],['Música','1,20','Alta'],['Beleza/Moda','2,20','Alta'],['Esportes','2,00','Média'],['Reacts','1,50','Alta'],['Mistério/True Crime','2,60','Média'],['Viagem','2,50','Baixa'],['Infantil','0,90','Alta']];
+
+var TIPOS=[['Tutorial','▲ views por mais tempo em Educação',0.2],['Review','▲ inscritos em Tecnologia',0.3],['React','▲ views em Reacts',0.1],['Desafio','▲ views em Games',0.2],['Vlog','▲ fidelidade em Vlog/Lifestyle',0.1],['Top 10','▲ views em qualquer nicho',0.2],['Documentário','▲ nota (mais horas de edição)',0.4]];
+var ISCAS=[['Título chamativo','▲ views no 1º dia',0],['Thumbnail com rosto','▲ cliques',0],['Seguir tendência','▲ views enquanto a tendência durar',0],['Participação especial','▲ inscritos',0],['Sorteio','▲ inscritos e comentários',100]];
+var INVS=[0,100,200,300,400];
+var THUMBS=['Microfones na mesa','Cara de surpresa','Antes e depois','Top 5 em destaque'];
+var PROMOS=[[50,'+8–12 mil views, +150–300 inscritos'],[200,'+30–45 mil views, +600–1.100 inscritos'],[500,'+80–120 mil views, +1.500–2.800 inscritos']];
+
+var TIPS={
+rpm:'Quanto você ganha a cada 1.000 views. Finanças paga mais, Infantil paga menos.',
+algo:'Nota de 0 a 10 que decide quanto o YouTube mostra seus vídeos. Postar com frequência e qualidade sobe a nota.',
+nicho:'O assunto principal do canal. Define o RPM e a concorrência. Vídeo fora do nicho rende menos.',
+horas:'As horas de gravação e edição são calculadas sozinhas: quanto mais experiência, menos horas.',
+conc:'Quantos canais disputam o mesmo público. Quanto maior, mais difícil crescer.'
+};
+function hp(k,r){return '<button type="button" class="help'+(r?' r':'')+'" aria-label="Ajuda">?<span class="tip" role="tooltip">'+TIPS[k]+'</span></button>';}
+
+var P={
+home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/>',
+plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+send:'<path d="M3 11l18-8-8 18-2-8z"/>',
+bag:'<path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/>',
+trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M12 14v4M8 20h8"/>',
+cap:'<path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5"/>',
+team:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.5.7 4 2.5 4 6"/>',
+play:'<path d="M8 5v14l11-7z" fill="currentColor"/>',
+mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+cam:'<rect x="2" y="6" width="15" height="12" rx="2"/><path d="M17 10l5-3v10l-5-3z"/>',
+pen:'<path d="M4 20l4-1L19 8l-3-3L5 16zM14 7l3 3"/>',
+book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M8 7h7"/>',
+work:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 13h18"/>',
+bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+mon:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8M12 16v5"/>',
+chair:'<path d="M7 3h10v8H7zM5 11h14v4H5zM12 15v4M8 21h8"/>',
+star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+msg:'<path d="M4 5h16v11H9l-5 4z"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+function ic(n,c){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'+(c?' style="color:'+c+'"':'')+'>'+P[n]+'</svg>';}
+function hue(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return h;}
+function av(name,sz){sz=sz||32;var h=hue(name),h2=(h+50)%360;var id='g'+Math.abs(hue(name+sz))+sz;
+return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 40 40" style="flex:none;border-radius:50%"><defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl('+h+',70%,55%)"/><stop offset="1" stop-color="hsl('+h2+',70%,35%)"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#'+id+')"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" font-family="Inter,Arial">'+name.charAt(0)+'</text></svg>';}
+function sp(d,w,h,col){var mn=Math.min.apply(null,d),mx=Math.max.apply(null,d),r=(mx-mn)||1,pts=[];
+for(var i=0;i<d.length;i++)pts.push((i*(w-4)/(d.length-1)+2).toFixed(1)+','+(h-3-(d[i]-mn)/r*(h-6)).toFixed(1));
+var line=pts.join(' ');
+return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="display:block;max-width:100%"><polygon points="2,'+h+' '+line+' '+(w-2)+','+h+'" fill="'+col+'" opacity=".15"/><polyline points="'+line+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>';}
+function th(i,t){var h=(i*47+10)%360;return '<div class="thumb" style="background:linear-gradient(135deg,hsl('+h+',60%,38%),hsl('+((h+60)%360)+',55%,18%))">'+ic('play','#fff')+(t?'<em>'+t+'</em>':'')+'</div>';}
+function bar(p,c){return '<div class="bar '+(c||'')+'"><i style="width:'+p+'%"></i></div>';}
+function lvl(n,m){var s='<div class="lvl">';for(var i=0;i<m;i++)s+='<i class="'+(i<n?'f':'')+'"></i>';return s+'</div>';}
+function fm(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function usd(n){return 'US$ '+fm(n.toFixed(2).split('.')[0])+','+n.toFixed(2).split('.')[1];}
+function dec1(n){return n.toFixed(1).replace('.',',');}
+function chip(act,i,label,on,extra){return '<button type="button" class="chip'+(on?' on':'')+(extra?' '+extra:'')+'" data-act="'+act+'" data-i="'+i+'">'+label+'</button>';}
+
+var NAV=[['principal','home','Principal'],['agenda','cal','Agenda'],['videos','film','Meus vídeos'],['criar','plus','Criar vídeo'],['postar','send','Postar vídeo'],['loja','bag','Loja'],['top','trophy','Top TubeStars'],['universidade','cap','Universidade'],['funcionarios','team','Funcionários']];
+
+function shell(active,inner,extra){
+var c=st.cur>=0?CH[st.cur]:null;
+var name=c?c.n:'Visão geral',pill=c?c.nic:'Todos os canais',subs=c?c.subs:'63,8 mil';
+var s='<div class="win"><aside class="side"><div class="logo"><i>'+ic('play','#fff').replace('<svg','<svg width="14" height="14"')+'</i>TubeStar</div>';
+NAV.forEach(function(n){s+='<a class="nav" href="#'+n[0]+'"'+(n[0]===active?' aria-current="page"':'')+'>'+ic(n[1])+n[2]+'</a>';});
+s+='</aside><div class="main"><header class="hd"><div class="ddwrap"><button type="button" class="chsel'+(st.menu?' open':'')+'" data-act="menu" aria-haspopup="true" aria-expanded="'+st.menu+'">'+av(name,38)+'<div><b>'+name+'</b><small>Ano 1 · Semana 3 · Dia 18</small></div><span class="pill soft">'+pill+'</span><span class="caret">▼</span></button>';
+if(st.menu){
+ s+='<div class="dd" role="menu">';
+ CH.forEach(function(x,i){s+='<button type="button" class="it'+(st.cur===i?' on':'')+'" data-act="ch" data-i="'+i+'">'+av(x.n,30)+'<div style="flex:1"><b>'+x.n+'</b><div class="muted xs">'+x.nic+' · '+x.subs+' inscritos</div></div></button>';});
+ s+='<hr><button type="button" class="it'+(st.cur<0?' on':'')+'" data-act="ch" data-i="-1"><span class="ico" style="width:30px;height:30px">'+ic('home')+'</span><b>Visão geral (todos)</b></button>'+
+ '<a class="it" href="#novocanal"><span class="ico" style="width:30px;height:30px">'+ic('plus')+'</span><b>+ Novo canal</b></a></div>';
+}
+s+='</div><span class="sp"></span>'+
+'<div class="stat"><small>Dinheiro (global)</small><b>US$ 12.480,50</b></div>'+
+'<div class="stat"><small>Inscritos</small><b>'+subs+'</b></div>'+
+'<div class="stat"><small>Algoritmo '+hp('algo','r')+'</small><b>'+ic('star').replace('<svg','<svg width="14" height="14" style="vertical-align:-2px;margin-right:4px"')+'7,4 / 10</b></div>'+
+'<a class="btn pri" href="#resumo">Próximo dia '+ic('play').replace('<svg','<svg width="14" height="14"')+'</a></header><div class="body">'+inner+'</div></div>'+(extra||'')+'</div>';
+return s;}
+
+var S={};
+S.inicial=function(){return '<div class="win"><div class="start"><div><div class="play">'+ic('play')+'</div><h1>TubeStar</h1><div class="muted">Seu caminho de zero a estrela do YouTube</div>'+
+'<div class="menu"><a class="btn pri big" href="#principal">Novo jogo</a><a class="btn big" href="#principal">Carregar jogo</a></div>'+
+'<div class="row" style="justify-content:center;margin-top:24px"><span class="muted">Idioma</span><div class="chips"><span class="chip on">Português (BR)</span><span class="chip">English</span><span class="chip">Español</span></div></div>'+
+'<p class="muted xs" style="margin-top:22px">Versão de estudo · save em Saves/save.tss</p></div></div></div>';};
+
+S.principal=function(){
+var vids=[['Review: celulares até US$ 200','82 mil','+US$ 164'],['Meu setup de gravação 2025','41 mil','+US$ 88'],['24h jogando só no escuro','27 mil','+US$ 52']];
+var inner='<h2>Visão geral do canal</h2><p class="lead">Hoje é dia 18. Você tem 8 horas livres e 3 tarefas pendentes.</p>'+
+'<div class="grid g4" style="margin-bottom:14px"><div class="card kpi"><small>Views ontem</small><b>14.820</b><span class="up">▲ 12%</span></div><div class="card kpi"><small>Ganhos ontem</small><b>US$ 51,40</b><span class="up">▲ 8%</span></div><div class="card kpi"><small>Novos inscritos</small><b>+312</b><span class="up">▲ 5%</span></div><div class="card kpi"><small>Posição no Top</small><b>#347</b><span class="up">▲ 12</span></div></div>'+
+'<div class="grid g21"><div class="card"><h3>Crescimento de inscritos (30 dias)</h3>'+sp([20,22,25,24,28,31,30,34,36,35,39,41,40,44,46,45,48],560,150,'var(--accent)')+'</div>'+
+'<div class="card"><h3>Nota do algoritmo '+hp('algo','r')+'</h3><div class="kpi"><b style="font-size:34px">7,4</b><span class="muted">de 10</span></div>'+bar(74,'soft')+'<p class="muted xs">Postar toda semana e manter a qualidade sobe a nota. Faltam 2 vídeos para o bônus.</p></div></div>'+
+'<div class="grid g2" style="margin-top:14px"><div class="card"><h3>Tarefas de hoje</h3>'+
+'<div class="row" style="margin-bottom:8px"><span class="ico">'+ic('cam')+'</span><div style="flex:1"><b>Gravar vídeo</b><div class="muted xs">3h · 60%</div>'+bar(60)+'</div></div>'+
+'<div class="row"><span class="ico">'+ic('pen')+'</span><div style="flex:1"><b>Editar vídeo</b><div class="muted xs">2h · 0%</div>'+bar(0)+'</div></div></div>'+
+'<div class="card"><h3>Últimos vídeos</h3>'+vids.map(function(x,i){return '<div class="row" style="margin-bottom:8px"><div style="width:96px">'+th(i+1)+'</div><div style="flex:1;min-width:0"><b style="font-size:13px">'+x[0]+'</b><div class="muted xs">'+x[1]+' views</div></div><b class="up">'+x[2]+'</b></div>';}).join('')+'</div></div>';
+return shell('principal',inner);};
+
+S.agenda=function(){
+var T=[['cam','Gravar','Review: celulares baratos','3h',60,'Em andamento'],['pen','Editar','Review: celulares baratos','2h',0,'Aguardando gravação'],['book','Estudar','Curso livre: Edição básica','1h',25,'Dia 2 de 4'],['work','Trabalhar','Freelancer de edição','2h',0,'+US$ 38 por hora']];
+var inner='<h2>Agenda do dia 18</h2><p class="lead">Distribua as 8 horas do dia. Ao clicar em "Próximo dia" as tarefas avançam.</p>'+
+'<div class="card" style="margin-bottom:14px"><h3>Horas do dia (8h)</h3><div class="tl"><i style="background:#3ea66b">Gravar 3h</i><i style="background:#3ea66b"></i><i style="background:#3ea66b"></i><i style="background:#8ab4f8">Editar 2h</i><i style="background:#8ab4f8"></i><i style="background:#e8e8e8">Estudo 1h</i><i style="background:#9b7bd6">Trab. 2h</i><i style="background:#9b7bd6"></i></div><div class="muted xs" style="margin-top:6px">8 de 8 horas usadas</div></div>'+
+'<div class="grid g2">'+T.map(function(t){return '<div class="card"><div class="row"><span class="ico">'+ic(t[0])+'</span><div style="flex:1"><b>'+t[1]+'</b><div class="muted xs">'+t[2]+'</div></div><span class="pill soft">'+t[3]+'</span></div><div style="margin:12px 0 6px">'+bar(t[4],'gain')+'</div><div class="row"><span class="muted xs" style="flex:1">'+t[5]+' · '+t[4]+'%</span><button class="btn">Mudar horas</button><button class="btn">Remover</button></div></div>';}).join('')+'</div>'+
+'<div class="row" style="margin-top:14px"><button class="btn pri">+ Adicionar tarefa</button><span class="muted xs">Trabalhar, gravar, editar, estudar</span></div>';
+return shell('agenda',inner);};
+
+var VIDS=[['Review: celulares até US$ 200',82140,9.1,164.30,'12:40',312],['Meu setup de gravação 2025',41050,8.2,88.10,'9:12',148],['24h jogando só no escuro',27300,7.7,52.00,'21:05',96],['Tutorial: edição para iniciantes',19870,8.8,61.20,'14:33',77],['Vlog: um dia como YouTuber',12400,6.9,29.70,'8:48',41],['Top 5 erros de quem começa',9230,7.3,21.40,'6:20',35],['Testei 5 microfones baratos',7800,8.0,24.90,'11:20',52],['Como ganhar o 1º mil inscritos',6100,7.1,15.60,'10:05',29],['Respondendo vocês: Q&A',4300,6.4,9.80,'16:42',64]];
+
+function videosInner(){
+var ci=st.cur<0?0:st.cur,c=CH[ci];
+var list=VIDS.map(function(x,i){return {x:x,i:i};});
+if(st.filt===1)list.sort(function(a,b){return b.x[1]-a.x[1];});
+if(st.filt===2)list.sort(function(a,b){return b.x[3]-a.x[3];});
+var pages=Math.ceil(c.vids/9);
+var tabs='<div class="row" style="margin-bottom:12px;flex-wrap:wrap"><div class="chips" style="flex:1">'+CH.map(function(x,i){return chip('tab',i,x.n+' · '+x.nic,st.cur===i);}).join('')+'</div><a class="btn pri" href="#novocanal">+ Novo canal</a></div>';
+var filt='<div class="row" style="margin-bottom:12px"><div class="chips">'+['Mais recentes','Mais vistos','Que mais rendem'].map(function(f,i){return chip('filt',i,f,st.filt===i);}).join('')+'</div><span class="sp"></span><input class="field" style="width:220px;padding:7px 12px" placeholder="Buscar vídeo" aria-label="Buscar vídeo"></div>';
+var cards=list.map(function(o){var x=o.x;return '<div class="card vcard">'+th(o.i,x[4])+'<span class="t">'+x[0]+'</span><div class="row" style="justify-content:space-between;font-size:12px"><span>'+fm(x[1])+' views</span><span class="pill soft">Nota '+dec1(x[2])+'</span></div><div class="row" style="margin-top:6px"><b class="up" style="flex:1;font-size:13px">'+usd(x[3])+'</b><span class="cm" title="Comentários">'+ic('msg')+x[5]+'</span><button type="button" class="btn ghost sm">Excluir</button></div></div>';}).join('');
+var pn='<div class="card"><h3>Painel: '+c.n+'</h3>'+
+'<div class="kpi"><small>Views totais</small><b>'+c.views+'</b></div>'+
+'<div class="kpi" style="margin-top:10px"><small>Ganhos totais</small><b class="up">'+c.gan+'</b></div>'+
+'<div class="kpi" style="margin-top:10px"><small>Inscritos</small><b>'+c.subs+'</b></div>'+
+'<div class="kpi" style="margin-top:10px"><small>Vídeos</small><b>'+c.vids+'</b></div>'+
+'<hr class="hr"><div class="kpi"><small>RPM atual '+hp('rpm','r')+'</small><b>US$ '+c.rpm+'</b><span class="up">▲</span></div>'+sp(c.spk,200,56,'var(--accent)')+'</div>';
+return '<h2>Meus vídeos</h2><p class="lead">A nota (de 0 a 10) decide quantas views o vídeo recebe por dia.</p>'+tabs+filt+
+'<div class="grid" style="grid-template-columns:1fr 240px;align-items:start"><div><div class="grid g3">'+cards+'</div>'+
+'<div class="row" style="justify-content:center;margin-top:14px"><button class="btn">‹ Anterior</button><span class="muted">Página 1 de '+pages+'</span><button class="btn">Próxima ›</button></div></div>'+pn+'</div>';}
+S.videos=function(){return shell('videos',videosInner());};
+
+S.novocanal=function(){
+var n=NICHOS[st.nicho];
+var m='<div class="modal"><div class="card"><h2>Novo canal</h2><p class="lead">Cada canal tem seu nicho, seu público e seu RPM.</p>'+
+'<label class="l" for="nn">Nome do canal</label><input id="nn" class="field" value="'+st.nn+'">'+
+'<label class="l sec">Nicho '+hp('nicho')+'</label><div class="chips">'+NICHOS.map(function(x,i){return chip('nicho',i,x[0],st.nicho===i);}).join('')+'</div>'+
+'<div class="card" style="background:var(--panel2);margin-top:14px;padding:10px 12px"><div class="grid g2"><div class="kpi"><small>RPM base '+hp('rpm')+'</small><b style="font-size:18px">US$ '+n[1]+'</b></div><div class="kpi"><small>Concorrência '+hp('conc','r')+'</small><b style="font-size:18px">'+n[2]+'</b></div></div></div>'+
+'<p class="xs" style="margin:12px 0 0;color:var(--c-loss)">O nicho não pode ser mudado depois.</p>'+
+'<div class="row" style="justify-content:flex-end;margin-top:14px"><a class="btn" href="#videos">Cancelar</a><a class="btn pri" href="#videos">Criar canal</a></div></div></div>';
+return shell('videos',videosInner(),m);};
+
+S.criar=function(){
+var dc=CH[st.dest],cn=NICHOS[st.cat][0],match=cn===dc.nic;
+var nota=6.0+(match?0.8:-0.6)+TIPOS[st.tipo][2]+st.iscas.length*0.2+INVS[st.inv]/400*1.4+(st.thumb>=0?0.2:0);
+nota=Math.max(0,Math.min(10,nota));
+var custo=INVS[st.inv];st.iscas.forEach(function(i){custo+=ISCAS[i][2];});
+var ef=[];ef.push(TIPOS[st.tipo][1]);st.iscas.forEach(function(i){ef.push(ISCAS[i][1]);});
+if(INVS[st.inv]>0)ef.push('▲ nota +'+dec1(INVS[st.inv]/400*1.4));
+if(st.thumb>=0)ef.push('▲ cliques (thumbnail escolhida)');
+if(!match)ef.push('▼ views (fora do nicho)');
+var thumbsHtml=st.thumbs?'<div class="muted xs" style="margin:10px 0 8px">Buscadas no YouTube (exemplo). Escolha uma:</div><div class="grid g4">'+THUMBS.map(function(t,i){return '<button type="button" class="tpick'+(st.thumb===i?' on':'')+'" data-act="thumb" data-i="'+i+'" aria-label="'+t+'">'+th(i+3)+'<div class="xs muted" style="padding:4px 2px">'+t+'</div></button>';}).join('')+'</div>':'';
+var inner='<h2>Criar vídeo</h2><p class="lead">Escolha o tema e invista na produção. As horas são calculadas sozinhas.</p>'+
+'<div class="grid" style="grid-template-columns:1.9fr 1fr"><div class="grid" style="gap:14px">'+
+'<div class="card"><label class="l" for="t">Título</label><input id="t" class="field" value="'+st.title+'">'+
+'<label class="l sec">Canal de destino</label><div class="chips">'+CH.map(function(x,i){return chip('dest',i,x.n+' · '+x.nic,st.dest===i);}).join('')+'</div>'+
+'<label class="l sec">Categoria (nicho) '+hp('nicho')+'</label><div class="chips">'+NICHOS.map(function(x,i){return chip('cat',i,(x[0]===dc.nic?'✓ ':'')+x[0],st.cat===i,x[0]===dc.nic?'match':'');}).join('')+'</div>'+
+'<div style="margin-top:8px">'+(match?'<span class="pill gain">Combina com o canal</span>':'<span class="pill loss">Fora do nicho de '+dc.n+'</span>')+'</div></div>'+
+'<div class="card"><label class="l">Thumbnail</label><div class="row"><button type="button" class="btn" data-act="thumbs">'+ic('film').replace('<svg','<svg width="16" height="16"')+'Escolher thumbnail</button><span class="muted xs">'+(st.thumb>=0?'Escolhida: '+THUMBS[st.thumb]:'Nenhuma escolhida')+'</span></div>'+thumbsHtml+'</div>'+
+'<div class="card"><label class="l">Tipo de vídeo</label><div class="chips">'+TIPOS.map(function(x,i){return chip('tipo',i,x[0],st.tipo===i);}).join('')+'</div><p class="xs up" style="margin:10px 0 0">'+TIPOS[st.tipo][0]+': '+TIPOS[st.tipo][1]+'</p>'+
+'<label class="l sec">Iscas (até 2) <b style="color:var(--text)">'+st.iscas.length+' de 2</b></label><div class="chips">'+ISCAS.map(function(x,i){var on=st.iscas.indexOf(i)>=0;return chip('isca',i,x[0]+(x[2]?' (US$ '+x[2]+')':''),on,(!on&&st.iscas.length>=2)?'off':'');}).join('')+'</div></div>'+
+'<div class="card"><label class="l">Investimento na produção</label><div class="chips">'+INVS.map(function(x,i){return chip('inv',i,'US$ '+x,st.inv===i);}).join('')+'</div><p class="xs up" style="margin:10px 0 0">'+(INVS[st.inv]?'US$ '+INVS[st.inv]+' → ▲ nota +'+dec1(INVS[st.inv]/400*1.4):'Sem investimento: nota base')+'</p>'+
+'<hr class="hr"><div class="row"><span class="ico">'+ic('clock','var(--text)')+'</span><div class="xs"><b>Horas automáticas</b> '+hp('horas')+'<div class="muted" style="margin-top:2px">Gravação: 4h · Edição: 5h, baseadas na sua experiência</div></div></div></div>'+
+'</div><div class="card preview"><h3>Prévia</h3>'+th(7,'11:20')+'<div class="grid g2" style="margin-top:12px"><div class="kpi"><small>Nota estimada</small><b>'+dec1(nota)+'</b></div><div class="kpi"><small>Custo</small><b>US$ '+custo+'</b></div></div>'+
+'<hr class="hr"><div class="xs">'+ef.map(function(e){return '<div class="'+(e.charAt(0)==='▼'?'down':'up')+'" style="margin-bottom:4px">'+e+'</div>';}).join('')+'</div>'+
+'<a class="btn pri big" style="width:100%;justify-content:center;margin-top:12px" href="#postar">Criar vídeo</a></div></div>';
+return shell('criar',inner);};
+
+S.postar=function(){
+var inner='<h2>Postar vídeo</h2><p class="lead">Escolha o canal e, se quiser, promova o vídeo. Promover traz audiência de verdade; não é compra de views.</p>'+
+(st.posted?'<div class="card" style="border-color:var(--c-gain);margin-bottom:14px"><b class="up">Vídeo publicado (exemplo).</b> <span class="muted xs">As views chegam nos próximos dias.</span></div>':'')+
+'<div class="grid g12" style="grid-template-columns:1fr 1.6fr"><div class="card"><h3>Vídeo pronto</h3>'+th(7,'11:20')+'<b style="display:block;margin:8px 0 2px;font-size:13px">'+st.title+'</b><div class="row xs muted"><span class="pill soft">Nota '+'8,0</span><span>Pronto para publicar</span></div></div>'+
+'<div class="card"><label class="l">Canal de publicação</label><div class="chips">'+CH.map(function(x,i){return chip('dest',i,x.n+' · '+x.nic,st.dest===i);}).join('')+'</div>'+
+'<h3 class="sec">Promover vídeo</h3><div class="grid g3">'+PROMOS.map(function(p,i){return '<button type="button" class="pick'+(st.promo===i?' on':'')+'" data-act="promo" data-i="'+i+'"><b style="font-size:18px">US$ '+p[0]+'</b><span class="up xs">'+p[1]+'</span></button>';}).join('')+'</div>'+
+'<p class="muted xs" style="margin:10px 0 0">Estimativas de exemplo. O resultado depende da nota do vídeo e do nicho.</p>'+
+'<div class="row" style="justify-content:flex-end;margin-top:14px"><button type="button" class="btn" data-act="promo" data-i="-1">Sem promoção</button><button type="button" class="btn pri big" data-act="publish">Publicar</button></div></div></div>';
+return shell('postar',inner);};
+
+S.loja=function(){
+var I=[['mic','Microfone USB','US$ 120','Áudio +1',0],['cam','Webcam Full HD','US$ 180','Imagem +1',0],['cam','Câmera DSLR','US$ 950','Imagem +3',1],['bulb','Ring Light','US$ 60','Imagem +1',0],['mon','PC Gamer','US$ 2.400','Edição +3 · Games +2',1],['chair','Cadeira gamer','US$ 380','Mais energia por dia',0],['pen','Software de edição Pro','US$ 220','Edição +2',2],['mon','Placa de captura','US$ 310','Games +2',1]];
+var inner='<h2>Loja</h2><p class="lead">Equipamentos ficam para sempre. Você tem <b>US$ 12.480,50</b>.</p><div class="grid g4">'+I.map(function(x){
+return '<div class="card"><div class="row" style="margin-bottom:10px"><span class="ico">'+ic(x[0])+'</span><div><b>'+x[1]+'</b><div class="muted xs">'+x[3]+'</div></div></div><div class="row" style="justify-content:space-between"><b>'+x[2]+'</b>'+(x[4]===2?'<span class="pill gain">Comprado</span>':'<button class="btn pri">Comprar</button>')+'</div></div>';}).join('')+'</div>';
+return shell('loja',inner);};
+
+var TOP=[['Mr. Beastão','48,2 mi','1,9 mi',[5,6,6,7,8,9,10],1],['Luna Games','31,5 mi','1,2 mi',[4,4,5,6,6,7,8],0],['Chef Tavares','22,1 mi','860 mil',[6,6,6,7,6,7,7],-1],['TecnoZé','18,7 mi','740 mil',[3,4,4,5,6,7,9],2],['Vlog da Bia','15,9 mi','610 mil',[5,5,4,5,5,6,5],-2],['Pedro Fitness','12,3 mi','480 mil',[4,5,6,6,7,7,8],1],['Dani Music','10,8 mi','420 mil',[7,7,6,6,5,5,5],-1],['Os Irmãos Fox','9,4 mi','390 mil',[2,3,4,5,7,8,9],3]];
+S.top=function(){
+var inner='<h2>Top TubeStars</h2><p class="lead">Ranking de canais do mundo do jogo. Suba posições postando com frequência e qualidade.</p>'+
+'<div class="tabs"><div class="tab on">'+ic('play','var(--accent)').replace('<svg','<svg width="18" height="18"')+'YouTube</div><div class="tab soon">Twitch <span class="pill tw">em breve</span></div><div class="tab soon">Podcast <span class="pill tw">em breve</span></div></div>'+
+'<div class="row" style="margin-bottom:12px"><div class="chips"><span class="chip on">Geral</span><span class="chip">Por nicho</span><span class="chip">Cresceram na semana</span></div></div>'+
+'<div class="card" style="padding:0;overflow:hidden"><table class="tbl"><thead><tr><th>#</th><th></th><th>Canal</th><th class="num">Inscritos</th><th class="num">Views/dia</th><th>Tendência</th></tr></thead><tbody>'+
+TOP.map(function(r,i){var m=r[4];return '<tr><td><b>'+(i+1)+'</b> <span class="'+(m>0?'up':m<0?'down':'muted')+' xs">'+(m>0?'▲'+m:m<0?'▼'+(-m):'–')+'</span></td><td style="width:44px">'+av(r[0],30)+'</td><td><a href="#rival"><b>'+r[0]+'</b></a></td><td class="num">'+r[1]+'</td><td class="num">'+r[2]+'</td><td style="width:130px">'+sp(r[3],110,26,m<0?'var(--c-loss)':'var(--c-gain)')+'</td></tr>';}).join('')+
+'<tr><td colspan="6" class="muted" style="text-align:center">…</td></tr>'+
+'<tr class="me"><td>347 <span class="up xs">▲12</span></td><td>'+av('Canal Estrela',30)+'</td><td>Canal Estrela <span class="pill red">Você</span></td><td class="num">48,3 mil</td><td class="num">14,8 mil</td><td>'+sp([3,3,4,4,5,6,8],110,26,'var(--c-gain)')+'</td></tr></tbody></table></div>'+
+'<div class="row" style="justify-content:center;margin-top:12px"><button class="btn">‹ Anterior</button><span class="muted">Página 1 de 35</span><button class="btn">Próxima ›</button><button class="btn">Ir para minha posição</button></div>';
+return shell('top',inner);};
+
+S.rival=function(){
+var inner='<a class="muted" href="#top">‹ Voltar ao Top</a><div class="row" style="margin:10px 0 14px">'+av('TecnoZé',64)+'<div style="flex:1"><h2 style="margin:0">TecnoZé</h2><div class="row"><span class="pill soft">Tecnologia</span><span class="pill soft">#4 no Top</span></div></div><button class="btn pri big">Propor collab (cachê US$ 2.500)</button></div>'+
+'<div class="grid g4" style="margin-bottom:14px"><div class="card kpi"><small>Inscritos</small><b>18,7 mi</b></div><div class="card kpi"><small>Total de views</small><b>2,4 bi</b></div><div class="card kpi"><small>Vídeos</small><b>612</b></div><div class="card kpi"><small>Idade do canal</small><b>6 anos</b></div></div>'+
+'<div class="grid g21"><div class="card"><h3>Crescimento de inscritos</h3>'+sp([2,3,4,6,7,9,10,12,13,15,17,18.7],620,190,'var(--c-gain)')+'<div class="row muted xs" style="justify-content:space-between"><span>Ano 1</span><span>Ano 6</span></div></div>'+
+'<div class="card"><h3>Sobre a collab</h3><p class="muted" style="font-size:13px">Uma collab com o TecnoZé deve trazer cerca de <b class="up">+4.200 inscritos</b> e um pico de views por 3 dias. O cachê é pago na hora.</p><div class="row"><span class="muted">Chance de aceitar</span><b>38%</b></div>'+bar(38,'soft')+'</div></div>';
+return shell('top',inner);};
+
+function chTable(rows){return '<table class="tbl mini"><thead><tr><th>Canal</th><th class="num">Views</th><th class="num">Ganhos</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td><td class="num up">'+r[2]+'</td></tr>';}).join('')+'</tbody></table>';}
+
+S.resumo=function(){
+var m='<div class="modal"><div class="card"><h2>Resumo do dia 17</h2><p class="lead">Terça-feira · Semana 3</p><div class="grid g2"><div class="kpi"><small>Views</small><b>14.820</b></div><div class="kpi"><small>Ganhos</small><b class="up">+US$ 51,40</b></div><div class="kpi"><small>Inscritos</small><b>+312</b></div><div class="kpi"><small>Gastos</small><b class="down">-US$ 28,00</b></div></div>'+
+'<hr class="hr"><h3>Por canal</h3>'+chTable([['Canal Estrela','10.650','US$ 36,80'],['Estrela Games','2.790','US$ 9,90'],['Vida de Estrela','1.380','US$ 4,70']])+
+'<hr class="hr"><div class="row"><span class="ico">'+ic('cam')+'</span><span style="flex:1">Gravação concluída: Review celulares</span><span class="pill gain">100%</span></div><div class="row" style="margin-top:8px"><span class="ico">'+ic('book')+'</span><span style="flex:1">Estudo: Edição básica avançou</span><span class="pill soft">+1 dia</span></div><div class="row" style="justify-content:flex-end;margin-top:16px"><a class="btn pri" href="#principal">Continuar</a></div></div></div>';
+return S.principal().replace(/<\/div>$/,m+'</div>');};
+
+S.relatorio=function(){
+var K=[['Views','98.420','▲ 14%'],['Ganhos','US$ 336,10','▲ 11%'],['Gastos','US$ 142,00','▲ 4%'],['Lucro','US$ 194,10','▲ 18%'],['Inscritos','+1.840','▲ 9%'],['RPM médio','US$ 3,41','▲ 0,12']];
+var inner='<h2>Relatório da semana 2</h2><p class="lead">Dias 8 a 14 comparados com a semana 1.</p><div class="grid g3">'+K.map(function(k){return '<div class="card kpi"><small>'+(k[0]==='RPM médio'?'RPM médio '+hp('rpm'):k[0])+'</small><b class="'+(k[0]==='Ganhos'||k[0]==='Lucro'?'up':k[0]==='Gastos'?'down':'')+'">'+k[1]+'</b><span class="'+(k[0]==='Gastos'?'down':'up')+'">'+k[2]+'</span></div>';}).join('')+'</div>'+
+'<div class="grid g2" style="margin-top:14px"><div class="card"><h3>Melhor vídeo da semana</h3><div class="row"><div style="width:150px">'+th(1,'12:40')+'</div><div><b>Review: celulares até US$ 200</b><div class="muted xs" style="margin:4px 0">82.140 views · nota 9,1</div><span class="pill gain">+US$ 164,30</span></div></div></div>'+
+'<div class="card"><h3>Posição no ranking</h3><div class="row"><b style="font-size:36px">#347</b><span class="up">▲ 12 posições</span></div><div class="muted xs">Semana anterior: #359</div>'+sp([380,372,365,359,347],240,50,'var(--accent)')+'</div></div>'+
+'<div class="grid g2" style="margin-top:14px"><div class="card"><h3>Detalhamento por canal</h3>'+chTable([['Canal Estrela','71.200','US$ 248,90'],['Estrela Games','19.600','US$ 61,30'],['Vida de Estrela','7.620','US$ 25,90'],['<b>Total</b>','<b>98.420</b>','<b>US$ 336,10</b>']])+'</div>'+
+'<div class="card"><h3>Views por dia</h3>'+sp([11,12,13,12,15,16,14,17,18,15,19,22,20,24],440,110,'var(--accent)')+'</div></div>'+
+'<div class="row" style="justify-content:flex-end;margin-top:12px"><a class="btn pri" href="#principal">Fechar relatório</a></div>';
+return shell('principal',inner);};
+
+S.universidade=function(){
+var C=[['Edição básica','Até nível 2',2,2,'US$ 80'],['Roteiro criativo','Até nível 2',1,2,'US$ 90'],['Câmera e luz','Até nível 3',1,3,'US$ 140'],['Marketing digital','Até nível 3',0,3,'US$ 160']];
+var A=[['Audiovisual',['Trilha livre','Técnico em Vídeo','Graduação em Cinema','Pós em Direção']],['Administração',['Trilha livre','Técnico em Gestão','Graduação em Administração','Pós em Finanças']],['Marketing',['Trilha livre','Técnico em Mídias','Graduação em Publicidade','Pós em Branding']]];
+var inner='<h2>Universidade</h2><p class="lead">Cursos livres são baratos, mas têm teto de nível. Para ir além, siga uma trilha formal.</p>'+
+'<div class="grid g12"><div class="card"><h3>Cursos livres</h3>'+C.map(function(c){return '<div style="margin-bottom:12px"><div class="row" style="justify-content:space-between"><b>'+c[0]+'</b><span class="pill soft">'+c[4]+'</span></div><div class="row" style="margin-top:4px">'+lvl(c[2],c[3])+'<span class="muted xs">'+c[1]+'</span></div></div>';}).join('')+'<p class="muted xs">Teto atingido? Faça o técnico da área.</p></div>'+
+'<div class="card"><h3>Trilhas por área</h3>'+A.map(function(a,ai){return '<div style="margin-bottom:14px"><div class="row" style="margin-bottom:6px"><b>'+a[0]+'</b>'+(a[0]==='Administração'?'<span class="pill soft">Gestão de equipe e custos</span>':'')+'</div><div class="row" style="align-items:stretch">'+a[1].map(function(s,i){var cls=ai===0?(i===0?'done':i===1?'cur':'lock'):(i===0?'cur':'lock');return '<div class="step '+cls+'"><b>'+s+'</b><span class="muted">'+(cls==='done'?'Concluído':cls==='cur'?'Disponível':'Bloqueado')+'</span></div>'+(i<3?'<span class="muted">›</span>':'');}).join('')+'</div></div>';}).join('')+'</div></div>';
+return shell('universidade',inner);};
+
+S.funcionarios=function(){
+var F=[['Editor','pen','Lucas Prado','Pleno',2,'US$ 900/mês','Edição +2'],['Roteirista','book','Marina Reis','Júnior',1,'US$ 500/mês','Roteiro +1'],['Cinegrafista','cam','Ravi Sousa','Sênior',3,'US$ 1.600/mês','Imagem +3'],['Marketing','bulb',null,'Vaga aberta',0,'a partir de US$ 600','Divulgação'],['Gerente','work',null,'Vaga aberta',0,'a partir de US$ 1.800','Menos custos']];
+var inner='<h2>Funcionários</h2><p class="lead">Contrate gente para liberar horas do seu dia. Folha total: <b class="down">US$ 3.000/mês</b>.</p><div class="grid g3">'+F.map(function(f){
+return '<div class="card"><div class="row" style="margin-bottom:10px"><span class="ico">'+ic(f[1])+'</span><div style="flex:1"><b>'+f[0]+'</b><div class="muted xs">'+(f[2]||'Ninguém contratado')+'</div></div><span class="pill soft">'+f[3]+'</span></div>'+(f[4]?'<div class="row" style="margin-bottom:8px">'+lvl(f[4],3)+'<span class="muted xs">'+f[6]+'</span></div>':'')+'<div class="row" style="justify-content:space-between"><b>'+f[5]+'</b><button class="btn'+(f[4]?'':' pri')+'">'+(f[4]?'Promover':'Contratar')+'</button></div></div>';}).join('')+'</div>'+
+'<p class="muted xs" style="margin-top:12px">Júnior, pleno e sênior: quanto mais experiente, maior o salário e o efeito.</p>';
+return shell('funcionarios',inner);};
+
+function parse(){var m=/^#([a-z]+)$/.exec(location.hash);return m&&S[m[1]]?m[1]:'inicial';}
+function render(){var s=parse(),app=document.getElementById('app');
+var b=app.querySelector('.body'),top=b?b.scrollTop:0;
+app.innerHTML=S[s]();
+var nb=app.querySelector('.body');if(nb)nb.scrollTop=top;
+document.getElementById('spick').innerHTML=SCREENS.map(function(x){return '<a href="#'+x[0]+'"'+(x[0]===s?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
+document.title='TubeStar Novo Visual';}
+
+function act(a,i){
+if(a==='menu')st.menu=!st.menu;
+else if(a==='ch'){st.cur=i;st.menu=false;}
+else if(a==='tab')st.cur=i;
+else if(a==='filt')st.filt=i;
+else if(a==='dest')st.dest=i;
+else if(a==='cat')st.cat=i;
+else if(a==='thumbs')st.thumbs=!st.thumbs;
+else if(a==='thumb')st.thumb=i;
+else if(a==='tipo')st.tipo=i;
+else if(a==='inv')st.inv=i;
+else if(a==='isca'){var k=st.iscas.indexOf(i);if(k>=0)st.iscas.splice(k,1);else if(st.iscas.length<2)st.iscas.push(i);}
+else if(a==='nicho')st.nicho=i;
+else if(a==='promo')st.promo=i;
+else if(a==='publish')st.posted=true;
+render();}
+
+document.addEventListener('click',function(e){
+var t=e.target;if(!t.closest)return;
+var h=t.closest('.help');
+var opened=document.querySelectorAll('.help.open');
+for(var k=0;k<opened.length;k++){if(opened[k]!==h)opened[k].classList.remove('open');}
+if(h){h.classList.toggle('open');return;}
+var a=t.closest('[data-act]');
+if(a){act(a.getAttribute('data-act'),parseInt(a.getAttribute('data-i'),10));return;}
+if(st.menu&&!t.closest('.ddwrap')){st.menu=false;render();}
+});
+document.addEventListener('input',function(e){
+if(e.target.id==='t')st.title=e.target.value;
+if(e.target.id==='nn')st.nn=e.target.value;
+});
+window.addEventListener('hashchange',function(){st.menu=false;st.posted=false;render();});
+render();
+})();
+</script>

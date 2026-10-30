@@ -4,36 +4,66 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Projeto
 
-TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-source (MIT), herdado para uso pessoal, sem fins comerciais. Responder sempre em português. Diagnóstico completo em [docs/visao-geral.md](docs/visao-geral.md). Histórico e ideias iniciais em `../relatorio_avancos_fase_tecnica.md` e `../registro_avancos_e_proximos_passos.md`: o dono quer rediscutir tudo, mas só dar feedback sobre eles quando ele pedir.
+TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-source (MIT), herdado para uso pessoal, sem fins comerciais. Diagnóstico completo em [docs/visao-geral.md](docs/visao-geral.md). Histórico e ideias iniciais em `../relatorio_avancos_fase_tecnica.md` e `../registro_avancos_e_proximos_passos.md`: o dono quer rediscutir tudo, mas só dar feedback sobre eles quando ele pedir.
 
-## Build e execução
+## Como trabalhar comigo
 
-```powershell
-& C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe TubeStarDesktop.sln /p:Configuration=Release /v:m
-```
+**Quem decide o quê**
+- O dono é iniciante em agentes e não escolhe quem ativar. Você decide qual subagente (`.claude/agents/`) usar em cada situação.
+- O dono decide O QUE será feito e se ficou bom. Você decide o COMO e QUEM.
 
-- Não há Visual Studio na máquina: esse MSBuild usa o compilador do **C# 5**. Nada de `?.`, `$"..."`, `nameof`, propriedades `=>` etc.
-- A saída vai para `TubeStarDesktop/bin/Release/`. A cópia jogável fica em `../Jogar_TubeStar/` e é atualizada **manualmente** (exe, pdb, DLLs).
-- Não há testes automatizados nem git.
+**Aprovação antes de modificar**
+- Nunca modificar, criar ou apagar nenhum arquivo sem aprovação prévia, nem em tarefa pequena. Isso inclui commit e push.
+- Antes de qualquer mudança, explicar em 2 ou 3 linhas simples: o que vai fazer, quais arquivos serão afetados e qual agente vai acionar e por quê. Esperar o "pode fazer".
+- Só leitura e análise podem ser feitas sem pedir.
+
+**Fluxo de trabalho**
+- Ideia vaga: acionar o planejador e refinar com o dono antes de qualquer código.
+- Para implementar: o tech-leader divide em tarefas, o programador (ou o designer, se for visual) implementa e o testador valida.
+- Trabalhar em passos pequenos, uma tarefa por vez.
+
+**Testes e compilação**
+- Ao terminar cada tarefa, compilar (ver "Como rodar e testar o jogo"). O testador valida antes do dono e traz o resultado.
+- Dizer ao dono exatamente como rodar e o que testar, em passos simples.
+
+**Feedback antes de avançar**
+- Ao concluir cada passo, parar e pedir que o dono teste. Só seguir depois da aprovação ou depois de ajustar o que ele apontar.
+- Bugs ou resultado de que ele não gostou devem ser corrigidos antes de seguir.
+- Só documentar (skill `documentar`: changelog, decisões, roadmap) depois da aprovação.
+
+**Comunicação**
+- Sempre em português, linguagem simples.
+- Se algo for grande ou arriscado, avisar antes e sugerir um commit no git, para poder voltar atrás.
+
+## Como rodar e testar o jogo
+
+Não há Visual Studio nesta máquina. O build usa o MSBuild que vem com o Windows. Rode os comandos no PowerShell, a partir desta pasta (`TubeStar-master`):
+
+1. Compilar:
+   ```powershell
+   & C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe TubeStarDesktop.sln /p:Configuration=Release /v:m
+   ```
+   Deu certo se terminar sem linhas `error`. Os avisos `warning` (MSB3644, MSB3270, CS0168) são esperados.
+2. Rodar: abrir `TubeStarDesktop\bin\Release\TubeStar.exe` (ou `& .\TubeStarDesktop\bin\Release\TubeStar.exe`).
+3. Se o jogo travar, o erro fica em `Crash Report.txt`, na pasta do exe.
+
+Detalhes:
+- O MSBuild do Windows só aceita **C# 5**: nada de `?.`, `$"..."`, `nameof`, propriedades `=>` ou `out var`.
+- A chave da API precisa estar em `TubeStarDesktop/youtube_api_key.txt` (o build copia para a saída) ou na variável `YOUTUBE_API_KEY`. Sem ela, as miniaturas não carregam.
+- O save fica em `bin\Release\Saves\save.tss`, separado do save de `../Jogar_TubeStar/`. Essa pasta é a cópia "oficial" para jogar e é atualizada à mão.
+- O git não está no PATH da sessão do Claude: usar `$env:Path += ";C:\Program Files\Git\cmd"`.
+- Não há testes automatizados.
 
 ## Arquitetura (essencial)
 
 - Estado global em singletons estáticos: `Player.Current` (dinheiro, canais, vídeos, tarefas, dia em `Iterations`), `Rivals.Current` e `Settings`.
 - O ciclo do dia fica em `MainPage.xaml.cs`: o botão de novo dia chama `dailyPlanner.NewDay()` e `rivalViewer.NewDay()`, que avançam tarefas, visualizações e renda.
-- Uma classe por conceito, com base abstrata + subclasses: `Tasks/` (Task, Studies), `Video/VideoAttributes/`, `OnlineStore/` (StoreItem), `Rivals/` (Rival1..15).
+- Uma classe por conceito, com base abstrata + subclasses: `Tasks/` (Task, Studies), `Video/Attributes/`, `OnlineStore/` (StoreItem), `Rivals/` (Rival1..15).
 - Textos: escrever em inglês em `Languages/EnglishStrings.cs` e usar `.Translate()`. As traduções ficam em `Languages/*.xml` (PT-BR = `Brazil.xml`).
-- Save: JSON (Newtonsoft, `TypeNameHandling.Auto`) em `Saves/save.tss`, via `Game/SaveLoad/`. Precisa continuar lendo saves XML antigos.
-- YouTube Data API v3 (`YouTube API/YouTubeAPI.cs`) só é chamada para os vídeos do jogador. A chave é lida de `youtube_api_key.txt` ao lado do exe (fonte em `TubeStarDesktop/`, ignorado pelo git) ou da variável de ambiente `YOUTUBE_API_KEY`; nunca colocar a chave no código. Os rivais são offline de propósito, para poupar cota; não reintroduzir chamadas para eles.
+- Save: JSON (Newtonsoft, `TypeNameHandling.Auto`) via `Game/SaveLoad/`. Precisa continuar lendo saves XML antigos.
+- YouTube Data API v3 (`YouTube API/YouTubeAPI.cs`) só é chamada para os vídeos do jogador. Nunca colocar a chave no código. Os rivais são offline de propósito, para poupar cota; não reintroduzir chamadas para eles.
 - GameJolt está desativado (código morto).
 - Mods: `TubeStar.exe RIVALMOD "<xml>"` troca os rivais (é o que o `ModLauncher` faz).
-
-## Subagentes
-
-O dono autoriza o uso automático dos subagentes em `.claude/agents/` conforme a descrição de cada um, sem precisar pedir. Fluxo: planejador → tech-leader → programador/designer → tech-leader (revisão) → testador. Para tarefas triviais, pular etapas.
-
-## Documentação
-
-Ao final de cada feature ou decisão importante, usar a skill `documentar`, que atualiza `docs/changelog.md`, `docs/decisoes.md` e `docs/roadmap.md`.
 
 ## Economia de tokens
 

@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-30
+- Opções de views "por view" ao postar agora conferem o dinheiro antes, como os pacotes fixos (evitava game over por compra barata).
 - Custo "por view" agora é cobrado só nas views compradas (antes, em todas as views do vídeo para sempre); views extras do SecondTime viraram bônus sem custo.
 - Tela de postar mais robusta: resposta inválida da internet não fecha o jogo, falha na busca mostra a imagem "sem internet", cliques rápidos nas setas mantêm a última imagem e o handler da imagem é removido ao fechar.
 - Corrigido o travamento ao postar quando a busca de miniaturas caía no fallback por categoria (`UploadVideoDialog.xaml.cs`).

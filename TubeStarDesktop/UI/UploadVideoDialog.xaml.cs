@@ -164,11 +164,21 @@ namespace TubeStar
             }
             else if (rb2c.IsChecked == true)
             {
+                if (Player.Current.Money - 20 < 0)
+                {
+                    CustomMessageBox.ShowDialog(EnglishStrings.LowCashHeader.Translate(), EnglishStrings.LowCashMessage.Translate(), MessagePicture.Money);
+                    return;
+                }
                 VideoViewer.BuyViews(Video, 1000);
                 Video.CostPerView = 0.02;
             }
             else if (rb4c.IsChecked == true)
             {
+                if (Player.Current.Money - 80 < 0)
+                {
+                    CustomMessageBox.ShowDialog(EnglishStrings.LowCashHeader.Translate(), EnglishStrings.LowCashMessage.Translate(), MessagePicture.Money);
+                    return;
+                }
                 VideoViewer.BuyViews(Video, 2000);
                 Video.CostPerView = 0.04;
             }

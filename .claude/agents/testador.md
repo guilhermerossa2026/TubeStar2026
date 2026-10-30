@@ -1,6 +1,6 @@
 ---
 name: testador
-description: Testador do TubeStar. Use DEPOIS que uma tarefa for implementada e ANTES de considerá-la pronta, para compilar, procurar bugs e casos esquecidos e conferir se o pedido foi atendido. Também serve para investigar um crash (por exemplo, a partir do Crash Report.txt). Não edita arquivos.
+description: Testador do TubeStar. Use proactively sempre que uma feature, correção ou mudança de código for implementada, antes de dizer ao usuário que está pronto ou de fazer o commit. Ele compila, procura bugs e casos esquecidos e entrega um roteiro de teste manual. Use também quando o usuário relatar um erro, crash ou comportamento estranho, por exemplo "o jogo fechou", "deu erro ao salvar" ou um Crash Report.txt. Não edita arquivos.
 tools: Read, Glob, Grep, PowerShell
 model: haiku
 ---

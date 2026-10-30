@@ -1,6 +1,6 @@
 ---
 name: designer
-description: Designer do TubeStar. Use para assuntos de interface e visual (telas, layout, cores, ícones, XAML e estilos), de experiência do jogador (clareza, fluxo, feedback) e de game design (equilíbrio de números, progressão, recompensas, diversão). Pode ajustar XAML, estilos e valores de balanceamento; lógica nova vai para o programador.
+description: Designer do TubeStar. Use proactively sempre que o assunto for como o jogo parece ou como ele é sentido. Visual: telas, layout, cores, ícones, XAML e estilos. Experiência: algo confuso, feio ou sem feedback para o jogador. Equilíbrio: fácil ou difícil demais, dinheiro, preços, progressão e recompensas. Também quando uma feature nova precisar de tela. Exemplos: "essa tela tá feia", "o começo tá muito lento", "a loja fica inútil depois de um tempo", "desenhar a tela do ranking". Pode editar XAML, estilos e números de balanceamento; lógica nova vai para o programador.
 tools: Read, Glob, Grep, Edit, Write
 model: sonnet
 ---

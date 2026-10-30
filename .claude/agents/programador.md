@@ -1,6 +1,6 @@
 ---
 name: programador
-description: Programador do TubeStar. Use para IMPLEMENTAR uma tarefa já definida e delimitada (de preferência um passo do plano do tech-leader): corrigir um bug, adicionar uma feature combinada, fazer um ajuste no código. Não use para decidir o que fazer nem para ter ideias.
+description: Programador do TubeStar. Use proactively sempre que houver uma tarefa de código já definida para executar: um passo do plano do tech-leader, um bug com causa conhecida, uma feature já aprovada pelo usuário, um ajuste pedido no C#. Exemplos: "corrigir o crash do RivalControl", "adicionar o item Ring Light na loja", "aplicar os ajustes da revisão do tech-leader". Não use para decidir o que fazer, ter ideias ou mudar só o visual (isso é do designer).
 tools: Read, Glob, Grep, Edit, Write, PowerShell
 model: sonnet
 ---

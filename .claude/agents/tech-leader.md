@@ -1,6 +1,6 @@
 ---
 name: tech-leader
-description: Líder técnico do TubeStar. Use ANTES de começar uma tarefa média ou grande, para decidir a arquitetura e quebrá-la em passos pequenos para o programador; e DEPOIS que o programador terminar, para revisar o código (qualidade, consistência, riscos para os saves). Não edita arquivos.
+description: Líder técnico do TubeStar. Use proactively em dois momentos. ANTES de implementar qualquer tarefa que mexa em mais de um ou dois arquivos, mude regras do jogo, o save ou a estrutura do código: ele decide a abordagem e quebra a tarefa em passos para o programador. DEPOIS que o programador ou o designer alterarem código C#: ele revisa qualidade, consistência e riscos. Exemplos: "implementar o sistema de ranking", "migrar para .NET 8", "trocar Newtonsoft por versão nova", revisão após uma feature. Dispensável para ajustes triviais de uma linha. Não edita arquivos.
 tools: Read, Glob, Grep, PowerShell
 model: opus
 ---

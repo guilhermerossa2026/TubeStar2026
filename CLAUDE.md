@@ -27,6 +27,10 @@ TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-sour
 - GameJolt está desativado (código morto).
 - Mods: `TubeStar.exe RIVALMOD "<xml>"` troca os rivais (é o que o `ModLauncher` faz).
 
+## Subagentes
+
+O dono autoriza o uso automático dos subagentes em `.claude/agents/` conforme a descrição de cada um, sem precisar pedir. Fluxo: planejador → tech-leader → programador/designer → tech-leader (revisão) → testador. Para tarefas triviais, pular etapas.
+
 ## Documentação
 
 Ao final de cada feature ou decisão importante, usar a skill `documentar`, que atualiza `docs/changelog.md`, `docs/decisoes.md` e `docs/roadmap.md`.

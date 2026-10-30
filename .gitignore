@@ -1,0 +1,8 @@
+*.suo
+*.user
+.vs/
+bin/
+obj/
+
+# Chave da YouTube API (nunca vai para o GitHub)
+youtube_api_key.txt

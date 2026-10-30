@@ -1,0 +1,260 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:local="clr-namespace:TubeStar">
+
+    <!-- Cores Oficiais do YouTube Dark Mode 2026 -->
+    <Color x:Key="YtDarkBgColor">#0F0F0F</Color>
+    <Color x:Key="YtDarkSurfaceColor">#1A1A1A</Color>
+    <Color x:Key="YtDarkCardColor">#242424</Color>
+    <Color x:Key="YtDarkCardHoverColor">#323232</Color>
+    <Color x:Key="YtDarkBorderColor">#383838</Color>
+    <Color x:Key="YtRedColor">#CC0000</Color>
+    <Color x:Key="YtRedHoverColor">#FF0000</Color>
+    <Color x:Key="YtTextPrimaryColor">#F1F1F1</Color>
+    <Color x:Key="YtTextSecondaryColor">#AAAAAA</Color>
+
+    <SolidColorBrush x:Key="YtDarkBgBrush" Color="{StaticResource YtDarkBgColor}" />
+    <SolidColorBrush x:Key="YtDarkSurfaceBrush" Color="{StaticResource YtDarkSurfaceColor}" />
+    <SolidColorBrush x:Key="YtDarkCardBrush" Color="{StaticResource YtDarkCardColor}" />
+    <SolidColorBrush x:Key="YtDarkCardHoverBrush" Color="{StaticResource YtDarkCardHoverColor}" />
+    <SolidColorBrush x:Key="YtDarkBorderBrush" Color="{StaticResource YtDarkBorderColor}" />
+    <SolidColorBrush x:Key="YtRedBrush" Color="{StaticResource YtRedColor}" />
+    <SolidColorBrush x:Key="YtRedHoverBrush" Color="{StaticResource YtRedHoverColor}" />
+    <SolidColorBrush x:Key="YtTextPrimaryBrush" Color="{StaticResource YtTextPrimaryColor}" />
+    <SolidColorBrush x:Key="YtTextSecondaryBrush" Color="{StaticResource YtTextSecondaryColor}" />
+
+    <!-- Estilo Global de TextBlock -->
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+    </Style>
+
+    <!-- ToolTips Escuras -->
+    <Style TargetType="ToolTip">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Background" Value="{StaticResource YtDarkCardBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Estilo Global de TextBox (Caixa de Texto Dark) -->
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="6,4"/>
+        <Setter Property="CaretBrush" Value="White"/>
+    </Style>
+
+    <!-- Estilo Global de ComboBox (Menu de Seleção Dark) -->
+    <Style TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="6,4"/>
+    </Style>
+
+    <!-- Estilo Global de ListBox (Listas Dark sem fundo branco) -->
+    <Style TargetType="ListBox">
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- Estilo Global de ListBoxItem -->
+    <Style TargetType="ListBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="6,4"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource YtDarkCardHoverBrush}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource YtRedBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo dos Dialogos Popups do Jogo (ChildWindow) -->
+    <Style TargetType="xctk:ChildWindow">
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CaptionForeground" Value="White"/>
+        <Setter Property="CloseButtonVisibility" Value="Collapsed"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="xctk:ChildWindow">
+                    <Grid>
+                        <Border Background="{StaticResource YtDarkBgBrush}" 
+                                BorderBrush="{StaticResource YtDarkBorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="38"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Border Grid.Row="0" Background="#1F1F1F" CornerRadius="8,8,0,0" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1">
+                                    <TextBlock Text="{TemplateBinding Caption}" 
+                                               Foreground="White" 
+                                               FontWeight="Bold" 
+                                               FontSize="15" 
+                                               VerticalAlignment="Center" 
+                                               Margin="14,0,0,0"/>
+                                </Border>
+                                
+                                <Border Grid.Row="1" Background="{StaticResource YtDarkBgBrush}" Padding="12">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DialogLabelStyle" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="5,4,5,2"/>
+        <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}"/>
+    </Style>
+
+    <Style x:Key="ClickStyle" TargetType="FrameworkElement">
+        <Style.Resources>
+            <Storyboard x:Key="OnClickAnimation">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="{x:Null}">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0.97"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="{x:Null}">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0.97"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </Style.Resources>
+
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TriggerClickStyle" TargetType="FrameworkElement" BasedOn="{StaticResource ClickStyle}">
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="ButtonBase.PreviewMouseLeftButtonDown">
+                <BeginStoryboard x:Name="OnClick1_BeginStoryboard" Storyboard="{StaticResource OnClickAnimation}"/>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="local:ChannelBlock" BasedOn="{StaticResource ClickStyle}" />
+    <Style TargetType="local:TodoTask" BasedOn="{StaticResource ClickStyle}" />
+    <Style TargetType="local:AppointmentBlock" BasedOn="{StaticResource ClickStyle}" />
+    <Style TargetType="local:StoreItemBlock" BasedOn="{StaticResource ClickStyle}" />
+    <Style TargetType="local:VideoBlock" BasedOn="{StaticResource ClickStyle}" />
+    <Style TargetType="local:VideoBlockGrid" BasedOn="{StaticResource ClickStyle}" />
+
+    <!-- Botões Globais: Cards Dark com Hover Sutil e Texto Alto Contraste -->
+    <Style TargetType="Button" BasedOn="{StaticResource TriggerClickStyle}">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+        <Setter Property="Background" Value="{StaticResource YtDarkCardBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,6" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="BtnBorder"
+                            CornerRadius="6"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          RecognizesAccessKey="True"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Hover cinza elegante em vez de branco lavado -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                            <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#555555" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BtnBorder" Property="Background" Value="#404040" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BtnBorder" Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="NonAnimatedButtonStyle" BasedOn="{StaticResource {x:Type Button}}" />
+
+    <!-- Abas Superiores -->
+    <Style TargetType="ToggleButton" BasedOn="{StaticResource TriggerClickStyle}">
+        <Setter Property="MinHeight" Value="34" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,6" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="TogBorder"
+                            CornerRadius="6"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          RecognizesAccessKey="True"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TogBorder" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="TogBorder" Property="Background" Value="{StaticResource YtRedBrush}" />
+                            <Setter TargetName="TogBorder" Property="BorderBrush" Value="{StaticResource YtRedHoverBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="TogBorder" Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

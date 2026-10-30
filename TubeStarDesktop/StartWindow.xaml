@@ -1,0 +1,21 @@
+<Window x:Class="TubeStar.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TubeStar" 
+        Title="TubeStar"
+        MinHeight="600" MinWidth="900"
+        Height="768" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        ResizeMode="CanResize"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        FontFamily="Segoe UI"
+        Icon="Resources/TubeStar.ico">
+    <Grid>
+        <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+        </Grid>
+    </Grid>
+</Window>

@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-30
+- Corrigido o travamento ao postar quando a busca de miniaturas caía no fallback por categoria (`UploadVideoDialog.xaml.cs`).
 - Projeto colocado no git e publicado em github.com/guilhermerossa2026/TubeStar2026.
 - Chave da YouTube API saiu do código: agora é lida de `youtube_api_key.txt` (ao lado do exe) ou da variável `YOUTUBE_API_KEY`.
 - `.gitignore` atualizado (bin/, obj/, chave da API).

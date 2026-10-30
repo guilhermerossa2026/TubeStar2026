@@ -84,7 +84,7 @@ namespace TubeStar
                     {
                         if (r != null && r.Entries != null && r.Entries.Count > 0)
                         {
-                            _videoImageIds.AddRange(response.Entries.ConvertAll(e => e.Id.VideoId));
+                            _videoImageIds.AddRange(r.Entries.ConvertAll(e => e.Id.VideoId));
                             UpdateButtons();
                         }
                     }, null);

@@ -15,7 +15,8 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 1 | Apagar código morto dos rivais (`DoAddNewVideo`) e o pop-up do jogo mobile | ✅ feito |
 | extra | Remover GameJolt (troféus agora locais em `Game/Trophies`), mods/ModLauncher e sobras | ✅ feito |
 | extra | Remover a dinâmica dos robôs (evento, tarefas, rebelião, fim de jogo) | ✅ feito |
-| 2 | Corrigir o travamento ao postar (fallback em `UI/UploadVideoDialog.xaml.cs:87`, usa `response` em vez de `r`) | ⏭️ **próximo** |
+| 2 | Corrigir o travamento ao postar (fallback em `UI/UploadVideoDialog.xaml.cs:87`, usa `response` em vez de `r`) | ✅ feito |
+| 2b | Tela de postar: tratar erro/resposta inválida da busca, aviso sem internet/chave, cliques rápidos nas setas, remover handler `OnImageFetched` | ⏭️ **próximo** |
 | 3 | Bugs de cobrança em `VideoViewer.cs` (SecondTime usa `numViews` na linha 145; CostPerView cobrado em todas as views, linha 138) | pendente |
 | 4 | Ramo de 50% que nunca acontece em `CategoryHelpers.cs:83` | pendente |
 | 5 | Desinscrição e bônus de inscritos com divisão inteira (`VideoViewer.cs:224` e `:305`) | pendente |

@@ -12,7 +12,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Comentários: remover frases geradas e chamadas à API de comentários; fica só o ícone com número estimado pelas views.
 - Tela de vídeos: parar de recriar tudo a cada dia.
 - Save: limpar os dados de vídeos excluídos.
-- Bugs: desinscrição por divisão inteira (`VideoViewer.cs:224`); `sqrt(subs/1000)` inteiro (`:305`); CostPerView cobrado em todas as views; SecondTime usando numViews; ramo de 50% inalcançável (`CategoryHelpers.cs:83`); Money/Subscribers acessados do BackgroundWorker sem sincronização.
+- Bugs: desinscrição por divisão inteira (`VideoViewer.cs:224`); `sqrt(subs/1000)` inteiro (`:305`); ramo de 50% inalcançável (`CategoryHelpers.cs:83`); Money/Subscribers acessados do BackgroundWorker sem sincronização.
 - Registro (para o item 5): hoje não há ajuste de dificuldade ao criar o canal; o Ultra é só o Challenge com CTR de 10%; o gasto fixo é $50/dia.
 - Dificuldade: Média. Depende de: nada.
 
@@ -86,6 +86,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Ideias guardadas
 
+- **Preço das views compradas "por view"**: após a correção do custo, $0,02/$0,04 (=$20/$80) ficou bem mais barato que os pacotes de $100/$200. O dono quer aumentar; rever com o planejador junto do "Promover vídeo".
 - **Instagram** e **Kick**: futuro, talvez.
 - **Caminho C (estúdio ilustrado)**: descartado, falta arte.
 - **Trocar de tecnologia**: descartado.

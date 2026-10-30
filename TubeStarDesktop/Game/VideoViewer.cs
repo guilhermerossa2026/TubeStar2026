@@ -135,14 +135,16 @@ namespace TubeStar
 
             video.Views += numViews;
             income += ViewIncome(channel, video, payedView, numViews);
-            expenses += video.CostPerView * numViews;
+            //Custo por view só vale para as views compradas
+            if (payedView)
+                expenses += video.CostPerView * numViews;
 
+            //Views extras do SecondTime são bônus, sem custo
             if (video.Attributes.Contains(VideoAttributes.SecondTime) && RandomHelpers.Chance(5))
             {
                 int tempViews = RandomHelpers.RandomInt(numViews * 2);
                 video.Views += tempViews;
                 income += ViewIncome(channel, video, payedView, tempViews);
-                expenses += video.CostPerView * numViews;
             }
 
             if (RandomHelpers.Chance(2))

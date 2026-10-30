@@ -35,6 +35,17 @@ TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-sour
 - Sempre em português, linguagem simples.
 - Se algo for grande ou arriscado, avisar antes e sugerir um commit no git, para poder voltar atrás.
 
+## Versionamento com Git
+
+- Só depois que o dono testar e aprovar uma etapa, perguntar: "Foi aprovado, posso subir para o Git?" e esperar o OK. Nunca fazer commit ou push sem confirmação explícita.
+- Antes de commitar, mostrar em 2 ou 3 linhas os arquivos incluídos e a mensagem sugerida.
+- Mensagens claras, em português, descrevendo o que foi feito (ex.: "Adiciona sistema de rivalidade entre canais").
+- Um commit por etapa aprovada; nunca misturar várias melhorias.
+- Nunca subir código não aprovado ou apontado como quebrado pelo testador.
+- Nunca usar comandos destrutivos (`push --force`, `reset --hard` etc.) sem pedido explícito.
+- Depois de subir, confirmar que deu certo e só então passar para a próxima melhoria.
+- Antes de uma mudança grande ou arriscada, sugerir um commit do estado atual.
+
 ## Como rodar e testar o jogo
 
 Não há Visual Studio nesta máquina. O build usa o MSBuild que vem com o Windows. Rode os comandos no PowerShell, a partir desta pasta (`TubeStar-master`):

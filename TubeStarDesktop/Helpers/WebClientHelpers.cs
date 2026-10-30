@@ -34,9 +34,21 @@ namespace TubeStar
             client.Encoding = Encoding.UTF8;
             client.DownloadStringCompleted += (s, e) =>
                 {
+                    T jsonResult = default(T);
+                    bool parsed = false;
                     if (e.Error == null)
                     {
-                        var jsonResult = JsonConvert.DeserializeObject<T>(e.Result);
+                        //Resposta inválida (ex.: página de login de Wi-Fi) não pode fechar o jogo
+                        try
+                        {
+                            jsonResult = JsonConvert.DeserializeObject<T>(e.Result);
+                            parsed = true;
+                        }
+                        catch (JsonException) { }
+                    }
+
+                    if (parsed)
+                    {
                         onCompleted(jsonResult);
                     }
                     else

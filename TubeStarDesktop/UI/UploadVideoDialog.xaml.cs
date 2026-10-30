@@ -27,7 +27,8 @@ namespace TubeStar
             Video = video;
 
             _videoImageIds = new List<string>();
-            _videoImageIds.Add(Video.YouTubeVideoId);
+            if (!String.IsNullOrEmpty(Video.YouTubeVideoId))
+                _videoImageIds.Add(Video.YouTubeVideoId);
             _imageIndex = 0;
             DoPopulateImages();
 
@@ -47,22 +48,27 @@ namespace TubeStar
             }
 
             if (Video.ImageBytes != null)
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
-                image.EndInit();
-                imgVideo.Source = image;
-            }
+                ShowVideoImage();
 
-            Video.OnImageFetched += () =>
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
-                image.EndInit();
-                imgVideo.Source = image;
-            };
+            Video.OnImageFetched += ShowVideoImage;
+            Closed += (s, e) => Video.OnImageFetched -= ShowVideoImage;
+        }
+
+        private void ShowVideoImage()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
+            image.EndInit();
+            imgVideo.Source = image;
+        }
+
+        //Sem internet, sem chave ou cota estourada: mostra a imagem de "sem internet"
+        private void OnSearchError()
+        {
+            UpdateButtons();
+            if (Video.ImageBytes == null)
+                Video.SetErrorImage();
         }
 
         private void DoPopulateImages()
@@ -87,9 +93,13 @@ namespace TubeStar
                             _videoImageIds.AddRange(r.Entries.ConvertAll(e => e.Id.VideoId));
                             UpdateButtons();
                         }
-                    }, null);
+                        else
+                        {
+                            OnSearchError();
+                        }
+                    }, OnSearchError);
                 }
-            }, null);
+            }, OnSearchError);
         }
 
         private void UpdateButtons()
@@ -211,6 +221,8 @@ namespace TubeStar
 
         private void FetchImage_Click(object sender, RoutedEventArgs e)
         {
+            if (_videoImageIds.Count == 0)
+                return;
             _imageIndex = RandomHelpers.RandomInt(_videoImageIds.Count);
             Video.SetImageFromId(_videoImageIds[_imageIndex]);
             UpdateButtons();

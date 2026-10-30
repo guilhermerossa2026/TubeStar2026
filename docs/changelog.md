@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-30
+- Tela de postar mais robusta: resposta inválida da internet não fecha o jogo, falha na busca mostra a imagem "sem internet", cliques rápidos nas setas mantêm a última imagem e o handler da imagem é removido ao fechar.
 - Corrigido o travamento ao postar quando a busca de miniaturas caía no fallback por categoria (`UploadVideoDialog.xaml.cs`).
 - Projeto colocado no git e publicado em github.com/guilhermerossa2026/TubeStar2026.
 - Chave da YouTube API saiu do código: agora é lida de `youtube_api_key.txt` (ao lado do exe) ou da variável `YOUTUBE_API_KEY`.

@@ -241,13 +241,18 @@ namespace TubeStar
             SetImageFromId(youTubeVideoId);
         }
 
+        //Última imagem pedida: respostas antigas (cliques rápidos) são ignoradas
+        private string _requestedImageId;
+
         public void SetImageFromId(string youTubeVideoId)
         {
             Uri photoUri = YouTubeAPI.GetPhotoUri(youTubeVideoId);
-            Uri linkUri = YouTubeAPI.GetLinkUri(youTubeVideoId);
+            _requestedImageId = youTubeVideoId;
 
             WebClientHelpers.DownloadImage(photoUri, (result) =>
             {
+                if (youTubeVideoId != _requestedImageId)
+                    return;
                 YouTubeVideoId = youTubeVideoId;
                 ImageBytes = StreamHelpers.StreamToBytes(result);
 
@@ -255,7 +260,8 @@ namespace TubeStar
                     OnImageFetched();
             }, () =>
             {
-                SetErrorImage();
+                if (youTubeVideoId == _requestedImageId)
+                    SetErrorImage();
             });
         }
 

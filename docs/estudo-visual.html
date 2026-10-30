@@ -115,7 +115,16 @@ h3{font-weight:600;font-size:14px;margin:0 0 10px}
 label.l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin:0 0 6px;text-transform:uppercase;letter-spacing:.05em}
 .sec{margin-top:16px}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;z-index:9}
-.modal .card{width:480px;background:var(--panel)}
+.modal>.card{width:560px;max-width:94%;max-height:90%;overflow:auto;background:var(--panel)}
+.help.l .tip{left:-8px;right:auto;transform:none}
+.rowv{display:flex;align-items:center;gap:10px;width:100%;padding:7px 8px;border:1px solid transparent;border-radius:8px;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.rowv:hover{background:var(--hover)}
+.rowv.on{background:var(--panel2);border-color:var(--accent)}
+.rowv .thumb svg{width:16px;height:16px}
+.rowv .tt{flex:1;min-width:0}
+.rowv .tt b{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plist{max-height:560px;overflow:auto;display:flex;flex-direction:column;gap:2px;margin:0 -6px;padding:0 6px}
+.pick.cp{padding:8px 10px}
 .ico{width:38px;height:38px;border-radius:var(--r);display:grid;place-items:center;background:var(--panel2);border:1px solid var(--line);flex:none}
 .ico svg{width:20px;height:20px}
 .lvl{display:flex;gap:3px}.lvl i{width:16px;height:6px;background:var(--panel2);border:1px solid var(--line);border-radius:2px}.lvl i.f{background:var(--text);border-color:var(--text)}
@@ -166,7 +175,7 @@ label.l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted
 var SCREENS=[['inicial','Título'],['principal','Principal'],['agenda','Agenda'],['videos','Meus vídeos'],['novocanal','Novo canal'],['criar','Criar vídeo'],['postar','Postar vídeo'],['loja','Loja'],['top','Top TubeStars'],['rival','Perfil do rival'],['resumo','Resumo do dia'],['relatorio','Relatório semanal'],['universidade','Universidade'],['funcionarios','Funcionários']];
 
 /* estado simples da prévia */
-var st={cur:0,menu:false,filt:0,dest:0,cat:2,thumbs:false,thumb:-1,tipo:1,iscas:[0],inv:2,promo:1,nicho:2,title:'Testei 5 microfones baratos: qual vale a pena?',nn:'Meu novo canal',posted:false};
+var st={cur:0,menu:false,filt:0,dest:0,cat:2,thumbs:false,thumb:-1,thumbIdx:7,thumbQuery:'',thumbEdit:false,sel:0,gone:[],tipo:1,iscas:[0],inv:2,promo:1,nicho:2,title:'Testei 5 microfones baratos: qual vale a pena?',nn:'Meu novo canal',posted:false};
 
 var CH=[{n:'Canal Estrela',nic:'Tecnologia',subs:'48,3 mil',views:'1,24 mi',gan:'US$ 4.920,60',rpm:'3,42',vids:72,spk:[2.8,2.9,3.0,2.9,3.1,3.2,3.1,3.3,3.42]},
 {n:'Estrela Games',nic:'Games',subs:'12,1 mil',views:'382 mil',gan:'US$ 810,20',rpm:'2,14',vids:31,spk:[1.9,2.0,1.9,2.0,2.1,2.0,2.1,2.1,2.14]},
@@ -177,7 +186,8 @@ var NICHOS=[['Games','2,10','Alta'],['Vlog/Lifestyle','1,80','Média'],['Tecnolo
 var TIPOS=[['Tutorial','▲ views por mais tempo em Educação',0.2],['Review','▲ inscritos em Tecnologia',0.3],['React','▲ views em Reacts',0.1],['Desafio','▲ views em Games',0.2],['Vlog','▲ fidelidade em Vlog/Lifestyle',0.1],['Top 10','▲ views em qualquer nicho',0.2],['Documentário','▲ nota (mais horas de edição)',0.4]];
 var ISCAS=[['Título chamativo','▲ views no 1º dia',0],['Thumbnail com rosto','▲ cliques',0],['Seguir tendência','▲ views enquanto a tendência durar',0],['Participação especial','▲ inscritos',0],['Sorteio','▲ inscritos e comentários',100]];
 var INVS=[0,100,200,300,400];
-var THUMBS=['Microfones na mesa','Cara de surpresa','Antes e depois','Top 5 em destaque'];
+var READY=[['Testei 5 microfones baratos: qual vale a pena?',8.0,'11:20'],['Review: fone bluetooth de US$ 30',7.6,'9:45'],['Setup barato para começar no YouTube',8.4,'13:10'],['Respondendo vocês: perguntas da semana',6.8,'16:02'],['Top 5 programas de edição grátis',7.9,'10:30'],['Um dia gravando 3 vídeos seguidos',7.2,'8:15']];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 var PROMOS=[[50,'+8–12 mil views, +150–300 inscritos'],[200,'+30–45 mil views, +600–1.100 inscritos'],[500,'+80–120 mil views, +1.500–2.800 inscritos']];
 
 var TIPS={
@@ -187,7 +197,7 @@ nicho:'O assunto principal do canal. Define o RPM e a concorrência. Vídeo fora
 horas:'As horas de gravação e edição são calculadas sozinhas: quanto mais experiência, menos horas.',
 conc:'Quantos canais disputam o mesmo público. Quanto maior, mais difícil crescer.'
 };
-function hp(k,r){return '<button type="button" class="help'+(r?' r':'')+'" aria-label="Ajuda">?<span class="tip" role="tooltip">'+TIPS[k]+'</span></button>';}
+function hp(k,r){return '<button type="button" class="help'+(r?' '+r:'')+'" aria-label="Ajuda">?<span class="tip" role="tooltip">'+TIPS[k]+'</span></button>';}
 
 var P={
 home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -301,8 +311,8 @@ S.novocanal=function(){
 var n=NICHOS[st.nicho];
 var m='<div class="modal"><div class="card"><h2>Novo canal</h2><p class="lead">Cada canal tem seu nicho, seu público e seu RPM.</p>'+
 '<label class="l" for="nn">Nome do canal</label><input id="nn" class="field" value="'+st.nn+'">'+
-'<label class="l sec">Nicho '+hp('nicho')+'</label><div class="chips">'+NICHOS.map(function(x,i){return chip('nicho',i,x[0],st.nicho===i);}).join('')+'</div>'+
-'<div class="card" style="background:var(--panel2);margin-top:14px;padding:10px 12px"><div class="grid g2"><div class="kpi"><small>RPM base '+hp('rpm')+'</small><b style="font-size:18px">US$ '+n[1]+'</b></div><div class="kpi"><small>Concorrência '+hp('conc','r')+'</small><b style="font-size:18px">'+n[2]+'</b></div></div></div>'+
+'<label class="l sec">Nicho '+hp('nicho','l')+'</label><div class="chips">'+NICHOS.map(function(x,i){return chip('nicho',i,x[0],st.nicho===i);}).join('')+'</div>'+
+'<div class="card" style="background:var(--panel2);margin-top:14px;padding:10px 12px;width:100%"><div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)"><div class="kpi"><small>RPM base '+hp('rpm','l')+'</small><b style="font-size:18px">US$ '+n[1]+'</b></div><div class="kpi"><small>Concorrência '+hp('conc','r')+'</small><b style="font-size:18px">'+n[2]+'</b></div></div></div>'+
 '<p class="xs" style="margin:12px 0 0;color:var(--c-loss)">O nicho não pode ser mudado depois.</p>'+
 '<div class="row" style="justify-content:flex-end;margin-top:14px"><a class="btn" href="#videos">Cancelar</a><a class="btn pri" href="#videos">Criar canal</a></div></div></div>';
 return shell('videos',videosInner(),m);};
@@ -316,31 +326,45 @@ var ef=[];ef.push(TIPOS[st.tipo][1]);st.iscas.forEach(function(i){ef.push(ISCAS[
 if(INVS[st.inv]>0)ef.push('▲ nota +'+dec1(INVS[st.inv]/400*1.4));
 if(st.thumb>=0)ef.push('▲ cliques (thumbnail escolhida)');
 if(!match)ef.push('▼ views (fora do nicho)');
-var thumbsHtml=st.thumbs?'<div class="muted xs" style="margin:10px 0 8px">Buscadas no YouTube (exemplo). Escolha uma:</div><div class="grid g4">'+THUMBS.map(function(t,i){return '<button type="button" class="tpick'+(st.thumb===i?' on':'')+'" data-act="thumb" data-i="'+i+'" aria-label="'+t+'">'+th(i+3)+'<div class="xs muted" style="padding:4px 2px">'+t+'</div></button>';}).join('')+'</div>':'';
+var tq=st.thumbQuery||st.title,tix=st.thumbIdx,ttot=Math.ceil(tix/50)*50,tnew=tix>1&&tix%50===1;
+var thumbsHtml=st.thumbs?'<div style="margin-top:12px"><div class="row" style="justify-content:center;gap:14px"><button type="button" class="btn big" data-act="tprev" data-i="0" aria-label="Thumbnail anterior"'+(tix<=1?' disabled':'')+'>‹</button><div style="width:360px;max-width:100%">'+th(tix)+'</div><button type="button" class="btn big" data-act="tnext" data-i="0" aria-label="Próxima thumbnail">›</button></div>'+
+'<div style="text-align:center;margin-top:10px"><b>'+tix+' de '+ttot+'</b>'+(tnew?' <span class="pill gain">nova página buscada</span>':'')+'<div class="muted xs" style="margin-top:2px">Busca: '+esc(tq)+'</div></div>'+
+'<div class="row" style="justify-content:center;margin-top:10px"><button type="button" class="btn pri" data-act="tuse" data-i="0">Usar esta</button><button type="button" class="btn" data-act="tedit" data-i="0">Buscar outras</button></div>'+
+(st.thumbEdit?'<div class="row" style="margin-top:10px"><input id="tq" class="field" value="'+esc(tq)+'" aria-label="Termo de busca"><button type="button" class="btn pri" data-act="tsearch" data-i="0">Buscar</button></div>':'')+
+'<p class="muted xs" style="margin:10px 0 0;text-align:center">Busca pelo título; 1 busca na API a cada 50 thumbs.</p></div>':'';
 var inner='<h2>Criar vídeo</h2><p class="lead">Escolha o tema e invista na produção. As horas são calculadas sozinhas.</p>'+
 '<div class="grid" style="grid-template-columns:1.9fr 1fr"><div class="grid" style="gap:14px">'+
 '<div class="card"><label class="l" for="t">Título</label><input id="t" class="field" value="'+st.title+'">'+
 '<label class="l sec">Canal de destino</label><div class="chips">'+CH.map(function(x,i){return chip('dest',i,x.n+' · '+x.nic,st.dest===i);}).join('')+'</div>'+
 '<label class="l sec">Categoria (nicho) '+hp('nicho')+'</label><div class="chips">'+NICHOS.map(function(x,i){return chip('cat',i,(x[0]===dc.nic?'✓ ':'')+x[0],st.cat===i,x[0]===dc.nic?'match':'');}).join('')+'</div>'+
 '<div style="margin-top:8px">'+(match?'<span class="pill gain">Combina com o canal</span>':'<span class="pill loss">Fora do nicho de '+dc.n+'</span>')+'</div></div>'+
-'<div class="card"><label class="l">Thumbnail</label><div class="row"><button type="button" class="btn" data-act="thumbs">'+ic('film').replace('<svg','<svg width="16" height="16"')+'Escolher thumbnail</button><span class="muted xs">'+(st.thumb>=0?'Escolhida: '+THUMBS[st.thumb]:'Nenhuma escolhida')+'</span></div>'+thumbsHtml+'</div>'+
+'<div class="card"><label class="l">Thumbnail</label><div class="row"><button type="button" class="btn" data-act="thumbs">'+ic('film').replace('<svg','<svg width="16" height="16"')+'Escolher thumbnail</button><span class="muted xs">'+(st.thumb>=0?'Escolhida: thumbnail nº '+st.thumb:'Nenhuma escolhida')+'</span></div>'+thumbsHtml+'</div>'+
 '<div class="card"><label class="l">Tipo de vídeo</label><div class="chips">'+TIPOS.map(function(x,i){return chip('tipo',i,x[0],st.tipo===i);}).join('')+'</div><p class="xs up" style="margin:10px 0 0">'+TIPOS[st.tipo][0]+': '+TIPOS[st.tipo][1]+'</p>'+
 '<label class="l sec">Iscas (até 2) <b style="color:var(--text)">'+st.iscas.length+' de 2</b></label><div class="chips">'+ISCAS.map(function(x,i){var on=st.iscas.indexOf(i)>=0;return chip('isca',i,x[0]+(x[2]?' (US$ '+x[2]+')':''),on,(!on&&st.iscas.length>=2)?'off':'');}).join('')+'</div></div>'+
 '<div class="card"><label class="l">Investimento na produção</label><div class="chips">'+INVS.map(function(x,i){return chip('inv',i,'US$ '+x,st.inv===i);}).join('')+'</div><p class="xs up" style="margin:10px 0 0">'+(INVS[st.inv]?'US$ '+INVS[st.inv]+' → ▲ nota +'+dec1(INVS[st.inv]/400*1.4):'Sem investimento: nota base')+'</p>'+
 '<hr class="hr"><div class="row"><span class="ico">'+ic('clock','var(--text)')+'</span><div class="xs"><b>Horas automáticas</b> '+hp('horas')+'<div class="muted" style="margin-top:2px">Gravação: 4h · Edição: 5h, baseadas na sua experiência</div></div></div></div>'+
-'</div><div class="card preview"><h3>Prévia</h3>'+th(7,'11:20')+'<div class="grid g2" style="margin-top:12px"><div class="kpi"><small>Nota estimada</small><b>'+dec1(nota)+'</b></div><div class="kpi"><small>Custo</small><b>US$ '+custo+'</b></div></div>'+
+'</div><div class="card preview"><h3>Prévia</h3>'+th(st.thumb>=0?st.thumb:7,'11:20')+'<div class="grid g2" style="margin-top:12px"><div class="kpi"><small>Nota estimada</small><b>'+dec1(nota)+'</b></div><div class="kpi"><small>Custo</small><b>US$ '+custo+'</b></div></div>'+
 '<hr class="hr"><div class="xs">'+ef.map(function(e){return '<div class="'+(e.charAt(0)==='▼'?'down':'up')+'" style="margin-bottom:4px">'+e+'</div>';}).join('')+'</div>'+
 '<a class="btn pri big" style="width:100%;justify-content:center;margin-top:12px" href="#postar">Criar vídeo</a></div></div>';
 return shell('criar',inner);};
 
 S.postar=function(){
-var inner='<h2>Postar vídeo</h2><p class="lead">Escolha o canal e, se quiser, promova o vídeo. Promover traz audiência de verdade; não é compra de views.</p>'+
-(st.posted?'<div class="card" style="border-color:var(--c-gain);margin-bottom:14px"><b class="up">Vídeo publicado (exemplo).</b> <span class="muted xs">As views chegam nos próximos dias.</span></div>':'')+
-'<div class="grid g12" style="grid-template-columns:1fr 1.6fr"><div class="card"><h3>Vídeo pronto</h3>'+th(7,'11:20')+'<b style="display:block;margin:8px 0 2px;font-size:13px">'+st.title+'</b><div class="row xs muted"><span class="pill soft">Nota '+'8,0</span><span>Pronto para publicar</span></div></div>'+
-'<div class="card"><label class="l">Canal de publicação</label><div class="chips">'+CH.map(function(x,i){return chip('dest',i,x.n+' · '+x.nic,st.dest===i);}).join('')+'</div>'+
-'<h3 class="sec">Promover vídeo</h3><div class="grid g3">'+PROMOS.map(function(p,i){return '<button type="button" class="pick'+(st.promo===i?' on':'')+'" data-act="promo" data-i="'+i+'"><b style="font-size:18px">US$ '+p[0]+'</b><span class="up xs">'+p[1]+'</span></button>';}).join('')+'</div>'+
+var rem=[];READY.forEach(function(v,i){if(st.gone.indexOf(i)<0)rem.push(i);});
+if(rem.indexOf(st.sel)<0)st.sel=rem.length?rem[0]:-1;
+var list=rem.map(function(i){var v=READY[i];var t=i===0?st.title:v[0];
+return '<button type="button" class="rowv'+(st.sel===i?' on':'')+'" data-act="psel" data-i="'+i+'"><div style="width:64px;flex:none">'+th(i+1)+'</div><div class="tt"><b>'+esc(t)+'</b><div class="muted xs">Nota '+dec1(v[1])+' · '+v[2]+'</div></div></button>';}).join('');
+var left='<div class="card"><h3>Prontos para postar ('+rem.length+')</h3>'+(rem.length?'<div class="plist">'+list+'</div>':'<p class="muted xs">Nenhum vídeo pronto. Crie um vídeo para ele aparecer aqui.</p>')+'</div>';
+var right;
+if(st.sel>=0){var v=READY[st.sel],vt=st.sel===0?st.title:v[0];
+right='<div class="card"><div class="row" style="margin-bottom:14px"><div style="width:160px;flex:none">'+th(st.sel+1,v[2])+'</div><div style="min-width:0"><b style="display:block;font-size:15px">'+esc(vt)+'</b><div class="row xs muted" style="margin-top:6px"><span class="pill soft">Nota '+dec1(v[1])+'</span><span>Pronto para publicar</span></div></div></div>'+
+'<label class="l">Canal de publicação</label><div class="chips">'+CH.map(function(x,i){return chip('dest',i,x.n+' · '+x.nic,st.dest===i);}).join('')+'</div>'+
+'<h3 class="sec">Promover vídeo</h3><div class="grid g3">'+PROMOS.map(function(p,i){return '<button type="button" class="pick cp'+(st.promo===i?' on':'')+'" data-act="promo" data-i="'+i+'"><b style="font-size:15px">US$ '+p[0]+'</b><span class="up xs">'+p[1]+'</span></button>';}).join('')+'</div>'+
 '<p class="muted xs" style="margin:10px 0 0">Estimativas de exemplo. O resultado depende da nota do vídeo e do nicho.</p>'+
-'<div class="row" style="justify-content:flex-end;margin-top:14px"><button type="button" class="btn" data-act="promo" data-i="-1">Sem promoção</button><button type="button" class="btn pri big" data-act="publish">Publicar</button></div></div></div>';
+'<div class="row" style="justify-content:flex-end;margin-top:14px"><button type="button" class="btn" data-act="promo" data-i="-1">Sem promoção</button><button type="button" class="btn pri big" data-act="publish" data-i="0">Publicar</button></div></div>';
+}else right='<div class="card"><p class="muted">Tudo publicado. Os vídeos novos aparecem na lista ao lado.</p></div>';
+var inner='<h2>Postar vídeo</h2><p class="lead">Escolha o vídeo, o canal e, se quiser, promova. Promover traz audiência de verdade; não é compra de views.</p>'+
+(st.posted?'<div class="card" style="border-color:var(--c-gain);margin-bottom:14px"><b class="up">Vídeo publicado (exemplo).</b> <span class="muted xs">As views chegam nos próximos dias.</span></div>':'')+
+'<div class="grid" style="grid-template-columns:340px minmax(0,1fr);align-items:start">'+left+right+'</div>';
 return shell('postar',inner);};
 
 S.loja=function(){
@@ -417,13 +441,18 @@ else if(a==='filt')st.filt=i;
 else if(a==='dest')st.dest=i;
 else if(a==='cat')st.cat=i;
 else if(a==='thumbs')st.thumbs=!st.thumbs;
-else if(a==='thumb')st.thumb=i;
+else if(a==='tprev'){if(st.thumbIdx>1)st.thumbIdx--;}
+else if(a==='tnext')st.thumbIdx++;
+else if(a==='tuse'){st.thumb=st.thumbIdx;st.thumbs=false;st.thumbEdit=false;}
+else if(a==='tedit'){st.thumbEdit=!st.thumbEdit;render();var q=document.getElementById('tq');if(q)q.focus();return;}
+else if(a==='tsearch'){var qi=document.getElementById('tq');if(qi&&qi.value.replace(/\s+/g,'')!=='')st.thumbQuery=qi.value;st.thumbIdx=1;st.thumbEdit=false;}
+else if(a==='psel')st.sel=i;
 else if(a==='tipo')st.tipo=i;
 else if(a==='inv')st.inv=i;
 else if(a==='isca'){var k=st.iscas.indexOf(i);if(k>=0)st.iscas.splice(k,1);else if(st.iscas.length<2)st.iscas.push(i);}
 else if(a==='nicho')st.nicho=i;
 else if(a==='promo')st.promo=i;
-else if(a==='publish')st.posted=true;
+else if(a==='publish'){if(st.sel>=0&&st.gone.indexOf(st.sel)<0){st.gone.push(st.sel);st.posted=true;}}
 render();}
 
 document.addEventListener('click',function(e){
@@ -440,7 +469,7 @@ document.addEventListener('input',function(e){
 if(e.target.id==='t')st.title=e.target.value;
 if(e.target.id==='nn')st.nn=e.target.value;
 });
-window.addEventListener('hashchange',function(){st.menu=false;st.posted=false;render();});
+window.addEventListener('hashchange',function(){st.menu=false;st.posted=false;st.gone=[];render();});
 render();
 })();
 </script>

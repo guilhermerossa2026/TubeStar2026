@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Projeto
 
-TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-source (MIT), herdado para uso pessoal, sem fins comerciais. Responder sempre em português. Diagnóstico completo em [docs/visao-geral.md](docs/visao-geral.md).
+TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-source (MIT), herdado para uso pessoal, sem fins comerciais. Responder sempre em português. Diagnóstico completo em [docs/visao-geral.md](docs/visao-geral.md). Histórico e ideias iniciais em `../relatorio_avancos_fase_tecnica.md` e `../registro_avancos_e_proximos_passos.md`: o dono quer rediscutir tudo, mas só dar feedback sobre eles quando ele pedir.
 
 ## Build e execução
 

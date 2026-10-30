@@ -120,7 +120,6 @@
     <Compile Include="Rivals\Rival3.cs" />
     <Compile Include="Tasks\Base\Task.cs" />
     <Compile Include="Tasks\Base\TaskType.cs" />
-    <Compile Include="Tasks\BowToRobotRulers.cs" />
     <Compile Include="Tasks\EditVideo.cs" />
     <Compile Include="Tasks\Job.cs" />
     <Compile Include="Tasks\ShootVideo.cs" />
@@ -455,7 +454,6 @@
     <Resource Include="Resources\Messages\Money.jpg" />
     <Resource Include="Resources\Messages\Puzzle.jpg" />
     <Resource Include="Resources\Messages\Question.jpg" />
-    <Resource Include="Resources\Messages\Robot.jpg" />
     <Resource Include="Resources\Messages\Sad.jpg" />
     <Resource Include="Resources\Messages\Score.jpg" />
     <Resource Include="Resources\Messages\Static.jpg" />

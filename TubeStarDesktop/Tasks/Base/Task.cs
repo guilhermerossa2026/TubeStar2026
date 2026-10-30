@@ -6,7 +6,6 @@ namespace TubeStar
 {
     [XmlInclude(typeof(EditVideo))]
     [XmlInclude(typeof(Job))]
-    [XmlInclude(typeof(BowToRobotRulers))]
     [XmlInclude(typeof(ShootVideo))]
     [XmlInclude(typeof(Study))]
     [XmlInclude(typeof(StudyAudienceAnalysisI))]

@@ -16,15 +16,14 @@ namespace TubeStar
         ComputerCrash = 7,
 
         Promotion = 8,
-        RobotsRise = 9,
-        FoundSmallChange = 10,
-        BeautyContest = 11,
+        FoundSmallChange = 9,
+        BeautyContest = 10,
 
-        GainSubscribers = 12,
-        CostOfLivingDrops = 13,
-        ChannelSuspensionLifted = 14,
-        VideoSuspensionLifted = 15,
-        FreeClass = 16,
+        GainSubscribers = 11,
+        CostOfLivingDrops = 12,
+        ChannelSuspensionLifted = 13,
+        VideoSuspensionLifted = 14,
+        FreeClass = 15,
     }
 
     public static class RandomEvents
@@ -175,23 +174,6 @@ namespace TubeStar
                             {
                                 Player.Current.HasPromotion = true;
                                 ShowMessage(EnglishStrings.Promoted.Translate(), MessagePicture.Work);
-                            }
-                        }
-                        break;
-                    case RandomEvent.RobotsRise:
-                        {
-                            if (!Player.Current.RobotRulers)
-                            {
-                                Player.Current.RobotRulers = true;
-                                ShowMessage(EnglishStrings.RobotRising.Translate(), MessagePicture.Robot);
-
-                                if (!TrophyManager.HasTrophy(Trophy.RobotMasters))
-                                    TrophyManager.UnlockTrophy(Trophy.RobotMasters);
-                            }
-                            else
-                            {
-                                Player.Current.Money -= (Player.Current.Money * 0.2);
-                                ShowMessage(EnglishStrings.RobotTax.Translate(), MessagePicture.Robot);
                             }
                         }
                         break;

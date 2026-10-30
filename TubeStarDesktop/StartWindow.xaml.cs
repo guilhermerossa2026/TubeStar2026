@@ -136,7 +136,6 @@ namespace TubeStar
             _mainPage = new MainPage();
             _mainPage.GameLose += MainPage_GameLose;
             _mainPage.GameExit += MainPage_GameExit;
-            _mainPage.GameDeath += MainPage_GameDeath;
             SetContent(_mainPage);
         }
 
@@ -151,16 +150,8 @@ namespace TubeStar
             _mainPage = new MainPage();
             _mainPage.GameLose += MainPage_GameLose;
             _mainPage.GameExit += MainPage_GameExit;
-            _mainPage.GameDeath += MainPage_GameDeath;
             SetContent(_mainPage);
             Player.Current.Money = Player.Current.Money;
-        }
-
-        private void MainPage_GameDeath()
-        {
-            SetContent(_titlePage);
-            _titlePage.Refresh();
-            CustomMessageBox.ShowDialog(EnglishStrings.Death.Translate(), EnglishStrings.RobotDeath.Translate(), MessagePicture.Robot);
         }
 
         private void MainPage_GameExit()

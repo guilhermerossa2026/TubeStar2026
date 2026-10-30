@@ -14,7 +14,6 @@ namespace TubeStar
     public partial class DailyPlanner : UserControl
     {
         public event Action GameExit;
-        public event Action Death;
         public event Action NewDayCompleted;
 
         public List<Task> Appointments { get; private set; }
@@ -50,40 +49,6 @@ namespace TubeStar
                             Update();
                         }
                     });
-                }
-                else if (appointmentBlock.Task.TaskType == TaskType.BowToRobotRulers)
-                {
-                    double cost = 10000;
-                    if (Player.Current.Money < cost)
-                    {
-                        CustomMessageBox.ShowDialog(EnglishStrings.RiseUp.Translate(), String.Format(EnglishStrings.RebellionCashRequired.Translate(), cost.ToCurrencyString()), MessagePicture.Robot);
-                    }
-                    else
-                    {
-                        int chance =  Player.Current.ChallengeMode ? 50 : 75;
-                        CustomMessageBox.ShowDialog(EnglishStrings.RiseUp.Translate(), String.Format(EnglishStrings.RebellionStart.Translate(), chance), MessagePicture.Robot, (result) =>
-                        {
-                            if (result == true)
-                            {
-                                if (RandomHelpers.Chance(chance))
-                                {
-                                    if (!TrophyManager.HasTrophy(Trophy.RebelLeader))
-                                        TrophyManager.UnlockTrophy(Trophy.RebelLeader);
-
-                                    CustomMessageBox.ShowDialog(EnglishStrings.Freedom.Translate(), EnglishStrings.RebellionSuccess.Translate(), MessagePicture.Robot);
-                                    Player.Current.Money -= 10000;
-                                    Player.Current.RobotRulers = false;
-                                    Appointments.RemoveAll(a => a.TaskType == TaskType.BowToRobotRulers);
-                                    Update();
-                                }
-                                else
-                                {
-                                    if (Death != null)
-                                        Death();
-                                }
-                            }
-                        });
-                    }
                 }
                 else if (appointmentBlock.Task != null)
                 {
@@ -261,13 +226,6 @@ namespace TubeStar
             }
 
             Appointments = new List<Task>();
-            if (Player.Current.RobotRulers)
-            {
-                var robots = new BowToRobotRulers();
-                AddAppointment(robots);
-                AddAppointment(robots);
-                AddAppointment(robots);
-            }
             if (!Player.Current.QuitJob)
             {
                 Player.Current.Money += 100;

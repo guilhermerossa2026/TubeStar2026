@@ -65,6 +65,15 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Têm horas próprias, fora da agenda do jogador: permitem mais vídeos por semana. Cada cartão explica claramente o efeito.
 - Dificuldade: Média. Depende de: 5, 6.
 
+**10b. Eventos 2.0**: direção aprovada, falta detalhar
+- Hoje: `Game/RandomEvents.cs`, 25% de chance por dia de 1 entre 16 eventos, em janela modal (`CustomMessageBox`) com fotos genéricas de `Resources/Messages`.
+- Sem janela no meio do dia: eventos vão para o resumo do dia (só os graves em destaque).
+- Causa explicada (ex.: desinscrição por ficar dias sem postar, viral num fórum).
+- Ligados às mecânicas novas: tendência da semana, proposta de patrocínio, convite de collab, funcionário pedindo aumento, imposto anual, equipamento quebrado. Alguns com escolha (aceitar/recusar).
+- Ícones no estilo do visual novo no lugar das fotos.
+- Registro: eventos de robôs removidos a pedido do dono (30/10/2026).
+- Dificuldade: Média. Depende de: 1, 3 (resumo do dia), 6.
+
 ## Depois (ideias grandes)
 
 **11. Collabs e live em collab (Twitch)**. Média. Depende de: 2.

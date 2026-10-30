@@ -53,6 +53,7 @@ namespace TubeStar
 
         public bool ChallengeMode { get; set; }
         public bool UltraMode { get; set; }
+        [Obsolete("Dinamica dos robos removida; mantido so para ler saves antigos.")]
         public bool RobotRulers { get; set; }
 
         public double LoanPayOff { get; set; }
@@ -64,7 +65,6 @@ namespace TubeStar
 
         public void Reset()
         {
-            RobotRulers = false;
             Iterations = -1;
             Money = 950;
             QuitJob = false;

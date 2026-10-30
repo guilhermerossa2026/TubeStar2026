@@ -14,7 +14,6 @@ namespace TubeStar
     /// </summary>
     public partial class MainPage : UserControl
     {
-        public event Action GameDeath;
         public event Action GameLose;
         public event Action GameExit;
 
@@ -58,11 +57,6 @@ namespace TubeStar
             {
                 if (GameLose != null)
                     GameLose();
-            };
-            dailyPlanner.Death += () =>
-            {
-                if (GameDeath != null)
-                    GameDeath();
             };
         }
 

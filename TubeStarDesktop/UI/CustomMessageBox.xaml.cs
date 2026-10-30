@@ -16,7 +16,6 @@ namespace TubeStar
         Money,
         Puzzle,
         Question,
-        Robot,
         Sad,
         Score,
         Static,

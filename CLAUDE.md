@@ -73,8 +73,7 @@ Detalhes:
 - Textos: escrever em inglês em `Languages/EnglishStrings.cs` e usar `.Translate()`. As traduções ficam em `Languages/*.xml` (PT-BR = `Brazil.xml`).
 - Save: JSON (Newtonsoft, `TypeNameHandling.Auto`) via `Game/SaveLoad/`. Precisa continuar lendo saves XML antigos.
 - YouTube Data API v3 (`YouTube API/YouTubeAPI.cs`) só é chamada para os vídeos do jogador. Nunca colocar a chave no código. Os rivais são offline de propósito, para poupar cota; não reintroduzir chamadas para eles.
-- GameJolt está desativado (código morto).
-- Mods: `TubeStar.exe RIVALMOD "<xml>"` troca os rivais (é o que o `ModLauncher` faz).
+- GameJolt e mods (ModLauncher/RIVALMOD) foram removidos. Os troféus são locais, em `Game/Trophies/TrophyManager.cs`.
 
 ## Economia de tokens
 

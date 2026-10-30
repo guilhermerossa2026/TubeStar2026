@@ -321,16 +321,8 @@
     <Text>Tutoriel</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Connexion</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Crédits</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Langage mod</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Erreur</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Erreur de connexion...recommencer?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

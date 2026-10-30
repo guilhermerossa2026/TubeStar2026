@@ -344,16 +344,8 @@ Zyskujesz {0} widzów!</Text>
     <Text>Poradnik</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Twórcy</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Mody językowe</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -619,10 +611,6 @@ To było łatwe!</Text>
   <CustomText>
     <Id>Failure</Id>
     <Text>Niepowodzenie</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Logowanie nie powiodło się ... Może spróbujesz jeszcze raz?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

@@ -321,16 +321,8 @@
     <Text>Tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Créditos</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Mods de linguagem</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Falhanço</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>O login falhou... talvez devesses tentar outra vez?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

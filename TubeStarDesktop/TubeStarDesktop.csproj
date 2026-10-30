@@ -77,7 +77,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameJolt Integration\DataStoreManager.cs" />
     <Compile Include="Game\RandomEvents.cs" />
     <Compile Include="Game\SaveLoad\SaveObj.cs" />
     <Compile Include="Game\SaveLoad\SaveLoadHelper.cs" />
@@ -175,9 +174,6 @@
     <Compile Include="UI\EditVideoDialog.xaml.cs">
       <DependentUpon>EditVideoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\LoginDialog.xaml.cs">
-      <DependentUpon>LoginDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\SelectButton.xaml.cs">
       <DependentUpon>SelectButton.xaml</DependentUpon>
     </Compile>
@@ -248,11 +244,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameJolt Integration\AddScoreManager.cs" />
-    <Compile Include="GameJolt Integration\AuthUserManager.cs" />
-    <Compile Include="GameJolt Integration\Base\BaseManager.cs" />
-    <Compile Include="GameJolt Integration\FetchScoreManager.cs" />
-    <Compile Include="GameJolt Integration\TrophyManager.cs" />
+    <Compile Include="Game\Trophies\TrophyManager.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\Settings.cs" />
     <Compile Include="Game\VideoViewer.cs" />
@@ -325,10 +317,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\EditVideoDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\LoginDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -411,7 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Edit.png" />
-    <Resource Include="Resources\GameJoltLogo.png" />
     <Resource Include="Resources\TubeStar.png" />
   </ItemGroup>
   <ItemGroup>
@@ -429,7 +416,6 @@
     <Resource Include="Resources\Study.jpg" />
     <Resource Include="Resources\YouTube.png" />
     <Resource Include="Resources\Tiger.jpg" />
-    <Resource Include="Resources\Update.png" />
     <Resource Include="Resources\Plus.png" />
     <Resource Include="Resources\StoreItems\Money.jpg" />
     <Resource Include="Resources\Likes.png" />
@@ -553,9 +539,6 @@
     <Resource Include="Resources\dice_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\more_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Languages\Netherlands.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -565,25 +548,10 @@
     <Resource Include="Resources\commons.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mods\Custom Language\Default.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Languages\Spain.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Languages\Spanish.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Mods\Custom TopTubeStars\Sample.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Mods\Custom TopTubeStars\Default.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Languages\Albania.xml" />

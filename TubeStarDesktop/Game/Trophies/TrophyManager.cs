@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace TubeStar
 {
@@ -29,7 +28,7 @@ namespace TubeStar
         OCD = 7613,
     }
 
-    public class TrophyManager : BaseManager
+    public class TrophyManager
     {
         private static List<Trophy> _achievedTrophies;
 
@@ -48,21 +47,7 @@ namespace TubeStar
             if (HasTrophy(trophy))
                 return;
 
-            if (String.IsNullOrEmpty(Settings.GameJoltLogin))
-                return;
-
-            WebClientHelpers.Download(AddTrophyUri(trophy), (result) =>
-            {
-                _achievedTrophies.Add(trophy);
-                //TODO: show trophy popup?
-            }, null);
-        }
-
-        private static Uri AddTrophyUri(Trophy trophy)
-        {
-            var tableUri = String.Format("http://gamejolt.com/api/game/v1/trophies/add-achieved/?format=json&game_id=11858&trophy_id={0}&username={1}&user_token={2}",
-                (int)trophy, HttpHelpers.UrlEncoding(Settings.GameJoltLogin), HttpHelpers.UrlEncoding(Settings.GameJoltToken));
-            return new Uri(String.Format("{0}&signature={1}", tableUri, GetSigniture(tableUri)));
+            _achievedTrophies.Add(trophy);
         }
     }
 }

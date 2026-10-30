@@ -321,16 +321,8 @@
     <Text>Oktatómód</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Bejelentkezés</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Pénz</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Még több nyelv</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Elbukás</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Nem sikerült a bejelentkezés.. talán próbáld újra!</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

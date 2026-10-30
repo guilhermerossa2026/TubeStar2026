@@ -321,16 +321,8 @@
     <Text>Обучение</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Войти</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Разработчики</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Язык</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Неудача</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Не получилось войти... Попробуйте еще раз.</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

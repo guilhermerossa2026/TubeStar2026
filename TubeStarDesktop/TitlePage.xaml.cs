@@ -20,9 +20,7 @@ namespace TubeStar
         {
             InitializeComponent();
 
-            UpdateLoginButton();
             Refresh();
-            CheckVersion();
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)
@@ -71,30 +69,6 @@ namespace TubeStar
             Application.Current.Shutdown();
         }
 
-        private void GJLogin_Click(object sender, RoutedEventArgs e)
-        {
-            LoginDialog login = new LoginDialog();
-            login.ShowDialog(() =>
-            {
-                if (login.DialogResult == true)
-                {
-                    Settings.GameJoltLogin = login.Username;
-                    Settings.GameJoltToken = login.Token;
-                    UpdateLoginButton();
-
-                    TrophyManager.UnlockTrophy(Trophy.Upgrade);
-                }
-            });
-        }
-
-        private void UpdateLoginButton()
-        {
-            if (!String.IsNullOrEmpty(Settings.GameJoltLogin))
-            {
-                btnLogin.Visibility = Visibility.Collapsed;
-            }
-        }
-
         public void Refresh()
         {
             btnContinue.IsEnabled = System.IO.File.Exists(SaveLoadHelper.SaveFile);
@@ -108,7 +82,6 @@ namespace TubeStar
             btnTutorial.Content = EnglishStrings.Tutorial.Translate();
             btnCredits.Content = EnglishStrings.Credits.Translate();
             btnExit.Content = EnglishStrings.Exit.Translate();
-            txtLogin.Text = EnglishStrings.Login.Translate();
 
             TranslatedBy.Text = "";
             if (!String.IsNullOrEmpty(Properties.Settings.Default.Language))
@@ -455,34 +428,5 @@ namespace TubeStar
             Refresh();
         }
 
-        private void imgCustom_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
-            ofd.Filter = "XML File|*.xml";
-            if (ofd.ShowDialog(Application.Current.MainWindow) == true)
-            {
-                if (File.Exists(ofd.FileName))
-                {
-                    Languages.ReadLanguage(ofd.FileName);
-                    Refresh();
-                }
-            }
-        }
-
-        private void CheckVersion()
-        {
-            // Verificação GameJolt desativada
-        }
-
-        private void imgUpdate_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://gamejolt.com/games/strategy-sim/tubestar/11858/");
-        }
-
-        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://gamejolt.com/games/strategy-sim/tubestar/11858/");
-        }
     }
 }

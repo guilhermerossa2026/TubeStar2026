@@ -321,16 +321,8 @@
     <Text>เกี่ยวกับการสอน</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>เข้าสู่ระบบ</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>เครดิต</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>ภาษา Mods</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>ความล้มเหลว</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>เข้าสู่ระบบล้มเหลว ... อาจจะลองไหม่หรือเปล่า</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

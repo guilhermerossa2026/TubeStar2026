@@ -321,16 +321,8 @@
     <Text>Yardım</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Giriş Yap</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Emeği Geçenler</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Dil Modları</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Yanlışlık</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Giriş hatalı... yeniden denesek?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

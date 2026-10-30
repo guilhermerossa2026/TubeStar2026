@@ -14,18 +14,6 @@ namespace TubeStar
                 if (_current == null)
                 {
                     _current = new Rivals();
-                    if (!String.IsNullOrEmpty(Settings.RivalsModPath))
-                    {
-                        try
-                        {
-                            var xml = System.IO.File.ReadAllText(Settings.RivalsModPath);
-                            _current.PopulateFromList(SerializationHelpers.FromXml<List<Rival>>(xml));
-                        }
-                        catch
-                        {
-                            _current = new Rivals();
-                        }
-                    }
                 }
                 return _current;
             }

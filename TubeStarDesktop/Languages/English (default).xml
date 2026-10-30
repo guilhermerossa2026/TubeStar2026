@@ -343,16 +343,8 @@ You've gained {0} subscribers!</Text>
     <Text>Tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Credits</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Language Mods</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -614,10 +606,6 @@ That was easy!</Text>
   <CustomText>
     <Id>Failure</Id>
     <Text>Failure</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>The login failed... maybe try again?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

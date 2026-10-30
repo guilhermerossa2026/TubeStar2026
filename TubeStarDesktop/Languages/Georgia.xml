@@ -322,16 +322,8 @@
     <Text>ტუტორიალი</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>ლოგინი</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>შემქმნელები</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>ენის მოდები</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -580,10 +572,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>შეცდომა</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>ლოგინი არასწორია... გსურთ თავიდან დაწყება?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

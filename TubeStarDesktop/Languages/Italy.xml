@@ -322,16 +322,8 @@ hai guadagnato '{0}' iscritti!</Text>
     <Text>tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>crediti</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>mod di linguaggio</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -581,10 +573,6 @@ hai guadagnato '{0}' iscritti!</Text>
   <CustomText>
     <Id>Failure</Id>
     <Text>fallimento</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>il login ha fallito... forse riprovare?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

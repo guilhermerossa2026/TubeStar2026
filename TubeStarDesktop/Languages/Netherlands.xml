@@ -321,16 +321,8 @@
     <Text>Tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Credits</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Taal mod</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -578,10 +570,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Gefaalt</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Inloggen niet gelukt... probeer het later nog eens.</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

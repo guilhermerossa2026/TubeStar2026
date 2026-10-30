@@ -16,7 +16,7 @@
             <ColumnDefinition Width="30*" />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0" Grid.ColumnSpan="3" Width="200" Source="Resources/TubeStar.png" Margin="10, 10, 10, 10" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown" />
+        <Image Grid.Row="0" Grid.ColumnSpan="3" Width="200" Source="Resources/TubeStar.png" Margin="10, 10, 10, 10" />
 
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
             <StackPanel>
@@ -45,11 +45,6 @@
                     <Image x:Name="imgIndonesia" Height="35" Source="Resources/Languages/Indonesian.png" MouseLeftButtonDown="imgIndonesia_MouseLeftButtonDown"/>
                     <Image x:Name="imgThailand" Height="35" Source="Resources/Languages/Thai.png" MouseLeftButtonDown="imgThailand_MouseLeftButtonDown"/>
 
-                    <Button x:Name="imgCustom" Margin="2" Height="35" Click="imgCustom_Click">
-                        <Button.Content>
-                            <Image Source="Resources/More_icon.png" />
-                        </Button.Content>
-                    </Button>
                 </StackPanel>
                 <TextBlock x:Name="TranslatedBy" HorizontalAlignment="Center" Text="" FontSize="10" TextWrapping="Wrap" Width="500" TextAlignment="Center" />
 
@@ -58,20 +53,6 @@
                 <Button x:Name="btnTutorial" Content="Tutorial" Margin="5" FontSize="20" Height="40" HorizontalAlignment="Center" Width="200" Click="Tutorial_Click" />
                 <Button x:Name="btnCredits" Content="Credits" Margin="5" FontSize="20" Height="40" HorizontalAlignment="Center" Width="200" Click="Credits_Click" />
                 <Button x:Name="btnExit" Content="Exit" Margin="5" FontSize="20" Height="40" HorizontalAlignment="Center" Width="200" Click="Exit_Click" />
-            </StackPanel>
-        </ScrollViewer>
-
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Right" Padding="0,50,0,0">
-            <StackPanel Grid.Row="1">
-                <Image x:Name="imgUpdate" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" Source="Resources/Update.png" Cursor="Hand" Height="50" Margin="10, 10, 10, 10" MouseLeftButtonDown="imgUpdate_MouseLeftButtonDown" />
-                <Button x:Name="btnLogin" Visibility="Collapsed" Margin="5" FontSize="20" Height="75" HorizontalAlignment="Center" Width="200" Click="GJLogin_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <Image Source="Resources/GameJoltLogo.png" />
-                            <TextBlock x:Name="txtLogin" Text="Login" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
             </StackPanel>
         </ScrollViewer>
 

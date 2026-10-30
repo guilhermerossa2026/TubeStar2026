@@ -321,16 +321,8 @@
     <Text>Tutoriál</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Přihlášení</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>O hře</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Jazyky</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -581,10 +573,6 @@ Vaše oficiální příčnia smrti je známá jako:
   <CustomText>
     <Id>Failure</Id>
     <Text>Selhání</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Přihlášení selhalo... nechcete to zkusit znovu?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

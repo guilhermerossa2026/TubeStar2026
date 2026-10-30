@@ -21,10 +21,6 @@ TubeStar supports limited modding via customizing the game's text.
 Visit http://tubestar.azurewebsites.net/Translation to add or alter a translation for use with this game.
 (Note: The '{0}' in the text will be replaced in game.)
 
-To customize the 'Top TubeStars' channels, add or edit the XML files in the following folder:
-<Install Directory>\Mods\Custom TopTubeStars\
-Then run ModLauncher.exe and select the XML file to use with TubeStar.
-
 The game's source code is also freely available for modification here: http://tubestar.codeplex.com/
 
 _______________________________________________________________________________
@@ -34,5 +30,4 @@ If you experience any bugs or have any feedback for the game, feel free to conta
 
 Site		http://tubestar.azurewebsites.net/
 IndieDB: 	http://www.indiedb.com/games/tubestar
-GameJolt: 	http://gamejolt.com/games/strategy-sim/tubestar/11858/
 CodePlex:	http://tubestar.codeplex.com/

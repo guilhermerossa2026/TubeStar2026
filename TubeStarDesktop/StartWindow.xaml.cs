@@ -22,11 +22,7 @@ namespace TubeStar
         {
             InitializeComponent();
 
-            if (!String.IsNullOrEmpty(Properties.Settings.Default.CustomModPath))
-            {
-                Languages.ReadLanguage(Properties.Settings.Default.CustomModPath);
-            }
-            else if (!String.IsNullOrEmpty(Properties.Settings.Default.Language))
+            if (!String.IsNullOrEmpty(Properties.Settings.Default.Language))
             {
                 Languages.SetLanguage(Properties.Settings.Default.Language);
             }

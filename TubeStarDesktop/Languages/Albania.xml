@@ -321,16 +321,8 @@
     <Text>punë praktike</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>hyrje</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>kredite</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Mod Per Gjuh</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>dështim</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Hyrsa dështuar ... ndoshta provoni përsëri?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

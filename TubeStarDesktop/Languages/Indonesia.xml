@@ -321,16 +321,8 @@
     <Text>Tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Masuk</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Kredit</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Bahasa Mods</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Gagal</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Login gagal ... mungkin coba lagi?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

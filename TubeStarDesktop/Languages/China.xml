@@ -321,16 +321,8 @@
     <Text>教學</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>登入</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>製作人員名單</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>語言模組</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>失敗</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>登入失敗...也許再試一次嗎？</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

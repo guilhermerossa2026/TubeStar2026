@@ -248,14 +248,8 @@ namespace TubeStar
         [Description("Tutorial")]
         Tutorial,
 
-        [Description("Login")]
-        Login,
-
         [Description("Credits")]
         Credits,
-
-        [Description("Language Mods")]
-        Mods,
 
         [Description("What a loser")]
         WhatALoser,
@@ -442,9 +436,6 @@ namespace TubeStar
 
         [Description("Failure")]
         Failure,
-
-        [Description("The login failed... maybe try again?")]
-        LoginFailure,
 
         [Description("User name")]
         Username,

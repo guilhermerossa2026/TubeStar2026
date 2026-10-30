@@ -335,16 +335,8 @@ Du har fått {0} prenumeranter!</Text>
     <Text>Handledning</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Logga in</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Ära</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Språk Mod</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -601,10 +593,6 @@ Click OK to continue, CANCEL to quit</Text>
   <CustomText>
     <Id>Failure</Id>
     <Text>Misslyckat</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Inloggning misslyckad... Försök igen?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

@@ -321,16 +321,8 @@
     <Text>Tutorial</Text>
   </CustomText>
   <CustomText>
-    <Id>Login</Id>
-    <Text>Login</Text>
-  </CustomText>
-  <CustomText>
     <Id>Credits</Id>
     <Text>Credite</Text>
-  </CustomText>
-  <CustomText>
-    <Id>Mods</Id>
-    <Text>Moduri pentru limba</Text>
   </CustomText>
   <CustomText>
     <Id>WhatALoser</Id>
@@ -579,10 +571,6 @@
   <CustomText>
     <Id>Failure</Id>
     <Text>Esuare</Text>
-  </CustomText>
-  <CustomText>
-    <Id>LoginFailure</Id>
-    <Text>Logarea nu a reusit... poate incerci din nou?</Text>
   </CustomText>
   <CustomText>
     <Id>Username</Id>

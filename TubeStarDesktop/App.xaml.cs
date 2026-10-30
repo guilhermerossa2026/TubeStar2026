@@ -20,18 +20,6 @@ namespace TubeStar
             }
             catch { }
 
-            if (e.Args.Length > 1)
-            {
-                if (e.Args[0] == "RIVALMOD")
-                {
-                    Settings.RivalsModPath = e.Args[1];
-                }
-                else
-                {
-                    Settings.GameJoltLogin = e.Args[0];
-                    Settings.GameJoltToken = e.Args[1];
-                }
-            }
             base.OnStartup(e);
             this.Dispatcher.UnhandledException += Dispatcher_UnhandledException;
             this.Exit += App_Exit;

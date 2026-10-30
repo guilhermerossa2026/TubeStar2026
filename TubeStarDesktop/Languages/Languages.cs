@@ -37,7 +37,6 @@ namespace TubeStar
                         {
                             _customLanguage[customText.Id] = customText.Text;
                         }
-                        Properties.Settings.Default.CustomModPath = null;
                         Properties.Settings.Default.Language = language;
                     }
                 }
@@ -46,27 +45,6 @@ namespace TubeStar
             {
                 _customLanguage = null;
                 Properties.Settings.Default.Language = null;
-            }
-        }
-
-        public static void ReadLanguage(string fileName)
-        {
-            if (_customLanguage == null)
-                _customLanguage = new Dictionary<EnglishStrings, string>();
-
-            try
-            {
-                var xml = File.ReadAllText(fileName);
-                foreach (var customText in SerializationHelpers.FromXml<List<CustomText>>(xml))
-                {
-                    _customLanguage[customText.Id] = customText.Text;
-                }
-                Properties.Settings.Default.CustomModPath = fileName;
-            }
-            catch
-            {
-                _customLanguage = null;
-                Properties.Settings.Default.CustomModPath = null;
             }
         }
 

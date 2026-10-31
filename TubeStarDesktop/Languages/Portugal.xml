@@ -817,4 +817,52 @@
     <Id>UseCreativeCommons</Id>
     <Text>Exibir "Conteúdo Creativo" apenas</Text>
   </CustomText>
+  <CustomText>
+    <Id>NavHome</Id>
+    <Text>Principal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavSchedule</Id>
+    <Text>Agenda</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavMyVideos</Id>
+    <Text>Meus vídeos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavCreateVideo</Id>
+    <Text>Criar vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavPostVideo</Id>
+    <Text>Postar vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavStore</Id>
+    <Text>Loja</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavUniversity</Id>
+    <Text>Universidade</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavEmployees</Id>
+    <Text>Funcionários</Text>
+  </CustomText>
+  <CustomText>
+    <Id>Soon</Id>
+    <Text>Em breve</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NextDay</Id>
+    <Text>Próximo dia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MoneyLabel</Id>
+    <Text>Dinheiro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>GameDate</Id>
+    <Text>Ano {0} · Semana {1} · Dia {2}</Text>
+  </CustomText>
 </ArrayOfCustomText>

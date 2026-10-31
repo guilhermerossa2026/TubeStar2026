@@ -255,6 +255,10 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Custom.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

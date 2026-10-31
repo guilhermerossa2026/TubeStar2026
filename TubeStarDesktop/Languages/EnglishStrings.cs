@@ -619,5 +619,41 @@ namespace TubeStar
 
         [Description("Display 'Creative Commons' Material Only")]
         UseCreativeCommons,
+
+        [Description("Home")]
+        NavHome,
+
+        [Description("Schedule")]
+        NavSchedule,
+
+        [Description("My videos")]
+        NavMyVideos,
+
+        [Description("Create video")]
+        NavCreateVideo,
+
+        [Description("Post video")]
+        NavPostVideo,
+
+        [Description("Store")]
+        NavStore,
+
+        [Description("University")]
+        NavUniversity,
+
+        [Description("Employees")]
+        NavEmployees,
+
+        [Description("Soon")]
+        Soon,
+
+        [Description("Next day")]
+        NextDay,
+
+        [Description("Money")]
+        MoneyLabel,
+
+        [Description("Year {0} · Week {1} · Day {2}")]
+        GameDate,
     }
 }

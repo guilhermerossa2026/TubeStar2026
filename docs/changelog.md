@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-31
+- Visual novo, etapa 2: menu lateral (Agenda, Meus vídeos, Loja e Top TubeStars; demais itens "Em breve"), cabeçalho com data "Ano · Semana · Dia" (ano de 112 dias), dinheiro, inscritos e botão "Próximo dia", ícones vetoriais em `Styles/Icons.xaml`. A faixa inferior do "Novo dia" saiu.
 - Visual novo, etapa 1 (cores e fonte): paleta da prévia V1 Studio centralizada em `Styles/Custom.xaml` (novas cores de ganho, perda e Twitch), ~100 cores fixas trocadas pelo tema, gráficos com tema escuro e fonte Inter embutida (licença SIL OFL, em `TubeStarDesktop/Fonts`).
 - "Novo jogo" na mesma sessão não herda mais os vídeos não lançados do jogo anterior; save corrompido (sem canais) é recusado e o jogo volta a um estado novo coerente.
 - Corrigido o carregamento de saves JSON: o jogo apagava o canal "não lançados" e tratava o primeiro canal real como ele (vídeos publicados podiam sumir). Saves sem listas de shares/views compradas também carregam.

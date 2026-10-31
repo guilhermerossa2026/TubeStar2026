@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace TubeStar
 {
@@ -21,25 +20,24 @@ namespace TubeStar
         {
             InitializeComponent();
             Translate();
-            Player.Current.MoneyChanged += () =>
-            {
-                Dispatcher.BeginInvoke(new Action(delegate()
-                {
-                    txtMoney.Text = Player.Current.Money.ToCurrencyString();
-                }));
-            };
+            txtMoney.Text = Player.Current.Money.ToCurrencyString();
+            UpdateHeader();
+            //Remove ao sair da tela: cada jogo novo cria outra MainPage
+            Player.Current.MoneyChanged += Player_MoneyChanged;
+            Unloaded += (s, e) => Player.Current.MoneyChanged -= Player_MoneyChanged;
 
             dailyPlanner.NewDayCompleted += () =>
             {
                 this.IsEnabled = true;
                 progress.Visibility = System.Windows.Visibility.Collapsed;
 
-                txtNewDay.Text = String.Format("{0} {1}!", EnglishStrings.StartDay.Translate(), Player.Current.Iterations + 1);
-
                 //A cada 3 dias roda um evento; depois dele, tudo é atualizado (uma vez só)
                 bool eventDay = Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0;
                 if (eventDay)
                     RandomEvents.RunEvent();
+
+                //Depois do evento: ele pode mudar inscritos sem mexer no dinheiro
+                UpdateHeader();
 
                 if (eventDay || videoManager.Visibility == System.Windows.Visibility.Visible)
                     videoManager.Update();
@@ -65,10 +63,54 @@ namespace TubeStar
             gridHelp.ToolTip = EnglishStrings.Help.Translate();
             gridExit.ToolTip = EnglishStrings.Exit.Translate();
             imgSave.ToolTip = EnglishStrings.SaveGame.Translate();
-            txtDailyPlanner.Text = EnglishStrings.DailyPlanner.Translate();
-            txtVideoPlanner.Text = EnglishStrings.VideoManager.Translate();
-            txtOnlineStore.Text = EnglishStrings.OnlineStore.Translate();
+            txtDailyPlanner.Text = EnglishStrings.NavSchedule.Translate();
+            txtVideoPlanner.Text = EnglishStrings.NavMyVideos.Translate();
+            txtOnlineStore.Text = EnglishStrings.NavStore.Translate();
             txtRivals.Text = EnglishStrings.TopTubeStars.Translate();
+            txtNavHome.Text = EnglishStrings.NavHome.Translate();
+            txtNavCreate.Text = EnglishStrings.NavCreateVideo.Translate();
+            txtNavPost.Text = EnglishStrings.NavPostVideo.Translate();
+            txtNavUniversity.Text = EnglishStrings.NavUniversity.Translate();
+            txtNavEmployees.Text = EnglishStrings.NavEmployees.Translate();
+            string soon = EnglishStrings.Soon.Translate();
+            txtSoon1.Text = soon;
+            txtSoon2.Text = soon;
+            txtSoon3.Text = soon;
+            txtSoon4.Text = soon;
+            txtSoon5.Text = soon;
+            txtMoneyLabel.Text = EnglishStrings.MoneyLabel.Translate();
+            txtSubscribersLabel.Text = EnglishStrings.Subscribers.Translate();
+            txtNewDay.Text = EnglishStrings.NextDay.Translate();
+            txtSectionTitle.Text = txtDailyPlanner.Text;
+        }
+
+        private void Player_MoneyChanged()
+        {
+            Dispatcher.BeginInvoke(new Action(delegate()
+            {
+                txtMoney.Text = Player.Current.Money.ToCurrencyString();
+                UpdateHeader();
+            }));
+        }
+
+        //Data do jogo (ano de 112 dias, semana de 7) e total de inscritos no cabeçalho
+        private void UpdateHeader()
+        {
+            //Iterations vale 0 no 1º dia (o DailyPlanner já roda o primeiro NewDay ao abrir)
+            int day = Math.Max(0, Player.Current.Iterations);
+            int dayOfYear = day % 112 + 1;
+            int week = (dayOfYear - 1) / 7 + 1;
+            int year = day / 112 + 1;
+            //Igual à prévia: "Dia" é o dia do ano (1 a 112)
+            txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
+
+            long subscribers = 0;
+            foreach (var channel in Player.Current.Channels)
+            {
+                if (channel != Channel.UnreleasedVideos)
+                    subscribers += channel.Subscribers;
+            }
+            txtSubscribers.Text = subscribers.ToString("N0");
         }
 
         private void CheckTrophies()
@@ -126,6 +168,7 @@ namespace TubeStar
         private void btnDailyPlanner_Click(object sender, RoutedEventArgs e)
         {
             btnDailyPlanner.IsChecked = true;
+            txtSectionTitle.Text = txtDailyPlanner.Text;
             btnVideoPlanner.IsChecked = false;
             btnOnlineStore.IsChecked = false;
             btnRivals.IsChecked = false;
@@ -140,6 +183,7 @@ namespace TubeStar
         {
             btnDailyPlanner.IsChecked = false;
             btnVideoPlanner.IsChecked = true;
+            txtSectionTitle.Text = txtVideoPlanner.Text;
             btnOnlineStore.IsChecked = false;
             btnRivals.IsChecked = false;
 
@@ -155,6 +199,7 @@ namespace TubeStar
             btnDailyPlanner.IsChecked = false;
             btnVideoPlanner.IsChecked = false;
             btnOnlineStore.IsChecked = true;
+            txtSectionTitle.Text = txtOnlineStore.Text;
             btnRivals.IsChecked = false;
 
             dailyPlanner.Visibility = Visibility.Collapsed;
@@ -170,6 +215,7 @@ namespace TubeStar
             btnVideoPlanner.IsChecked = false;
             btnOnlineStore.IsChecked = false;
             btnRivals.IsChecked = true;
+            txtSectionTitle.Text = txtRivals.Text;
 
             dailyPlanner.Visibility = Visibility.Collapsed;
             videoManager.Visibility = Visibility.Collapsed;
@@ -234,36 +280,6 @@ namespace TubeStar
                         GameExit();
                 }
             });
-        }
-
-        private void imgSave_MouseEnter(object sender, MouseEventArgs e)
-        {
-            imgSave.Source = new BitmapImage(new Uri("Resources/Disk_hover.png", UriKind.Relative));
-        }
-
-        private void imgSave_MouseLeave(object sender, MouseEventArgs e)
-        {
-            imgSave.Source = new BitmapImage(new Uri("Resources/Disk.png", UriKind.Relative));
-        }
-
-        private void gridHelp_MouseEnter(object sender, MouseEventArgs e)
-        {
-            gridHelp.Source = new BitmapImage(new Uri("Resources/Help_hover.png", UriKind.Relative));
-        }
-
-        private void gridHelp_MouseLeave(object sender, MouseEventArgs e)
-        {
-            gridHelp.Source = new BitmapImage(new Uri("Resources/Help.png", UriKind.Relative));
-        }
-
-        private void gridExit_MouseEnter(object sender, MouseEventArgs e)
-        {
-            gridExit.Source = new BitmapImage(new Uri("Resources/Exit_hover.png", UriKind.Relative));
-        }
-
-        private void gridExit_MouseLeave(object sender, MouseEventArgs e)
-        {
-            gridExit.Source = new BitmapImage(new Uri("Resources/Exit.png", UriKind.Relative));
         }
     }
 }

@@ -1,86 +1,151 @@
-<UserControl x:Class="TubeStar.MainPage"
+﻿<UserControl x:Class="TubeStar.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TubeStar">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
+    <UserControl.Resources>
+        <!-- Etiqueta "Em breve" dos itens ainda não disponíveis -->
+        <Style x:Key="SoonBadgeStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource YtDarkCardBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Padding" Value="5,1" />
+            <Setter Property="Margin" Value="6,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="SoonTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
+        </Style>
+        <Style x:Key="NavSoonStyle" TargetType="ToggleButton" BasedOn="{StaticResource NavItemStyle}">
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Opacity" Value="0.45" />
+            <Setter Property="Cursor" Value="Arrow" />
+        </Style>
+        <Style x:Key="StatLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}" TextElement.FontFamily="{StaticResource YtFontFamily}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="196" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="64" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="46" />
         </Grid.RowDefinitions>
 
-        <!-- Barra Superior de Navegação Estilo YouTube Dark -->
-        <Border Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Padding="6,2">
+        <!-- Menu lateral -->
+        <Border Grid.Column="0" Grid.RowSpan="2" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,1,0" Padding="12,0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="64" VerticalAlignment="Center" Margin="6,0,0,0">
+                    <Border Background="{StaticResource YtRedBrush}" CornerRadius="7" Width="32" Height="24" VerticalAlignment="Center">
+                        <Path Data="{StaticResource IconPlay}" Fill="{StaticResource YtOnAccentBrush}" Stretch="Uniform" Width="10" Height="11" Margin="2,0,0,0" />
+                    </Border>
+                    <TextBlock Text="TubeStar" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" VerticalAlignment="Center" Margin="9,0,0,0" />
+                </StackPanel>
+
+                <StackPanel Margin="0,8,0,0">
+                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconHome}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="txtNavHome" Text="Home" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon1" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton x:Name="btnDailyPlanner" IsChecked="True" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconCalendar}" Click="btnDailyPlanner_Click">
+                        <TextBlock x:Name="txtDailyPlanner" Text="Schedule" VerticalAlignment="Center" />
+                    </ToggleButton>
+
+                    <ToggleButton x:Name="btnVideoPlanner" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconFilm}" Click="btnVideoPlanner_Click">
+                        <TextBlock x:Name="txtVideoPlanner" Text="My videos" VerticalAlignment="Center" />
+                    </ToggleButton>
+
+                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconPlus}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="txtNavCreate" Text="Create video" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon2" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconSend}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="txtNavPost" Text="Post video" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon3" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton x:Name="btnOnlineStore" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconBag}" Click="btnOnlineStore_Click">
+                        <TextBlock x:Name="txtOnlineStore" Text="Store" VerticalAlignment="Center" />
+                    </ToggleButton>
+
+                    <ToggleButton x:Name="btnRivals" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconTrophy}" Click="btnRivals_Click">
+                        <TextBlock x:Name="txtRivals" Text="Top TubeStars" VerticalAlignment="Center" />
+                    </ToggleButton>
+
+                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconCap}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="txtNavUniversity" Text="University" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon4" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                        </StackPanel>
+                    </ToggleButton>
+
+                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconTeam}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="txtNavEmployees" Text="Employees" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon5" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                        </StackPanel>
+                    </ToggleButton>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Cabeçalho -->
+        <Border Grid.Column="1" Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Padding="20,0,12,0">
             <Grid>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <ToggleButton x:Name="btnDailyPlanner" IsChecked="True" Margin="4,0" Click="btnDailyPlanner_Click">
-                        <ToggleButton.Content>
-                            <WrapPanel VerticalAlignment="Center">
-                                <Image Source="/Resources/Home_icon.png" Margin="0,0,6,0" Height="16" Width="16" />
-                                <TextBlock x:Name="txtDailyPlanner" Text="Daily Planner" VerticalAlignment="Center"/>
-                            </WrapPanel>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                    <ToggleButton x:Name="btnVideoPlanner" Margin="4,0" Click="btnVideoPlanner_Click">
-                        <ToggleButton.Content>
-                            <WrapPanel VerticalAlignment="Center">
-                                <Image Source="/Resources/Video_icon.png" Margin="0,0,6,0" Height="16" Width="16" />
-                                <TextBlock x:Name="txtVideoPlanner" Text="Video Manager" VerticalAlignment="Center"/>
-                            </WrapPanel>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                    <ToggleButton x:Name="btnOnlineStore" Margin="4,0" Click="btnOnlineStore_Click">
-                        <ToggleButton.Content>
-                            <WrapPanel VerticalAlignment="Center">
-                                <Image Source="/Resources/Cart_icon.png" Margin="0,0,6,0" Height="16" Width="16" />
-                                <TextBlock x:Name="txtOnlineStore" Text="Online Store" VerticalAlignment="Center" />
-                            </WrapPanel>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-
-                    <ToggleButton x:Name="btnRivals" Margin="4,0" Click="btnRivals_Click">
-                        <ToggleButton.Content>
-                            <WrapPanel VerticalAlignment="Center">
-                                <Image Source="/Resources/Rivals_icon.png" Margin="0,0,6,0" Height="16" Width="16" />
-                                <TextBlock x:Name="txtRivals" Text="Rivals" VerticalAlignment="Center" />
-                            </WrapPanel>
-                        </ToggleButton.Content>
-                    </ToggleButton>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="txtSectionTitle" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Schedule" />
+                    <TextBlock x:Name="txtDate" FontSize="12" Foreground="{StaticResource YtTextSecondaryBrush}" Margin="0,2,0,0" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Border Background="{StaticResource YtDarkCardHoverBrush}" CornerRadius="6" Padding="10,4" Margin="0,0,10,0">
-                        <TextBlock x:Name="txtMoney" FontSize="15" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Text="$1,000.00" VerticalAlignment="Center" />
-                    </Border>
-                    <Image x:Name="imgSave" Source="Resources/Disk.png" Height="22" Width="22" Margin="4,0" MouseLeftButtonDown="Save_MouseLeftButtonDown" Style="{StaticResource TriggerClickStyle}" MouseEnter="imgSave_MouseEnter" MouseLeave="imgSave_MouseLeave" Cursor="Hand"/>
-                    <Image x:Name="gridHelp" Source="Resources/Help.png" Height="22" Width="22" Margin="4,0" MouseLeftButtonDown="Tutorial_MouseLeftButtonDown" Style="{StaticResource TriggerClickStyle}" MouseEnter="gridHelp_MouseEnter" MouseLeave="gridHelp_MouseLeave" Cursor="Hand"/>
-                    <Image x:Name="gridExit" Source="Resources/Exit.png" Height="22" Width="22" Margin="4,0" MouseLeftButtonDown="Exit_MouseLeftButtonDown" Style="{StaticResource TriggerClickStyle}" MouseEnter="gridExit_MouseEnter" MouseLeave="gridExit_MouseLeave" Cursor="Hand"/>
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,22,0">
+                        <TextBlock x:Name="txtMoneyLabel" Text="Money" Style="{StaticResource StatLabelStyle}" />
+                        <TextBlock x:Name="txtMoney" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Text="$1,000.00" />
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,22,0">
+                        <TextBlock x:Name="txtSubscribersLabel" Text="Subscribers" Style="{StaticResource StatLabelStyle}" />
+                        <TextBlock x:Name="txtSubscribers" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="0" />
+                    </StackPanel>
+
+                    <Button x:Name="btnNewDay" Style="{StaticResource PrimaryButtonStyle}" Click="btnNewDay_Click" Margin="0,0,10,0" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconPlay}" Fill="{StaticResource YtOnAccentBrush}" Stretch="Uniform" Width="11" Height="12" Margin="0,0,8,0" VerticalAlignment="Center" />
+                            <TextBlock x:Name="txtNewDay" Text="Next day" VerticalAlignment="Center" />
+                            <ProgressBar x:Name="progress" IsIndeterminate="True" Width="70" Height="6" Margin="10,0,0,0" Visibility="Collapsed" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="imgSave" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconSave}" PreviewMouseLeftButtonDown="Save_MouseLeftButtonDown" />
+                    <Button x:Name="gridHelp" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconHelp}" PreviewMouseLeftButtonDown="Tutorial_MouseLeftButtonDown" />
+                    <Button x:Name="gridExit" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconExit}" PreviewMouseLeftButtonDown="Exit_MouseLeftButtonDown" />
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- Barra Inferior do Novo Dia Estilo YouTube Red -->
-        <Border Grid.Row="2" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,1,0,0" Padding="6,4">
-            <Button FontSize="18" Click="btnNewDay_Click" Background="{StaticResource YtRedBrush}" Foreground="{StaticResource YtOnAccentBrush}" BorderThickness="0">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="/Resources/Play_icon.png" Margin="0,0,8,0" Height="18" Width="18" />
-                        <TextBlock x:Name="txtNewDay" VerticalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource YtOnAccentBrush}"/>
-                        <ProgressBar x:Name="progress" IsIndeterminate="True" Width="160" Margin="10,0,0,0" Visibility="Collapsed"/>
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </Border>
-
-        <local:DailyPlanner Grid.Row="1" x:Name="dailyPlanner" />
-        <local:VideoManagerControl Grid.Row="1" x:Name="videoManager" Visibility="Collapsed" />
-        <local:OnlineStoreControl Grid.Row="1" x:Name="onlineStore" Visibility="Collapsed" />
-        <local:RivalControl Grid.Row="1" x:Name="rivalViewer" Visibility="Collapsed" />
+        <!-- Área de conteúdo -->
+        <local:DailyPlanner Grid.Column="1" Grid.Row="1" x:Name="dailyPlanner" />
+        <local:VideoManagerControl Grid.Column="1" Grid.Row="1" x:Name="videoManager" Visibility="Collapsed" />
+        <local:OnlineStoreControl Grid.Column="1" Grid.Row="1" x:Name="onlineStore" Visibility="Collapsed" />
+        <local:RivalControl Grid.Column="1" Grid.Row="1" x:Name="rivalViewer" Visibility="Collapsed" />
     </Grid>
 
 </UserControl>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:TubeStar" 
         Title="TubeStar"
-        MinHeight="600" MinWidth="900"
+        MinHeight="600" MinWidth="1000"
         Height="768" Width="1200"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"

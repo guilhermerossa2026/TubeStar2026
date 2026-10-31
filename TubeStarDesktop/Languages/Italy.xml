@@ -818,4 +818,52 @@ hai guadagnato '{0}' iscritti!</Text>
     <Id>UseCreativeCommons</Id>
     <Text>Display 'Creative Commons' Solo questo materiale</Text>
   </CustomText>
+  <CustomText>
+    <Id>NavHome</Id>
+    <Text>Home</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavSchedule</Id>
+    <Text>Schedule</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavMyVideos</Id>
+    <Text>My videos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavCreateVideo</Id>
+    <Text>Create video</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavPostVideo</Id>
+    <Text>Post video</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavStore</Id>
+    <Text>Store</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavUniversity</Id>
+    <Text>University</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavEmployees</Id>
+    <Text>Employees</Text>
+  </CustomText>
+  <CustomText>
+    <Id>Soon</Id>
+    <Text>Soon</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NextDay</Id>
+    <Text>Next day</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MoneyLabel</Id>
+    <Text>Money</Text>
+  </CustomText>
+  <CustomText>
+    <Id>GameDate</Id>
+    <Text>Year {0} · Week {1} · Day {2}</Text>
+  </CustomText>
 </ArrayOfCustomText>

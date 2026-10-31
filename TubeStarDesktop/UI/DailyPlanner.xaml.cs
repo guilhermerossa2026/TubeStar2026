@@ -259,6 +259,7 @@ namespace TubeStar
         //Player/Rivais/RandomHelpers com a tela, e erros vão para o Crash Report
         private void RunIterations()
         {
+            bool gameOver = false;
             try
             {
                 foreach (var channel in Player.Current.Channels)
@@ -301,10 +302,13 @@ namespace TubeStar
                     }
                 }
 
+                //Game over: o dia para aqui (sem troféu, eventos ou atualização de tela)
                 if (Player.Current.Money < 0)
                 {
+                    gameOver = true;
                     if (GameExit != null)
                         GameExit();
+                    return;
                 }
 
                 if (Player.Current.Money - _moneyAtStartOfDay >= 1000)
@@ -317,7 +321,7 @@ namespace TubeStar
             finally
             {
                 //Mesmo com erro (vai para o Crash Report), a tela precisa ser liberada
-                if (NewDayCompleted != null)
+                if (!gameOver && NewDayCompleted != null)
                     NewDayCompleted();
             }
         }

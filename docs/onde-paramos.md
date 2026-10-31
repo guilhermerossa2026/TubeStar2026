@@ -26,7 +26,7 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | ✅ feito: simulação passou a rodar na thread da tela |
 | 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | ✅ feito |
 | 9 | A tela de vídeos para de ser recriada inteira a cada dia | ✅ feito (versão enxuta: cache de miniatura, vazamento, sem update em dobro; reconstrução fica para o visual novo) |
-| 9b | Game over no meio do dia: `RunIterations` segue rodando depois de `GameExit` (pode abrir evento sobre a tela de título) | a decidir |
+| 9b | Game over no meio do dia: `RunIterations` segue rodando depois de `GameExit` (pode abrir evento sobre a tela de título) | ✅ feito |
 | 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | ⏭️ **próximo** |
 
 Decisões do dono para esta etapa:

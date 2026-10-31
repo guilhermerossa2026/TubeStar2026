@@ -5,6 +5,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace TubeStar
 {
@@ -113,32 +116,53 @@ namespace TubeStar
 
         private void Translate()
         {
-            txtAddTask.Text = EnglishStrings.AddTask.Translate();
+            txtTitle.Text = EnglishStrings.NavSchedule.Translate();
+            txtLead.Text = EnglishStrings.ScheduleLead.Translate();
+            txtDayHours.Text = EnglishStrings.ScheduleDayHours.Translate();
+            txtAddTask.Text = "+ " + EnglishStrings.AddTask.Translate();
+            txtAddTaskHint.Text = EnglishStrings.ScheduleAddTaskHint.Translate();
         }
 
-        private void AppointmentBlock_Click(object sender, EventArgs e)
+        //Mesmo comportamento do antigo clique num horário da agenda
+        private void HourSlot_Click(Task task)
         {
-            var appointmentBlock = sender as AppointmentBlock;
-            if (appointmentBlock != null && appointmentBlock.Task != null)
+            if (task == null)
+                return;
+
+            //Special: quit job
+            if (task.TaskType == TaskType.Job)
             {
-                //Special: quit job
-                if (appointmentBlock.Task.TaskType == TaskType.Job)
-                {
-                    CustomMessageBox.ShowDialog(EnglishStrings.QuitJobHeader.Translate(), EnglishStrings.QuitJobText.Translate(), MessagePicture.Work, (result) =>
-                    {
-                        if (result == true)
-                        {
-                            Player.Current.QuitJob = true;
-                            Appointments.RemoveAll(a => a.TaskType == TaskType.Job);
-                            Update();
-                        }
-                    });
-                }
-                else if (appointmentBlock.Task != null)
-                {
-                    RemoveAppointment(appointmentBlock.Task, false);
-                }
+                AskQuitJob();
             }
+            else
+            {
+                RemoveAppointment(task, false);
+            }
+        }
+
+        private void AskQuitJob()
+        {
+            CustomMessageBox.ShowDialog(EnglishStrings.QuitJobHeader.Translate(), EnglishStrings.QuitJobText.Translate(), MessagePicture.Work, (result) =>
+            {
+                if (result == true)
+                {
+                    Player.Current.QuitJob = true;
+                    Appointments.RemoveAll(a => a.TaskType == TaskType.Job);
+                    Update();
+                }
+            });
+        }
+
+        private void AskRemoveTask(Task task)
+        {
+            bool isStudy = task is Study;
+            CustomMessageBox.ShowDialog(EnglishStrings.RemoveTask.Translate(), String.Format("{0} {1}", EnglishStrings.AreYouSure.Translate(), isStudy ? String.Format("\n{0}", EnglishStrings.NoRefunds.Translate()) : ""), MessagePicture.Question, (result) =>
+            {
+                if (result == true)
+                {
+                    RemoveAppointment(task, true);
+                }
+            });
         }
 
         private void AddTask_Click(object sender, RoutedEventArgs e)
@@ -206,43 +230,258 @@ namespace TubeStar
 
         public void Update()
         {
-            //Todo Tasks
+            UpdateHoursBar();
+
+            //Cartões de tarefa
             tasksPanel.Children.Clear();
+            Task jobTask = Appointments.FirstOrDefault(a => a.TaskType == TaskType.Job);
+            if (jobTask != null)
+                tasksPanel.Children.Add(CreateTaskCard(jobTask, true));
             foreach (var task in Player.Current.TasksInProgress)
             {
-                TodoTask appointmentTask = new TodoTask(task);
-                appointmentTask.TaskClick += (s, ev) =>
+                tasksPanel.Children.Add(CreateTaskCard(task, false));
+            }
+        }
+
+        private static Brush FindBrush(string key)
+        {
+            return (Brush)Application.Current.FindResource(key);
+        }
+
+        private static string TypeLabel(Task task)
+        {
+            switch (task.TaskType)
+            {
+                case TaskType.Job: return EnglishStrings.Job.Translate();
+                case TaskType.ShootVideo: return EnglishStrings.ShootVideo.Translate();
+                case TaskType.EditVideo: return EnglishStrings.EditVideo.Translate();
+                default: return EnglishStrings.Study.Translate();
+            }
+        }
+
+        private static string IconKey(Task task)
+        {
+            switch (task.TaskType)
+            {
+                case TaskType.Job: return "IconBag";
+                case TaskType.ShootVideo: return "IconFilm";
+                case TaskType.EditVideo: return "IconPlay";
+                default: return "IconCap";
+            }
+        }
+
+        private void UpdateHoursBar()
+        {
+            hoursBar.Children.Clear();
+            for (int i = 0; i < 15; i++)
+            {
+                Task task = i < Appointments.Count ? Appointments[i] : null;
+                bool startsBlock = task != null && (i == 0 || Appointments[i - 1] != task);
+                bool endsBlock = task != null && (i + 1 >= Appointments.Count || Appointments[i + 1] != task);
+
+                var segment = new Border();
+                segment.Margin = new Thickness(1, 0, 1, 0);
+                segment.CornerRadius = new CornerRadius(startsBlock || task == null ? 6 : 0, endsBlock || task == null ? 6 : 0, endsBlock || task == null ? 6 : 0, startsBlock || task == null ? 6 : 0);
+                segment.Background = task == null ? FindBrush("YtDarkCardHoverBrush") : new SolidColorBrush(task.Color);
+                segment.ClipToBounds = false;
+
+                if (task != null)
+                {
+                    segment.Cursor = Cursors.Hand;
+                    segment.ToolTip = task.Name;
+                    if (startsBlock)
+                    {
+                        var label = new TextBlock();
+                        label.Text = TypeLabel(task);
+                        label.Foreground = FindBrush("YtOnAccentBrush");
+                        label.FontSize = 11;
+                        label.FontWeight = FontWeights.SemiBold;
+                        label.VerticalAlignment = VerticalAlignment.Center;
+                        label.Margin = new Thickness(6, 0, 0, 0);
+                        label.TextWrapping = TextWrapping.NoWrap;
+                        label.IsHitTestVisible = false;
+                        //O texto pode passar por cima dos próximos segmentos do mesmo bloco
+                        var canvas = new Canvas();
+                        canvas.IsHitTestVisible = false;
+                        canvas.VerticalAlignment = VerticalAlignment.Center;
+                        Canvas.SetTop(label, -8);
+                        canvas.Children.Add(label);
+                        Panel.SetZIndex(segment, 1);
+                        segment.Child = canvas;
+                    }
+                    Task clicked = task;
+                    segment.MouseLeftButtonUp += (s, ev) => HourSlot_Click(clicked);
+                }
+                hoursBar.Children.Add(segment);
+            }
+            txtHoursUsed.Text = String.Format(EnglishStrings.ScheduleHoursUsed.Translate(), Appointments.Count);
+        }
+
+        private Border CreateTaskCard(Task task, bool isJob)
+        {
+            int hoursToday = Appointments.Count(a => a == task);
+
+            var card = new Border();
+            card.Style = (Style)FindResource("CardBorderStyle");
+            card.Margin = new Thickness(6, 0, 6, 12);
+
+            var root = new StackPanel();
+            card.Child = root;
+
+            //Cabeçalho: ícone, tipo, nome e pill de horas
+            var header = new DockPanel();
+            header.LastChildFill = true;
+
+            var iconBox = new Border();
+            iconBox.Width = 36;
+            iconBox.Height = 36;
+            iconBox.CornerRadius = new CornerRadius(8);
+            iconBox.Background = new SolidColorBrush(task.Color);
+            iconBox.Margin = new Thickness(0, 0, 10, 0);
+            var icon = new Path();
+            icon.Data = (Geometry)FindResource(IconKey(task));
+            icon.Stroke = FindBrush("YtOnAccentBrush");
+            icon.StrokeThickness = 2;
+            icon.StrokeLineJoin = PenLineJoin.Round;
+            icon.StrokeStartLineCap = PenLineCap.Round;
+            icon.StrokeEndLineCap = PenLineCap.Round;
+            var iconCanvas = new Canvas();
+            iconCanvas.Width = 24;
+            iconCanvas.Height = 24;
+            iconCanvas.Children.Add(icon);
+            var viewbox = new Viewbox();
+            viewbox.Width = 18;
+            viewbox.Height = 18;
+            viewbox.Child = iconCanvas;
+            iconBox.Child = viewbox;
+            DockPanel.SetDock(iconBox, Dock.Left);
+            header.Children.Add(iconBox);
+
+            var pill = new Border();
+            pill.Style = (Style)FindResource(hoursToday > 0 ? "PillSoftStyle" : "PillStyle");
+            var pillText = new TextBlock();
+            pillText.Style = (Style)FindResource("InheritTextStyle");
+            pillText.Text = String.Format(EnglishStrings.ScheduleHoursToday.Translate(), hoursToday);
+            pill.Child = pillText;
+            pill.Margin = new Thickness(8, 0, 0, 0);
+            DockPanel.SetDock(pill, Dock.Right);
+            header.Children.Add(pill);
+
+            var titles = new StackPanel();
+            titles.VerticalAlignment = VerticalAlignment.Center;
+            var typeText = new TextBlock();
+            typeText.Text = TypeLabel(task);
+            typeText.FontWeight = FontWeights.Bold;
+            typeText.FontSize = 14;
+            titles.Children.Add(typeText);
+            var nameText = new TextBlock();
+            nameText.Style = (Style)FindResource("MutedTextStyle");
+            nameText.Text = task.Name;
+            nameText.TextTrimming = TextTrimming.CharacterEllipsis;
+            nameText.ToolTip = task.Name;
+            if (!isJob) //No Trabalhar o nome repetiria o tipo
+                titles.Children.Add(nameText);
+            header.Children.Add(titles);
+            root.Children.Add(header);
+
+            //Barra de progresso
+            if (!isJob)
+            {
+                int total = task.HoursToComplete + task.ExtraHours;
+                double ratio = total > 0 ? Math.Min(1.0, Math.Max(0.0, (double)task.HoursPutIn / total)) : 1.0;
+                var track = new Grid();
+                track.Height = 6;
+                track.Margin = new Thickness(0, 12, 0, 0);
+                track.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(ratio, GridUnitType.Star) });
+                track.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1.0 - ratio, GridUnitType.Star) });
+                var back = new Border();
+                back.CornerRadius = new CornerRadius(3);
+                back.Background = FindBrush("YtDarkCardHoverBrush");
+                Grid.SetColumnSpan(back, 2);
+                track.Children.Add(back);
+                var fill = new Border();
+                fill.CornerRadius = new CornerRadius(3);
+                fill.Background = FindBrush("YtGainBrush");
+                track.Children.Add(fill);
+                root.Children.Add(track);
+            }
+
+            //Status
+            var status = new TextBlock();
+            status.Style = (Style)FindResource("MutedTextStyle");
+            status.Margin = new Thickness(0, 8, 0, 0);
+            if (isJob)
+                status.Text = EnglishStrings.ScheduleJobStatus.Translate();
+            else if (task.IsCompleted)
+            {
+                status.Text = EnglishStrings.ScheduleTaskDone.Translate();
+                status.Foreground = FindBrush("YtGainBrush");
+            }
+            else
+                status.Text = String.Format(EnglishStrings.ScheduleHoursRemaining.Translate(), task.HoursLeft);
+            root.Children.Add(status);
+
+            //Botões
+            var buttons = new WrapPanel();
+            buttons.Margin = new Thickness(0, 10, 0, 0);
+            if (isJob)
+            {
+                var quit = NewSmallButton(EnglishStrings.QuitJobHeader.Translate());
+                quit.Click += (s, ev) => AskQuitJob();
+                buttons.Children.Add(quit);
+            }
+            else
+            {
+                var plus = NewSmallButton("+1h");
+                plus.IsEnabled = !task.IsCompleted && Appointments.Count < 15;
+                plus.Click += (s, ev) =>
                 {
                     if (!task.IsCompleted)
-                    {
                         AddAppointment(task);
-                    }
                 };
-                appointmentTask.CancelTaskClick += (s, ev) =>
+                buttons.Children.Add(plus);
+
+                var minus = NewSmallButton("−1h");
+                minus.IsEnabled = hoursToday > 0;
+                minus.Click += (s, ev) =>
                 {
-                    bool isStudy = task is Study;
-                    CustomMessageBox.ShowDialog(EnglishStrings.RemoveTask.Translate(), String.Format("{0} {1}", EnglishStrings.AreYouSure.Translate(), isStudy ? String.Format("\n{0}", EnglishStrings.NoRefunds.Translate()) : ""), MessagePicture.Question, (result) =>
-                    {
-                        if (result == true)
-                        {
-                            RemoveAppointment(task, true);
-                        }
-                    });
+                    if (Appointments.Contains(task))
+                        RemoveLastAppointment(task);
                 };
-                tasksPanel.Children.Add(appointmentTask);
-                appointmentTask.UpdateText();
-            }
+                buttons.Children.Add(minus);
 
-            //Appointments
-            foreach (AppointmentBlock appointment in appointmentPanel.Children)
-            {
-                appointment.Task = null;
+                var remove = NewSmallButton(EnglishStrings.ScheduleRemove.Translate());
+                remove.Style = (Style)FindResource("GhostButtonStyle");
+                remove.MinHeight = 0;
+                remove.FontSize = 12;
+                remove.Padding = new Thickness(9, 3, 9, 3);
+                remove.Click += (s, ev) => AskRemoveTask(task);
+                buttons.Children.Add(remove);
             }
+            root.Children.Add(buttons);
 
-            for (int i = 0; i < Appointments.Count; i++)
-            {
-                (appointmentPanel.Children[i] as AppointmentBlock).Task = Appointments[i];
-            }
+            return card;
+        }
+
+        private Button NewSmallButton(string text)
+        {
+            var button = new Button();
+            button.Style = (Style)FindResource("SmallButtonStyle");
+            button.Content = text;
+            button.Margin = new Thickness(0, 0, 6, 0);
+            return button;
+        }
+
+        //Remove a última hora desta tarefa na agenda de hoje (mesma regra do RemoveAppointment(task, false))
+        private void RemoveLastAppointment(Task task)
+        {
+            int index = Appointments.LastIndexOf(task);
+            if (index < 0)
+                return;
+            //RemoveAppointment tira a primeira ocorrência; para tirar a última, move-a antes
+            Appointments.RemoveAt(index);
+            Appointments.Insert(Appointments.IndexOf(task) < 0 ? index : Appointments.IndexOf(task), task);
+            RemoveAppointment(task, false);
         }
 
         private void CleanTodoList()

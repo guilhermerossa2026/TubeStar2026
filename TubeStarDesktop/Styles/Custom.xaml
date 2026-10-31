@@ -182,8 +182,6 @@
     </Style>
 
     <Style TargetType="local:ChannelBlock" BasedOn="{StaticResource ClickStyle}" />
-    <Style TargetType="local:TodoTask" BasedOn="{StaticResource ClickStyle}" />
-    <Style TargetType="local:AppointmentBlock" BasedOn="{StaticResource ClickStyle}" />
     <Style TargetType="local:StoreItemBlock" BasedOn="{StaticResource ClickStyle}" />
     <Style TargetType="local:VideoBlock" BasedOn="{StaticResource ClickStyle}" />
     <Style TargetType="local:VideoBlockGrid" BasedOn="{StaticResource ClickStyle}" />

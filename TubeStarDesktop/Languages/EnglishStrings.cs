@@ -670,5 +670,32 @@ namespace TubeStar
 
         [Description("Ranking of the channels in the game world. Climb positions by posting often and with quality.")]
         TopTubeStarsLead,
+
+        [Description("Distribute the hours of the day. When you click Next day, the tasks move forward.")]
+        ScheduleLead,
+
+        [Description("Hours of the day (15h)")]
+        ScheduleDayHours,
+
+        [Description("{0} of 15 hours used")]
+        ScheduleHoursUsed,
+
+        [Description("{0}h today")]
+        ScheduleHoursToday,
+
+        [Description("Work shift booked for today")]
+        ScheduleJobStatus,
+
+        [Description("Completed")]
+        ScheduleTaskDone,
+
+        [Description("{0}h left")]
+        ScheduleHoursRemaining,
+
+        [Description("Remove")]
+        ScheduleRemove,
+
+        [Description("Work, shoot, edit, study")]
+        ScheduleAddTaskHint,
     }
 }

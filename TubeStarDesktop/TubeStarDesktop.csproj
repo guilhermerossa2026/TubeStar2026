@@ -149,9 +149,6 @@
     <Compile Include="UI\AddVideoDialog.xaml.cs">
       <DependentUpon>AddVideoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AppointmentBlock.xaml.cs">
-      <DependentUpon>AppointmentBlock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\ChannelBlock.xaml.cs">
       <DependentUpon>ChannelBlock.xaml</DependentUpon>
     </Compile>
@@ -178,9 +175,6 @@
     </Compile>
     <Compile Include="UI\StudySelectionDialog.xaml.cs">
       <DependentUpon>StudySelectionDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TodoTask.xaml.cs">
-      <DependentUpon>TodoTask.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\UploadVideoDialog.xaml.cs">
       <DependentUpon>UploadVideoDialog.xaml</DependentUpon>
@@ -291,10 +285,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AppointmentBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\ChannelBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -328,10 +318,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\StudySelectionDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\TodoTask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

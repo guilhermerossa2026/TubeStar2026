@@ -885,4 +885,40 @@
     <Id>TopTubeStarsLead</Id>
     <Text>Ranking de canais do mundo do jogo. Suba posições postando com frequência e qualidade.</Text>
   </CustomText>
+  <CustomText>
+    <Id>ScheduleLead</Id>
+    <Text>Distribua as horas do dia. Ao clicar em Próximo dia, as tarefas avançam.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleDayHours</Id>
+    <Text>Horas do dia (15h)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursUsed</Id>
+    <Text>{0} de 15 horas usadas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursToday</Id>
+    <Text>{0}h hoje</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleJobStatus</Id>
+    <Text>Turno de trabalho marcado para hoje</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleTaskDone</Id>
+    <Text>Concluída</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursRemaining</Id>
+    <Text>{0}h restantes</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleRemove</Id>
+    <Text>Remover</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleAddTaskHint</Id>
+    <Text>Trabalhar, gravar, editar, estudar</Text>
+  </CustomText>
 </ArrayOfCustomText>

@@ -885,4 +885,40 @@
     <Id>TopTubeStarsLead</Id>
     <Text>Ranking of the channels in the game world. Climb positions by posting often and with quality.</Text>
   </CustomText>
+  <CustomText>
+    <Id>ScheduleLead</Id>
+    <Text>Distribute the hours of the day. When you click Next day, the tasks move forward.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleDayHours</Id>
+    <Text>Hours of the day (15h)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursUsed</Id>
+    <Text>{0} of 15 hours used</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursToday</Id>
+    <Text>{0}h today</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleJobStatus</Id>
+    <Text>Work shift booked for today</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleTaskDone</Id>
+    <Text>Completed</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleHoursRemaining</Id>
+    <Text>{0}h left</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleRemove</Id>
+    <Text>Remove</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ScheduleAddTaskHint</Id>
+    <Text>Work, shoot, edit, study</Text>
+  </CustomText>
 </ArrayOfCustomText>

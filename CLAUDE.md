@@ -48,7 +48,7 @@ TubeStar: simulador casual de YouTuber em C#/WPF (.NET Framework 4.8), open-sour
 
 ## Como rodar e testar o jogo
 
-Não há Visual Studio nesta máquina. O build usa o MSBuild que vem com o Windows. Rode os comandos no PowerShell, a partir desta pasta (`TubeStar-master`):
+Não há Visual Studio nesta máquina. O build usa o MSBuild que vem com o Windows. Rode os comandos no PowerShell, a partir desta pasta (a raiz do projeto, onde está o `TubeStarDesktop.sln`):
 
 1. Compilar:
    ```powershell

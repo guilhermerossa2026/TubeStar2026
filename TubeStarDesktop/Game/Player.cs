@@ -79,6 +79,7 @@ namespace TubeStar
 
             TasksInProgress = new List<Task>();
             Videos = new List<Video>();
+            Channel.UnreleasedVideos = null; //Novo jogo não herda os vídeos não lançados do anterior
             Channel.UnreleasedVideos.Name = EnglishStrings.UnreleasedVideos.Translate();
             Channels = new List<Channel>() { Channel.UnreleasedVideos }; //Default channel
 

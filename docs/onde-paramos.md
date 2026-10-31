@@ -29,7 +29,7 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 9b | Game over no meio do dia: `RunIterations` segue rodando depois de `GameExit` (pode abrir evento sobre a tela de título) | ✅ feito |
 | 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | ✅ feito |
 | 10b | Load de save JSON apagava o canal "não lançados" (`RemoveAt(0)` só vale para XML) | ✅ feito |
-| 10c | "Novo jogo" na mesma sessão herda vídeos não lançados; save sem canais deixa o jogo quebrado | ⏭️ **próximo** |
+| 10c | "Novo jogo" na mesma sessão herda vídeos não lançados; save sem canais deixa o jogo quebrado | ✅ feito |
 
 Decisões do dono para esta etapa:
 - Os passos 3, 4 e 5 corrigem os bugs agora, mesmo mudando o equilíbrio do jogo (opção A).
@@ -48,4 +48,4 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "continuar do passo 10c do Consertar a base".
+3. Pedir ao Claude: "começar o Visual novo (V1 Studio)" (a etapa "Consertar a base" terminou; antes, decidir os itens "a discutir" da tabela).

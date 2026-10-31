@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-31
+- "Novo jogo" na mesma sessão não herda mais os vídeos não lançados do jogo anterior; save corrompido (sem canais) é recusado e o jogo volta a um estado novo coerente.
 - Corrigido o carregamento de saves JSON: o jogo apagava o canal "não lançados" e tratava o primeiro canal real como ele (vídeos publicados podiam sumir). Saves sem listas de shares/views compradas também carregam.
 - Save mais enxuto: compartilhamentos e views compradas só são gravados para vídeos que ainda existem e ainda têm algo a entregar.
 - Game over no meio do dia agora encerra o dia na hora (antes o dia seguia por trás e podia abrir evento sobre a tela de título).

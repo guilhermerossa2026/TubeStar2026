@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-31
+- O dia agora é simulado na thread da tela (sem BackgroundWorker): acaba a disputa com os rivais e com o gerador aleatório, erros vão para o Crash Report sem travar a tela, e os vídeos novos dos rivais entram antes da simulação.
 - Simulação diária muito mais rápida (~11× a 40×): views processadas em até ~50 lotes por vídeo, com sorteio de "quantos" curtem/se inscrevem/compartilham em cada lote; médias e variação iguais às do jogo antigo (comparação numérica do testador).
 
 ## 2026-10-30

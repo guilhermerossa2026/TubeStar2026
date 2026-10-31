@@ -183,8 +183,9 @@ namespace TubeStar
             this.IsEnabled = false;
             progress.Visibility = System.Windows.Visibility.Visible;
 
-            dailyPlanner.NewDay();
+            //Rivais primeiro: a simulação do dia já considera os vídeos novos deles
             rivalViewer.NewDay();
+            dailyPlanner.NewDay();
         }
 
         private void Tutorial_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -255,10 +255,11 @@ namespace TubeStar
             RunIterations();
         }
 
+        //Roda na thread da tela: a simulação ficou rápida (lotes) e assim não disputa
+        //Player/Rivais/RandomHelpers com a tela, e erros vão para o Crash Report
         private void RunIterations()
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, ea) =>
+            try
             {
                 foreach (var channel in Player.Current.Channels)
                 {
@@ -299,9 +300,7 @@ namespace TubeStar
                         }
                     }
                 }
-            };
-            worker.RunWorkerCompleted += (s, ea) =>
-            {
+
                 if (Player.Current.Money < 0)
                 {
                     if (GameExit != null)
@@ -314,11 +313,13 @@ namespace TubeStar
                 }
 
                 Player.Current.Iterations++;
-
+            }
+            finally
+            {
+                //Mesmo com erro (vai para o Crash Report), a tela precisa ser liberada
                 if (NewDayCompleted != null)
                     NewDayCompleted();
-            };
-            worker.RunWorkerAsync();
+            }
         }
     }
 }

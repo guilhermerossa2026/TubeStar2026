@@ -23,9 +23,9 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 5 | Desinscrição e bônus de inscritos com divisão inteira (`VideoViewer.cs:224` e `:305`) | ✅ feito |
 | novo | `RandomHelpers.Chance(p)` dá 1 ponto a mais (5% vira 6%); afeta o jogo todo | a discutir |
 | 6 | Trocar a simulação view a view por cálculo direto (`VideoViewer.cs`, risco alto) | ✅ feito (lotes + sorteio binomial, ~11× a 40× mais rápido) |
-| 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | ⏭️ **próximo** |
+| 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | ✅ feito: simulação passou a rodar na thread da tela |
 | 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | ✅ feito |
-| 9 | A tela de vídeos para de ser recriada inteira a cada dia | pendente |
+| 9 | A tela de vídeos para de ser recriada inteira a cada dia | ⏭️ **próximo** |
 | 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | pendente |
 
 Decisões do dono para esta etapa:
@@ -42,4 +42,4 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "continuar do passo 7 do Consertar a base".
+3. Pedir ao Claude: "continuar do passo 9 do Consertar a base".

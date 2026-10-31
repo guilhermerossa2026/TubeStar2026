@@ -10,8 +10,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 **0. Consertar a base**: aprovado, vem antes do visual
 - Tela de vídeos: parar de recriar tudo a cada dia.
 - Save: limpar os dados de vídeos excluídos.
-- Bugs: `RandomHelpers.Chance(p)` dá (p+1)% (`Next(100) <= p`), afeta o jogo todo, discutir antes de mudar; `RandomEvents.cs:114` tira inscritos sem piso de zero (seguro hoje, rever nos Eventos 2.0); Money/Subscribers acessados do BackgroundWorker sem sincronização.
-- Registro (para o item 5): hoje não há ajuste de dificuldade ao criar o canal; o Ultra é só o Challenge com CTR de 10%; o gasto fixo é $50/dia.
+- Bugs: `RandomHelpers.Chance(p)` dá (p+1)% (`Next(100) <= p`), afeta o jogo todo, discutir antes de mudar; `RandomEvents.cs:114` tira inscritos sem piso de zero (seguro hoje, rever nos Eventos 2.0);- Registro (para o item 5): hoje não há ajuste de dificuldade ao criar o canal; o Ultra é só o Challenge com CTR de 10%; o gasto fixo é $50/dia.
 - Dificuldade: Média. Depende de: nada.
 
 **1. Visual novo: V1 Studio (WPF/XAML)**: versão escolhida

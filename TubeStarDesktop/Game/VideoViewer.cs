@@ -131,8 +131,6 @@ namespace TubeStar
 
         private static void ViewVideo(Channel channel, Video video, ref double income, ref double expenses, int numViews, bool payedView = false)
         {
-            CommentType? commentType = null;
-
             video.Views += numViews;
             income += ViewIncome(channel, video, payedView, numViews);
             //Custo por view só vale para as views compradas
@@ -147,17 +145,11 @@ namespace TubeStar
                 income += ViewIncome(channel, video, payedView, tempViews);
             }
 
-            if (RandomHelpers.Chance(2))
-                commentType = CommentType.Random;
-
             if (CategoryHelpers.CheckInterest(video))
             {
                 if (RandomHelpers.Chance(video.Quality.Value))
                 {
                     video.Likes += numViews;
-
-                    if (RandomHelpers.Chance(1))
-                        commentType = CommentType.Like;
 
                     if (GetSubscriptionChance(channel, video))
                     {
@@ -169,9 +161,6 @@ namespace TubeStar
                         else
                         {
                             channel.Subscribers += numViews;
-
-                            if (RandomHelpers.Chance(1))
-                                commentType = CommentType.Subscribe;
                         }
                     }
 
@@ -181,15 +170,8 @@ namespace TubeStar
                 {
                     video.Dislikes += numViews;
 
-                    if (RandomHelpers.Chance(2))
-                        commentType = CommentType.Dislike;
-
                     //Chance of unsubscribe because of dislike
-                    if (CheckUnsubscriptions(channel, video, numViews, payedView))
-                    {
-                        if (RandomHelpers.Chance(1))
-                            commentType = CommentType.UnsubscribeQuality;
-                    }
+                    CheckUnsubscriptions(channel, video, numViews, payedView);
 
                     //Share video if "So bad" attribute on video
                     if (video.Attributes.Contains(VideoAttributes.SoBad))
@@ -201,21 +183,7 @@ namespace TubeStar
             else
             {
                 //Chance of unsubscribe because of disinterest in category
-                if (CheckUnsubscriptions(channel, video, numViews, payedView))
-                {
-                    if (RandomHelpers.Chance(1))
-                        commentType = CommentType.UnsubscribeCategory;
-                }
-            }
-
-            if (!channel.IsRivalChannel && commentType.HasValue)
-            {
-                var comment = CommentGenerator.GenerateComment(video, commentType.Value);
-                var first = video.Comments.FirstOrDefault(c => c.Comment == comment);
-                if (first != null)
-                    first.Likes++;
-                else
-                    video.Comments.Add(new VideoComment(comment, 0));
+                CheckUnsubscriptions(channel, video, numViews, payedView);
             }
         }
 

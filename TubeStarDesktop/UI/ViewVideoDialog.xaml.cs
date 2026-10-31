@@ -23,11 +23,6 @@ namespace TubeStar
             _video = video;
 
             Translate();
-            if (video.GetCommentsCount() == 0)
-            {
-                lblComments.Visibility = commentStack.Visibility = Visibility.Collapsed;
-            }
-            Populate(video);
 
             string id = video.YouTubeVideoId;
 
@@ -55,22 +50,6 @@ namespace TubeStar
             Caption = EnglishStrings.ViewVideo.Translate();
             lblComments.Text = String.Format("{0} ({1})", EnglishStrings.Comments.Translate(), _video.GetCommentsCount().ToNumberString());
             btnOk.Content = EnglishStrings.Ok.Translate();
-        }
-
-        private void Populate(Video video)
-        {
-            List<VideoComment> orderedComments = new List<VideoComment>();
-            foreach (var item in video.Comments)
-            {
-                VideoComment likedComment = new VideoComment(item.Comment, item.Likes);
-                orderedComments.Add(likedComment);
-            }
-
-            foreach (var comment in orderedComments)
-            {
-                CommentBlock block = new CommentBlock(comment.Comment, comment.Likes);
-                commentStack.Children.Insert(0, block);
-            }
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)

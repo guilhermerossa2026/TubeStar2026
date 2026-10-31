@@ -9,7 +9,6 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 **0. Consertar a base**: aprovado, vem antes do visual
 - Simulação: trocar o loop view a view (`VideoViewer.ViewVideo`) e o loop por amigo (`ShareVideo`) por cálculo direto; vídeos antigos calculados de forma leve.
-- Comentários: remover frases geradas e chamadas à API de comentários; fica só o ícone com número estimado pelas views.
 - Tela de vídeos: parar de recriar tudo a cada dia.
 - Save: limpar os dados de vídeos excluídos.
 - Bugs: `RandomHelpers.Chance(p)` dá (p+1)% (`Next(100) <= p`), afeta o jogo todo, discutir antes de mudar; `RandomEvents.cs:114` tira inscritos sem piso de zero (seguro hoje, rever nos Eventos 2.0); Money/Subscribers acessados do BackgroundWorker sem sincronização.

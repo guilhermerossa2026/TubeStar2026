@@ -155,9 +155,6 @@
     <Compile Include="UI\ChannelBlock.xaml.cs">
       <DependentUpon>ChannelBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\CommentBlock.xaml.cs">
-      <DependentUpon>CommentBlock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\ChannelStatsDialog.xaml.cs">
       <DependentUpon>ChannelStatsDialog.xaml</DependentUpon>
     </Compile>
@@ -225,7 +222,6 @@
     <Compile Include="Video\Attributes\SoBad.cs" />
     <Compile Include="Video\Attributes\VideoAttributes.cs" />
     <Compile Include="Video\Channel.cs" />
-    <Compile Include="Video\CommentGenerator.cs" />
     <Compile Include="Video\VideoComment.cs" />
     <Compile Include="Video\UniqueObject.cs" />
     <Compile Include="Video\Video.cs" />
@@ -292,10 +288,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\ChannelBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\CommentBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

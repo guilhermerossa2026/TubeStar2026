@@ -94,9 +94,7 @@ namespace TubeStar
 
         private int GetCount(Video video)
         {
-            int count = video.Comments.Count;
-            video.Comments.ForEach(c => count += c.Likes);
-            return count;
+            return video.GetCommentsCount();
         }
 
         private string GetQualityText(bool isUnreleasedChannel)

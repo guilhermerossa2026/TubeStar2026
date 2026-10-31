@@ -24,7 +24,7 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | novo | `RandomHelpers.Chance(p)` dá 1 ponto a mais (5% vira 6%); afeta o jogo todo | a discutir |
 | 6 | Trocar a simulação view a view por cálculo direto (`VideoViewer.cs`, risco alto) | ⏭️ **próximo** |
 | 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | pendente |
-| 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | pendente |
+| 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | ✅ feito |
 | 9 | A tela de vídeos para de ser recriada inteira a cada dia | pendente |
 | 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | pendente |
 
@@ -33,7 +33,7 @@ Decisões do dono para esta etapa:
 - No passo 6, é aceitável uma variação menor de um dia para o outro.
 
 ## Pendências pequenas anotadas
-- Textos de idioma sem uso (robôs, `MissingToken` do GameJolt) continuam em `EnglishStrings.cs` e nos 20 XML. Para remover, é preciso tirar do enum e de **todos** os XML juntos, senão a leitura do idioma falha em silêncio e o jogo volta para o inglês.
+- Textos de idioma sem uso (robôs, `MissingToken` do GameJolt, frases de comentário em `CommentStrings.cs`) continuam em `EnglishStrings.cs` e nos 20 XML. Para remover, é preciso tirar do enum e de **todos** os XML juntos, senão a leitura do idioma falha em silêncio e o jogo volta para o inglês.
 - Os troféus `RobotMasters` e `RebelLeader` e o campo `Player.RobotRulers` ficaram mantidos por compatibilidade com saves antigos.
 - `docs/visao-geral.md` está desatualizado: ainda cita GameJolt e mods.
 

@@ -198,9 +198,6 @@ namespace TubeStar
                     {
                         if (uploadDialog.Channel != null)
                         {
-                            //Generate comments
-                            CommentGenerator.GenerateRealComments(uploadDialog.Video.YouTubeVideoId);
-
                             //Subscriber views
                             VideoViewer.SubscriberView(uploadDialog.Channel, uploadDialog.Video);
 

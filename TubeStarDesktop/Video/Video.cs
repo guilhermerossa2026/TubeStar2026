@@ -167,12 +167,8 @@ namespace TubeStar
 
         public int GetCommentsCount()
         {
-            int count = Comments.Count;
-            foreach (var comment in Comments)
-            {
-                count += comment.Likes;
-            }
-            return count;
+            //Calculado a partir de likes/dislikes (não é salvo)
+            return Likes / 20 + Dislikes / 10;
         }
 
         public int GenerateRivalQuality(int shootingSkill, int postProductionSkill)

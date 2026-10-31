@@ -56,27 +56,37 @@ namespace TubeStar
                         txtSuspendedSub.Visibility = Visibility.Visible;
                     }
 
-                    if (Video.ImageBytes != null)
-                    {
-                        BitmapImage image = new BitmapImage();
-                        image.BeginInit();
-                        image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
-                        image.EndInit();
-                        imgVideo.Source = image;
-                    }
-                    else
-                    {
-                        Video.OnImageFetched += () =>
-                        {
-                            BitmapImage image = new BitmapImage();
-                            image.BeginInit();
-                            image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
-                            image.EndInit();
-                            imgVideo.Source = image;
-                        };
-                    }
+                    imgVideo.Source = _video.GetThumbnail();
                 }
             }
+        }
+
+        private bool _subscribed;
+
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_video == null) return;
+            if (!_subscribed)
+            {
+                _video.OnImageFetched += Video_OnImageFetched;
+                _subscribed = true;
+            }
+            //A imagem pode ter chegado enquanto o controle estava fora da tela
+            imgVideo.Source = _video.GetThumbnail();
+        }
+
+        private void Control_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_video != null && _subscribed)
+            {
+                _video.OnImageFetched -= Video_OnImageFetched;
+                _subscribed = false;
+            }
+        }
+
+        private void Video_OnImageFetched()
+        {
+            imgVideo.Source = _video.GetThumbnail();
         }
 
         private string GetNumberOfViews()
@@ -107,6 +117,8 @@ namespace TubeStar
         public VideoBlock(Channel channel, Video video)
         {
             InitializeComponent();
+            Loaded += Control_Loaded;
+            Unloaded += Control_Unloaded;
             _channel = channel;
             Video = video;
             Translate();

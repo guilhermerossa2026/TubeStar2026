@@ -25,15 +25,17 @@ O plano completo em 10 passos (feito pelo tech-leader) está no roadmap. Situaç
 | 6 | Trocar a simulação view a view por cálculo direto (`VideoViewer.cs`, risco alto) | ✅ feito (lotes + sorteio binomial, ~11× a 40× mais rápido) |
 | 7 | Sincronizar Money/Subscribers, que hoje são alterados pelo BackgroundWorker (`DailyPlanner.xaml.cs`) | ✅ feito: simulação passou a rodar na thread da tela |
 | 8 | Remover as frases de comentários e deixar só o número (manter `Video.Comments` por causa dos saves) | ✅ feito |
-| 9 | A tela de vídeos para de ser recriada inteira a cada dia | ⏭️ **próximo** |
-| 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | pendente |
+| 9 | A tela de vídeos para de ser recriada inteira a cada dia | ✅ feito (versão enxuta: cache de miniatura, vazamento, sem update em dobro; reconstrução fica para o visual novo) |
+| 9b | Game over no meio do dia: `RunIterations` segue rodando depois de `GameExit` (pode abrir evento sobre a tela de título) | a decidir |
+| 10 | Limpar `_videoShares`/`_videoBoughtViews` de vídeos excluídos no save | ⏭️ **próximo** |
 
 Decisões do dono para esta etapa:
 - Os passos 3, 4 e 5 corrigem os bugs agora, mesmo mudando o equilíbrio do jogo (opção A).
 - No passo 6, é aceitável uma variação menor de um dia para o outro.
 
 ## Pendências pequenas anotadas
-- Passo 6: em vídeos bem pequenos (~100 views/dia), compartilhamentos ficam ~3/dia abaixo do antigo (5,7 × 8,6); renda até 0,4% menor. Investigar junto do passo 9.
+- Passo 6: em vídeos bem pequenos (~100 views/dia), compartilhamentos ficam ~3/dia abaixo do antigo (5,7 × 8,6); renda até 0,4% menor. Investigar como item separado.
+- Imagem baixada inválida (`Video.ImageBytes`) gera exceção ao montar a miniatura e fica salva; validar no download.
 - `rivalDailyIncome` (`DailyPlanner.xaml.cs:298`) é calculado e nunca usado; rever no Top TubeStars.
 - Textos de idioma sem uso (robôs, `MissingToken` do GameJolt, frases de comentário em `CommentStrings.cs`) continuam em `EnglishStrings.cs` e nos 20 XML. Para remover, é preciso tirar do enum e de **todos** os XML juntos, senão a leitura do idioma falha em silêncio e o jogo volta para o inglês.
 - Os troféus `RobotMasters` e `RebelLeader` e o campo `Player.RobotRulers` ficaram mantidos por compatibilidade com saves antigos.
@@ -42,4 +44,4 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "continuar do passo 9 do Consertar a base".
+3. Pedir ao Claude: "continuar do passo 10 do Consertar a base".

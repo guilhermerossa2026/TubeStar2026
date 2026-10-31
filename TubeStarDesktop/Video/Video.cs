@@ -37,7 +37,34 @@ namespace TubeStar
         public List<VideoAttribute> Attributes { get; set; }
 
         public string YouTubeVideoId { get; set; }
-        public byte[] ImageBytes { get; set; }
+        private byte[] _imageBytes;
+        public byte[] ImageBytes
+        {
+            get { return _imageBytes; }
+            set
+            {
+                _imageBytes = value;
+                _thumbnail = null;
+            }
+        }
+
+        //Cache em memória da miniatura (não é salvo)
+        private BitmapImage _thumbnail;
+
+        public BitmapImage GetThumbnail()
+        {
+            if (_thumbnail == null && _imageBytes != null)
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = StreamHelpers.BytesToStream(_imageBytes);
+                image.EndInit();
+                image.Freeze();
+                _thumbnail = image;
+            }
+            return _thumbnail;
+        }
         public event Action OnImageFetched;
 
         public bool IsSuspended { get; set; }

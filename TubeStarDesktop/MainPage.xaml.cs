@@ -34,21 +34,21 @@ namespace TubeStar
                 this.IsEnabled = true;
                 progress.Visibility = System.Windows.Visibility.Collapsed;
 
-                if (videoManager.Visibility == System.Windows.Visibility.Visible)
-                    videoManager.Update();
-
-                if (rivalViewer.Visibility == System.Windows.Visibility.Visible)
-                    rivalViewer.Update();
-
                 txtNewDay.Text = String.Format("{0} {1}!", EnglishStrings.StartDay.Translate(), Player.Current.Iterations + 1);
 
-                if (Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0)
-                {
+                //A cada 3 dias roda um evento; depois dele, tudo é atualizado (uma vez só)
+                bool eventDay = Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0;
+                if (eventDay)
                     RandomEvents.RunEvent();
+
+                if (eventDay || videoManager.Visibility == System.Windows.Visibility.Visible)
                     videoManager.Update();
-                    dailyPlanner.Update();
+
+                if (eventDay || rivalViewer.Visibility == System.Windows.Visibility.Visible)
                     rivalViewer.Update();
-                }
+
+                if (eventDay)
+                    dailyPlanner.Update();
 
                 CheckTrophies();
             };

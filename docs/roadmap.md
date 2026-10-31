@@ -8,7 +8,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 ## Agora (bases)
 
 **0. Consertar a base**: aprovado, vem antes do visual
-- Tela de vídeos: parar de recriar tudo a cada dia.
+- Tela de vídeos: a reconstrução completa dos cartões fica para o visual novo (passo 9 fez só cache de miniatura, vazamento e atualização em dobro).
 - Save: limpar os dados de vídeos excluídos.
 - Bugs: `RandomHelpers.Chance(p)` dá (p+1)% (`Next(100) <= p`), afeta o jogo todo, discutir antes de mudar; `RandomEvents.cs:114` tira inscritos sem piso de zero (seguro hoje, rever nos Eventos 2.0);- Registro (para o item 5): hoje não há ajuste de dificuldade ao criar o canal; o Ultra é só o Challenge com CTR de 10%; o gasto fixo é $50/dia.
 - Dificuldade: Média. Depende de: nada.

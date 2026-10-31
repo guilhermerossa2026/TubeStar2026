@@ -56,11 +56,7 @@ namespace TubeStar
 
         private void ShowVideoImage()
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.StreamSource = StreamHelpers.BytesToStream(Video.ImageBytes);
-            image.EndInit();
-            imgVideo.Source = image;
+            imgVideo.Source = Video.GetThumbnail();
         }
 
         //Sem internet, sem chave ou cota estourada: mostra a imagem de "sem internet"

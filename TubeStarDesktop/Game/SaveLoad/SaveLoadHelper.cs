@@ -77,8 +77,9 @@ namespace TubeStar
             {
                 var content = File.ReadAllText(fileName);
                 SaveObj saveObj = null;
+                bool isXml = !string.IsNullOrWhiteSpace(content) && content.TrimStart().StartsWith("<");
 
-                if (!string.IsNullOrWhiteSpace(content) && content.TrimStart().StartsWith("<"))
+                if (isXml)
                 {
                     // Compatibilidade retroativa para saves antigos em XML
                     saveObj = SerializationHelpers.FromXml<SaveObj>(content);
@@ -93,11 +94,15 @@ namespace TubeStar
                     throw new Exception("Falha ao desserializar save.");
 
                 Player.Current = saveObj.Player;
-                Player.Current.Channels.RemoveAt(0);
+                //O XmlSerializer acrescenta à lista criada pelo construtor do Player,
+                //então o XML antigo traz um canal "não lançados" extra no início.
+                //No JSON (Replace) a lista vem exatamente como foi salva.
+                if (isXml)
+                    Player.Current.Channels.RemoveAt(0);
                 Channel.UnreleasedVideos = Player.Current.Channels[0];
 
-                VideoViewer.SetShares(saveObj.ShareViews);
-                VideoViewer.SetBoughtViews(saveObj.BoughtViews);
+                VideoViewer.SetShares(saveObj.ShareViews ?? new List<SerializableShareData>());
+                VideoViewer.SetBoughtViews(saveObj.BoughtViews ?? new List<SerializableShareData>());
                 Studies.Current = saveObj.Studies;
                 StoreItems.Current = saveObj.StoreItems;
 

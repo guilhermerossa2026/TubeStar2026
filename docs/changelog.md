@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-10-31
+- Corrigido o carregamento de saves JSON: o jogo apagava o canal "não lançados" e tratava o primeiro canal real como ele (vídeos publicados podiam sumir). Saves sem listas de shares/views compradas também carregam.
+- Save mais enxuto: compartilhamentos e views compradas só são gravados para vídeos que ainda existem e ainda têm algo a entregar.
 - Game over no meio do dia agora encerra o dia na hora (antes o dia seguia por trás e podia abrir evento sobre a tela de título).
 - Tela de vídeos mais leve: miniatura de cada vídeo fica pronta em memória (sem refazer a cada atualização), cartões param de vazar memória e o fim do dia com evento não atualiza as telas em dobro.
 - O dia agora é simulado na thread da tela (sem BackgroundWorker): acaba a disputa com os rivais e com o gerador aleatório, erros vão para o Crash Report sem travar a tela, e os vídeos novos dos rivais entram antes da simulação.

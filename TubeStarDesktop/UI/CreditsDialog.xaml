@@ -5,13 +5,13 @@
         Caption="Credits"
         WindowStartupLocation="Center">
 
-    <Grid x:Name="LayoutRoot" Margin="5">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Created By" HorizontalAlignment="Center" Margin="5" />
-                <TextBlock FontSize="18" Text="MIKE HALL" HorizontalAlignment="Center" />                
-                <Separator Margin="5"/>
-                <TextBlock Text="Images from" HorizontalAlignment="Center" Margin="5" />
+    <StackPanel x:Name="LayoutRoot" MinWidth="380">
+        <TextBlock Text="Created By" HorizontalAlignment="Center" Style="{StaticResource MutedTextStyle}" />
+        <TextBlock FontSize="18" FontWeight="Bold" Text="MIKE HALL" HorizontalAlignment="Center" Margin="0,4,0,0" />
+        <Border Height="1" Background="{StaticResource YtDarkBorderBrush}" Margin="0,14" />
+        <TextBlock Text="Images from" HorizontalAlignment="Center" Style="{StaticResource MutedTextStyle}" Margin="0,0,0,8" />
+        <Border Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="10" Padding="10" HorizontalAlignment="Center">
+            <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image x:Name="imgYouTube" Source="../Resources/youtube.png" Margin="5" Cursor="Hand" MouseLeftButtonDown="imgYouTube_MouseLeftButtonDown" />
                     <Image x:Name="imgPixabay" Source="../Resources/pixabay.png" Margin="5" Cursor="Hand" MouseLeftButtonDown="imgPixabay_MouseLeftButtonDown" />
@@ -20,11 +20,11 @@
                     <Image x:Name="imgStockXchang" Source="../Resources/freeimages_logo.jpg" Margin="5" Cursor="Hand" MouseLeftButtonDown="imgStockXchang_MouseLeftButtonDown" />
                     <Image x:Name="imgIcons8" Source="../Resources/icons8.png" Margin="5" Cursor="Hand" MouseLeftButtonDown="imgIcons8_MouseLeftButtonDown" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnOk" Width="120" Height="30" Content="OK" Margin="3,3,3,3" Click="CancelButton_Click"/>
-                </StackPanel>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button x:Name="btnOk" Content="OK" MinWidth="100" IsDefault="True" IsCancel="True" Style="{StaticResource PrimaryButtonStyle}" Click="CancelButton_Click"/>
+        </StackPanel>
+    </StackPanel>
 
 </xctk:ChildWindow>

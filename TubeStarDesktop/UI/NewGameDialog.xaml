@@ -1,48 +1,48 @@
-﻿<xctk:ChildWindow x:Class="TubeStar.NewGameDialog"
+<xctk:ChildWindow x:Class="TubeStar.NewGameDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Caption="New Game"
         WindowStartupLocation="Center">
 
-    <Grid x:Name="LayoutRoot">
-        <StackPanel Orientation="Vertical">
+    <StackPanel x:Name="LayoutRoot">
+        <UniformGrid Rows="1" Columns="3" Margin="-6,0,-6,0">
+            <Button x:Name="btnCasual" Width="200" Style="{StaticResource OptionCardButtonStyle}" Click="Casual_Click">
+                <StackPanel>
+                    <Border Height="120" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Cat.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtCasual" Text="Casual" FontSize="15" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+            </Button>            <Button x:Name="btnCareer" Width="200" Style="{StaticResource OptionCardButtonStyle}" Click="Career_Click">
+                <StackPanel>
+                    <Border Height="120" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Tiger.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtChallenge" Text="Challenge" FontSize="15" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+            </Button>            <Button x:Name="btnUltra" Width="200" Style="{StaticResource OptionCardButtonStyle}" Click="Ultra_Click">
+                <StackPanel>
+                    <Border Height="120" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Ultra.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtUltra" Text="Ultra" FontSize="15" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+            </Button>        </UniformGrid>
+        <ToggleButton x:Name="commonsButton" HorizontalAlignment="Center" Margin="0,12,0,0">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnCasual" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Casual_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <Image Source="../Resources/Cat.jpg" />
-                            <TextBlock x:Name="txtCasual" Text="Casual" TextAlignment="Center" TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnCareer" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Career_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <Image Source="../Resources/Tiger.jpg" />
-                            <TextBlock x:Name="txtChallenge" Text="Challenge" TextAlignment="Center" TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button x:Name="btnUltra" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Ultra_Click">
-                    <Button.Content>
-                        <StackPanel>
-                            <Image Source="../Resources/Ultra.jpg" />
-                            <TextBlock x:Name="txtUltra" Text="Ultra" TextAlignment="Center" TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                <Image Source="../Resources/Commons.png" Height="20" Margin="0,0,8,0" />
+                <TextBlock x:Name="commonsText1" Text="Display 'Creative Commons' Material Only" FontSize="13" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <ToggleButton x:Name="commonsButton" Margin="5" >
-                    <ToggleButton.Content>
-                        <StackPanel>
-                            <Image Source="../Resources/Commons.png" Height="30"/>
-                            <TextBlock x:Name="commonsText1" Text="Display 'Creative Commons' Material Only" FontSize="18" HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </ToggleButton.Content>
-                </ToggleButton>
-            </StackPanel>
+        </ToggleButton>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6,0,0">
+            <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Click="Cancel_Click" />
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </xctk:ChildWindow>

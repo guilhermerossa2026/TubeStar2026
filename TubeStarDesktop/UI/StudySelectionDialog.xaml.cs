@@ -35,8 +35,7 @@ namespace TubeStar
                 var studyCost = Player.Current.ChallengeMode ? study.Cost * 1.5 : study.Cost;
 
                 Button button = new Button();
-                button.Margin = new Thickness(0, 2, 0, 2);
-                button.Height = 60;
+                button.Style = (Style)FindResource("OptionCardButtonStyle");
                 button.HorizontalAlignment = HorizontalAlignment.Stretch;
                 button.HorizontalContentAlignment = HorizontalAlignment.Left;
 
@@ -87,12 +86,14 @@ namespace TubeStar
         private StackPanel CreateButtonContent(string name, string details)
         {
             TextBlock tbName = new TextBlock();
-            tbName.FontSize = 18;
+            tbName.FontSize = 15;
             tbName.FontWeight = FontWeights.Bold;
             tbName.Text = name;
 
             TextBlock tbDetails = new TextBlock();
             tbDetails.Text = details;
+            tbDetails.Style = (Style)FindResource("MutedTextStyle");
+            tbDetails.Margin = new Thickness(0, 3, 0, 0);
 
             StackPanel stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Vertical;

@@ -82,6 +82,7 @@ namespace TubeStar
             btnTutorial.Content = EnglishStrings.Tutorial.Translate();
             btnCredits.Content = EnglishStrings.Credits.Translate();
             btnExit.Content = EnglishStrings.Exit.Translate();
+            txtTagline.Text = EnglishStrings.TitleTagline.Translate();
 
             TranslatedBy.Text = "";
             if (!String.IsNullOrEmpty(Properties.Settings.Default.Language))

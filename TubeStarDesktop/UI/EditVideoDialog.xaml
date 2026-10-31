@@ -1,29 +1,27 @@
-﻿<xctk:ChildWindow x:Class="TubeStar.EditVideoDialog"
+<xctk:ChildWindow x:Class="TubeStar.EditVideoDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Caption="Edit video"
         WindowStartupLocation="Center" >
     
-    <Grid Height="Auto" Width="500" Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <StackPanel Width="440">
+        <TextBlock x:Name="lblVideo" Text="Video: " Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
+        <ComboBox x:Name="cmbVideo" FontSize="15" Margin="0,0,0,14" />
 
-        <TextBlock x:Name="lblVideo" Grid.Row="0" Text="Video: " Style="{StaticResource DialogLabelStyle}" />
-        <ComboBox x:Name="cmbVideo" Grid.Row="1" FontSize="16" VerticalAlignment="Center" Margin="5,0,5,5" />
+        <TextBlock x:Name="lblHoursSelect" Text="Hours: " Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
+        <Grid Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Slider x:Name="sldrHours" Minimum="4" Maximum="8" TickFrequency="1" Value="4" VerticalAlignment="Center" Height="12" SmallChange="1" IsSnapToTickEnabled="True" ValueChanged="sldrHours_ValueChanged" Style="{StaticResource FlatSlider}" />
+            <TextBlock x:Name="lblHours" Grid.Column="1" FontSize="14" FontWeight="SemiBold" Text="4 hours" VerticalAlignment="Center" Margin="14,0,0,0" />
+        </Grid>
 
-        <TextBlock x:Name="lblHoursSelect" Grid.Row="2" Text="Hours: " Style="{StaticResource DialogLabelStyle}" />
-        <Slider x:Name="sldrHours" Grid.Row="3" Minimum="4" Maximum="8" TickFrequency="1" Value="4" VerticalAlignment="Top" Height="12" Margin="5,10,100,15" SmallChange="1" ValueChanged="sldrHours_ValueChanged" Style="{StaticResource FlatSlider}" />
-        <TextBlock x:Name="lblHours" Grid.Row="3" FontSize="14" Text="4 hours" HorizontalAlignment="Right" Margin="0,0,5,0" />
-
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnOk" Width="120" Height="30" Content="OK" Margin="3,3,3,3" Click="OKButton_Click"/>
-            <Button x:Name="btnCancel" Width="120" Height="30" Content="Cancel" Margin="3,3,3,3" Click="CancelButton_Click"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Margin="0,0,8,0" Click="CancelButton_Click"/>
+            <Button x:Name="btnOk" Content="OK" MinWidth="100" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" Click="OKButton_Click"/>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </xctk:ChildWindow>

@@ -28,6 +28,15 @@ namespace TubeStar
             txtShootVideo.Text = EnglishStrings.ShootVideo.Translate();
             txtEditVideo.Text = EnglishStrings.EditVideo.Translate();
             txtStudy.Text = EnglishStrings.Study.Translate();
+            txtShootHint.Text = EnglishStrings.AddTaskShootHint.Translate();
+            txtEditHint.Text = EnglishStrings.AddTaskEditHint.Translate();
+            txtStudyHint.Text = EnglishStrings.AddTaskStudyHint.Translate();
+            btnCancel.Content = EnglishStrings.Cancel.Translate();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
         }
 
         private void AddTask_VideoShoot(object sender, RoutedEventArgs e)

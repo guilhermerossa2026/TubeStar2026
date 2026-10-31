@@ -38,12 +38,14 @@ namespace TubeStar
         {
             TextBlock nameBlock = new TextBlock();
             nameBlock.Text = EnglishStrings.SubscriberHistory.Translate();
-            nameBlock.FontSize = 16;
-            nameBlock.Margin = new Thickness(5, 0, 5, 0);
+            nameBlock.FontSize = 14;
+            nameBlock.FontWeight = System.Windows.FontWeights.Bold;
+            nameBlock.Margin = new Thickness(4, 4, 4, 6);
             plotParent.Children.Add(nameBlock);
 
             OxyPlot.Wpf.Plot plot = new OxyPlot.Wpf.Plot();
             plot.Height = 200;
+            plot.Background = (System.Windows.Media.Brush)FindResource("YtDarkSurfaceBrush");
 
             var plotModel1 = new PlotModel();
 
@@ -63,12 +65,14 @@ namespace TubeStar
         {
             TextBlock nameBlock = new TextBlock();
             nameBlock.Text = EnglishStrings.DailyIncome.Translate();
-            nameBlock.FontSize = 16;
-            nameBlock.Margin = new Thickness(5, 0, 5, 0);
+            nameBlock.FontSize = 14;
+            nameBlock.FontWeight = System.Windows.FontWeights.Bold;
+            nameBlock.Margin = new Thickness(4, 4, 4, 6);
             plotParent.Children.Add(nameBlock);
 
             OxyPlot.Wpf.Plot plot = new OxyPlot.Wpf.Plot();
             plot.Height = 200;
+            plot.Background = (System.Windows.Media.Brush)FindResource("YtDarkSurfaceBrush");
 
             var plotModel1 = new PlotModel();
 

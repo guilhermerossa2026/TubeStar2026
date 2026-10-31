@@ -72,7 +72,65 @@
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="6,4"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <!-- Modelo escuro (o padrao do Windows ignora o Background e fica claro) -->
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Focusable="False" ClickMode="Press"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="bd" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="6" Cursor="Hand">
+                                        <Path HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" Data="M0,0 L5,5 L10,0" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource YtButtonHoverBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <ContentPresenter IsHitTestVisible="False" Margin="{TemplateBinding Padding}" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" VerticalAlignment="Center" HorizontalAlignment="Left" TextElement.Foreground="{StaticResource YtTextPrimaryBrush}" />
+                        <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                            <Border MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{TemplateBinding MaxDropDownHeight}" Margin="0,4,0,0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="4">
+                                <ScrollViewer SnapsToDevicePixels="True">
+                                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border x:Name="bd" Background="Transparent" CornerRadius="4" Padding="8,6">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource YtRedBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Estilo Global de ListBox (Listas Dark sem fundo branco) -->
@@ -108,29 +166,37 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="xctk:ChildWindow">
-                    <Grid>
-                        <Border Background="{StaticResource YtDarkBgBrush}" 
-                                BorderBrush="{StaticResource YtDarkBorderBrush}" 
-                                BorderThickness="1" 
-                                CornerRadius="8">
+                    <!-- Fundo escurecido (modal) + janela centralizada -->
+                    <Grid Background="#B3000000">
+                        <Border x:Name="WindowFrame"
+                                Margin="24"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="{StaticResource YtDarkCardBrush}"
+                                BorderBrush="{StaticResource YtDarkBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.6" Color="Black" />
+                            </Border.Effect>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="38"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                
-                                <Border Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" CornerRadius="8,8,0,0" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1">
-                                    <TextBlock Text="{TemplateBinding Caption}" 
-                                               Foreground="{StaticResource YtOnAccentBrush}" 
-                                               FontWeight="Bold" 
-                                               FontSize="15" 
-                                               VerticalAlignment="Center" 
-                                               Margin="14,0,0,0"/>
+
+                                <Border Grid.Row="0" Background="{StaticResource YtDarkSurfaceBrush}" CornerRadius="10,10,0,0" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Padding="18,12">
+                                    <TextBlock Text="{TemplateBinding Caption}"
+                                               Foreground="{StaticResource YtTextPrimaryBrush}"
+                                               FontWeight="Bold"
+                                               FontSize="16"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"/>
                                 </Border>
-                                
-                                <Border Grid.Row="1" Background="{StaticResource YtDarkBgBrush}" Padding="12">
-                                    <ContentPresenter Content="{TemplateBinding Content}" />
-                                </Border>
+
+                                <ScrollViewer Grid.Row="1" Margin="0,0,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                                    <ContentPresenter Margin="16,14,16,4" Content="{TemplateBinding Content}" />
+                                </ScrollViewer>
                             </Grid>
                         </Border>
                     </Grid>

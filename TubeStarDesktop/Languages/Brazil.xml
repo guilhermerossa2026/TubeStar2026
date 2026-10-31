@@ -1105,4 +1105,20 @@
     <Id>PostPromote</Id>
     <Text>Promover vídeo</Text>
   </CustomText>
+  <CustomText>
+    <Id>AddTaskShootHint</Id>
+    <Text>Planejar e gravar um vídeo novo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AddTaskEditHint</Id>
+    <Text>Caprichar num vídeo já gravado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AddTaskStudyHint</Id>
+    <Text>Fazer um curso e aprender</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TitleTagline</Id>
+    <Text>Seu caminho de zero a estrela do YouTube</Text>
+  </CustomText>
 </ArrayOfCustomText>

@@ -46,7 +46,6 @@ namespace TubeStar
 
         public void HideCancelButton()
         {
-            btnOk.Margin = btnCancel.Margin;
             btnCancel.Visibility = System.Windows.Visibility.Collapsed;
             btnOk.IsCancel = true;
         }

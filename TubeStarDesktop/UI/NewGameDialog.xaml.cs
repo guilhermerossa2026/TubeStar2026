@@ -31,6 +31,12 @@ namespace TubeStar
             txtChallenge.Text = EnglishStrings.Challenge.Translate();
             txtUltra.Text = EnglishStrings.Ultra.Translate();
             commonsText1.Text = EnglishStrings.UseCreativeCommons.Translate();
+            btnCancel.Content = EnglishStrings.Cancel.Translate();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
         }
 
         private void Casual_Click(object sender, RoutedEventArgs e)

@@ -1106,4 +1106,20 @@ Vaše oficiální příčnia smrti je známá jako:
     <Id>PostPromote</Id>
     <Text>Promote video</Text>
   </CustomText>
+  <CustomText>
+    <Id>AddTaskShootHint</Id>
+    <Text>Plan and record a new video</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AddTaskEditHint</Id>
+    <Text>Polish a recorded video</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AddTaskStudyHint</Id>
+    <Text>Take a course and learn new skills</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TitleTagline</Id>
+    <Text>Your path from zero to YouTube star</Text>
+  </CustomText>
 </ArrayOfCustomText>

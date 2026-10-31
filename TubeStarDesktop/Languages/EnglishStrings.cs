@@ -835,5 +835,17 @@ namespace TubeStar
 
         [Description("Promote video")]
         PostPromote,
+
+        [Description("Plan and record a new video")]
+        AddTaskShootHint,
+
+        [Description("Polish a recorded video")]
+        AddTaskEditHint,
+
+        [Description("Take a course and learn new skills")]
+        AddTaskStudyHint,
+
+        [Description("Your path from zero to YouTube star")]
+        TitleTagline,
     }
 }

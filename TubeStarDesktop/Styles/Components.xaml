@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Componentes do visual novo (V1 Studio): cartao, pills, botoes, selo, tabela, abas -->
@@ -224,6 +224,35 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+    </Style>
+
+<!-- Cartao de opcao clicavel (janelas: Adicionar tarefa, Novo jogo, Estudar) -->
+    <Style x:Key="OptionCardButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10" Padding="12" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource YtRedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

@@ -19,6 +19,10 @@ namespace TubeStar
 
         public static void ShowDialog(this ChildWindow window, Action onClose = null)
         {
+            //Estilos implicitos nao valem para subclasses (AddTaskDialog etc.): aplica o visual escuro do ChildWindow
+            if (window.Style == null)
+                window.Style = Application.Current.TryFindResource(typeof(ChildWindow)) as Style;
+
             RootElement.Children.Add(window);
             window.IsModal = true;
             window.WindowStartupLocation = Xceed.Wpf.Toolkit.WindowStartupLocation.Center;

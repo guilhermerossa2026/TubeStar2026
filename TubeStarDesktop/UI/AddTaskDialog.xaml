@@ -5,31 +5,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid x:Name="LayoutRoot">
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="btnShootVideo" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AddTask_VideoShoot">
-                <Button.Content>
-                    <StackPanel>
-                        <Image Source="../Resources/Shoot.jpg" />
-                        <TextBlock x:Name="txtShootVideo" Text="Shoot video" TextAlignment="Center" TextWrapping="Wrap" />
-                    </StackPanel>
-                </Button.Content>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Cartoes de opcao (mesmo visual dos cartoes da Agenda) -->
+        <UniformGrid Rows="1" Columns="3" Margin="-6,0,-6,0">
+            <Button x:Name="btnShootVideo" Width="210" Style="{StaticResource OptionCardButtonStyle}" Click="AddTask_VideoShoot">
+                <StackPanel>
+                    <Border Height="110" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Shoot.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtShootVideo" Text="Shoot video" FontSize="15" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock x:Name="txtShootHint" Text="Plan and record a new video" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,3,0,0" />
+                </StackPanel>
             </Button>
-            <Button x:Name="btnEditVideo" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AddTask_VideoEdit">
-                <Button.Content>
-                    <StackPanel>
-                        <Image Source="../Resources/Edit.jpg" />
-                        <TextBlock x:Name="txtEditVideo" Text="Edit video" TextAlignment="Center" TextWrapping="Wrap" />
-                    </StackPanel>
-                </Button.Content>
+            <Button x:Name="btnEditVideo" Width="210" Style="{StaticResource OptionCardButtonStyle}" Click="AddTask_VideoEdit">
+                <StackPanel>
+                    <Border Height="110" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Edit.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtEditVideo" Text="Edit video" FontSize="15" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock x:Name="txtEditHint" Text="Polish a recorded video" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,3,0,0" />
+                </StackPanel>
             </Button>
-            <Button x:Name="btnStudy" Width="200" FontSize="15" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AddTask_Study">
-                <Button.Content>
-                    <StackPanel>
-                        <Image Source="../Resources/Study.jpg" />
-                        <TextBlock x:Name="txtStudy" Text="Study" TextAlignment="Center" TextWrapping="Wrap" />
-                    </StackPanel>
-                </Button.Content>
+            <Button x:Name="btnStudy" Width="210" Style="{StaticResource OptionCardButtonStyle}" Click="AddTask_Study">
+                <StackPanel>
+                    <Border Height="110" CornerRadius="8" Margin="0,0,0,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Resources/Study.jpg" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock x:Name="txtStudy" Text="Study" FontSize="15" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock x:Name="txtStudyHint" Text="Take a course and learn new skills" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,3,0,0" />
+                </StackPanel>
             </Button>
+        </UniformGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>
 </xctk:ChildWindow>

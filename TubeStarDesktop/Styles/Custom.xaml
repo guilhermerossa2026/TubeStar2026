@@ -5,14 +5,18 @@
 
     <!-- Cores Oficiais do YouTube Dark Mode 2026 -->
     <Color x:Key="YtDarkBgColor">#0F0F0F</Color>
-    <Color x:Key="YtDarkSurfaceColor">#1A1A1A</Color>
-    <Color x:Key="YtDarkCardColor">#242424</Color>
-    <Color x:Key="YtDarkCardHoverColor">#323232</Color>
-    <Color x:Key="YtDarkBorderColor">#383838</Color>
-    <Color x:Key="YtRedColor">#CC0000</Color>
-    <Color x:Key="YtRedHoverColor">#FF0000</Color>
+    <Color x:Key="YtDarkSurfaceColor">#141414</Color>
+    <Color x:Key="YtDarkCardColor">#1F1F1F</Color>
+    <Color x:Key="YtDarkCardHoverColor">#262626</Color>
+    <Color x:Key="YtDarkBorderColor">#2D2D2D</Color>
+    <Color x:Key="YtRedColor">#FF0000</Color>
+    <Color x:Key="YtRedHoverColor">#FF3333</Color>
     <Color x:Key="YtTextPrimaryColor">#F1F1F1</Color>
     <Color x:Key="YtTextSecondaryColor">#AAAAAA</Color>
+    <Color x:Key="YtGainColor">#3EA66B</Color>
+    <Color x:Key="YtLossColor">#E5534B</Color>
+    <Color x:Key="YtTwitchColor">#9B7BD6</Color>
+    <Color x:Key="YtOnAccentColor">#FFFFFF</Color>
 
     <SolidColorBrush x:Key="YtDarkBgBrush" Color="{StaticResource YtDarkBgColor}" />
     <SolidColorBrush x:Key="YtDarkSurfaceBrush" Color="{StaticResource YtDarkSurfaceColor}" />
@@ -23,16 +27,27 @@
     <SolidColorBrush x:Key="YtRedHoverBrush" Color="{StaticResource YtRedHoverColor}" />
     <SolidColorBrush x:Key="YtTextPrimaryBrush" Color="{StaticResource YtTextPrimaryColor}" />
     <SolidColorBrush x:Key="YtTextSecondaryBrush" Color="{StaticResource YtTextSecondaryColor}" />
+    <SolidColorBrush x:Key="YtGainBrush" Color="{StaticResource YtGainColor}" />
+    <SolidColorBrush x:Key="YtLossBrush" Color="{StaticResource YtLossColor}" />
+    <SolidColorBrush x:Key="YtTwitchBrush" Color="{StaticResource YtTwitchColor}" />
+    <SolidColorBrush x:Key="YtOnAccentBrush" Color="{StaticResource YtOnAccentColor}" />
+
+    <SolidColorBrush x:Key="YtButtonHoverBrush" Color="#555555" />
+    <SolidColorBrush x:Key="YtButtonPressedBrush" Color="#404040" />
+    <SolidColorBrush x:Key="YtDropHighlightBrush" Color="{StaticResource YtRedColor}" Opacity="0.35" />
+
+    <CornerRadius x:Key="YtCornerRadius">10</CornerRadius>
+    <FontFamily x:Key="YtFontFamily">pack://application:,,,/Fonts/#Inter, Segoe UI</FontFamily>
 
     <!-- Estilo Global de TextBlock -->
     <Style TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
-        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
     </Style>
 
     <!-- ToolTips Escuras -->
     <Style TargetType="ToolTip">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}"/>
         <Setter Property="Background" Value="{StaticResource YtDarkCardBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
@@ -41,16 +56,18 @@
 
     <!-- Estilo Global de TextBox (Caixa de Texto Dark) -->
     <Style TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}"/>
         <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="6,4"/>
-        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="CaretBrush" Value="{StaticResource YtTextPrimaryBrush}"/>
     </Style>
 
     <!-- Estilo Global de ComboBox (Menu de Seleção Dark) -->
     <Style TargetType="ComboBox">
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}"/>
         <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
@@ -77,7 +94,7 @@
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{StaticResource YtRedBrush}"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource YtOnAccentBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -86,7 +103,7 @@
     <Style TargetType="xctk:ChildWindow">
         <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CaptionForeground" Value="White"/>
+        <Setter Property="CaptionForeground" Value="{StaticResource YtOnAccentBrush}"/>
         <Setter Property="CloseButtonVisibility" Value="Collapsed"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -102,9 +119,9 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 
-                                <Border Grid.Row="0" Background="#1F1F1F" CornerRadius="8,8,0,0" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1">
+                                <Border Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" CornerRadius="8,8,0,0" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1">
                                     <TextBlock Text="{TemplateBinding Caption}" 
-                                               Foreground="White" 
+                                               Foreground="{StaticResource YtOnAccentBrush}" 
                                                FontWeight="Bold" 
                                                FontSize="15" 
                                                VerticalAlignment="Center" 
@@ -173,6 +190,7 @@
 
     <!-- Botões Globais: Cards Dark com Hover Sutil e Texto Alto Contraste -->
     <Style TargetType="Button" BasedOn="{StaticResource TriggerClickStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}"/>
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
@@ -199,10 +217,10 @@
                         <!-- Hover cinza elegante em vez de branco lavado -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
-                            <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#555555" />
+                            <Setter TargetName="BtnBorder" Property="BorderBrush" Value="{StaticResource YtButtonHoverBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="BtnBorder" Property="Background" Value="#404040" />
+                            <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource YtButtonPressedBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="BtnBorder" Property="Opacity" Value="0.35" />
@@ -246,7 +264,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="TogBorder" Property="Background" Value="{StaticResource YtRedBrush}" />
                             <Setter TargetName="TogBorder" Property="BorderBrush" Value="{StaticResource YtRedHoverBrush}" />
-                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Foreground" Value="{StaticResource YtOnAccentBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="TogBorder" Property="Opacity" Value="0.35" />

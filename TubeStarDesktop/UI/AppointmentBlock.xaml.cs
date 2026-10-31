@@ -31,7 +31,7 @@ namespace TubeStar
                 appointmentGrid.Background = new SolidColorBrush(isNull ? Colors.Transparent : _task.Color);
                 txtTime.Text = String.Format("{0} {1}", Hour, Minute);
                 appointmentTextBlock.Text = isNull ? "-" : _task.Name;
-                txtTime.Foreground = appointmentTextBlock.Foreground = isNull ? (Brush)new BrushConverter().ConvertFrom("#777777") : Brushes.WhiteSmoke;
+                txtTime.Foreground = appointmentTextBlock.Foreground = isNull ? (Brush)System.Windows.Application.Current.FindResource("YtTextSecondaryBrush") : (Brush)System.Windows.Application.Current.FindResource("YtOnAccentBrush");
             }
         }
 
@@ -51,7 +51,7 @@ namespace TubeStar
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = (Brush)new BrushConverter().ConvertFrom("#262626");
+            this.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)

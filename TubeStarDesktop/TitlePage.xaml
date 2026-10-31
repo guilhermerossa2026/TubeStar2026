@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TubeStar">
 
-    <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30*" />
             <RowDefinition Height="70*" />

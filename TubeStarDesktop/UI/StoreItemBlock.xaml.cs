@@ -91,7 +91,7 @@ namespace TubeStar
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = (Brush)new BrushConverter().ConvertFrom("#2A2A2A");
+            this.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)

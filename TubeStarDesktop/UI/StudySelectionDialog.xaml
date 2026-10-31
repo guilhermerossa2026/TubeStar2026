@@ -7,7 +7,7 @@
     
     <Grid x:Name="LayoutRoot">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Border Background="#141414" BorderBrush="#333333" BorderThickness="1" CornerRadius="8" Height="Auto" Width="500" Margin="5" Padding="8">
+            <Border Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Height="Auto" Width="500" Margin="5" Padding="8">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

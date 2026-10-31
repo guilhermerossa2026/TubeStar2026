@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TubeStar">
 
-    <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <!-- Barra Superior de Navegação Estilo YouTube Dark -->
-        <Border Grid.Row="0" Background="#1F1F1F" BorderBrush="#383838" BorderThickness="0,0,0,1" Padding="6,2">
+        <Border Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Padding="6,2">
             <Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <ToggleButton x:Name="btnDailyPlanner" IsChecked="True" Margin="4,0" Click="btnDailyPlanner_Click">
@@ -54,8 +54,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Border Background="#282828" CornerRadius="6" Padding="10,4" Margin="0,0,10,0">
-                        <TextBlock x:Name="txtMoney" FontSize="15" FontWeight="Bold" Foreground="#2BA640" Text="$1,000.00" VerticalAlignment="Center" />
+                    <Border Background="{StaticResource YtDarkCardHoverBrush}" CornerRadius="6" Padding="10,4" Margin="0,0,10,0">
+                        <TextBlock x:Name="txtMoney" FontSize="15" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Text="$1,000.00" VerticalAlignment="Center" />
                     </Border>
                     <Image x:Name="imgSave" Source="Resources/Disk.png" Height="22" Width="22" Margin="4,0" MouseLeftButtonDown="Save_MouseLeftButtonDown" Style="{StaticResource TriggerClickStyle}" MouseEnter="imgSave_MouseEnter" MouseLeave="imgSave_MouseLeave" Cursor="Hand"/>
                     <Image x:Name="gridHelp" Source="Resources/Help.png" Height="22" Width="22" Margin="4,0" MouseLeftButtonDown="Tutorial_MouseLeftButtonDown" Style="{StaticResource TriggerClickStyle}" MouseEnter="gridHelp_MouseEnter" MouseLeave="gridHelp_MouseLeave" Cursor="Hand"/>
@@ -65,12 +65,12 @@
         </Border>
 
         <!-- Barra Inferior do Novo Dia Estilo YouTube Red -->
-        <Border Grid.Row="2" Background="#1F1F1F" BorderBrush="#383838" BorderThickness="0,1,0,0" Padding="6,4">
-            <Button FontSize="18" Click="btnNewDay_Click" Background="#CC0000" Foreground="White" BorderThickness="0">
+        <Border Grid.Row="2" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,1,0,0" Padding="6,4">
+            <Button FontSize="18" Click="btnNewDay_Click" Background="{StaticResource YtRedBrush}" Foreground="{StaticResource YtOnAccentBrush}" BorderThickness="0">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Resources/Play_icon.png" Margin="0,0,8,0" Height="18" Width="18" />
-                        <TextBlock x:Name="txtNewDay" VerticalAlignment="Center" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock x:Name="txtNewDay" VerticalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource YtOnAccentBrush}"/>
                         <ProgressBar x:Name="progress" IsIndeterminate="True" Width="160" Margin="10,0,0,0" Visibility="Collapsed"/>
                     </StackPanel>
                 </Button.Content>

@@ -12,10 +12,10 @@
         TextOptions.TextFormattingMode="Display"
         TextOptions.TextRenderingMode="ClearType"
         RenderOptions.BitmapScalingMode="HighQuality"
-        FontFamily="Segoe UI"
+        FontFamily="{StaticResource YtFontFamily}"
         Icon="Resources/TubeStar.ico">
     <Grid>
-        <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+        <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         </Grid>
     </Grid>
 </Window>

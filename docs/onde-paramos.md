@@ -48,4 +48,4 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "começar o Visual novo (V1 Studio)" (a etapa "Consertar a base" terminou; antes, decidir os itens "a discutir" da tabela).
+3. Pedir ao Claude: "continuar o Visual novo, etapa 2 (cabeçalho, menu lateral e relógio Ano/Semana/Dia)". "Consertar a base" terminou; a etapa 1 do visual (cores e fonte Inter) foi feita em 31/10/2026..

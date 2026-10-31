@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TubeStar" >
 
-    <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Background="#181818" BorderBrush="#2A2A2A" BorderThickness="0,0,1,0" Padding="8">
+        <Border Grid.Column="0" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkCardBrush}" BorderThickness="0,0,1,0" Padding="8">
             <Grid>
-                <Button x:Name="btnAddTask" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="36" Click="AddTask_Click" Background="#282828" BorderBrush="#383838">
+                <Button x:Name="btnAddTask" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="36" Click="AddTask_Click" Background="{StaticResource YtDarkCardHoverBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}">
                     <Button.Content>
                         <WrapPanel VerticalAlignment="Center">
                             <Image Source="/Resources/Add_icon.png" Margin="0,0,8,0" Height="14" />

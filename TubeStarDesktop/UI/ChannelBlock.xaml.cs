@@ -40,9 +40,9 @@ namespace TubeStar
             set
             {
                 _selected = value;
-                rootGrid.Background = (Brush)new BrushConverter().ConvertFrom(_selected ? 
-                    (Channel != null && Channel.IsRivalChannel ? "#1E88E5" : "#CC0000") : 
-                    "#282828");
+                rootGrid.Background = (Brush)System.Windows.Application.Current.FindResource(_selected ?
+                    (Channel != null && Channel.IsRivalChannel ? "YtTwitchBrush" : "YtRedBrush") :
+                    "YtDarkCardHoverBrush");
             }
         }
 
@@ -90,10 +90,10 @@ namespace TubeStar
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = (Brush)new BrushConverter().ConvertFrom("#2D2D2D");
+            this.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
             if (!_selected)
             {
-                rootGrid.Background = (Brush)new BrushConverter().ConvertFrom("#333333");
+                rootGrid.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkBorderBrush");
             }    
         }
 
@@ -102,7 +102,7 @@ namespace TubeStar
             this.Background = Brushes.Transparent;
             if (!_selected)
             {
-                rootGrid.Background = (Brush)new BrushConverter().ConvertFrom("#242424");
+                rootGrid.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardBrush");
             }  
         }
     }

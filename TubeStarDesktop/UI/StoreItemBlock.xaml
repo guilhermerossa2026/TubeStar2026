@@ -9,14 +9,14 @@
              MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave">
 
-    <Border Background="#1C1C1C" BorderBrush="#333333" BorderThickness="1" CornerRadius="8" Padding="6">
+    <Border Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="6">
         <Grid x:Name="LayoutRoot" Background="Transparent" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="#252525" CornerRadius="6" Margin="4">
+            <Border Background="{StaticResource YtDarkCardBrush}" CornerRadius="6" Margin="4">
                 <Image x:Name="imgItem" Height="140" Width="140" Stretch="Uniform"></Image>
             </Border>
 
@@ -27,10 +27,10 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock x:Name="txtName" Grid.Column="0" FontSize="18" Text="" FontWeight="Bold" Foreground="#F1F1F1" TextWrapping="Wrap"></TextBlock>
-                    <TextBlock x:Name="txtPrice" Grid.Column="1" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Text="" FontWeight="Bold" Foreground="#2BA640" Margin="8,0,0,0"></TextBlock>
+                    <TextBlock x:Name="txtName" Grid.Column="0" FontSize="18" Text="" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock x:Name="txtPrice" Grid.Column="1" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Text="" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Margin="8,0,0,0"></TextBlock>
                 </Grid>
-                <TextBlock x:Name="txtDescription" FontSize="14" Text="" Foreground="#AAAAAA" FontStyle="Normal" TextWrapping="Wrap"></TextBlock>
+                <TextBlock x:Name="txtDescription" FontSize="14" Text="" Foreground="{StaticResource YtTextSecondaryBrush}" FontStyle="Normal" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
         </Grid>
     </Border>

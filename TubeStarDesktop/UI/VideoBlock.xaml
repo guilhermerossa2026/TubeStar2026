@@ -9,7 +9,7 @@
              Padding="2">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Border Background="#1C1C1C" BorderBrush="#333333" BorderThickness="1" CornerRadius="8" Margin="0,3">
+        <Border Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Margin="0,3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -17,7 +17,7 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Background="#252525" CornerRadius="6" Margin="4">
+                <Border Background="{StaticResource YtDarkCardBrush}" CornerRadius="6" Margin="4">
                     <Image x:Name="imgVideo" Cursor="Hand" MouseLeftButtonDown="imgVideo_MouseLeftButtonDown" Stretch="UniformToFill"></Image>
                 </Border>
 
@@ -28,21 +28,21 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock x:Name="txtName" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Foreground="#F1F1F1" Text="Blah Blah" Margin="10,6,10,0" TextTrimming="WordEllipsis" />
+                        <TextBlock x:Name="txtName" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Blah Blah" Margin="10,6,10,0" TextTrimming="WordEllipsis" />
 
-                        <TextBlock x:Name="txtViews" Text="Blah Blah" FontSize="14" Foreground="#AAAAAA" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,4,10,4" />
+                        <TextBlock x:Name="txtViews" Text="Blah Blah" FontSize="14" Foreground="{StaticResource YtTextSecondaryBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,4,10,4" />
 
                         <StackPanel x:Name="panelStats" Orientation="Horizontal">
                             <Image x:Name="imgLikes" Height="16" Source="../Resources/Likes_Black.png" Margin="10,3,3,3" />
-                            <TextBlock x:Name="txtLikes" Text="Blah Blah" FontSize="13" Foreground="#AAAAAA" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,3,10,3" />
+                            <TextBlock x:Name="txtLikes" Text="Blah Blah" FontSize="13" Foreground="{StaticResource YtTextSecondaryBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,3,10,3" />
                             <Image x:Name="imgDislikes" Height="16" Source="../Resources/Dislikes_Black.png" Margin="10,3,3,3" />
-                            <TextBlock x:Name="txtDislikes" Text="Blah Blah" FontSize="13" Foreground="#AAAAAA" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,3,10,3" />
+                            <TextBlock x:Name="txtDislikes" Text="Blah Blah" FontSize="13" Foreground="{StaticResource YtTextSecondaryBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,3,10,3" />
                         </StackPanel>
                     </StackPanel>
 
                     <Grid x:Name="qualityGrid" Grid.Column="1" Height="44" Width="44" Margin="10" HorizontalAlignment="Right" >
-                        <Border Background="#CC0000" CornerRadius="6" Width="44" Height="44"/>
-                        <TextBlock x:Name="txtQuality" FontSize="22" FontWeight="Bold" Text="99" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <Border Background="{StaticResource YtRedBrush}" CornerRadius="6" Width="44" Height="44"/>
+                        <TextBlock x:Name="txtQuality" FontSize="22" FontWeight="Bold" Text="99" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource YtOnAccentBrush}"/>
                     </Grid>
                 </Grid>
                 <Button x:Name="btnUpload" Grid.Column="1" Height="30" Content="Upload" VerticalAlignment="Bottom" Margin="10,0,10,6" Click="btnUpload_Click"/>
@@ -58,7 +58,7 @@
 
         <AdornerDecorator>
             <Grid x:Name="SuspendedAdorner" Visibility="Collapsed" MouseLeftButtonDown="SuspendedAdorner_MouseLeftButtonDown">
-                <Rectangle Fill="Gray" Opacity="0.5"/>
+                <Rectangle Fill="{StaticResource YtDarkBgBrush}" Opacity="0.5"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="txtSuspended" Text="SUSPENDED" FontSize="25" FontWeight="Black" />
                     <TextBlock x:Name="txtSuspendedSub" Text="(Click to Hire Lawyer)" FontSize="10" FontWeight="Black" />

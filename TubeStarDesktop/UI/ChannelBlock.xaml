@@ -16,9 +16,9 @@
 
         <StackPanel Grid.Row="0" Margin="5,10,0,20">
             <TextBlock x:Name="channelTextBlock" Text="Blah Blah" HorizontalAlignment="Left" VerticalAlignment="Center"  
-                       FontSize="22" FontWeight="ExtraBold" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
+                       FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap"/>
             <TextBlock x:Name="txtVideoCount" Text="Blah Blah" HorizontalAlignment="Left" VerticalAlignment="Center"  
-                       FontSize="18" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
+                       FontSize="18" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap"/>
         </StackPanel>
 
         <Button x:Name="btnEdit" Grid.Row="1" Width="120" Height="30" HorizontalAlignment="Right" Click="EditButton_Click" Margin="0,0,2,2" >

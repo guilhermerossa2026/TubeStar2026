@@ -38,7 +38,7 @@ namespace TubeStar
 
         public override Color Color
         {
-            get { return Colors.DodgerBlue; }
+            get { return Color.FromRgb(0x3B, 0x82, 0xC4); }
         }
     }
 }

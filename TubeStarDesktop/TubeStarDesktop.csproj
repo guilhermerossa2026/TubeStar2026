@@ -390,6 +390,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Edit.png" />
+    <Resource Include="Fonts\Inter-Regular.ttf" />
+    <Resource Include="Fonts\Inter-Medium.ttf" />
+    <Resource Include="Fonts\Inter-SemiBold.ttf" />
+    <Resource Include="Fonts\Inter-Bold.ttf" />
+    <None Include="Fonts\Inter-LICENSE.txt" />
     <Resource Include="Resources\TubeStar.png" />
   </ItemGroup>
   <ItemGroup>

@@ -10,8 +10,8 @@
 
     <Grid x:Name="appointmentGrid" Grid.Column="1" MouseLeftButtonDown="AppointmentBorder_MouseLeftButtonDown">
         <StackPanel Orientation="Horizontal">
-            <TextBlock x:Name="txtTime" Text="10:00 AM" FontSize="12" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="WhiteSmoke" Width="80" />
-            <TextBlock x:Name="appointmentTextBlock" Text="Blah Blah" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="WhiteSmoke" />
+            <TextBlock x:Name="txtTime" Text="10:00 AM" FontSize="12" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="{StaticResource YtTextPrimaryBrush}" Width="80" />
+            <TextBlock x:Name="appointmentTextBlock" Text="Blah Blah" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="{StaticResource YtTextPrimaryBrush}" />
         </StackPanel>
     </Grid>
 

@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="BlackColor">#FF000000</Color>
-    <Color x:Key="AccentColor">#FFCC0000</Color>
-    <Color x:Key="AccentColor2">#FFFF0000</Color>
+    <Color x:Key="AccentColor">#FFFF0000</Color>
+    <Color x:Key="AccentColor2">#FFFF3333</Color>
 
     <SolidColorBrush x:Key="SliderThumbDisabled" Color="#FF333333" />
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FF2E2E2E" />
@@ -32,7 +32,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Border CornerRadius="6" Background="{TemplateBinding Background}" BorderBrush="#333333" BorderThickness="1"/>
+                    <Border CornerRadius="6" Background="{TemplateBinding Background}" BorderBrush="#2D2D2D" BorderThickness="1"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

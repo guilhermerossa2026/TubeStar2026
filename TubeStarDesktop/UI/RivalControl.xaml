@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TubeStar" >
 
-    <Grid x:Name="LayoutRoot" Background="#0F0F0F">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#181818" BorderBrush="#2A2A2A" BorderThickness="0,0,0,1" Padding="8">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkCardBrush}" BorderThickness="0,0,0,1" Padding="8">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <ToggleButton x:Name="btnTier1" Width="100" Content="Tier I" Margin="4,0" IsChecked="True" Click="btnTier1_Click" />
                 <ToggleButton x:Name="btnTier2" Width="100" Content="Tier II" Margin="4,0" Click="btnTier2_Click" />
@@ -26,7 +26,7 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1" Grid.Column="0" Background="#181818" BorderBrush="#2A2A2A" BorderThickness="0,0,1,0" Padding="8">
+        <Border Grid.Row="1" Grid.Column="0" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkCardBrush}" BorderThickness="0,0,1,0" Padding="8">
             <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="channelPanel"/>
             </ScrollViewer>
@@ -38,7 +38,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Background="#202020" BorderBrush="#383838" BorderThickness="1" CornerRadius="8" Height="48" Margin="0,0,0,8" Padding="6,2">
+            <Border Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Height="48" Margin="0,0,0,8" Padding="6,2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="42"/>
@@ -46,14 +46,14 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnGrid" Grid.Column="0" VerticalAlignment="Center" Height="32" Margin="2" Click="btnGrid_Click" Background="#282828" BorderBrush="#383838" >
+                    <Button x:Name="btnGrid" Grid.Column="0" VerticalAlignment="Center" Height="32" Margin="2" Click="btnGrid_Click" Background="{StaticResource YtDarkCardHoverBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" >
                         <Image Source="../Resources/Grid-icon.png" Height="16" />
                     </Button>
-                    <Button x:Name="btnList" Grid.Column="1" VerticalAlignment="Center" Height="32" Margin="2" Click="btnList_Click" Background="#282828" BorderBrush="#383838" >
+                    <Button x:Name="btnList" Grid.Column="1" VerticalAlignment="Center" Height="32" Margin="2" Click="btnList_Click" Background="{StaticResource YtDarkCardHoverBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" >
                         <Image Source="../Resources/List-icon.png" Height="16" />
                     </Button>
 
-                    <TextBlock x:Name="channelSummaryTextBlock" Grid.Column="2" FontSize="16" FontWeight="SemiBold" Text="Canal Rival" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#F1F1F1" />
+                    <TextBlock x:Name="channelSummaryTextBlock" Grid.Column="2" FontSize="16" FontWeight="SemiBold" Text="Canal Rival" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource YtTextPrimaryBrush}" />
                 </Grid>
             </Border>
 

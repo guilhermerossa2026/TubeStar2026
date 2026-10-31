@@ -258,7 +258,7 @@ namespace TubeStar
 
         private void binGrid_DragEnter(object sender, DragEventArgs e)
         {
-            binGrid.Background = Brushes.Silver;
+            binGrid.Background = (Brush)Application.Current.FindResource("YtDropHighlightBrush");
         }
 
         private void binGrid_DragLeave(object sender, DragEventArgs e)

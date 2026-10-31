@@ -1016,4 +1016,68 @@
     <Id>VideosDelete</Id>
     <Text>Delete</Text>
   </CustomText>
+  <CustomText>
+    <Id>CreateVideoLead</Id>
+    <Text>Pick a title and category, choose the attributes and invest in production.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CreateVideoSummary</Id>
+    <Text>Summary</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbnailLabel</Id>
+    <Text>Thumbnail</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbSearch</Id>
+    <Text>Search</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbUseThis</Id>
+    <Text>Use this</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbSearchOthers</Id>
+    <Text>Search others</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbCounter</Id>
+    <Text>{0} of {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbSearching</Id>
+    <Text>Searching...</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbLoading</Id>
+    <Text>Loading...</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbNoResults</Id>
+    <Text>No thumbnails found.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbOffline</Id>
+    <Text>Couldn&apos;t load thumbnails. Check your internet or the API key.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbTypeTitle</Id>
+    <Text>Type the title to see thumbnails.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbQuery</Id>
+    <Text>Search: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbHint</Id>
+    <Text>Searches by title; 1 API search for every 50 thumbnails.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbChosen</Id>
+    <Text>Thumbnail chosen.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbAuto</Id>
+    <Text>No thumbnail chosen: the first result will be used.</Text>
+  </CustomText>
 </ArrayOfCustomText>

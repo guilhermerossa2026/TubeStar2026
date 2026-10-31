@@ -36,6 +36,20 @@ namespace TubeStar
             return new Uri(uriString);
         }
 
+        public static bool HasApiKey
+        {
+            get { return !String.IsNullOrEmpty(ApiKey); }
+        }
+
+        //Busca por relevância (padrão da API), com página opcional (pageToken)
+        public static Uri SearchVideos(string search, int max, string pageToken)
+        {
+            var uriString = String.Format("https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&maxResults={1}&fields=nextPageToken,items(id(videoId))&key={2}{3}{4}",
+                HttpHelpers.UrlEncoding(search), max, ApiKey, Settings.UseCreativeCommons ? "&videoLicense=creativeCommon" : "",
+                String.IsNullOrEmpty(pageToken) ? "" : "&pageToken=" + HttpHelpers.UrlEncoding(pageToken));
+            return new Uri(uriString);
+        }
+
         public static Uri GetRandomImagesWithTitle(string search, int max)
         {
             search = search.Replace(' ', ',');

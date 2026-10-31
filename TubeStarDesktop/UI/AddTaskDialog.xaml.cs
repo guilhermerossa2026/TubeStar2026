@@ -14,6 +14,7 @@ namespace TubeStar
     public partial class AddTaskDialog : ChildWindow
     {
         public event Action<Task> TaskClick;
+        public event Action CreateVideoRequested;
 
         public AddTaskDialog()
         {
@@ -31,27 +32,10 @@ namespace TubeStar
 
         private void AddTask_VideoShoot(object sender, RoutedEventArgs e)
         {
-            if (TaskClick != null)
-            {
-                AddVideoDialog videoDialog = new AddVideoDialog();
-                videoDialog.ShowDialog(() =>
-                    {
-                        if (videoDialog.Video != null)
-                        {
-                            AddVideoDialog2 videoDialog2 = new AddVideoDialog2(videoDialog.Video);
-                            videoDialog2.ShowDialog(() =>
-                                {
-                                    if (videoDialog2.DialogResult == true)
-                                    {
-                                        var shootVideoTask = new ShootVideo(videoDialog.Video);
-                                        shootVideoTask.ExtraHours = videoDialog.Video.ExtraShootingHours;
-                                        TaskClick(shootVideoTask);
-                                    }
-                                });
-                        }
-                    });
-            }
+            //Gravar vídeo agora abre a tela "Criar vídeo" do menu lateral
             DialogResult = true;
+            if (CreateVideoRequested != null)
+                CreateVideoRequested();
         }
 
         private void AddTask_VideoEdit(object sender, RoutedEventArgs e)

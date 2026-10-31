@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="TubeStar.CreateVideoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TubeStar">
+
+    <UserControl.Resources>
+        <!-- Rótulo de campo (label.l) -->
+        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+        <Style x:Key="FieldLabelSecStyle" TargetType="TextBlock" BasedOn="{StaticResource FieldLabelStyle}">
+            <Setter Property="Margin" Value="0,14,0,8" />
+        </Style>
+        <Style x:Key="ArrowButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Padding" Value="0,-4,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
+        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,16,20">
+            <StackPanel>
+                <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Create video" />
+                <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" Text="" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="290" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <!-- Título e categoria -->
+                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock x:Name="lblName" Style="{StaticResource FieldLabelStyle}" Text="Name" />
+                                <TextBox x:Name="txtName" FontSize="15" MaxLength="100" LostKeyboardFocus="txtName_LostFocus" AutomationProperties.AutomationId="txtName" />
+                                <TextBlock x:Name="lblCategory" Style="{StaticResource FieldLabelSecStyle}" Text="Category" />
+                                <WrapPanel x:Name="categoryPanel" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Miniatura (carrossel) -->
+                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <DockPanel>
+                                    <Button x:Name="btnSearchThumbs" DockPanel.Dock="Right" Style="{StaticResource SmallButtonStyle}" Content="Search" Click="btnSearchThumbs_Click" />
+                                    <TextBlock x:Name="lblThumbnail" Style="{StaticResource FieldLabelStyle}" Text="Thumbnail" VerticalAlignment="Center" Margin="0" />
+                                </DockPanel>
+
+                                <Grid HorizontalAlignment="Center" Margin="0,12,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="btnPrev" Grid.Column="0" Style="{StaticResource ArrowButtonStyle}" Content="‹" Click="btnPrev_Click" Margin="0,0,14,0" IsEnabled="False" />
+                                    <Border Grid.Column="1" Width="320" Height="180" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" ClipToBounds="True">
+                                        <Grid>
+                                            <Image x:Name="imgThumb" Stretch="UniformToFill" />
+                                            <TextBlock x:Name="txtThumbStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16" />
+                                        </Grid>
+                                    </Border>
+                                    <Button x:Name="btnNext" Grid.Column="2" Style="{StaticResource ArrowButtonStyle}" Content="›" Click="btnNext_Click" Margin="14,0,0,0" IsEnabled="False" />
+                                </Grid>
+
+                                <TextBlock x:Name="txtCounter" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" Margin="0,10,0,0" />
+                                <TextBlock x:Name="txtQueryInfo" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" />
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                    <Button x:Name="btnUseThis" Style="{StaticResource SmallPrimaryButtonStyle}" Content="Use this" Click="btnUseThis_Click" Margin="0,0,8,0" IsEnabled="False" />
+                                    <Button x:Name="btnSearchOthers" Style="{StaticResource SmallButtonStyle}" Content="Search others" Click="btnSearchOthers_Click" />
+                                </StackPanel>
+
+                                <DockPanel x:Name="queryPanel" Margin="0,10,0,0" Visibility="Collapsed">
+                                    <Button x:Name="btnQuerySearch" DockPanel.Dock="Right" Style="{StaticResource SmallPrimaryButtonStyle}" Content="Search" Click="btnQuerySearch_Click" Margin="8,0,0,0" />
+                                    <TextBox x:Name="txtQuery" FontSize="14" MaxLength="100" KeyDown="txtQuery_KeyDown" />
+                                </DockPanel>
+
+                                <TextBlock x:Name="txtThumbHint" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Atributos -->
+                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock x:Name="lblAttributes" Style="{StaticResource FieldLabelStyle}" Text="Attributes" />
+                                <WrapPanel x:Name="attributeGrid" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Produção: horas e investimento -->
+                        <Border Style="{StaticResource CardBorderStyle}">
+                            <StackPanel>
+                                <TextBlock x:Name="lblHours" Style="{StaticResource FieldLabelStyle}" Text="Hours" />
+                                <WrapPanel x:Name="hoursPanel" />
+                                <TextBlock x:Name="lblCost" Style="{StaticResource FieldLabelSecStyle}" Text="Cost" />
+                                <WrapPanel x:Name="costPanel" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Resumo -->
+                    <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" VerticalAlignment="Top">
+                        <StackPanel>
+                            <TextBlock x:Name="lblSummary" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Summary" Margin="0,0,0,10" />
+                            <Border Height="146" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" ClipToBounds="True">
+                                <Image x:Name="imgPreview" Stretch="UniformToFill" />
+                            </Border>
+                            <TextBlock x:Name="txtPreviewName" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
+                            <TextBlock x:Name="txtPreviewThumb" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,2,0,0" />
+                            <UniformGrid Columns="2">
+                                <StackPanel>
+                                    <TextBlock x:Name="lblSumCost" Style="{StaticResource KpiLabelStyle}" Text="Cost" />
+                                    <TextBlock x:Name="txtSumCost" Style="{StaticResource KpiValueStyle}" Text="$0" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Name="lblSumHours" Style="{StaticResource KpiLabelStyle}" Text="Hours" />
+                                    <TextBlock x:Name="txtSumHours" Style="{StaticResource KpiValueStyle}" Text="2" />
+                                </StackPanel>
+                            </UniformGrid>
+                            <TextBlock x:Name="txtSumPoints" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,10,0,0" />
+                            <Button x:Name="btnCreate" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Stretch" Margin="0,14,0,0" Click="btnCreate_Click">
+                                <TextBlock x:Name="txtCreate" Text="Create video" />
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

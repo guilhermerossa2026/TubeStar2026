@@ -227,25 +227,24 @@ namespace TubeStar
                 OnImageFetched();
         }
 
-        public void FetchRandomImage(bool useCategory = true)
+        //Miniatura automática: busca só pelo título; sem resultado, pela categoria.
+        //Sem sorteio: usa o 1º resultado (ordem de relevância)
+        public void FetchFirstImage()
         {
-            int randomImageCount = 50;
-            var searchString = useCategory ? String.Format("{0},{1}", Category.GetString(), Name) : Name;
-            WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.GetRandomImages(searchString, randomImageCount), (response) =>
+            WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(Name, 1, null), (response) =>
             {
-                if (response != null && response.Entries != null && response.Entries.Count > 0)
+                if (HasFirstId(response))
                 {
-                    DoFetchImage(randomImageCount, response);
+                    SetImageFromId(response.Entries[0].Id.VideoId);
                 }
                 else
                 {
-                    //Limit to category
-                    WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.GetRandomImages(Category.GetString(), randomImageCount), (r) =>
+                    WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(Category.GetString(), 1, null), (r) =>
                     {
-                        if (r != null && r.Entries != null && r.Entries.Count > 0)
-                        {
-                            DoFetchImage(randomImageCount, r);
-                        }
+                        if (HasFirstId(r))
+                            SetImageFromId(r.Entries[0].Id.VideoId);
+                        else
+                            SetErrorImage();
                     }, () =>
                     {
                         SetErrorImage();
@@ -257,11 +256,10 @@ namespace TubeStar
             });
         }
 
-        private void DoFetchImage(int randomImageCount, YouTubeSearchResponse response)
+        private static bool HasFirstId(YouTubeSearchResponse response)
         {
-            var randomInt = RandomHelpers.RandomInt(Math.Min(randomImageCount, response.Entries.Count));
-            var youTubeVideoId = response.Entries[randomInt].Id.VideoId;
-            SetImageFromId(youTubeVideoId);
+            return response != null && response.Entries != null && response.Entries.Count > 0
+                && response.Entries[0] != null && response.Entries[0].Id != null && !String.IsNullOrEmpty(response.Entries[0].Id.VideoId);
         }
 
         //Última imagem pedida: respostas antigas (cliques rápidos) são ignoradas

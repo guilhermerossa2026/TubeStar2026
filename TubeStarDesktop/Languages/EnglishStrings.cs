@@ -769,5 +769,53 @@ namespace TubeStar
 
         [Description("Delete")]
         VideosDelete,
+
+        [Description("Pick a title and category, choose the attributes and invest in production.")]
+        CreateVideoLead,
+
+        [Description("Summary")]
+        CreateVideoSummary,
+
+        [Description("Thumbnail")]
+        ThumbnailLabel,
+
+        [Description("Search")]
+        ThumbSearch,
+
+        [Description("Use this")]
+        ThumbUseThis,
+
+        [Description("Search others")]
+        ThumbSearchOthers,
+
+        [Description("{0} of {1}")]
+        ThumbCounter,
+
+        [Description("Searching...")]
+        ThumbSearching,
+
+        [Description("Loading...")]
+        ThumbLoading,
+
+        [Description("No thumbnails found.")]
+        ThumbNoResults,
+
+        [Description("Couldn't load thumbnails. Check your internet or the API key.")]
+        ThumbOffline,
+
+        [Description("Type the title to see thumbnails.")]
+        ThumbTypeTitle,
+
+        [Description("Search: {0}")]
+        ThumbQuery,
+
+        [Description("Searches by title; 1 API search for every 50 thumbnails.")]
+        ThumbHint,
+
+        [Description("Thumbnail chosen.")]
+        ThumbChosen,
+
+        [Description("No thumbnail chosen: the first result will be used.")]
+        ThumbAuto,
     }
 }

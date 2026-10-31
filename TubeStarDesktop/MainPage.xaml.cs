@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace TubeStar
@@ -51,6 +52,14 @@ namespace TubeStar
                 CheckTrophies();
             };
 
+            //"Gravar vídeo" da Agenda abre a tela Criar vídeo; ao criar, a tarefa vai para a Agenda
+            dailyPlanner.CreateVideoRequested += () => btnCreateVideo_Click(null, null);
+            createVideo.VideoCreated += (task) =>
+            {
+                dailyPlanner.AddTask(task);
+                btnDailyPlanner_Click(null, null);
+            };
+
             dailyPlanner.GameExit += () =>
             {
                 if (GameLose != null)
@@ -74,7 +83,6 @@ namespace TubeStar
             txtNavEmployees.Text = EnglishStrings.NavEmployees.Translate();
             string soon = EnglishStrings.Soon.Translate();
             txtSoon1.Text = soon;
-            txtSoon2.Text = soon;
             txtSoon3.Text = soon;
             txtSoon4.Text = soon;
             txtSoon5.Text = soon;
@@ -165,62 +173,46 @@ namespace TubeStar
             }
         }
 
+        //Marca o item do menu, mostra só a tela dele e troca o título da seção
+        private void ShowSection(ToggleButton navButton, UIElement screen, string title)
+        {
+            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnRivals };
+            foreach (var button in buttons)
+                button.IsChecked = button == navButton;
+
+            UIElement[] screens = { dailyPlanner, videoManager, createVideo, onlineStore, rivalViewer };
+            foreach (var s in screens)
+                s.Visibility = s == screen ? Visibility.Visible : Visibility.Collapsed;
+
+            txtSectionTitle.Text = title;
+        }
+
         private void btnDailyPlanner_Click(object sender, RoutedEventArgs e)
         {
-            btnDailyPlanner.IsChecked = true;
-            txtSectionTitle.Text = txtDailyPlanner.Text;
-            btnVideoPlanner.IsChecked = false;
-            btnOnlineStore.IsChecked = false;
-            btnRivals.IsChecked = false;
-
-            dailyPlanner.Visibility = Visibility.Visible;
-            videoManager.Visibility = Visibility.Collapsed;
-            onlineStore.Visibility = Visibility.Collapsed;
-            rivalViewer.Visibility = Visibility.Collapsed;
+            ShowSection(btnDailyPlanner, dailyPlanner, txtDailyPlanner.Text);
         }
 
         private void btnVideoPlanner_Click(object sender, RoutedEventArgs e)
         {
-            btnDailyPlanner.IsChecked = false;
-            btnVideoPlanner.IsChecked = true;
-            txtSectionTitle.Text = txtVideoPlanner.Text;
-            btnOnlineStore.IsChecked = false;
-            btnRivals.IsChecked = false;
-
-            dailyPlanner.Visibility = Visibility.Collapsed;
-            videoManager.Visibility = Visibility.Visible;
-            onlineStore.Visibility = Visibility.Collapsed;
-            rivalViewer.Visibility = Visibility.Collapsed;
+            ShowSection(btnVideoPlanner, videoManager, txtVideoPlanner.Text);
             videoManager.Update();
+        }
+
+        private void btnCreateVideo_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSection(btnCreateVideo, createVideo, txtNavCreate.Text);
+            createVideo.Update();
         }
 
         private void btnOnlineStore_Click(object sender, RoutedEventArgs e)
         {
-            btnDailyPlanner.IsChecked = false;
-            btnVideoPlanner.IsChecked = false;
-            btnOnlineStore.IsChecked = true;
-            txtSectionTitle.Text = txtOnlineStore.Text;
-            btnRivals.IsChecked = false;
-
-            dailyPlanner.Visibility = Visibility.Collapsed;
-            videoManager.Visibility = Visibility.Collapsed;
-            onlineStore.Visibility = Visibility.Visible;
-            rivalViewer.Visibility = Visibility.Collapsed;
+            ShowSection(btnOnlineStore, onlineStore, txtOnlineStore.Text);
             onlineStore.Update();
         }
 
         private void btnRivals_Click(object sender, RoutedEventArgs e)
         {
-            btnDailyPlanner.IsChecked = false;
-            btnVideoPlanner.IsChecked = false;
-            btnOnlineStore.IsChecked = false;
-            btnRivals.IsChecked = true;
-            txtSectionTitle.Text = txtRivals.Text;
-
-            dailyPlanner.Visibility = Visibility.Collapsed;
-            videoManager.Visibility = Visibility.Collapsed;
-            onlineStore.Visibility = Visibility.Collapsed;
-            rivalViewer.Visibility = Visibility.Visible;
+            ShowSection(btnRivals, rivalViewer, txtRivals.Text);
             rivalViewer.Update();
         }
 

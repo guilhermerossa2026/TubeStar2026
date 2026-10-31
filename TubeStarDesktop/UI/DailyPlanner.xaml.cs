@@ -172,10 +172,18 @@ namespace TubeStar
             {
                 AddTask(t);
             };
+            dialog.CreateVideoRequested += () =>
+            {
+                if (CreateVideoRequested != null)
+                    CreateVideoRequested();
+            };
             dialog.ShowDialog();
         }
 
-        private void AddTask(Task task)
+        //Pedido para abrir a tela "Criar vídeo" (a MainPage troca a seção)
+        public event Action CreateVideoRequested;
+
+        public void AddTask(Task task)
         {
             foreach (var checkTask in Player.Current.TasksInProgress)
             {

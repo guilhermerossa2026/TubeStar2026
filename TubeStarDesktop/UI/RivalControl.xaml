@@ -85,23 +85,10 @@
                     <TextBlock x:Name="channelNameTextBlock" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
                     <TextBlock x:Name="channelSummaryTextBlock" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
                 </StackPanel>
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button x:Name="btnGrid" Style="{StaticResource SmallButtonStyle}" Padding="8,6" Margin="0,0,6,0" Click="btnGrid_Click">
-                        <Image Source="../Resources/Grid-icon.png" Height="16" />
-                    </Button>
-                    <Button x:Name="btnList" Style="{StaticResource SmallButtonStyle}" Padding="8,6" Click="btnList_Click">
-                        <Image Source="../Resources/List-icon.png" Height="16" />
-                    </Button>
-                </StackPanel>
             </Grid>
 
-            <ScrollViewer x:Name="listViewer" Grid.Row="1" BorderThickness="0" VerticalScrollBarVisibility="Auto">
-                <StackPanel x:Name="videoPanel" Orientation="Vertical" />
-            </ScrollViewer>
-
             <ScrollViewer x:Name="gridViewer" Grid.Row="1" BorderThickness="0" VerticalScrollBarVisibility="Auto">
-                <WrapPanel x:Name="videoPanelGrid" />
+                <UniformGrid x:Name="videoPanelGrid" Columns="3" VerticalAlignment="Top" />
             </ScrollViewer>
         </Grid>
     </Grid>

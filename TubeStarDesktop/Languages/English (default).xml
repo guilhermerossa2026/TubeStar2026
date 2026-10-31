@@ -956,4 +956,100 @@ Pay back {1} per day. {2}% interest.</Text>
     <Id>ScheduleAddTaskHint</Id>
     <Text>Work, shoot, edit, study</Text>
   </CustomText>
+  <CustomText>
+    <Id>VideosLead</Id>
+    <Text>The score (from 0 to 10) decides how many views the video gets per day.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosUnreleasedChip</Id>
+    <Text>Not released</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNewChannel</Id>
+    <Text>+ New channel</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterRecent</Id>
+    <Text>Most recent</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterMostViewed</Id>
+    <Text>Most viewed</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterBestScore</Id>
+    <Text>Best score</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosSearch</Id>
+    <Text>Search video</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewAll</Id>
+    <Text>View all</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewPages</Id>
+    <Text>View by page</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPrevious</Id>
+    <Text>‹ Previous</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNext</Id>
+    <Text>Next ›</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPageOf</Id>
+    <Text>Page {0} of {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosScore</Id>
+    <Text>Score {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewsCount</Id>
+    <Text>{0} views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPanel</Id>
+    <Text>Panel: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosTotalViews</Id>
+    <Text>Total views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosTotalEarnings</Id>
+    <Text>Total earnings</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosReady</Id>
+    <Text>Ready videos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosUnreleasedHint</Id>
+    <Text>Finished videos wait here. Click Post to choose the channel.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPost</Id>
+    <Text>Post</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosStatistics</Id>
+    <Text>Statistics</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosEditChannel</Id>
+    <Text>Edit channel</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNone</Id>
+    <Text>No videos here yet.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosDelete</Id>
+    <Text>Delete</Text>
+  </CustomText>
 </ArrayOfCustomText>

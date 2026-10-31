@@ -194,23 +194,11 @@ namespace TubeStar
             channelNameTextBlock.Text = channel.Name;
             channelSummaryTextBlock.Text = String.Format("{0}: {1}", EnglishStrings.Subscribers.Translate(), channel.Subscribers.ToNumberString());
 
-            listViewer.Visibility = Settings.ListView ? Visibility.Visible : Visibility.Collapsed;
-            gridViewer.Visibility = Settings.ListView ? Visibility.Collapsed : Visibility.Visible;
-
-            videoPanel.Children.Clear();
             videoPanelGrid.Children.Clear();
             foreach (var video in channel.Videos)
             {
-                if (Settings.ListView)
-                {
-                    var videoBlock = new VideoBlock(channel, video);
-                    videoPanel.Children.Insert(0, videoBlock);
-                }
-                else
-                {
-                    var videoBlock = new VideoBlockGrid(channel, video);
-                    videoPanelGrid.Children.Insert(0, videoBlock);
-                }
+                var videoBlock = new VideoBlockGrid(channel, video);
+                videoPanelGrid.Children.Insert(0, videoBlock);
             }
         }
 
@@ -231,20 +219,6 @@ namespace TubeStar
             channelView.Visibility = Visibility.Collapsed;
             rankingView.Visibility = Visibility.Visible;
             Update();
-        }
-
-        private void btnGrid_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.ListView = false;
-            Settings.ListView = false;
-            ShowChannel(_currentChannel);
-        }
-
-        private void btnList_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.ListView = true;
-            Settings.ListView = true;
-            ShowChannel(_currentChannel);
         }
     }
 }

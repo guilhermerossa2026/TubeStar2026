@@ -181,9 +181,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="local:ChannelBlock" BasedOn="{StaticResource ClickStyle}" />
     <Style TargetType="local:StoreItemBlock" BasedOn="{StaticResource ClickStyle}" />
-    <Style TargetType="local:VideoBlock" BasedOn="{StaticResource ClickStyle}" />
     <Style TargetType="local:VideoBlockGrid" BasedOn="{StaticResource ClickStyle}" />
 
     <!-- Botões Globais: Cards Dark com Hover Sutil e Texto Alto Contraste -->

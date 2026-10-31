@@ -697,5 +697,77 @@ namespace TubeStar
 
         [Description("Work, shoot, edit, study")]
         ScheduleAddTaskHint,
+
+        [Description("The score (from 0 to 10) decides how many views the video gets per day.")]
+        VideosLead,
+
+        [Description("Not released")]
+        VideosUnreleasedChip,
+
+        [Description("+ New channel")]
+        VideosNewChannel,
+
+        [Description("Most recent")]
+        VideosFilterRecent,
+
+        [Description("Most viewed")]
+        VideosFilterMostViewed,
+
+        [Description("Best score")]
+        VideosFilterBestScore,
+
+        [Description("Search video")]
+        VideosSearch,
+
+        [Description("View all")]
+        VideosViewAll,
+
+        [Description("View by page")]
+        VideosViewPages,
+
+        [Description("‹ Previous")]
+        VideosPrevious,
+
+        [Description("Next ›")]
+        VideosNext,
+
+        [Description("Page {0} of {1}")]
+        VideosPageOf,
+
+        [Description("Score {0}")]
+        VideosScore,
+
+        [Description("{0} views")]
+        VideosViewsCount,
+
+        [Description("Panel: {0}")]
+        VideosPanel,
+
+        [Description("Total views")]
+        VideosTotalViews,
+
+        [Description("Total earnings")]
+        VideosTotalEarnings,
+
+        [Description("Ready videos")]
+        VideosReady,
+
+        [Description("Finished videos wait here. Click Post to choose the channel.")]
+        VideosUnreleasedHint,
+
+        [Description("Post")]
+        VideosPost,
+
+        [Description("Statistics")]
+        VideosStatistics,
+
+        [Description("Edit channel")]
+        VideosEditChannel,
+
+        [Description("No videos here yet.")]
+        VideosNone,
+
+        [Description("Delete")]
+        VideosDelete,
     }
 }

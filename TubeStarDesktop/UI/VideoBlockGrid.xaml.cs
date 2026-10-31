@@ -1,22 +1,19 @@
-﻿using Nicenis.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace TubeStar
 {
     /// <summary>
-    /// Interaction logic for VideoBlockGrid.xaml
+    /// Cartao de video em grade (.card.vcard): miniatura, titulo, views, nota, comentarios e acoes.
     /// </summary>
     public partial class VideoBlockGrid : UserControl
     {
         public event EventHandler UploadClick;
         public event EventHandler LawyerClick;
+        public event EventHandler DeleteClick;
 
         private Channel _channel;
 
@@ -27,7 +24,6 @@ namespace TubeStar
             private set
             {
                 _video = value;
-                DataContext = new VideoDataContext(_video);
                 if (_video != null)
                 {
                     if (_channel == null)
@@ -36,13 +32,22 @@ namespace TubeStar
                     bool isUnreleasedChannel = (_channel == Channel.UnreleasedVideos);
 
                     txtName.Text = _video.Name;
-                    txtViews.Text = String.Format("{0} {1}", GetNumberOfViews(), EnglishStrings.Views.Translate());
-                    txtLikes.Text = _video.Likes.ToNumberString();
-                    txtDislikes.Text = _video.Dislikes.ToNumberString();
+                    txtName.ToolTip = _video.Name;
+                    string views = GetNumberOfViews();
+                    txtViews.Text = views;
+                    txtViewsLine.Text = String.Format(EnglishStrings.VideosViewsCount.Translate(), views);
+                    txtComments.Text = _video.GetCommentsCount().ToNumberString();
 
-                    panelStats.Visibility = viewsBadge.Visibility = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
+                    var released = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
+                    viewsBadge.Visibility = txtViewsLine.Visibility = panelComments.Visibility = released;
 
-                    txtQuality.Text = GetQualityText(isUnreleasedChannel);
+                    bool canViewQuality = !isUnreleasedChannel || Player.Current.CanViewQualityBeforeUpload;
+                    scorePill.Visibility = canViewQuality ? Visibility.Visible : Visibility.Collapsed;
+                    if (canViewQuality)
+                        txtScore.Text = String.Format(EnglishStrings.VideosScore.Translate(), (_video.GenerateQuality() / 10.0).ToString("0.0"));
+
+                    btnUpload.Visibility = isUnreleasedChannel ? Visibility.Visible : Visibility.Collapsed;
+                    btnDelete.Visibility = _channel.IsRivalChannel ? Visibility.Collapsed : Visibility.Visible;
 
                     SuspendedAdorner.Visibility = _video.IsSuspended ? Visibility.Visible : Visibility.Collapsed;
                     txtSuspendedSub.Visibility = Visibility.Collapsed;
@@ -57,6 +62,24 @@ namespace TubeStar
         }
 
         private bool _subscribed;
+
+        public VideoBlockGrid(Channel channel, Video video)
+        {
+            InitializeComponent();
+            Loaded += Control_Loaded;
+            Unloaded += Control_Unloaded;
+            Translate();
+            _channel = channel;
+            Video = video;
+        }
+
+        private void Translate()
+        {
+            txtSuspended.Text = EnglishStrings.Suspended.Translate().ToUpper();
+            txtSuspendedSub.Text = EnglishStrings.SuspendedHireLawyer.Translate();
+            btnDelete.Content = EnglishStrings.VideosDelete.Translate();
+            btnUpload.Content = EnglishStrings.VideosPost.Translate();
+        }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
@@ -84,16 +107,22 @@ namespace TubeStar
             imgVideo.Source = _video.GetThumbnail();
         }
 
+        //Miniatura sempre em 16:9 com cantos arredondados, qualquer que seja a largura do cartao
+        private void thumbGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double w = thumbGrid.ActualWidth;
+            if (w <= 0) return;
+            double h = Math.Round(w * 9 / 16);
+            if (Math.Abs(thumbGrid.Height - h) > 0.5)
+                thumbGrid.Height = h;
+            thumbGrid.Clip = new RectangleGeometry(new Rect(0, 0, w, h), 8, 8);
+        }
+
         private string GetNumberOfViews()
         {
             if (_video.Views > 301 && Video.Iterations == 1)
                 return "301+";
             return _video.Views.ToNumberString();
-        }
-
-        public void HideInformation()
-        {
-            bottomGrid.Visibility = topGrid.Visibility = Visibility.Collapsed;
         }
 
         private void SuspendedAdorner_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -102,45 +131,37 @@ namespace TubeStar
                 LawyerClick(this, EventArgs.Empty);
         }
 
-        private int GetCount(Video video)
+        private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
-            return video.GetCommentsCount();
+            if (Video.IsSuspended) return;
+            if (UploadClick != null)
+                UploadClick(this, EventArgs.Empty);
         }
 
-        private string GetQualityText(bool isUnreleasedChannel)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            bool canView = !isUnreleasedChannel || Player.Current.CanViewQualityBeforeUpload;
-            qualityGrid.Visibility = canView ? Visibility.Visible : Visibility.Collapsed;
-            return String.Format("{0}", canView ? String.Format("{0}", _video.GenerateQuality()) : "-");
-        }
-
-        public VideoBlockGrid(Channel channel, Video video)
-        {
-            InitializeComponent();
-            Loaded += Control_Loaded;
-            Unloaded += Control_Unloaded;
-            Translate();
-            _channel = channel;
-            Video = video;
-        }
-
-        private void Translate()
-        {
-            txtSuspended.Text = EnglishStrings.Suspended.Translate().ToUpper();
-            txtSuspendedSub.Text = EnglishStrings.SuspendedHireLawyer.Translate();
+            CustomMessageBox.ShowDialog(EnglishStrings.Delete.Translate(), EnglishStrings.DeleteVideo.Translate(), MessagePicture.Question, (result) =>
+                {
+                    if (result == true)
+                    {
+                        if (DeleteClick != null)
+                            DeleteClick(this, EventArgs.Empty);
+                    }
+                });
         }
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
+            cardBorder.Background = (Brush)Application.Current.FindResource("YtDarkCardHoverBrush");
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardBrush");
+            cardBorder.Background = (Brush)Application.Current.FindResource("YtDarkCardBrush");
         }
 
-        private void UserControl_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //Clique no cartao (os botoes marcam o evento como tratado, entao nao chegam aqui)
+        private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.PlayAnimation(() =>
             {
@@ -160,21 +181,6 @@ namespace TubeStar
                     dlg.ShowDialog();
                 }
             });
-        }
-    }
-
-    public class VideoDataContext : IDataObjectProvider
-    {
-        private Video _video;
-
-        public VideoDataContext(Video video)
-        {
-            _video = video;
-        }
-
-        public object GetDataObject()
-        {
-            return _video;
         }
     }
 }

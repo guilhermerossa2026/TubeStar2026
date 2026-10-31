@@ -15,6 +15,7 @@
     <Geometry x:Key="IconSave">M4,3 H16 L20,7 V21 H4 Z M8,3 V8 H15 V3 M7,21 V14 H17 V21</Geometry>
     <Geometry x:Key="IconHelp">M12,3 A9,9 0 1 1 11.99,3 Z M9.5,9.5 A2.5,2.5 0 1 1 13,11.8 C12.3,12.2 12,12.7 12,13.5 V14 M12,17 V17.6</Geometry>
     <Geometry x:Key="IconExit">M10,4 H5 V20 H10 M14,8 L18,12 L14,16 M18,12 H9</Geometry>
+    <Geometry x:Key="IconComment">M4,5 H20 V16 H10 L6,20 V16 H4 Z</Geometry>
 
     <!-- Item do menu lateral: Tag = geometria do ícone, Content = texto -->
     <Style x:Key="NavItemStyle" TargetType="ToggleButton">

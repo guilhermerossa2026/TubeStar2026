@@ -149,9 +149,6 @@
     <Compile Include="UI\AddVideoDialog.xaml.cs">
       <DependentUpon>AddVideoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ChannelBlock.xaml.cs">
-      <DependentUpon>ChannelBlock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\ChannelStatsDialog.xaml.cs">
       <DependentUpon>ChannelStatsDialog.xaml</DependentUpon>
     </Compile>
@@ -184,9 +181,6 @@
     </Compile>
     <Compile Include="UI\VideoBlockGrid.xaml.cs">
       <DependentUpon>VideoBlockGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\VideoBlock.xaml.cs">
-      <DependentUpon>VideoBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\OnlineStoreControl.xaml.cs">
       <DependentUpon>OnlineStoreControl.xaml</DependentUpon>
@@ -285,10 +279,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ChannelBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\ChannelStatsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -332,10 +322,6 @@
     <Page Include="UI\VideoBlockGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\VideoBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\OnlineStoreControl.xaml">
       <Generator>MSBuild:Compile</Generator>

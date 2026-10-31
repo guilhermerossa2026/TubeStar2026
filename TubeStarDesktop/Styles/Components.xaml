@@ -172,4 +172,58 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
     </Style>
+    <!-- .chip / .chip.on (filtros e abas em pilula) -->
+    <Style x:Key="ChipButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource YtDarkBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="0,0,8,8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="16" Padding="12,6" SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="ChipActiveButtonStyle" TargetType="Button" BasedOn="{StaticResource ChipButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource YtRedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource YtRedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource YtOnAccentBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource YtRedHoverBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource YtOnAccentBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- .kpi (rotulo pequeno + valor grande) -->
+    <Style x:Key="KpiLabelStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Margin" Value="0,10,0,4" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
+    </Style>
+    <Style x:Key="KpiValueStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+    </Style>
+
 </ResourceDictionary>

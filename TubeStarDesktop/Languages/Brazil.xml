@@ -921,4 +921,100 @@
     <Id>ScheduleAddTaskHint</Id>
     <Text>Trabalhar, gravar, editar, estudar</Text>
   </CustomText>
+  <CustomText>
+    <Id>VideosLead</Id>
+    <Text>A nota (de 0 a 10) decide quantas views o vídeo recebe por dia.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosUnreleasedChip</Id>
+    <Text>Não lançados</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNewChannel</Id>
+    <Text>+ Novo canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterRecent</Id>
+    <Text>Mais recentes</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterMostViewed</Id>
+    <Text>Mais vistos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosFilterBestScore</Id>
+    <Text>Melhor nota</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosSearch</Id>
+    <Text>Buscar vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewAll</Id>
+    <Text>Ver todos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewPages</Id>
+    <Text>Ver por página</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPrevious</Id>
+    <Text>‹ Anterior</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNext</Id>
+    <Text>Próxima ›</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPageOf</Id>
+    <Text>Página {0} de {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosScore</Id>
+    <Text>Nota {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosViewsCount</Id>
+    <Text>{0} views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPanel</Id>
+    <Text>Painel: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosTotalViews</Id>
+    <Text>Views totais</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosTotalEarnings</Id>
+    <Text>Ganhos totais</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosReady</Id>
+    <Text>Vídeos prontos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosUnreleasedHint</Id>
+    <Text>Os vídeos prontos esperam aqui. Clique em Postar para escolher o canal.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosPost</Id>
+    <Text>Postar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosStatistics</Id>
+    <Text>Estatísticas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosEditChannel</Id>
+    <Text>Editar canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosNone</Id>
+    <Text>Nenhum vídeo por aqui.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosDelete</Id>
+    <Text>Excluir</Text>
+  </CustomText>
 </ArrayOfCustomText>

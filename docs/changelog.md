@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-31
+- Simulação diária muito mais rápida (~11× a 40×): views processadas em até ~50 lotes por vídeo, com sorteio de "quantos" curtem/se inscrevem/compartilham em cada lote; médias e variação iguais às do jogo antigo (comparação numérica do testador).
+
 ## 2026-10-30
 - Comentários viraram só um número (likes ÷ 20 + dislikes ÷ 10): saíram as frases geradas, a lista na janela do vídeo e a busca de comentários na API do YouTube.
 - Desinscrições e bônus de renda por inscritos deixaram de usar divisão inteira: agora há perda real de inscritos (com piso de zero) e o bônus cresce de forma suave.

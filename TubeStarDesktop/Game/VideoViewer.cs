@@ -99,7 +99,7 @@ namespace TubeStar
                 return;
             }
 
-            int tempShares = (int)(_videoShares[video.Id] * (Player.Current.ChallengeMode ? 0.1 : 0.2)); 
+            int tempShares = (int)(_videoShares[video.Id] * (Player.Current.ChallengeMode ? 0.1 : 0.2));
             _videoShares[video.Id] -= tempShares;
 
             int payedViews = _videoBoughtViews.ContainsKey(video.Id) ? _videoBoughtViews[video.Id] : 0;
@@ -109,26 +109,56 @@ namespace TubeStar
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
             var iterationViews = searchEngineViews + qualityViews + tempShares;
 
-            int skip = 0;
-            while (skip <= iterationViews)
+            //Total de views orgânicas: mesmo laço antigo de pulos de 4 ou 5, só somando (sem ver view por view)
+            int organicViews = 0;
+            while (organicViews <= iterationViews)
             {
-                var jump = RandomHelpers.RandomInt(4, 6);
-                for (int i = 0; i < jump; i++)
-                {
-                    ViewVideo(channel, video, ref dailyIncome, ref dailyExpenses, 1);
-                }
-                skip += jump;
+                organicViews += RandomHelpers.RandomInt(4, 6);
             }
 
-            for (int i = 0; i < payedViews; i++)
-            {
-                ViewVideo(channel, video, ref dailyIncome, ref dailyExpenses, 1, true);
-            }
+            //Simula em lotes (no máximo ~50 chamadas por vídeo/dia) em vez de view por view
+            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, organicViews, false);
+            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, payedViews, true);
 
             if (channel.Subscribers < channel.MinimumSubsribers)
                 channel.Subscribers = channel.MinimumSubsribers;
         }
 
+        private const int MaxBatches = 50;
+
+        private static void ViewInBatches(Channel channel, Video video, ref double income, ref double expenses, int totalViews, bool payedView)
+        {
+            if (totalViews <= 0) return;
+            int batchSize = Math.Max(1, (int)Math.Ceiling(totalViews / (double)MaxBatches));
+            int remaining = totalViews;
+            while (remaining > 0)
+            {
+                //O último lote leva o resto exato
+                int batch = Math.Min(batchSize, remaining);
+                ViewVideo(channel, video, ref income, ref expenses, batch, payedView);
+                remaining -= batch;
+            }
+        }
+
+        //Probabilidade real de RandomHelpers.Chance(p): Next(100) <= p, ou seja (p+1)/100
+        private static double ChanceProb(int percentage)
+        {
+            percentage = Math.Max(0, Math.Min(100, percentage));
+            return Math.Min(1.0, (percentage + 1) / 100.0);
+        }
+
+        //Probabilidade por view de CategoryHelpers.CheckInterest(video), com q = 1/18:
+        //p = q + (1-q)*q*0,5 + (1-q)^2*0,06; com GenreBuster: p + (1-p)*0,36
+        private static double InterestProb(Video video)
+        {
+            double q = 1.0 / 18.0;
+            double p = q + (1 - q) * q * 0.5 + (1 - q) * (1 - q) * ChanceProb(5);
+            if (video.Attributes.Contains(VideoAttributes.GenreBuster))
+                p = p + (1 - p) * ChanceProb(35);
+            return p;
+        }
+
+        //Um lote de numViews equivale a numViews views independentes: sorteia quantas seguem cada ramo
         private static void ViewVideo(Channel channel, Video video, ref double income, ref double expenses, int numViews, bool payedView = false)
         {
             video.Views += numViews;
@@ -137,97 +167,103 @@ namespace TubeStar
             if (payedView)
                 expenses += video.CostPerView * numViews;
 
-            //Views extras do SecondTime são bônus, sem custo
-            if (video.Attributes.Contains(VideoAttributes.SecondTime) && RandomHelpers.Chance(5))
+            //Views extras do SecondTime são bônus, sem custo (antes: Chance(5) e RandomInt(2) por view)
+            if (video.Attributes.Contains(VideoAttributes.SecondTime))
             {
-                int tempViews = RandomHelpers.RandomInt(numViews * 2);
-                video.Views += tempViews;
-                income += ViewIncome(channel, video, payedView, tempViews);
-            }
-
-            if (CategoryHelpers.CheckInterest(video))
-            {
-                if (RandomHelpers.Chance(video.Quality.Value))
+                int tempViews = RandomHelpers.Binomial(RandomHelpers.Binomial(numViews, ChanceProb(5)), 0.5);
+                if (tempViews > 0)
                 {
-                    video.Likes += numViews;
-
-                    if (GetSubscriptionChance(channel, video))
-                    {
-                        if (video.Attributes.Contains(VideoAttributes.Crowdfunding))
-                        {
-                            if (!payedView)
-                                Player.Current.Money += numViews * VideoAttributes.Crowdfunding.Money;
-                        }
-                        else
-                        {
-                            channel.Subscribers += numViews;
-                        }
-                    }
-
-                    ShareVideo(video, numViews);
-                }
-                else if (RandomHelpers.RandomBool())
-                {
-                    video.Dislikes += numViews;
-
-                    //Chance of unsubscribe because of dislike
-                    CheckUnsubscriptions(channel, video, numViews, payedView);
-
-                    //Share video if "So bad" attribute on video
-                    if (video.Attributes.Contains(VideoAttributes.SoBad))
-                    {
-                        ShareVideo(video, numViews);
-                    }
+                    video.Views += tempViews;
+                    income += ViewIncome(channel, video, payedView, tempViews);
                 }
             }
-            else
+
+            double pInterest = InterestProb(video);
+            int interested = RandomHelpers.Binomial(numViews, pInterest);
+            int likes = RandomHelpers.Binomial(interested, ChanceProb(video.Quality.Value));
+            int dislikes = RandomHelpers.Binomial(interested - likes, 0.5);
+
+            if (likes > 0)
             {
-                //Chance of unsubscribe because of disinterest in category
-                CheckUnsubscriptions(channel, video, numViews, payedView);
+                video.Likes += likes;
+
+                int subs = RandomHelpers.Binomial(likes, SubscriptionProb(channel, video));
+                if (video.Attributes.Contains(VideoAttributes.Crowdfunding))
+                {
+                    if (!payedView)
+                        Player.Current.Money += subs * VideoAttributes.Crowdfunding.Money;
+                }
+                else
+                {
+                    channel.Subscribers += subs;
+                }
+
+                ShareVideo(video, likes, pInterest);
             }
+
+            if (dislikes > 0)
+            {
+                video.Dislikes += dislikes;
+
+                //Share video if "So bad" attribute on video
+                if (video.Attributes.Contains(VideoAttributes.SoBad))
+                {
+                    ShareVideo(video, dislikes, pInterest);
+                }
+            }
+
+            //Chance of unsubscribe because of dislike or disinterest in category
+            CheckUnsubscriptions(channel, video, dislikes + (numViews - interested), payedView);
         }
 
-        private static bool CheckUnsubscriptions(Channel channel, Video video, int numViews, bool payedView)
+        //numChecks = quantas views passariam pela checagem de desinscrição
+        private static void CheckUnsubscriptions(Channel channel, Video video, int numChecks, bool payedView)
         {
+            if (numChecks <= 0) return;
             if (!channel.IsRivalChannel && !payedView)
             {
                 int chance = (int)Math.Min(100.0, channel.Subscribers * 100.0 / Math.Max(1, video.Views));
                 if (!Player.Current.ChallengeMode) chance = chance / 2;
-                if (RandomHelpers.Chance(25) && GetUnsubscriptionChance(channel) && RandomHelpers.Chance(chance))
-                {
-                    channel.Subscribers = Math.Max(0, channel.Subscribers - numViews);
-                    return true;
-                }
+                double p = ChanceProb(25) * UnsubscriptionProb(channel) * ChanceProb(chance);
+                int unsubs = RandomHelpers.Binomial(numChecks, p);
+                if (unsubs > 0)
+                    channel.Subscribers = Math.Max(0, channel.Subscribers - unsubs);
             }
-            return false;
         }
 
-        private static void ShareVideo(Video video, int numViews)
+        //numViews = quantas views tentam compartilhar
+        private static void ShareVideo(Video video, int numViews, double pInterest)
         {
-            //Like enough to share
+            //Like enough to share: RandomInt(100+memetic) >= 60
             int memeticMutator = video.Attributes.Contains(VideoAttributes.Memetic) ? 20 : 0;
-            if (RandomHelpers.RandomInt(100 + memeticMutator) >= 60)
-            {
-                //Share
-                var friends = RandomHelpers.RandomInt(10 * numViews);
-                for (int i = 0; i < friends; i++)
-                {
-                    if (CategoryHelpers.CheckInterest(video))
-                    {
-                        _videoShares[video.Id] += 1;
-                    }
-                }
+            double pShare = (40.0 + memeticMutator) / (100.0 + memeticMutator);
+            int sharers = RandomHelpers.Binomial(numViews, pShare);
+            if (sharers <= 0) return;
 
-                //Owner of site - share video on site
-                if (RandomHelpers.Chance(1) && RandomHelpers.Chance(10))
-                {
-                    var subscribers = RandomHelpers.RandomInt((int)(25000 * (Player.Current.ChallengeMode ? 0.02 : 0.05)));
-                    _videoShares[video.Id] += (int)(subscribers * 0.25);
-                }
+            //Share: cada uma chama RandomInt(10) amigos (média 4,5, variância 8,25)
+            int friends = 0;
+            if (sharers <= 30)
+            {
+                for (int i = 0; i < sharers; i++)
+                    friends += RandomHelpers.RandomInt(10);
+            }
+            else
+            {
+                double value = 4.5 * sharers + Math.Sqrt(8.25 * sharers) * RandomHelpers.Gaussian();
+                friends = (int)Math.Max(0, Math.Min(9.0 * sharers, Math.Round(value)));
+            }
+            _videoShares[video.Id] += RandomHelpers.Binomial(friends, pInterest);
+
+            //Owner of site - share video on site (Chance(1)&&Chance(10) = 2% * 11% = 0,22%)
+            int owners = RandomHelpers.Binomial(sharers, ChanceProb(1) * ChanceProb(10));
+            for (int o = 0; o < owners; o++)
+            {
+                var subscribers = RandomHelpers.RandomInt((int)(25000 * (Player.Current.ChallengeMode ? 0.02 : 0.05)));
+                _videoShares[video.Id] += (int)(subscribers * 0.25);
             }
         }
 
-        private static bool GetSubscriptionChance(Channel channel, Video video)
+        private static double SubscriptionProb(Channel channel, Video video)
         {
             int initialChance = 0;
             switch (channel.Advertising)
@@ -250,17 +286,17 @@ namespace TubeStar
             if (video.Attributes.Contains(VideoAttributes.Hypnotic))
                 initialChance += 30;
 
-            return RandomHelpers.Chance(initialChance);
+            return ChanceProb(initialChance);
         }
 
-        private static bool GetUnsubscriptionChance(Channel channel)
+        private static double UnsubscriptionProb(Channel channel)
         {
             switch (channel.Advertising)
             {
-                case (AdvertisingStrategy.Low): return RandomHelpers.Chance(10);
-                case (AdvertisingStrategy.Normal): return RandomHelpers.Chance(20);
-                case (AdvertisingStrategy.High): return RandomHelpers.Chance(40);
-                case (AdvertisingStrategy.Aggressive): return RandomHelpers.Chance(60);
+                case (AdvertisingStrategy.Low): return ChanceProb(10);
+                case (AdvertisingStrategy.Normal): return ChanceProb(20);
+                case (AdvertisingStrategy.High): return ChanceProb(40);
+                case (AdvertisingStrategy.Aggressive): return ChanceProb(60);
                 default: throw new NotSupportedException();
             }
         }
@@ -276,30 +312,22 @@ namespace TubeStar
             extraIncome = Math.Min(extraIncome, Player.Current.ChallengeMode ? 0.25 : 0.50);
             income += extraIncome;
 
-            if (Player.Current.ChallengeMode && RandomHelpers.Chance(90))
+            //CTR: no ChallengeMode, Chance(90) && Chance(90 ultra / 50 normal) zera a renda daquela view
+            int paidViews = numViews;
+            if (Player.Current.ChallengeMode)
             {
-                if (Player.Current.UltraMode)
-                {
-                    if (RandomHelpers.Chance(90))
-                    {
-                        income = 0; //only 10% CTR in ultra mode
-                    }
-                }
-                else
-                {
-                    if (RandomHelpers.Chance(50))
-                    {
-                        income = 0; //only 50% CTR in challenge mode
-                    }
-                }
+                double pZero = ChanceProb(90) * (Player.Current.UltraMode ? ChanceProb(90) : ChanceProb(50));
+                paidViews = RandomHelpers.Binomial(numViews, 1 - pZero);
             }
+
+            double total = income * paidViews;
 
             if (video.Attributes.Contains(VideoAttributes.ProductPlacement))
             {
-                income += 0.01; //Extra 1c
+                total += 0.01 * numViews; //Extra 1c
             }
 
-            return income * numViews;
+            return total;
         }
 
         private static void Initialize(Video video)

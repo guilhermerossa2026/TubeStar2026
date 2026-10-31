@@ -18,12 +18,41 @@ namespace TubeStar
 
         public static List<SerializableShareData> GetShares()
         {
+            return ToSaveData(_videoShares);
+        }
+
+        //Só vai para o save o que ainda existe e ainda tem algo a entregar
+        private static List<SerializableShareData> ToSaveData(ConcurrentDictionary<Guid, int> source)
+        {
+            var liveIds = GetLiveVideoIds();
             List<SerializableShareData> data = new List<SerializableShareData>();
-            foreach (var item in _videoShares)
+            foreach (var item in source)
             {
-                data.Add(new SerializableShareData() { Id = item.Key, Count = item.Value });
+                if (item.Value > 0 && liveIds.Contains(item.Key))
+                    data.Add(new SerializableShareData() { Id = item.Key, Count = item.Value });
             }
             return data;
+        }
+
+        private static HashSet<Guid> GetLiveVideoIds()
+        {
+            var ids = new HashSet<Guid>();
+            if (Player.Current != null)
+            {
+                foreach (var video in Player.Current.Videos)
+                    ids.Add(video.Id);
+                foreach (var channel in Player.Current.Channels)
+                    foreach (var video in channel.Videos)
+                        ids.Add(video.Id);
+            }
+            if (Rivals.Current != null)
+            {
+                foreach (var rival in Rivals.Current.All)
+                    if (rival.Channel != null && rival.Channel.Videos != null)
+                        foreach (var video in rival.Channel.Videos)
+                            ids.Add(video.Id);
+            }
+            return ids;
         }
 
         public static void SetShares(List<SerializableShareData> data)
@@ -37,12 +66,7 @@ namespace TubeStar
 
         public static List<SerializableShareData> GetBoughtViews()
         {
-            List<SerializableShareData> data = new List<SerializableShareData>();
-            foreach (var item in _videoBoughtViews)
-            {
-                data.Add(new SerializableShareData() { Id = item.Key, Count = item.Value });
-            }
-            return data;
+            return ToSaveData(_videoBoughtViews);
         }
 
         public static void SetBoughtViews(List<SerializableShareData> data)

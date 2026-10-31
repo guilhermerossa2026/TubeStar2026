@@ -20,6 +20,8 @@ namespace TubeStar
         private int _page;
         private bool _showAll;
 
+        public event Action<Video> PostRequested;
+
         public VideoManagerControl()
         {
             InitializeComponent();
@@ -341,55 +343,11 @@ namespace TubeStar
             }
         }
 
+        //"Postar" de um não lançado: a MainPage abre a tela Postar vídeo com ele
         private void UploadVideo(Video video)
         {
-            if (Player.Current.Channels.Count == 1)
-            {
-                CustomMessageBox.ShowDialog(EnglishStrings.WhereTo.Translate(), EnglishStrings.ChannelNeeded.Translate(), MessagePicture.Puzzle);
-            }
-            else
-            {
-                UploadVideoDialog uploadDialog = new UploadVideoDialog(video);
-                uploadDialog.ShowDialog(() =>
-                    {
-                        if (uploadDialog.Channel != null)
-                        {
-                            //Subscriber views
-                            VideoViewer.SubscriberView(uploadDialog.Channel, uploadDialog.Video);
-
-                            video.GenerateQuality();
-
-                            //Consultant fee
-                            if (StoreItems.Current.Consultant.Purchased)
-                            {
-                                video.OnceOffCost += StoreItems.Current.Consultant.AdditionalCost;
-                            }
-
-                            //Special attribute - CopyCat
-                            if (uploadDialog.Video.Attributes.Contains(VideoAttributes.CopyCat))
-                            {
-                                VideoViewer.FreeViews(uploadDialog.Video, VideoAttributes.CopyCat.FreeViews);
-                            }
-
-                            //Special attribute - FanBoyBait
-                            if (video.Quality >= 75 && uploadDialog.Video.Attributes.Contains(VideoAttributes.FanBoyBait))
-                            {
-                                uploadDialog.Channel.MinimumSubsribers = uploadDialog.Channel.Subscribers;
-                                TrophyManager.UnlockTrophy(Trophy.HookLineAndSinker);
-                            }
-
-                            //Trophy - PoopStar
-                            if (video.Quality <= 1)
-                            {
-                                TrophyManager.UnlockTrophy(Trophy.PoopStar);
-                            }
-
-                            uploadDialog.Channel.Videos.Add(uploadDialog.Video);
-                            Player.Current.Videos.Remove(uploadDialog.Video);
-                            Update();
-                        }
-                    });
-            }
+            if (PostRequested != null)
+                PostRequested(video);
         }
 
         private void btnStats_Click(object sender, RoutedEventArgs e)

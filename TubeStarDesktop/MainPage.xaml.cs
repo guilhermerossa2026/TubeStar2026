@@ -43,6 +43,9 @@ namespace TubeStar
                 if (eventDay || videoManager.Visibility == System.Windows.Visibility.Visible)
                     videoManager.Update();
 
+                if (postVideo.Visibility == System.Windows.Visibility.Visible)
+                    postVideo.Update();
+
                 if (eventDay || rivalViewer.Visibility == System.Windows.Visibility.Visible)
                     rivalViewer.Update();
 
@@ -58,6 +61,15 @@ namespace TubeStar
             {
                 dailyPlanner.AddTask(task);
                 btnDailyPlanner_Click(null, null);
+            };
+
+            //Postar vídeo: vem do menu ou do botão "Postar" de Meus vídeos
+            videoManager.PostRequested += (video) => ShowPostVideo(video);
+            postVideo.CreateVideoRequested += () => btnCreateVideo_Click(null, null);
+            postVideo.VideoPosted += () =>
+            {
+                UpdateHeader();
+                CheckTrophies();
             };
 
             dailyPlanner.GameExit += () =>
@@ -83,7 +95,6 @@ namespace TubeStar
             txtNavEmployees.Text = EnglishStrings.NavEmployees.Translate();
             string soon = EnglishStrings.Soon.Translate();
             txtSoon1.Text = soon;
-            txtSoon3.Text = soon;
             txtSoon4.Text = soon;
             txtSoon5.Text = soon;
             txtMoneyLabel.Text = EnglishStrings.MoneyLabel.Translate();
@@ -176,11 +187,11 @@ namespace TubeStar
         //Marca o item do menu, mostra só a tela dele e troca o título da seção
         private void ShowSection(ToggleButton navButton, UIElement screen, string title)
         {
-            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnRivals };
+            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnPostVideo, btnOnlineStore, btnRivals };
             foreach (var button in buttons)
                 button.IsChecked = button == navButton;
 
-            UIElement[] screens = { dailyPlanner, videoManager, createVideo, onlineStore, rivalViewer };
+            UIElement[] screens = { dailyPlanner, videoManager, createVideo, postVideo, onlineStore, rivalViewer };
             foreach (var s in screens)
                 s.Visibility = s == screen ? Visibility.Visible : Visibility.Collapsed;
 
@@ -202,6 +213,17 @@ namespace TubeStar
         {
             ShowSection(btnCreateVideo, createVideo, txtNavCreate.Text);
             createVideo.Update();
+        }
+
+        private void btnPostVideo_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPostVideo(null);
+        }
+
+        private void ShowPostVideo(Video video)
+        {
+            ShowSection(btnPostVideo, postVideo, txtNavPost.Text);
+            postVideo.Update(video);
         }
 
         private void btnOnlineStore_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="TubeStar.PostVideoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TubeStar">
+
+    <UserControl.Resources>
+        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+            <Setter Property="Margin" Value="0,14,0,8" />
+        </Style>
+        <Style x:Key="ArrowButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Padding" Value="0,-4,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <!-- Linha da lista de vídeos prontos (.rowv) -->
+        <Style x:Key="RowButtonStyle" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="8,7">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RowActiveButtonStyle" TargetType="Button" BasedOn="{StaticResource RowButtonStyle}">
+            <Setter Property="BorderBrush" Value="{StaticResource YtRedBrush}" />
+            <Setter Property="Background" Value="{StaticResource YtDarkSurfaceBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
+        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,16,20">
+            <StackPanel>
+                <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Post video" />
+                <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" Text="" />
+
+                <!-- Nenhum vídeo pronto -->
+                <Border x:Name="emptyPanel" Style="{StaticResource CardBorderStyle}" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center" Margin="0,20">
+                        <TextBlock x:Name="txtEmpty" Style="{StaticResource MutedTextStyle}" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" />
+                        <Button x:Name="btnGoCreate" Style="{StaticResource SmallPrimaryButtonStyle}" HorizontalAlignment="Center" Margin="0,12,0,0" Click="btnGoCreate_Click" Content="Create video" />
+                    </StackPanel>
+                </Border>
+
+                <Grid x:Name="mainGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Lista compacta dos prontos -->
+                    <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" VerticalAlignment="Top">
+                        <StackPanel>
+                            <TextBlock x:Name="lblReady" Style="{StaticResource FieldLabelStyle}" Margin="0,0,0,8" Text="Ready videos" />
+                            <StackPanel x:Name="videoList" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Selecionado -->
+                    <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" VerticalAlignment="Top">
+                        <StackPanel>
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnPrev" Grid.Column="0" Style="{StaticResource ArrowButtonStyle}" Content="‹" Click="btnPrev_Click" Margin="0,0,14,0" Visibility="Hidden" />
+                                <Border Grid.Column="1" Width="320" Height="180" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" ClipToBounds="True">
+                                    <Grid>
+                                        <Image x:Name="imgThumb" Stretch="UniformToFill" />
+                                        <TextBlock x:Name="txtThumbStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16" />
+                                    </Grid>
+                                </Border>
+                                <Button x:Name="btnNext" Grid.Column="2" Style="{StaticResource ArrowButtonStyle}" Content="›" Click="btnNext_Click" Margin="14,0,0,0" Visibility="Hidden" />
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                <Button x:Name="btnChangeThumb" Style="{StaticResource SmallButtonStyle}" Content="Change thumbnail" Click="btnChangeThumb_Click" />
+                                <TextBlock x:Name="txtCounter" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            </StackPanel>
+
+                            <TextBlock x:Name="txtVideoName" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" Margin="0,14,0,0" />
+                            <TextBlock x:Name="txtVideoInfo" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
+
+                            <TextBlock x:Name="lblChannel" Style="{StaticResource FieldLabelStyle}" Text="Channel" />
+                            <WrapPanel x:Name="channelPanel" />
+                            <StackPanel x:Name="noChannelPanel" Orientation="Horizontal" Visibility="Collapsed">
+                                <TextBlock x:Name="txtNoChannel" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="360" />
+                                <Button x:Name="btnAddChannel" Style="{StaticResource SmallPrimaryButtonStyle}" Margin="10,0,0,0" Click="btnAddChannel_Click" Content="+ New channel" />
+                            </StackPanel>
+
+                            <TextBlock x:Name="lblPromote" Style="{StaticResource FieldLabelStyle}" Text="Promote video" />
+                            <WrapPanel x:Name="viewsPanel" />
+
+                            <Border Background="{StaticResource YtDarkSurfaceBrush}" CornerRadius="8" Padding="12" Margin="0,14,0,0">
+                                <DockPanel>
+                                    <Button x:Name="btnPost" DockPanel.Dock="Right" Style="{StaticResource PrimaryButtonStyle}" Click="btnPost_Click" VerticalAlignment="Center">
+                                        <TextBlock x:Name="txtPost" Text="Post video" />
+                                    </Button>
+                                    <TextBlock x:Name="txtSummary" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                </DockPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

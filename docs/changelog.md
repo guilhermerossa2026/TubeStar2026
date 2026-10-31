@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-31
+- Visual novo, etapa 4d: "Postar vídeo" virou tela do menu (sai a janela UploadVideoDialog): lista compacta dos vídeos prontos, canal em chips, opções de views atuais em "Promover vídeo" (mesmos valores e regras), "Trocar miniatura" com busca só ao clicar. O botão "Postar" de Meus vídeos abre essa tela.
 - Visual novo, etapa 4c: "Criar vídeo" virou tela do menu (sai a janela AddVideoDialog/AddVideoDialog2), com horas e custo em chips, resumo à direita e carrossel de miniaturas: busca só pelo título (categoria como fallback), sem sorteio, contador "N de 50", próxima página por pageToken, imagem baixada só quando exibida, "Usar esta" e "Buscar outras".
 - Visual novo, etapa 4b: Meus vídeos com chips de canal e "+ Novo canal", filtros (Mais recentes, Mais vistos, Melhor nota), busca, grade 3×3 com paginação e "Ver todos", nota 0–10 no cartão, botão Excluir (sai a lixeira de arrastar) e painel do canal com KPIs. `VideoBlock` e `ChannelBlock` removidos.
 - Visual novo, etapa 4a: Agenda com barra "Horas do dia (15h)" colorida por tipo e cartões de tarefa com progresso e botões +1h, −1h e Remover (regras iguais). Componentes antigos `TodoTask` e `AppointmentBlock` removidos.

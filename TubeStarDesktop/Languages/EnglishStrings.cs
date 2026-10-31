@@ -817,5 +817,23 @@ namespace TubeStar
 
         [Description("No thumbnail chosen: the first result will be used.")]
         ThumbAuto,
+
+        [Description("Pick a ready video, the channel and how to promote it.")]
+        PostVideoLead,
+
+        [Description("Ready videos")]
+        PostReadyVideos,
+
+        [Description("No video ready. Create and edit a video in the Schedule.")]
+        PostNoVideos,
+
+        [Description("Change thumbnail")]
+        PostChangeThumb,
+
+        [Description("You have no channel yet. Create one to post your videos.")]
+        PostNoChannel,
+
+        [Description("Promote video")]
+        PostPromote,
     }
 }

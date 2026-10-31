@@ -1081,4 +1081,28 @@
     <Id>ThumbAuto</Id>
     <Text>Nenhuma escolhida: será usada a primeira do resultado.</Text>
   </CustomText>
+  <CustomText>
+    <Id>PostVideoLead</Id>
+    <Text>Escolha um vídeo pronto, o canal e como divulgá-lo.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostReadyVideos</Id>
+    <Text>Vídeos prontos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostNoVideos</Id>
+    <Text>Nenhum vídeo pronto. Crie e edite um vídeo na Agenda.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostChangeThumb</Id>
+    <Text>Trocar miniatura</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostNoChannel</Id>
+    <Text>Você ainda não tem um canal. Crie um para postar seus vídeos.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostPromote</Id>
+    <Text>Promover vídeo</Text>
+  </CustomText>
 </ArrayOfCustomText>

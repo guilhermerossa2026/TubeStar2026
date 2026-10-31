@@ -73,11 +73,8 @@
                         <TextBlock x:Name="txtNavCreate" Text="Create video" VerticalAlignment="Center" />
                     </ToggleButton>
 
-                    <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconSend}">
-                        <DockPanel LastChildFill="True">
-                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon3" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                            <TextBlock x:Name="txtNavPost" Text="Post video" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
-                        </DockPanel>
+                    <ToggleButton x:Name="btnPostVideo" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconSend}" Click="btnPostVideo_Click">
+                        <TextBlock x:Name="txtNavPost" Text="Post video" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
                     </ToggleButton>
 
                     <ToggleButton x:Name="btnOnlineStore" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconBag}" Click="btnOnlineStore_Click">
@@ -142,6 +139,7 @@
         <local:DailyPlanner Grid.Column="1" Grid.Row="1" x:Name="dailyPlanner" />
         <local:VideoManagerControl Grid.Column="1" Grid.Row="1" x:Name="videoManager" Visibility="Collapsed" />
         <local:CreateVideoControl Grid.Column="1" Grid.Row="1" x:Name="createVideo" Visibility="Collapsed" />
+        <local:PostVideoControl Grid.Column="1" Grid.Row="1" x:Name="postVideo" Visibility="Collapsed" />
         <local:OnlineStoreControl Grid.Column="1" Grid.Row="1" x:Name="onlineStore" Visibility="Collapsed" />
         <local:RivalControl Grid.Column="1" Grid.Row="1" x:Name="rivalViewer" Visibility="Collapsed" />
     </Grid>

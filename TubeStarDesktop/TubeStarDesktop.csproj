@@ -170,8 +170,8 @@
     <Compile Include="UI\StudySelectionDialog.xaml.cs">
       <DependentUpon>StudySelectionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\UploadVideoDialog.xaml.cs">
-      <DependentUpon>UploadVideoDialog.xaml</DependentUpon>
+    <Compile Include="UI\PostVideoControl.xaml.cs">
+      <DependentUpon>PostVideoControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\StoreItemBlock.xaml.cs">
       <DependentUpon>StoreItemBlock.xaml</DependentUpon>
@@ -304,7 +304,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\UploadVideoDialog.xaml">
+    <Page Include="UI\PostVideoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

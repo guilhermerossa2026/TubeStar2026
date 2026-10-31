@@ -1109,4 +1109,28 @@ Das war einfach!</Text>
     <Id>ThumbAuto</Id>
     <Text>No thumbnail chosen: the first result will be used.</Text>
   </CustomText>
+  <CustomText>
+    <Id>PostVideoLead</Id>
+    <Text>Pick a ready video, the channel and how to promote it.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostReadyVideos</Id>
+    <Text>Ready videos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostNoVideos</Id>
+    <Text>No video ready. Create and edit a video in the Schedule.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostChangeThumb</Id>
+    <Text>Change thumbnail</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostNoChannel</Id>
+    <Text>You have no channel yet. Create one to post your videos.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PostPromote</Id>
+    <Text>Promote video</Text>
+  </CustomText>
 </ArrayOfCustomText>

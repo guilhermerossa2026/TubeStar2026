@@ -132,6 +132,7 @@ namespace TubeStar
             Player.Current.Reset();
             Player.Current.ChallengeMode = careerMode;
             Player.Current.UltraMode = ultraMode;
+            DailyPlanner.SetAgendaToRestore(null, null); //Jogo novo sempre começa com NewDay
 
             _mainPage = new MainPage();
             _mainPage.GameLose += MainPage_GameLose;
@@ -143,6 +144,7 @@ namespace TubeStar
         {
             VideoViewer.Reset();
             Player.Current.Reset();
+            DailyPlanner.SetAgendaToRestore(null, null); //O Load preenche se o save tiver agenda
             this.IsEnabled = false;
             SaveLoadHelper.Load(SaveLoadHelper.SaveFile);
             this.IsEnabled = true;

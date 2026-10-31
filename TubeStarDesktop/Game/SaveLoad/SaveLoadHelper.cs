@@ -61,6 +61,8 @@ namespace TubeStar
                     }
                 }
                 obj.Rivals = Rivals.Current.All;
+                obj.DailyAgenda = DailyPlanner.GetCurrentAgendaForSave();
+                obj.MoneyAtStartOfDay = DailyPlanner.GetMoneyAtStartOfDayForSave();
 
                 var json = JsonConvert.SerializeObject(obj, JsonSettings);
                 File.WriteAllText(fileName, json);
@@ -113,6 +115,9 @@ namespace TubeStar
 
                 if (saveObj.Rivals != null && saveObj.Rivals.Count > 0)
                     Rivals.Current.PopulateFromList(saveObj.Rivals);
+
+                //Se o save tem a agenda, o próximo DailyPlanner volta ao mesmo dia
+                DailyPlanner.SetAgendaToRestore(saveObj.DailyAgenda, saveObj.MoneyAtStartOfDay);
             }
             catch (Exception)
             {
@@ -120,6 +125,7 @@ namespace TubeStar
                 //volta para um jogo novo coerente em vez de deixar peças misturadas
                 VideoViewer.Reset();
                 Player.Current.Reset();
+                DailyPlanner.SetAgendaToRestore(null, null);
                 CustomMessageBox.ShowDialog(EnglishStrings.Failure.Translate(), EnglishStrings.LoadFail.Translate(), MessagePicture.Error);
             }
         }

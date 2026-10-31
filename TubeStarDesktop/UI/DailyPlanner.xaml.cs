@@ -19,12 +19,96 @@ namespace TubeStar
         public List<Task> Appointments { get; private set; }
         private double _moneyAtStartOfDay;
 
+        private const string JobMarker = "Job";
+
+        //Agenda que está na tela (a MainPage atual tem um só DailyPlanner): usada pelo Save
+        private static DailyPlanner _active;
+        //Agenda vinda do Load, consumida pelo próximo DailyPlanner criado (Continuar)
+        private static List<string> _agendaToRestore;
+        private static double? _moneyAtStartToRestore;
+
         public DailyPlanner()
         {
             InitializeComponent();
             Translate();
             Appointments = new List<Task>();
-            NewDay();
+            _active = this;
+
+            var agenda = _agendaToRestore;
+            var moneyAtStart = _moneyAtStartToRestore;
+            SetAgendaToRestore(null, null);
+
+            if (agenda != null)
+                RestoreDay(agenda, moneyAtStart);
+            else
+                NewDay();
+        }
+
+        public static void SetAgendaToRestore(List<string> agenda, double? moneyAtStartOfDay)
+        {
+            _agendaToRestore = agenda;
+            _moneyAtStartToRestore = moneyAtStartOfDay;
+        }
+
+        public static List<string> GetCurrentAgendaForSave()
+        {
+            if (_active == null || _active.Appointments == null)
+                return null;
+
+            var result = new List<string>();
+            foreach (var task in _active.Appointments)
+            {
+                if (task.TaskType == TaskType.Job)
+                {
+                    result.Add(JobMarker);
+                }
+                else
+                {
+                    int index = Player.Current.TasksInProgress.IndexOf(task);
+                    if (index >= 0)
+                        result.Add(index.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                }
+            }
+            return result;
+        }
+
+        public static double? GetMoneyAtStartOfDayForSave()
+        {
+            if (_active == null)
+                return null;
+            return _active._moneyAtStartOfDay;
+        }
+
+        //Volta ao mesmo dia do save: sem cobrar, pagar ou simular.
+        //As horas das tarefas (HoursPutIn) já foram salvas com a agenda somada.
+        private void RestoreDay(List<string> agenda, double? moneyAtStart)
+        {
+            _moneyAtStartOfDay = moneyAtStart.HasValue ? moneyAtStart.Value : Player.Current.Money;
+
+            Job job = null;
+            foreach (var marker in agenda)
+            {
+                if (Appointments.Count >= 15)
+                    break;
+
+                if (marker == JobMarker)
+                {
+                    if (job == null)
+                        job = new Job();
+                    job.HoursPutIn++;
+                    Appointments.Add(job);
+                }
+                else
+                {
+                    int index;
+                    if (int.TryParse(marker, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out index)
+                        && index >= 0 && index < Player.Current.TasksInProgress.Count)
+                    {
+                        Appointments.Add(Player.Current.TasksInProgress[index]);
+                    }
+                }
+            }
+            Update();
         }
 
         private void Translate()

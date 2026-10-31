@@ -48,4 +48,4 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "continuar o Visual novo, etapa 3 (cards novos e Top TubeStars)". Etapas 1 (cores e fonte Inter) e 2 (menu lateral e cabeçalho) feitas em 31/10/2026. Pendente: "Continuar" avança um dia sozinho (DailyPlanner chama NewDay no construtor); 18 idiomas com os textos novos do menu em inglês..
+3. Pedir ao Claude: "continuar o Visual novo, etapa 3 (cards novos e Top TubeStars)". Etapas 1 (cores e fonte Inter) e 2 (menu lateral e cabeçalho) feitas em 31/10/2026. O "Continuar" agora volta ao mesmo dia (agenda salva). Textos novos só precisam de PT-BR (decisão do dono)..

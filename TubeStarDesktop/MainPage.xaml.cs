@@ -263,11 +263,11 @@ namespace TubeStar
             }
         }
 
+        //A agenda do dia vai junto no save e é restaurada no Continuar,
+        //então as horas já marcadas ficam como estão (antes eram tiradas aqui)
         private void DoSave()
         {
-            dailyPlanner.Appointments.ForEach(a => a.HoursPutIn--);
             SaveLoadHelper.Save(SaveLoadHelper.SaveFile);
-            dailyPlanner.Appointments.ForEach(a => a.HoursPutIn++);
         }
 
         private void Exit_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

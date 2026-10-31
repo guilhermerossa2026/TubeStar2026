@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -28,7 +28,9 @@ namespace TubeStar
                     txtName.Text = _storeItem.Name;
                     txtDescription.Text = _storeItem.Description;
                     txtPrice.Text = _storeItem.Cost.ToCurrencyString();
-                    this.IsEnabled = _storeItem.Purchased ? false : true;
+                    btnBuy.Visibility = _storeItem.Purchased ? Visibility.Collapsed : Visibility.Visible;
+                    pillPurchased.Visibility = _storeItem.Purchased ? Visibility.Visible : Visibility.Collapsed;
+                    LayoutRoot.Cursor = _storeItem.Purchased ? Cursors.Arrow : Cursors.Hand;
                     imgItem.Source = new BitmapImage(new Uri(String.Format("../Resources/StoreItems/{0}.jpg", _storeItem.ImageName), UriKind.Relative));
                 }
             }
@@ -37,30 +39,26 @@ namespace TubeStar
         public StoreItemBlock(StoreItem item)
         {
             InitializeComponent();
+            btnBuy.Content = EnglishStrings.Buy.Translate();
+            txtPurchased.Text = EnglishStrings.Purchased.Translate();
             StoreItem = item;
         }
 
         private void btnBuy_Click(object sender, RoutedEventArgs e)
         {
-            if (Player.Current.Money - _storeItem.Cost < 0)
-            {
-                CustomMessageBox.ShowDialog(EnglishStrings.LowCashHeader.Translate(), EnglishStrings.LowCashMessage.Translate(), MessagePicture.Money);
-                return;
-            }
-
-            Player.Current.Money -= _storeItem.Cost;
-            _storeItem.Purchased = true;
-            this.IsEnabled = false;
-
-            if (_storeItem == StoreItems.Current.Loan)
-            {
-                Player.Current.LoanPayOff = (StoreItems.Current.Loan.Payout * (100 + StoreItems.Current.Loan.Interest) / 100);
-                Player.Current.Money += StoreItems.Current.Loan.Payout;
-            }
+            TryBuy();
         }
 
         private void LayoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            TryBuy();
+        }
+
+        private void TryBuy()
+        {
+            if (_storeItem == null || _storeItem.Purchased)
+                return;
+
             this.PlayAnimation(() =>
             {
                 if (Player.Current.Money - _storeItem.Cost < 0)
@@ -91,12 +89,13 @@ namespace TubeStar
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
+            if (_storeItem != null && !_storeItem.Purchased)
+                cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.Transparent;
+            cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardBrush");
         }
     }
 }

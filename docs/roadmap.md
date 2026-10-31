@@ -13,7 +13,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Dificuldade: Média. Depende de: nada.
 
 **1. Visual novo: V1 Studio (WPF/XAML)**: versão escolhida
-- Prévia: `docs/estudo-visual.html`. Etapas: (1) cores e fontes em `Styles/` (feita em 31/10/2026); (2) cabeçalho, menu lateral e relógio Ano/Semana/Dia (feita em 31/10/2026; seletor de canal e Algoritmo ficam para os itens 4 e 8); (3) cards novos e Top TubeStars; (4) demais telas.
+- Prévia: `docs/estudo-visual.html`. Etapas: (1) cores e fontes em `Styles/` (feita em 31/10/2026); (2) cabeçalho, menu lateral e relógio Ano/Semana/Dia (feita em 31/10/2026; seletor de canal e Algoritmo ficam para os itens 4 e 8); (3) cards novos e Top TubeStars (feita em 31/10/2026: só visual, com os 15 rivais atuais; mecânica completa no item 2); (4) demais telas.
 - Ajustes: tela título sem o botão Top TubeStars; Meus vídeos com seletor de canal, "+ Novo canal", grade de 9 com paginação, filtros, busca, painel direito mais estreito, ver todos e excluir; botão de thumbnail em Criar vídeo.
 - Thumbnail (Criar vídeo): busca na API só pelo TÍTULO; categoria só como fallback sem resultado (hoje "categoria,nome" + sorteio de 1 em 50 em `Video.FetchRandomImage`, `Video.cs:549`). Sem sorteio, ordem de relevância. Carrossel com setas (direita = próxima, esquerda = anterior exata) e contador "N de 50". Os 50 resultados ficam guardados; ao passar do fim, busca a próxima página (pageToken, +1 busca). Cada imagem é baixada só quando exibida. Botões "Usar esta" e "Buscar outras" (troca o termo).
 - Postar vídeo: lista compacta dos vídeos prontos à esquerda (uma linha por vídeo); o selecionado aparece à direita com o canal e o "Promover vídeo".

@@ -259,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Components.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Custom.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

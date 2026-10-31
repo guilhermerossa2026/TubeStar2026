@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Custom.xaml" />
                 <ResourceDictionary Source="Styles/Icons.xaml" />
+                <ResourceDictionary Source="Styles/Components.xaml" />
                 <ResourceDictionary Source="Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

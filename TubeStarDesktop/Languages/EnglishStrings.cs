@@ -655,5 +655,20 @@ namespace TubeStar
 
         [Description("Year {0} · Week {1} · Day {2}")]
         GameDate,
+
+        [Description("You have {0}.")]
+        YouHave,
+
+        [Description("Purchased")]
+        Purchased,
+
+        [Description("You")]
+        You,
+
+        [Description("Back to Top")]
+        BackToTop,
+
+        [Description("Ranking of the channels in the game world. Climb positions by posting often and with quality.")]
+        TopTubeStarsLead,
     }
 }

@@ -35,7 +35,7 @@
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}" TextElement.FontFamily="{StaticResource YtFontFamily}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="196" />
+            <ColumnDefinition Width="240" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -55,10 +55,10 @@
 
                 <StackPanel Margin="0,8,0,0">
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconHome}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="txtNavHome" Text="Home" VerticalAlignment="Center" />
-                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon1" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                        </StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon1" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                            <TextBlock x:Name="txtNavHome" Text="Home" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
                     </ToggleButton>
 
                     <ToggleButton x:Name="btnDailyPlanner" IsChecked="True" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconCalendar}" Click="btnDailyPlanner_Click">
@@ -70,17 +70,17 @@
                     </ToggleButton>
 
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconPlus}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="txtNavCreate" Text="Create video" VerticalAlignment="Center" />
-                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon2" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                        </StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon2" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                            <TextBlock x:Name="txtNavCreate" Text="Create video" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
                     </ToggleButton>
 
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconSend}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="txtNavPost" Text="Post video" VerticalAlignment="Center" />
-                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon3" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                        </StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon3" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                            <TextBlock x:Name="txtNavPost" Text="Post video" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
                     </ToggleButton>
 
                     <ToggleButton x:Name="btnOnlineStore" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconBag}" Click="btnOnlineStore_Click">
@@ -92,17 +92,17 @@
                     </ToggleButton>
 
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconCap}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="txtNavUniversity" Text="University" VerticalAlignment="Center" />
-                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon4" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                        </StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon4" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                            <TextBlock x:Name="txtNavUniversity" Text="University" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
                     </ToggleButton>
 
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconTeam}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="txtNavEmployees" Text="Employees" VerticalAlignment="Center" />
-                            <Border Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon5" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
-                        </StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon5" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
+                            <TextBlock x:Name="txtNavEmployees" Text="Employees" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
                     </ToggleButton>
                 </StackPanel>
             </DockPanel>

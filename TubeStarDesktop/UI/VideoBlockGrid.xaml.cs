@@ -1,4 +1,4 @@
-using Nicenis.Windows;
+﻿using Nicenis.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace TubeStar
                     txtLikes.Text = _video.Likes.ToNumberString();
                     txtDislikes.Text = _video.Dislikes.ToNumberString();
 
-                    panelStats.Visibility = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
+                    panelStats.Visibility = viewsBadge.Visibility = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
 
                     txtQuality.Text = GetQualityText(isUnreleasedChannel);
 
@@ -132,12 +132,12 @@ namespace TubeStar
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
+            cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardHoverBrush");
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.Transparent;
+            cardBorder.Background = (Brush)System.Windows.Application.Current.FindResource("YtDarkCardBrush");
         }
 
         private void UserControl_PreviewMouseUp(object sender, MouseButtonEventArgs e)

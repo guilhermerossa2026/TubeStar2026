@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace TubeStar
 {
@@ -13,9 +14,9 @@ namespace TubeStar
     public partial class RivalControl : UserControl
     {
         private Channel _currentChannel;
-        private int _tier = 1;
 
-        private const int RivalsPerTier = 3;
+        //Cores dos avatares (derivadas do nome do canal)
+        private static readonly string[] AvatarColors = { "#E5534B", "#3EA66B", "#9B7BD6", "#E3A23B", "#3B8FE3", "#D65BA4", "#2FB3A6", "#C7743B" };
 
         public RivalControl()
         {
@@ -37,12 +38,17 @@ namespace TubeStar
 
         private void Translate()
         {
+            txtTitle.Text = EnglishStrings.TopTubeStars.Translate();
+            txtLead.Text = EnglishStrings.TopTubeStarsLead.Translate();
+            txtSoonTwitch.Text = txtSoonPodcast.Text = EnglishStrings.Soon.Translate();
+            thChannel.Text = EnglishStrings.Channel.Translate().ToUpper();
+            thSubscribers.Text = EnglishStrings.Subscribers.Translate().ToUpper();
+            thViews.Text = EnglishStrings.Views.Translate().ToUpper();
+            btnBack.Content = "‹ " + EnglishStrings.BackToTop.Translate();
         }
 
         public void Update()
         {
-            channelPanel.Children.Clear();
-
             List<Channel> channels = new List<Channel>();
             foreach (var rival in Rivals.Current.All)
             {
@@ -51,83 +57,133 @@ namespace TubeStar
                     channels.Add(rival.Channel);
                 }
             }
+            //Uma linha "voce" para cada canal do jogador
             foreach (var channel in Player.Current.Channels)
             {
-                if (channel != Channel.UnreleasedVideos)
+                if (channel != null && channel != Channel.UnreleasedVideos)
                     channels.Add(channel);
             }
 
-            channels.Sort((l, r) => 
-                {
-                    if (l == null || r == null)
-                        return -1;
-                    return l.Subscribers.CompareTo(r.Subscribers);
-                });
+            //Maior numero de inscritos primeiro
+            channels = channels.OrderByDescending(c => c.Subscribers).ToList();
 
-            if (channels.Count > 0 && !channels.Last().IsRivalChannel)
+            if (channels.Count > 0 && !channels[0].IsRivalChannel)
             {
                 TrophyManager.UnlockTrophy(Trophy.King);
             }
 
-            int taken = 0;
-            int skip = (_tier - 1) * RivalsPerTier;
-            foreach (var channel in channels)
+            rankingPanel.Children.Clear();
+            for (int i = 0; i < channels.Count; i++)
             {
-                if (skip == 0)
-                {
-                    if (_currentChannel == null)
-                        _currentChannel = channel;
-
-                    RenderChannel(channel);
-                    if (channel.IsRivalChannel)
-                    {
-                        taken++;
-                        if (taken == RivalsPerTier)
-                        {
-                            if (_tier != 5)
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    if (channel.IsRivalChannel)
-                        skip--;
-                }
+                rankingPanel.Children.Add(CreateRow(i + 1, channels[i]));
             }
 
-            ShowChannel(_currentChannel);
+            if (channelView.Visibility == Visibility.Visible)
+                ShowChannel(_currentChannel);
         }
 
-        private void RenderChannel(Channel channel)
+        private Border CreateRow(int position, Channel channel)
         {
-            var channelBlock = new ChannelBlock(channel, channel == _currentChannel);
-            channelBlock.HideEdit();
-            channelBlock.ChannelClick += (s, e) =>
-            {
-                foreach (ChannelBlock block in channelPanel.Children)
-                {
-                    block.Selected = false;
-                }
+            bool isMe = !channel.IsRivalChannel;
 
-                channelBlock.Selected = true;
-                _currentChannel = channelBlock.Channel;
-                ShowChannel(channelBlock.Channel);
-            };
-            channelBlock.EditClick += (s, e) =>
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(44) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(140) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(140) });
+
+            var txtPosition = new TextBlock { Text = position.ToString(), FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid.Children.Add(txtPosition);
+
+            var avatar = CreateAvatar(channel.Name);
+            Grid.SetColumn(avatar, 1);
+            grid.Children.Add(avatar);
+
+            var namePanel = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
+            namePanel.Children.Add(new TextBlock { Text = channel.Name, FontWeight = FontWeights.Bold, TextTrimming = TextTrimming.CharacterEllipsis, VerticalAlignment = VerticalAlignment.Center });
+            if (isMe)
             {
-                AddChannelDialog channelDialog = new AddChannelDialog(channelBlock.Channel);
-                channelDialog.ShowDialog(() =>
+                var pill = new Border { Style = (Style)FindResource("PillRedStyle"), Margin = new Thickness(8, 0, 0, 0) };
+                pill.Child = new TextBlock { Text = EnglishStrings.You.Translate(), Style = (Style)FindResource("InheritTextStyle") };
+                namePanel.Children.Add(pill);
+            }
+            Grid.SetColumn(namePanel, 2);
+            grid.Children.Add(namePanel);
+
+            var txtSubs = new TextBlock { Text = channel.Subscribers.ToNumberString(), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
+            Grid.SetColumn(txtSubs, 3);
+            grid.Children.Add(txtSubs);
+
+            var txtViews = new TextBlock { Text = GetTotalViews(channel).ToNumberString(), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
+            Grid.SetColumn(txtViews, 4);
+            grid.Children.Add(txtViews);
+
+            var row = new Border { Style = (Style)FindResource(isMe ? "TableRowMeStyle" : "TableRowStyle"), Child = grid };
+            if (!isMe)
+            {
+                row.Cursor = Cursors.Hand;
+                row.MouseLeftButtonUp += (s, e) =>
                 {
-                    if (channelDialog.DialogResult == true)
-                    {
-                        channelBlock.Channel.Name = channelDialog.Channel.Name;
-                        channelBlock.Channel.Advertising = channelDialog.Channel.Advertising;
-                        Update();
-                    }
-                });
+                    _currentChannel = channel;
+                    rankingView.Visibility = Visibility.Collapsed;
+                    channelView.Visibility = Visibility.Visible;
+                    ShowChannel(channel);
+                };
+            }
+            return row;
+        }
+
+        private static int GetTotalViews(Channel channel)
+        {
+            long total = 0;
+            if (channel.Videos != null)
+            {
+                foreach (var video in channel.Videos)
+                    total += video.Views;
+            }
+            return (int)Math.Min(total, int.MaxValue);
+        }
+
+        private static FrameworkElement CreateAvatar(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+                name = "?";
+
+            int hash = 0;
+            foreach (char c in name)
+                hash = (hash * 31 + c) & 0x7FFFFFFF;
+
+            var color = (Color)ColorConverter.ConvertFromString(AvatarColors[hash % AvatarColors.Length]);
+            var circle = new Border
+            {
+                Width = 30,
+                Height = 30,
+                CornerRadius = new CornerRadius(15),
+                Background = new SolidColorBrush(color),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
             };
-            channelPanel.Children.Insert(0, channelBlock);
+            circle.Child = new TextBlock
+            {
+                Text = GetInitial(name),
+                FontWeight = FontWeights.Bold,
+                FontSize = 13,
+                Foreground = Brushes.White,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            return circle;
+        }
+
+        private static string GetInitial(string name)
+        {
+            foreach (char c in name)
+            {
+                if (Char.IsLetterOrDigit(c))
+                    return Char.ToUpper(c).ToString();
+            }
+            return "?";
         }
 
         private void ShowChannel(Channel channel)
@@ -135,7 +191,11 @@ namespace TubeStar
             if (channel == null)
                 return;
 
+            channelNameTextBlock.Text = channel.Name;
             channelSummaryTextBlock.Text = String.Format("{0}: {1}", EnglishStrings.Subscribers.Translate(), channel.Subscribers.ToNumberString());
+
+            listViewer.Visibility = Settings.ListView ? Visibility.Visible : Visibility.Collapsed;
+            gridViewer.Visibility = Settings.ListView ? Visibility.Collapsed : Visibility.Visible;
 
             videoPanel.Children.Clear();
             videoPanelGrid.Children.Clear();
@@ -143,17 +203,11 @@ namespace TubeStar
             {
                 if (Settings.ListView)
                 {
-                    listViewer.Visibility = Visibility.Visible;
-                    gridViewer.Visibility = Visibility.Collapsed;
-
                     var videoBlock = new VideoBlock(channel, video);
                     videoPanel.Children.Insert(0, videoBlock);
                 }
                 else
                 {
-                    listViewer.Visibility = Visibility.Collapsed;
-                    gridViewer.Visibility = Visibility.Visible;
-
                     var videoBlock = new VideoBlockGrid(channel, video);
                     videoPanelGrid.Children.Insert(0, videoBlock);
                 }
@@ -172,49 +226,10 @@ namespace TubeStar
             }
         }
 
-        private void UnCheckAll()
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            btnTier1.IsChecked = btnTier2.IsChecked = btnTier3.IsChecked = btnTier4.IsChecked = btnTier5.IsChecked = false;
-            _currentChannel = null;
-        }
-
-        private void btnTier1_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UnCheckAll();
-            btnTier1.IsChecked = true;
-            _tier = 1;
-            Update();
-        }
-
-        private void btnTier2_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UnCheckAll();
-            btnTier2.IsChecked = true;
-            _tier = 2;
-            Update();
-        }
-
-        private void btnTier3_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UnCheckAll();
-            btnTier3.IsChecked = true;
-            _tier = 3;
-            Update();
-        }
-
-        private void btnTier4_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UnCheckAll();
-            btnTier4.IsChecked = true;
-            _tier = 4;
-            Update();
-        }
-
-        private void btnTier5_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            UnCheckAll();
-            btnTier5.IsChecked = true;
-            _tier = 5;
+            channelView.Visibility = Visibility.Collapsed;
+            rankingView.Visibility = Visibility.Visible;
             Update();
         }
 
@@ -222,14 +237,14 @@ namespace TubeStar
         {
             Properties.Settings.Default.ListView = false;
             Settings.ListView = false;
-            Update();
+            ShowChannel(_currentChannel);
         }
 
         private void btnList_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ListView = true;
             Settings.ListView = true;
-            Update();
+            ShowChannel(_currentChannel);
         }
     }
 }

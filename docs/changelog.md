@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-31
+- Visual novo, etapa 3: estilos de cartão reutilizáveis (`Styles/Components.xaml`), cartões de vídeo em grade e lista, Loja em grade (itens comprados ficam no fim com "Comprado"; comprar sempre pede confirmação) e Top TubeStars em tabela de ranking (15 rivais + seus canais destacados, abas Twitch/Podcast "Em breve"). Menu lateral passou para 240px.
 - "Continuar" volta exatamente ao mesmo dia: o save guarda a agenda do dia e o dinheiro do início do dia (antes, carregar o jogo encerrava o dia e simulava um dia novo). Salvar não tira mais as horas já marcadas.
 - Visual novo, etapa 2: menu lateral (Agenda, Meus vídeos, Loja e Top TubeStars; demais itens "Em breve"), cabeçalho com data "Ano · Semana · Dia" (ano de 112 dias), dinheiro, inscritos e botão "Próximo dia", ícones vetoriais em `Styles/Icons.xaml`. A faixa inferior do "Novo dia" saiu.
 - Visual novo, etapa 1 (cores e fonte): paleta da prévia V1 Studio centralizada em `Styles/Custom.xaml` (novas cores de ganho, perda e Twitch), ~100 cores fixas trocadas pelo tema, gráficos com tema escuro e fonte Inter embutida (licença SIL OFL, em `TubeStarDesktop/Fonts`).

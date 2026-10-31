@@ -865,4 +865,24 @@
     <Id>GameDate</Id>
     <Text>Ano {0} · Semana {1} · Dia {2}</Text>
   </CustomText>
+  <CustomText>
+    <Id>YouHave</Id>
+    <Text>Você tem {0}.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>Purchased</Id>
+    <Text>Comprado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>You</Id>
+    <Text>Você</Text>
+  </CustomText>
+  <CustomText>
+    <Id>BackToTop</Id>
+    <Text>Voltar ao Top</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TopTubeStarsLead</Id>
+    <Text>Ranking de canais do mundo do jogo. Suba posições postando com frequência e qualidade.</Text>
+  </CustomText>
 </ArrayOfCustomText>

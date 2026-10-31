@@ -887,4 +887,24 @@ Click OK to continue, CANCEL to quit</Text>
     <Id>GameDate</Id>
     <Text>Year {0} · Week {1} · Day {2}</Text>
   </CustomText>
+  <CustomText>
+    <Id>YouHave</Id>
+    <Text>You have {0}.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>Purchased</Id>
+    <Text>Purchased</Text>
+  </CustomText>
+  <CustomText>
+    <Id>You</Id>
+    <Text>You</Text>
+  </CustomText>
+  <CustomText>
+    <Id>BackToTop</Id>
+    <Text>Back to Top</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TopTubeStarsLead</Id>
+    <Text>Ranking of the channels in the game world. Climb positions by posting often and with quality.</Text>
+  </CustomText>
 </ArrayOfCustomText>

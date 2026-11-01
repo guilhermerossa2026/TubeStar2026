@@ -32,7 +32,7 @@ namespace TubeStar
         {
             search = search.Replace(' ', ',');
             var uriString = String.Format("https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&&maxResults={1}&fields=nextPageToken,prevPageToken,items(id(videoId))&key={2}{3}",
-                HttpHelpers.UrlEncoding(search), max, ApiKey, Settings.UseCreativeCommons ? "&videoLicense=creativeCommon" : "");
+                HttpHelpers.UrlEncoding(search), max, ApiKey, "");
             return new Uri(uriString);
         }
 
@@ -45,7 +45,7 @@ namespace TubeStar
         public static Uri SearchVideos(string search, int max, string pageToken)
         {
             var uriString = String.Format("https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&maxResults={1}&fields=nextPageToken,items(id(videoId))&key={2}{3}{4}",
-                HttpHelpers.UrlEncoding(search), max, ApiKey, Settings.UseCreativeCommons ? "&videoLicense=creativeCommon" : "",
+                HttpHelpers.UrlEncoding(search), max, ApiKey, "",
                 String.IsNullOrEmpty(pageToken) ? "" : "&pageToken=" + HttpHelpers.UrlEncoding(pageToken));
             return new Uri(uriString);
         }
@@ -54,7 +54,7 @@ namespace TubeStar
         {
             search = search.Replace(' ', ',');
             var uriString = String.Format("https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&&maxResults={1}&fields=nextPageToken,prevPageToken,items(id(videoId),snippet(title))&key={2}{3}",
-                HttpHelpers.UrlEncoding(search), max, ApiKey, Settings.UseCreativeCommons ? "&videoLicense=creativeCommon" : "");
+                HttpHelpers.UrlEncoding(search), max, ApiKey, "");
             return new Uri(uriString);
         }
 

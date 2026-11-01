@@ -35,13 +35,7 @@
                     <TextBlock x:Name="txtUltra" Text="Ultra" FontSize="15" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
             </Button>        </UniformGrid>
-        <ToggleButton x:Name="commonsButton" HorizontalAlignment="Center" Margin="0,12,0,0">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="../Resources/Commons.png" Height="20" Margin="0,0,8,0" />
-                <TextBlock x:Name="commonsText1" Text="Display 'Creative Commons' Material Only" FontSize="13" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
-            </StackPanel>
-        </ToggleButton>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6,0,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
             <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Click="Cancel_Click" />
         </StackPanel>
     </StackPanel>

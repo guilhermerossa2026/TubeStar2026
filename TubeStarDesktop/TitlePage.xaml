@@ -19,8 +19,6 @@
                 <StackPanel Width="300" Margin="0,26,0,0">
                     <Button x:Name="btnNewGame" Content="New game" FontSize="16" Height="46" Margin="0,0,0,12" Style="{StaticResource PrimaryButtonStyle}" Click="NewGame_Click" />
                     <Button x:Name="btnContinue" Content="Continue game" FontSize="16" Height="46" Margin="0,0,0,12" Click="ContinueGame_Click" />
-                    <Button x:Name="btnTutorial" Content="Tutorial" FontSize="15" Height="42" Margin="0,0,0,12" Click="Tutorial_Click" />
-                    <Button x:Name="btnCredits" Content="Credits" FontSize="15" Height="42" Margin="0,0,0,12" Click="Credits_Click" />
                     <Button x:Name="btnExit" Content="Exit" FontSize="15" Height="42" Style="{StaticResource GhostButtonStyle}" Click="Exit_Click" />
                 </StackPanel>
 
@@ -47,7 +45,6 @@
                     <Image x:Name="imgIndonesia" Height="26" Margin="3" Cursor="Hand" Source="Resources/Languages/Indonesian.png" MouseLeftButtonDown="imgIndonesia_MouseLeftButtonDown"/>
                     <Image x:Name="imgThailand" Height="26" Margin="3" Cursor="Hand" Source="Resources/Languages/Thai.png" MouseLeftButtonDown="imgThailand_MouseLeftButtonDown"/>
                 </WrapPanel>
-                <TextBlock x:Name="TranslatedBy" HorizontalAlignment="Center" Text="" FontSize="11" Foreground="{StaticResource YtTextSecondaryBrush}" TextWrapping="Wrap" MaxWidth="500" TextAlignment="Center" Margin="0,8,0,0" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

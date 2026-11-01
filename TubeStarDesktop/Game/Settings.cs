@@ -9,7 +9,5 @@ namespace TubeStar
         public static Channel LastChannel { get; set; }
         public static string PlayerName { get; set; }
 
-        public static bool ListView { get; set; }
-        public static bool UseCreativeCommons { get; set; }
-    }
+        public static bool ListView { get; set; }    }
 }

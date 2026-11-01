@@ -120,17 +120,7 @@ namespace TubeStar
             grid.Children.Add(txtViews);
 
             var row = new Border { Style = (Style)FindResource(isMe ? "TableRowMeStyle" : "TableRowStyle"), Child = grid };
-            if (!isMe)
-            {
-                row.Cursor = Cursors.Hand;
-                row.MouseLeftButtonUp += (s, e) =>
-                {
-                    _currentChannel = channel;
-                    rankingView.Visibility = Visibility.Collapsed;
-                    channelView.Visibility = Visibility.Visible;
-                    ShowChannel(channel);
-                };
-            }
+            //Clique no rival desativado: o perfil completo entra no Top TubeStars (roadmap item 2)
             return row;
         }
 

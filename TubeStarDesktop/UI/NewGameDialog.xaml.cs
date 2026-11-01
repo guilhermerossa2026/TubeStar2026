@@ -21,7 +21,6 @@ namespace TubeStar
         {
             InitializeComponent();
             Translate();
-            commonsButton.IsChecked = Settings.UseCreativeCommons;
         }
 
         private void Translate()
@@ -30,7 +29,6 @@ namespace TubeStar
             txtCasual.Text = EnglishStrings.Casual.Translate();
             txtChallenge.Text = EnglishStrings.Challenge.Translate();
             txtUltra.Text = EnglishStrings.Ultra.Translate();
-            commonsText1.Text = EnglishStrings.UseCreativeCommons.Translate();
             btnCancel.Content = EnglishStrings.Cancel.Translate();
         }
 
@@ -41,7 +39,6 @@ namespace TubeStar
 
         private void Casual_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSettings();
             if (CasualClicked != null)
             {
                 CasualClicked();
@@ -50,7 +47,6 @@ namespace TubeStar
 
         private void Career_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSettings();
             if (CareerClicked != null)
             {
                 CareerClicked();
@@ -59,17 +55,10 @@ namespace TubeStar
 
         private void Ultra_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSettings();
             if (UltraClicked != null)
             {
                 UltraClicked();
             }
-        }
-
-        private void UpdateSettings()
-        {
-            Settings.UseCreativeCommons = (commonsButton.IsChecked == true);
-            Properties.Settings.Default.UseCreativeCommons = Settings.UseCreativeCommons;
         }
     }
 }

@@ -81,7 +81,6 @@ namespace TubeStar
 
         private void Translate()
         {
-            gridHelp.ToolTip = EnglishStrings.Help.Translate();
             gridExit.ToolTip = EnglishStrings.Exit.Translate();
             imgSave.ToolTip = EnglishStrings.SaveGame.Translate();
             txtDailyPlanner.Text = EnglishStrings.NavSchedule.Translate();
@@ -246,14 +245,6 @@ namespace TubeStar
             //Rivais primeiro: a simulação do dia já considera os vídeos novos deles
             rivalViewer.NewDay();
             dailyPlanner.NewDay();
-        }
-
-        private void Tutorial_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (!TrophyManager.HasTrophy(Trophy.Pupil))
-                TrophyManager.UnlockTrophy(Trophy.Pupil);
-
-            System.Diagnostics.Process.Start("http://www.youtube.com/watch?v=oKfNSm1SLSQ");
         }
 
         private void Save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

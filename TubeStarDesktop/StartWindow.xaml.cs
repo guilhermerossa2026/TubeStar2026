@@ -107,7 +107,6 @@ namespace TubeStar
             }
 
             Settings.ListView = Properties.Settings.Default.ListView;
-            Settings.UseCreativeCommons = Properties.Settings.Default.UseCreativeCommons;
 
             _titlePage = new TitlePage();
             _titlePage.NewGameClicked += TitlePage_NewGameClicked;

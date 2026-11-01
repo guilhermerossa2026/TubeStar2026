@@ -164,9 +164,6 @@
     <Compile Include="UI\SelectButton.xaml.cs">
       <DependentUpon>SelectButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\CreditsDialog.xaml.cs">
-      <DependentUpon>CreditsDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\StudySelectionDialog.xaml.cs">
       <DependentUpon>StudySelectionDialog.xaml</DependentUpon>
     </Compile>
@@ -295,10 +292,6 @@
     <Page Include="UI\SelectButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\CreditsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\StudySelectionDialog.xaml">
       <SubType>Designer</SubType>

@@ -129,7 +129,6 @@
                     </Button>
 
                     <Button x:Name="imgSave" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconSave}" PreviewMouseLeftButtonDown="Save_MouseLeftButtonDown" />
-                    <Button x:Name="gridHelp" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconHelp}" PreviewMouseLeftButtonDown="Tutorial_MouseLeftButtonDown" />
                     <Button x:Name="gridExit" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconExit}" PreviewMouseLeftButtonDown="Exit_MouseLeftButtonDown" />
                 </StackPanel>
             </Grid>

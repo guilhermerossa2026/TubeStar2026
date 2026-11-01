@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-01
+- Removidos da tela de título os botões Tutorial e Créditos (e a janela de créditos) e os nomes dos tradutores; removidos a opção "Creative Commons" do Novo jogo e o "?" do cabeçalho (vídeo antigo). No Top TubeStars, clicar num rival não abre mais a lista de vídeos (o perfil entra no item 2 do roadmap).
+
 ## 2026-10-31
 - Visual novo, etapa 4e: todas as janelas no estilo novo (o estilo escuro nunca era aplicado às janelas; corrigido em `DialogHelper`), Adicionar tarefa, Novo jogo e Estudos em cartões, ComboBox escuro, gráficos escuros, mensagens com OK vermelho e tela de título como a prévia. Conclui o Visual novo (V1 Studio).
 - Visual novo, etapa 4d: "Postar vídeo" virou tela do menu (sai a janela UploadVideoDialog): lista compacta dos vídeos prontos, canal em chips, opções de views atuais em "Promover vídeo" (mesmos valores e regras), "Trocar miniatura" com busca só ao clicar. O botão "Postar" de Meus vídeos abre essa tela.

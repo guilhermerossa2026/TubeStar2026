@@ -1437,4 +1437,68 @@
     <Id>NumberTrillion</Id>
     <Text>tri</Text>
   </CustomText>
+  <CustomText>
+    <Id>NicheLabel</Id>
+    <Text>Nicho</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheChooseHint</Id>
+    <Text>Escolha o nicho do canal. Ele não pode ser trocado depois.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheInfo</Id>
+    <Text>Ganho por view: {0} · Concorrência: {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheLevelHigh</Id>
+    <Text>Alto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheLevelMedium</Id>
+    <Text>Médio</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheLevelLow</Id>
+    <Text>Baixo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheFixed</Id>
+    <Text>O nicho não pode ser trocado depois que o canal é criado.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheMissing</Id>
+    <Text>Escolha o nicho do canal.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheOutWarning</Id>
+    <Text>Este vídeo está fora do nicho do canal ({0}): menos inscritos vão assistir, mas mais gente nova pode se inscrever.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheCrowdHigh</Id>
+    <Text>Alta</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheCrowdMedium</Id>
+    <Text>Média</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NicheCrowdLow</Id>
+    <Text>Baixa</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummarySalary</Id>
+    <Text>Salário</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryChannel</Id>
+    <Text>Canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryOther</Id>
+    <Text>Outros</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoSubscribersGained</Id>
+    <Text>Inscritos que trouxe</Text>
+  </CustomText>
 </ArrayOfCustomText>

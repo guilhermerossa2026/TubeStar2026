@@ -8,6 +8,8 @@ namespace TubeStar
     {
         public string Name { get; set; }
         public bool IsRivalChannel { get; set; }
+        //Nicho escolhido na criação (fixo); nulo em saves antigos
+        public VideoCategory? Niche { get; set; }
         //Liga o canal à linha dele no Top TubeStars (não muda ao renomear)
         public string RankId { get; set; }
         public int MinimumSubsribers { get; set; }

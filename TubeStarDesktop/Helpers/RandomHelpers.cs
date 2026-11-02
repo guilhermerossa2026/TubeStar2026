@@ -8,7 +8,7 @@ namespace TubeStar
 {
     public static class RandomHelpers
     {
-        private const int _videoCategoryLength = 18;
+        private const int _videoCategoryLength = VideoCategoryHelpers.Count;
         private static Lazy<Random> _random;
 
         static RandomHelpers()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
 
 namespace TubeStar
@@ -24,12 +25,50 @@ namespace TubeStar
             cmbAdvertising.SelectedValuePath = "Key";
 
             cmbAdvertising.SelectedValue = AdvertisingStrategy.Normal;
+
+            BuildNicheChips();
+        }
+
+        private VideoCategory? _niche;
+        private bool _editing;
+
+        private void BuildNicheChips()
+        {
+            foreach (VideoCategory niche in Enum.GetValues(typeof(VideoCategory)))
+            {
+                var chip = new Button { Content = niche.GetString(), Tag = niche, Style = (Style)FindResource("ChipButtonStyle") };
+                chip.Click += (s, e) => SelectNiche((VideoCategory)((Button)s).Tag);
+                nicheChips.Children.Add(chip);
+            }
+            txtNicheInfo.Text = EnglishStrings.NicheChooseHint.Translate();
+        }
+
+        private void SelectNiche(VideoCategory niche)
+        {
+            if (_editing)
+                return;
+
+            _niche = niche;
+            foreach (Button chip in nicheChips.Children)
+                chip.Style = (Style)FindResource((VideoCategory)chip.Tag == niche ? "ChipActiveButtonStyle" : "ChipButtonStyle");
+            txtNicheInfo.Text = GetNicheInfo(niche);
+        }
+
+        //"Ganho por view: Alto · Concorrência: Baixa"
+        public static string GetNicheInfo(VideoCategory niche)
+        {
+            double rpm = niche.GetRpmMultiplier();
+            double competition = niche.GetCompetitionMultiplier();
+            string pay = (rpm >= 1.3 ? EnglishStrings.NicheLevelHigh : (rpm >= 0.95 ? EnglishStrings.NicheLevelMedium : EnglishStrings.NicheLevelLow)).Translate();
+            string crowd = (competition <= 0.85 ? EnglishStrings.NicheCrowdHigh : (competition <= 0.95 ? EnglishStrings.NicheCrowdMedium : EnglishStrings.NicheCrowdLow)).Translate();
+            return String.Format(EnglishStrings.NicheInfo.Translate(), pay, crowd);
         }
 
         private void Translate()
         {
             Caption = EnglishStrings.AddChannel.Translate();
             lblName.Text = EnglishStrings.Name.Translate() + ":";
+            lblNiche.Text = EnglishStrings.NicheLabel.Translate() + ":";
             lblStrategy.Text = EnglishStrings.AdvertisingStrategy.Translate() + ":";
             btnOk.Content = EnglishStrings.Ok.Translate();
             btnCancel.Content = EnglishStrings.Cancel.Translate();
@@ -42,6 +81,14 @@ namespace TubeStar
             Channel = channel;
             txtName.Text = channel.Name;
             cmbAdvertising.SelectedValue = channel.Advertising;
+
+            //Nicho é fixo depois de criado: só mostra
+            if (channel.Niche.HasValue)
+                SelectNiche(channel.Niche.Value);
+            _editing = true;
+            foreach (Button chip in nicheChips.Children)
+                chip.IsEnabled = channel.Niche.HasValue && (VideoCategory)chip.Tag == channel.Niche.Value;
+            txtNicheInfo.Text = EnglishStrings.NicheFixed.Translate();
         }
 
         private Dictionary<AdvertisingStrategy, string> GetData()
@@ -71,6 +118,12 @@ namespace TubeStar
                 return;
             }
 
+            if (!_editing && !_niche.HasValue)
+            {
+                CustomMessageBox.ShowDialog(EnglishStrings.MissingValueHeader.Translate(), EnglishStrings.NicheMissing.Translate(), MessagePicture.Puzzle);
+                return;
+            }
+
             if (cmbAdvertising.SelectedValue == null)
             {
                 CustomMessageBox.ShowDialog(EnglishStrings.MissingValueHeader.Translate(), EnglishStrings.MissingStrategy.Translate(), MessagePicture.Puzzle);
@@ -81,6 +134,7 @@ namespace TubeStar
             {
                 Name = txtName.Text,
                 Advertising = (AdvertisingStrategy)cmbAdvertising.SelectedValue,
+                Niche = _niche,
             };
             this.DialogResult = true;
         }

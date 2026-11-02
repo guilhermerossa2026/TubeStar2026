@@ -9,6 +9,9 @@ namespace TubeStar
         //Título do resumo (ex.: "Resumo da semana 2 · Ano 1"), usado no histórico do Calendário
         public string Title { get; set; }
         public double Earned { get; set; }
+        //Parte do Earned que veio do emprego (salário + promoção) e de eventos; o resto é do canal
+        public double Salary { get; set; }
+        public double OtherEarned { get; set; }
         public double Spent { get; set; }
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
@@ -27,6 +30,12 @@ namespace TubeStar
             get { return Earned - Spent; }
         }
 
+        [Newtonsoft.Json.JsonIgnore]
+        public double ChannelEarned
+        {
+            get { return Earned - Salary - OtherEarned; }
+        }
+
         public ChannelPeriodStats GetChannel(string name)
         {
             foreach (var channel in Channels)
@@ -43,6 +52,8 @@ namespace TubeStar
         public void Add(PeriodStats other)
         {
             Earned += other.Earned;
+            Salary += other.Salary;
+            OtherEarned += other.OtherEarned;
             Spent += other.Spent;
             Views += other.Views;
             NewSubscribers += other.NewSubscribers;

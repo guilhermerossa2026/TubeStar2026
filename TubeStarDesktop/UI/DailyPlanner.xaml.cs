@@ -177,7 +177,13 @@ namespace TubeStar
         public static List<UIElement> CreateSummaryKpis(PeriodStats stats)
         {
             var result = new List<UIElement>();
-            result.Add(CreateKpi(EnglishStrings.SummaryEarned.Translate(), stats.Earned.ToCurrencyString(), null));
+            //Ganho com a origem embaixo: salário, canal e outros (eventos)
+            var earned = (StackPanel)CreateKpi(EnglishStrings.SummaryEarned.Translate(), stats.Earned.ToCurrencyString(), null);
+            earned.Children.Add(CreateEarnedLine(EnglishStrings.SummarySalary.Translate(), stats.Salary));
+            earned.Children.Add(CreateEarnedLine(EnglishStrings.SummaryChannel.Translate(), stats.ChannelEarned));
+            if (stats.OtherEarned > 0)
+                earned.Children.Add(CreateEarnedLine(EnglishStrings.SummaryOther.Translate(), stats.OtherEarned));
+            result.Add(earned);
             result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToCurrencyString(), null));
             result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToCurrencyString(),
                 FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush")));
@@ -186,6 +192,11 @@ namespace TubeStar
             result.Add(CreateKpi(EnglishStrings.SummaryVideosPosted.Translate(), stats.VideosPosted.ToString("N0"), null));
             result.Add(CreateKpi(EnglishStrings.SummaryTasksDone.Translate(), stats.TasksCompleted.ToString("N0"), null));
             return result;
+        }
+
+        private static TextBlock CreateEarnedLine(string label, double value)
+        {
+            return new TextBlock { Text = label + " " + value.ToCurrencyString(), Style = (Style)Application.Current.FindResource("MutedTextStyle"), FontSize = 11 };
         }
 
         private static UIElement CreateKpi(string label, string value, Brush valueBrush)
@@ -645,6 +656,7 @@ namespace TubeStar
             {
                 Player.Current.Money += 100;
                 today.Earned += 100;
+                today.Salary += 100;
                 var job = new Job();
                 for (int i = 0; i <= job.HoursToComplete; i++)
                 {
@@ -654,6 +666,7 @@ namespace TubeStar
                 {
                     Player.Current.Money += 50;
                     today.Earned += 50;
+                    today.Salary += 50;
                     AddAppointment(job);
                     AddAppointment(job);
                 }
@@ -685,6 +698,9 @@ namespace TubeStar
                     {
                         double dailyIncome = 0;
                         double dailyExpenses = 0;
+                        //Piso do FanboyBait aplicado antes dos vídeos: a reposição não conta como inscritos trazidos por um vídeo
+                        if (channel.Subscribers < channel.MinimumSubsribers)
+                            channel.Subscribers = channel.MinimumSubsribers;
                         int subscribersBefore = channel.Subscribers;
                         var channelToday = today.GetChannel(channel.Name);
                         foreach (var video in channel.Videos)
@@ -693,12 +709,14 @@ namespace TubeStar
                             double moneyBefore = Player.Current.Money;
                             double incomeBefore = dailyIncome;
                             double expensesBefore = dailyExpenses;
+                            int videoSubscribersBefore = channel.Subscribers;
                             VideoViewer.Iteration(channel, video, ref dailyIncome, ref dailyExpenses);
                             //Crowdfunding entra direto no dinheiro, fora do dailyIncome
                             double crowdfunding = Math.Max(0, Player.Current.Money - moneyBefore);
                             today.Earned += crowdfunding;
                             video.Income += (dailyIncome - incomeBefore) + crowdfunding;
                             video.Expenses += dailyExpenses - expensesBefore;
+                            video.SubscribersGained += channel.Subscribers - videoSubscribersBefore;
                             if (video.Iterations == 1)
                             {
                                 dailyExpenses += video.Cost;

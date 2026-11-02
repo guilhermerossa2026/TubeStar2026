@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-11-02
+- Canais e nichos, etapa 4a: 15 nichos substituem as 18 categorias (vídeo e canal). Nicho do canal escolhido na criação e fixo, com ganho por view (RPM ×0,6 a ×1,8) e concorrência (views de busca ×0,8 a ×1,15) próprios. Vídeo fora do nicho: 25% menos inscritos assistem, mas 30% mais chance de inscrição; aviso ao postar. Troféus migrados para os nichos equivalentes.
+- Resumos mostram a origem do ganho (Salário, Canal, Outros). "Ver vídeo" mostra os inscritos que o vídeo trouxe. Abas de Ver vídeo com o mesmo tamanho.
 - Top TubeStars, etapa 2b: clicar num canal abre o perfil (banner, avatar, tema, posição, inscritos, views, vídeos, inscritos na semana, variação desde ontem, dias no #1, melhor posição e distância para você). Números curtos vão até trilhão (1,25 tri) e o truncamento não erra mais por arredondamento.
 - Top TubeStars, etapa 2a (ranking vivo): 15 rivais famosos + 500 canais genéricos só com números (offline, sem vídeos; save mais leve), crescimento diário com volatilidade e virais, ▲▼ desde ontem, destaques da semana (maior alta, maior queda, você), abas Geral e Cresceu na semana, "Ir para minha posição", "Voltar ao #1" e paginação de 50. Renomear canal mantém o histórico no ranking.
 - Números curtos no jogo todo (12,4 mil, 1,19 mi, 2,3 bi) para inscritos, views, likes e comentários; dinheiro continua exato.

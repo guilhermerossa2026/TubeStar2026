@@ -166,13 +166,13 @@ namespace TubeStar
                     if (!TrophyManager.HasTrophy(Trophy.PropDepartment) && video.Cost == 400)
                         TrophyManager.UnlockTrophy(Trophy.PropDepartment);
 
-                    if (!TrophyManager.HasTrophy(Trophy.WellHeeld) && video.Category == VideoCategory.Hauls && video.Name.ToLower().Contains("heels"))
+                    if (!TrophyManager.HasTrophy(Trophy.WellHeeld) && video.Category == VideoCategory.Beauty && video.Name.ToLower().Contains("heels"))
                         heelCount++;
 
                     if (!TrophyManager.HasTrophy(Trophy.RantMaster) && video.Category == VideoCategory.Vlog && video.Name.ToLower().Contains("rant"))
                         rantCount++;
 
-                    if (!TrophyManager.HasTrophy(Trophy.Procrastinator) && video.Category == VideoCategory.Gaming && video.Name.ToLower().Contains("nerd"))
+                    if (!TrophyManager.HasTrophy(Trophy.Procrastinator) && video.Category == VideoCategory.Games && video.Name.ToLower().Contains("nerd"))
                         nerdCount++;
                 }
 

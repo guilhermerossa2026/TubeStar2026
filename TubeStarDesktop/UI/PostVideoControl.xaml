@@ -105,6 +105,7 @@
 
                             <TextBlock x:Name="lblChannel" Style="{StaticResource FieldLabelStyle}" Text="Channel" />
                             <WrapPanel x:Name="channelPanel" />
+                            <TextBlock x:Name="txtNicheWarning" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,6" Visibility="Collapsed" />
                             <StackPanel x:Name="noChannelPanel" Orientation="Horizontal" Visibility="Collapsed">
                                 <TextBlock x:Name="txtNoChannel" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="360" />
                                 <Button x:Name="btnAddChannel" Style="{StaticResource SmallPrimaryButtonStyle}" Margin="10,0,0,0" Click="btnAddChannel_Click" Content="+ New channel" />

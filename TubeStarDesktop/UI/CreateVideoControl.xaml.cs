@@ -56,7 +56,7 @@ namespace TubeStar
             txtTitle.Text = EnglishStrings.NavCreateVideo.Translate();
             txtLead.Text = EnglishStrings.CreateVideoLead.Translate();
             lblName.Text = EnglishStrings.Name.Translate();
-            lblCategory.Text = EnglishStrings.Category.Translate();
+            lblCategory.Text = EnglishStrings.NicheLabel.Translate();
             lblThumbnail.Text = EnglishStrings.ThumbnailLabel.Translate();
             btnSearchThumbs.Content = EnglishStrings.ThumbSearch.Translate();
             btnQuerySearch.Content = EnglishStrings.ThumbSearch.Translate();

@@ -31,13 +31,13 @@
         <!-- abas -->
         <StackPanel Orientation="Horizontal" Margin="0,16,0,8">
             <Button x:Name="btnTabPerformance" Click="btnTabPerformance_Click" />
-            <Button x:Name="btnTabMoney" Margin="8,0,0,0" Click="btnTabMoney_Click" />
+            <Button x:Name="btnTabMoney" Click="btnTabMoney_Click" />
         </StackPanel>
 
         <Border Style="{StaticResource CardBorderStyle}">
             <Grid>
                 <StackPanel x:Name="panelPerformance">
-                    <UniformGrid x:Name="performanceKpis" Columns="3" />
+                    <UniformGrid x:Name="performanceKpis" Columns="4" />
                     <TextBlock x:Name="txtWhyScore" FontWeight="Bold" Margin="0,14,0,8" />
                     <StackPanel x:Name="qualityRows" />
                     <TextBlock x:Name="txtAttributes" Style="{StaticResource MutedTextStyle}" Margin="0,10,0,0" TextWrapping="Wrap" />

@@ -87,7 +87,10 @@ namespace TubeStar
 
             var extra = new PeriodStats();
             if (money > 0)
+            {
                 extra.Earned = money;
+                extra.OtherEarned = money;
+            }
             else
                 extra.Spent = -money;
             extra.NewSubscribers = subscribers;

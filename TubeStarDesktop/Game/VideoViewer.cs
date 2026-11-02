@@ -108,7 +108,9 @@ namespace TubeStar
         public static void SubscriberView(Channel channel, Video video)
         {
             Initialize(video);
-            _videoShares[video.Id] += (int)(channel.Subscribers * (Player.Current.ChallengeMode ? 0.2 : 0.4));
+            //Fora do nicho do canal, menos inscritos assistem
+            double nicheFactor = video.IsInNiche(channel) ? 1.0 : 0.75;
+            _videoShares[video.Id] += (int)(channel.Subscribers * (Player.Current.ChallengeMode ? 0.2 : 0.4) * nicheFactor);
         }
 
         public static void Iteration(Channel channel, Video video, ref double dailyIncome, ref double dailyExpenses)
@@ -131,7 +133,8 @@ namespace TubeStar
 
             var searchEngineViews = video.Views / (50 * video.Iterations);
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
-            var iterationViews = searchEngineViews + qualityViews + tempShares;
+            //Concorrência do nicho: nicho lotado recebe menos views de busca e de qualidade
+            var iterationViews = (searchEngineViews + qualityViews) * video.Category.GetCompetitionMultiplier() + tempShares;
 
             //Total de views orgânicas: mesmo laço antigo de pulos de 4 ou 5, só somando (sem ver view por view)
             int organicViews = 0;
@@ -171,11 +174,11 @@ namespace TubeStar
             return Math.Min(1.0, (percentage + 1) / 100.0);
         }
 
-        //Probabilidade por view de CategoryHelpers.CheckInterest(video), com q = 1/18:
+        //Probabilidade por view de CategoryHelpers.CheckInterest(video), com q = 1/15 (nichos):
         //p = q + (1-q)*q*0,5 + (1-q)^2*0,06; com GenreBuster: p + (1-p)*0,36
         private static double InterestProb(Video video)
         {
-            double q = 1.0 / 18.0;
+            double q = 1.0 / VideoCategoryHelpers.Count;
             double p = q + (1 - q) * q * 0.5 + (1 - q) * (1 - q) * ChanceProb(5);
             if (video.Attributes.Contains(VideoAttributes.GenreBuster))
                 p = p + (1 - p) * ChanceProb(35);
@@ -310,7 +313,11 @@ namespace TubeStar
             if (video.Attributes.Contains(VideoAttributes.Hypnotic))
                 initialChance += 30;
 
-            return ChanceProb(initialChance);
+            //Fora do nicho atrai público novo: mais chance de quem curtiu se inscrever
+            double p = ChanceProb(initialChance);
+            if (!video.IsInNiche(channel))
+                p = Math.Min(1.0, p * 1.3);
+            return p;
         }
 
         private static double UnsubscriptionProb(Channel channel)
@@ -335,6 +342,9 @@ namespace TubeStar
             var extraIncome = Math.Sqrt(Math.Max(0, channel.Subscribers) /(Player.Current.ChallengeMode ? 20000.0 : 1000.0)) * 0.01;
             extraIncome = Math.Min(extraIncome, Player.Current.ChallengeMode ? 0.25 : 0.50);
             income += extraIncome;
+
+            //RPM do nicho: cada tema paga diferente por view
+            income *= video.Category.GetRpmMultiplier();
 
             //CTR: no ChallengeMode, Chance(90) && Chance(90 ultra / 50 normal) zera a renda daquela view
             int paidViews = numViews;

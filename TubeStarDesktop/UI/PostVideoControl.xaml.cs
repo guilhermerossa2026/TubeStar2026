@@ -172,7 +172,7 @@ namespace TubeStar
             foreach (var channel in channels)
             {
                 var chip = new Button();
-                chip.Content = channel.Name;
+                chip.Content = channel.Niche.HasValue ? channel.Name + " · " + channel.Niche.Value.GetString() : channel.Name;
                 chip.Style = (Style)FindResource(channel == _channel ? "ChipActiveButtonStyle" : "ChipButtonStyle");
                 var target = channel;
                 chip.Click += (s, e) =>
@@ -225,6 +225,12 @@ namespace TubeStar
             txtSummary.Text = String.Format("{0}: {1}\n{2}: {3}",
                 EnglishStrings.Channel.Translate(), _channel != null ? _channel.Name : "-",
                 EnglishStrings.BuyViews.Translate(), ViewOptionText(_viewsOption));
+
+            //Aviso de vídeo fora do nicho do canal
+            bool outOfNiche = _channel != null && !_selected.IsInNiche(_channel);
+            txtNicheWarning.Visibility = outOfNiche ? Visibility.Visible : Visibility.Collapsed;
+            if (outOfNiche)
+                txtNicheWarning.Text = "⚠ " + String.Format(EnglishStrings.NicheOutWarning.Translate(), _channel.Niche.Value.GetString());
         }
 
         #region Miniatura

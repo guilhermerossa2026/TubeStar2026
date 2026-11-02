@@ -925,6 +925,38 @@ namespace TubeStar
         VideoMoneyNote,
         [Description("Week")]
         RankWeek,
+        [Description("Salary")]
+        SummarySalary,
+        [Description("Channel")]
+        SummaryChannel,
+        [Description("Other")]
+        SummaryOther,
+        [Description("Subscribers gained")]
+        VideoSubscribersGained,
+        [Description("Niche")]
+        NicheLabel,
+        [Description("Choose the channel niche. It cannot be changed later.")]
+        NicheChooseHint,
+        [Description("Pay per view: {0} · Competition: {1}")]
+        NicheInfo,
+        [Description("High")]
+        NicheLevelHigh,
+        [Description("Medium")]
+        NicheLevelMedium,
+        [Description("Low")]
+        NicheLevelLow,
+        [Description("High")]
+        NicheCrowdHigh,
+        [Description("Medium")]
+        NicheCrowdMedium,
+        [Description("Low")]
+        NicheCrowdLow,
+        [Description("The niche cannot be changed after the channel is created.")]
+        NicheFixed,
+        [Description("Choose the channel niche.")]
+        NicheMissing,
+        [Description("This video is outside the channel niche ({0}): fewer subscribers will watch, but more new people may subscribe.")]
+        NicheOutWarning,
         [Description("#{0} in the ranking")]
         ProfilePosition,
         [Description("Videos")]

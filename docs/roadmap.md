@@ -33,7 +33,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Próximo (diversão e equilíbrio)
 
-**4. Canais e nichos**
+**4. Canais e nichos** (etapa 4a, nichos, feita em 2026-11-02; falta 4b: seletor de canal no cabeçalho e painel; 4c: ranking por nicho)
 - Canais ilimitados; nicho escolhido na criação, fixo depois. Vídeo no nicho rende mais; fora do nicho rende menos, mas atrai público novo.
 - Nichos (substituem as 18 categorias antigas), cada um com RPM e concorrência próprios: Games, Vlog/Lifestyle, Tecnologia, Humor, Educação, Finanças, Fitness/Saúde, Culinária, Música, Beleza/Moda, Esportes, Reacts, Mistério/True Crime, Viagem, Infantil.
 - Cabeçalho com canal ativo e seletor (inclui "Visão geral" = soma). Painel do canal: views e ganhos totais, inscritos, RPM, nº de vídeos, gráfico.
@@ -75,7 +75,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 **11. Collabs e live em collab (Twitch)**. Média. Depende de: 2.
 **12. Patrocínios**. Média. Depende de: 2, 6.
-**13. TubeStar Awards e placas**. Fácil/Média. Depende de: 2, 3.
+**13. TubeStar Awards e placas**. Fácil/Média. Depende de: 2, 3. Ideia do dono (02/11/2026): além de "Melhor YouTuber do ano", prêmios por nicho (Melhor Gamer, Melhor Vlogger etc.).
 **14. Podcast**. Média. Depende de: 6, 11.
 **15. Lado empresário**. Difícil. Depende de: 6, 9.
 **16. Empresas no exterior e bancos** (precisa de estudo próprio). Difícil. Depende de: 15.

@@ -358,7 +358,7 @@ namespace TubeStar
 
         private void DeleteVideo(Video video)
         {
-            if (video.Category == VideoCategory.Cats)
+            if (video.Attributes.Contains(VideoAttributes.Cats))
                 TrophyManager.UnlockTrophy(Trophy.CatInBin);
 
             if (_currentChannel == Channel.UnreleasedVideos)

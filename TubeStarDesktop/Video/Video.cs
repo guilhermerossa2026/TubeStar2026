@@ -32,6 +32,8 @@ namespace TubeStar
         public double Income { get; set; }
         //Gastos do vídeo depois de postado (views compradas)
         public double Expenses { get; set; }
+        //Inscritos que o vídeo trouxe (ganhos menos os que saíram por causa dele), somado a cada dia
+        public int SubscribersGained { get; set; }
 
         public int Iterations { get; set; }
 

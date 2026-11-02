@@ -5,9 +5,13 @@
         xmlns:local="clr-namespace:TubeStar"
         Caption="Add channel">
 
-    <StackPanel Width="440">
+    <StackPanel Width="520">
         <TextBlock x:Name="lblName" Text="Name:" Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
         <TextBox x:Name="txtName" FontSize="15" Margin="0,0,0,14" />
+
+        <TextBlock x:Name="lblNiche" Text="Niche:" Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
+        <WrapPanel x:Name="nicheChips" Margin="0,0,0,2" />
+        <TextBlock x:Name="txtNicheInfo" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,0,0,14" />
 
         <TextBlock x:Name="lblStrategy" Text="Advertising strategy:" Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
         <ComboBox x:Name="cmbAdvertising" FontSize="15" Margin="0,0,0,18" />

@@ -925,6 +925,10 @@ namespace TubeStar
         VideoMoneyNote,
         [Description("Week")]
         RankWeek,
+        [Description("All niches")]
+        RankAllNiches,
+        [Description("No channel here yet.")]
+        RankEmpty,
         [Description("Salary")]
         SummarySalary,
         [Description("Channel")]

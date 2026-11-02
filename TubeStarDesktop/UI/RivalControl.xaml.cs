@@ -24,6 +24,29 @@ namespace TubeStar
         {
             InitializeComponent();
             Translate();
+            BuildNicheFilter();
+        }
+
+        //null = todos os nichos
+        private VideoCategory? _niche;
+
+        private void BuildNicheFilter()
+        {
+            nicheFilter.Children.Add(CreateNicheChip(EnglishStrings.RankAllNiches.Translate(), null));
+            foreach (VideoCategory niche in Enum.GetValues(typeof(VideoCategory)))
+                nicheFilter.Children.Add(CreateNicheChip(niche.GetString(), niche));
+        }
+
+        private Button CreateNicheChip(string text, VideoCategory? niche)
+        {
+            var chip = new Button { Content = text, Tag = niche, FontSize = 12 };
+            chip.Click += (s, e) =>
+            {
+                _niche = niche;
+                _page = 0;
+                UpdateTable();
+            };
+            return chip;
         }
 
         private void Translate()
@@ -54,16 +77,20 @@ namespace TubeStar
 
         private List<RankChannel> GetList()
         {
-            var channels = Ranking.Current.Channels;
+            IEnumerable<RankChannel> channels = Ranking.Current.Channels;
+            if (_niche.HasValue)
+                channels = channels.Where(c => c.Niche == _niche);
             if (_weekTab)
                 return channels.Where(c => c.WeekGrowth > 0).OrderByDescending(c => c.WeekGrowth).ToList();
-            return channels;
+            return channels.ToList();
         }
 
         private void UpdateTable()
         {
             btnTabAll.Style = (Style)FindResource(_weekTab ? "ChipButtonStyle" : "ChipActiveButtonStyle");
             btnTabWeek.Style = (Style)FindResource(_weekTab ? "ChipActiveButtonStyle" : "ChipButtonStyle");
+            foreach (Button chip in nicheFilter.Children)
+                chip.Style = (Style)FindResource(Equals(chip.Tag, (object)_niche) ? "ChipActiveButtonStyle" : "ChipButtonStyle");
             //Geral: views totais; Cresceu na semana: views da semana
             thViews.Text = (_weekTab ? EnglishStrings.RankViewsWeek : EnglishStrings.Views).Translate().ToUpper();
 
@@ -74,6 +101,8 @@ namespace TubeStar
             rankingPanel.Children.Clear();
             for (int i = _page * PageSize; i < Math.Min(list.Count, (_page + 1) * PageSize); i++)
                 rankingPanel.Children.Add(CreateRow(i + 1, list[i]));
+            if (list.Count == 0)
+                rankingPanel.Children.Add(new TextBlock { Text = EnglishStrings.RankEmpty.Translate(), Style = (Style)FindResource("MutedTextStyle"), Margin = new Thickness(16, 14, 16, 14) });
 
             txtPage.Text = String.Format(EnglishStrings.RankPage.Translate(), _page + 1, pages);
             btnPrevPage.IsEnabled = _page > 0;

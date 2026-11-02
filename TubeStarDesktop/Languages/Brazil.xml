@@ -1501,4 +1501,12 @@
     <Id>VideoSubscribersGained</Id>
     <Text>Inscritos que trouxe</Text>
   </CustomText>
+  <CustomText>
+    <Id>RankAllNiches</Id>
+    <Text>Todos os nichos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankEmpty</Id>
+    <Text>Nenhum canal aqui por enquanto.</Text>
+  </CustomText>
 </ArrayOfCustomText>

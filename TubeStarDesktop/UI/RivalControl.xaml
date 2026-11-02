@@ -44,8 +44,8 @@
                 <!-- destaques da semana -->
                 <UniformGrid x:Name="highlights" Columns="3" Margin="-6,0,-6,12" />
 
-                <!-- filtros (nichos entram aqui depois) -->
-                <Grid Margin="0,0,0,10">
+                <!-- filtros: Geral / Cresceu na semana + nicho -->
+                <Grid Margin="0,0,0,2">
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btnTabAll" Click="btnTabAll_Click" />
                         <Button x:Name="btnTabWeek" Click="btnTabWeek_Click" />
@@ -55,6 +55,7 @@
                         <Button x:Name="btnGoToMe" Margin="8,0,0,0" Style="{StaticResource GhostButtonStyle}" Click="btnGoToMe_Click" />
                     </StackPanel>
                 </Grid>
+                <WrapPanel x:Name="nicheFilter" Margin="0,0,0,8" />
 
                 <!-- .card > .tbl -->
                 <Border Style="{StaticResource CardBorderStyle}" Padding="0">

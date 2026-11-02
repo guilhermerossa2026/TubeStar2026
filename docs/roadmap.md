@@ -33,7 +33,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Próximo (diversão e equilíbrio)
 
-**4. Canais e nichos** (etapa 4a, nichos, feita em 2026-11-02; falta 4b: seletor de canal no cabeçalho e painel; 4c: ranking por nicho)
+**4. Canais e nichos** (etapas 4a nichos e 4c ranking por nicho feitas em 2026-11-02; falta 4b: seletor de canal no cabeçalho e painel)
 - Canais ilimitados; nicho escolhido na criação, fixo depois. Vídeo no nicho rende mais; fora do nicho rende menos, mas atrai público novo.
 - Nichos (substituem as 18 categorias antigas), cada um com RPM e concorrência próprios: Games, Vlog/Lifestyle, Tecnologia, Humor, Educação, Finanças, Fitness/Saúde, Culinária, Música, Beleza/Moda, Esportes, Reacts, Mistério/True Crime, Viagem, Infantil.
 - Cabeçalho com canal ativo e seletor (inclui "Visão geral" = soma). Painel do canal: views e ganhos totais, inscritos, RPM, nº de vídeos, gráfico.

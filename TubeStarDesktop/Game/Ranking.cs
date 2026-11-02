@@ -11,6 +11,8 @@ namespace TubeStar
     {
         public string Name { get; set; }
         public string Theme { get; set; }
+        //Nicho do canal (filtro do ranking); nulo em rankings de saves antigos até a migração
+        public VideoCategory? Niche { get; set; }
         public bool IsFamous { get; set; }
         public bool IsPlayer { get; set; }
         //Canal do jogador ligado a esta linha (Channel.RankId)
@@ -82,6 +84,10 @@ namespace TubeStar
                     Player.Current.Ranking = Create();
                     Player.Current.Ranking.Refresh(false);
                 }
+                else if (Player.Current.Ranking.Channels.Any(c => !c.IsPlayer && !c.Niche.HasValue))
+                {
+                    Player.Current.Ranking.MigrateNiches();
+                }
                 return Player.Current.Ranking;
             }
         }
@@ -92,11 +98,12 @@ namespace TubeStar
             var usedNames = new HashSet<string>();
 
             //Famosos: os 15 rivais atuais, entre ~300 mil e ~15 mi de inscritos
+            int famousIndex = 0;
             foreach (var rival in Rivals.Current.All)
             {
                 double skill = (rival.ShootingSkill + rival.PostProductionSkill) / 200.0;
                 long subs = (long)Math.Pow(10, 5.5 + 1.7 * Math.Min(1, skill) + RandomHelpers.RandomDouble() * 0.4);
-                ranking.Channels.Add(NewChannel(rival.Name, rival.VideoKeyword1, subs, true));
+                ranking.Channels.Add(NewChannel(rival.Name, FamousNiche(famousIndex++), subs, true));
                 usedNames.Add(rival.Name);
             }
 
@@ -107,17 +114,18 @@ namespace TubeStar
                 if (!usedNames.Add(name))
                     continue;
                 long subs = (long)Math.Pow(10, 2 + Math.Pow(RandomHelpers.RandomDouble(), 1.6) * 4.5);
-                ranking.Channels.Add(NewChannel(name, Themes[RandomHelpers.RandomInt(Themes.Length)].Translate(), subs, false));
+                ranking.Channels.Add(NewChannel(name, (VideoCategory)RandomHelpers.RandomInt(1, VideoCategoryHelpers.Count + 1), subs, false));
             }
             return ranking;
         }
 
-        private static RankChannel NewChannel(string name, string theme, long subscribers, bool famous)
+        private static RankChannel NewChannel(string name, VideoCategory niche, long subscribers, bool famous)
         {
             var channel = new RankChannel
             {
                 Name = name,
-                Theme = theme,
+                Theme = niche.GetString(),
+                Niche = niche,
                 IsFamous = famous,
                 Subscribers = subscribers,
                 Views = (long)(subscribers * (40 + RandomHelpers.RandomDouble() * 120)),
@@ -207,6 +215,8 @@ namespace TubeStar
                     Channels.Add(entry);
                 }
                 entry.Name = channel.Name;
+                entry.Niche = channel.Niche;
+                entry.Theme = channel.Niche.HasValue ? channel.Niche.Value.GetString() : null;
                 entry.Subscribers = channel.Subscribers;
                 entry.Views = channel.Videos.Sum(v => (long)v.Views);
                 entry.VideoCount = channel.Videos.Count;
@@ -230,11 +240,52 @@ namespace TubeStar
             return RandomHelpers.RandomInt(3) == 0 ? nick + RandomHelpers.RandomInt(10, 100) : nick;
         }
 
-        private static readonly EnglishStrings[] Themes =
+        //Nicho de cada rival famoso, na ordem de Rivals.Current.All (Rival1..Rival15), pelo tema dos vídeos dele
+        private static readonly VideoCategory[] FamousNiches =
         {
-            EnglishStrings.ThemeGames, EnglishStrings.ThemeVlog, EnglishStrings.ThemeTech, EnglishStrings.ThemeComedy, EnglishStrings.ThemeEducation,
-            EnglishStrings.ThemeFinance, EnglishStrings.ThemeFitness, EnglishStrings.ThemeCooking, EnglishStrings.ThemeMusic, EnglishStrings.ThemeBeauty,
-            EnglishStrings.ThemeSports, EnglishStrings.ThemeReacts, EnglishStrings.ThemeMystery, EnglishStrings.ThemeTravel, EnglishStrings.ThemeKids
+            VideoCategory.Mystery,    //NightTerrors98 (Slenderman)
+            VideoCategory.Games,      //xxxSUPAGAMERxxx (retro game)
+            VideoCategory.Music,      //Black Crow Music (heavy metal)
+            VideoCategory.Comedy,     //CATTY_KATE (gatos)
+            VideoCategory.Mystery,    //TheTruthSeeker (aliens)
+            VideoCategory.Education,  //CraftyHowTo's
+            VideoCategory.Sports,     //<XTRMEFreak> (skate)
+            VideoCategory.Vlog,       //The 'Good Deed' Man
+            VideoCategory.Vlog,       //BehindMyCurtain
+            VideoCategory.Comedy,     //Herpaderp
+            VideoCategory.Technology, //TechTalk with Tech Terry
+            VideoCategory.Reacts,     //MegaAnimeFan89
+            VideoCategory.Reacts,     //ArmchairMovieCritic
+            VideoCategory.Beauty,     //Fashion4Life
+            VideoCategory.Comedy      //EpicFails4Win
         };
+
+        private static VideoCategory FamousNiche(int index)
+        {
+            return index < FamousNiches.Length ? FamousNiches[index] : VideoCategory.Vlog;
+        }
+
+        //Rankings criados antes dos nichos: descobre o nicho pelo tema gravado (genéricos) ou pela ordem (famosos)
+        private void MigrateNiches()
+        {
+            foreach (var channel in Channels.Where(c => c.IsFamous && !c.Niche.HasValue))
+            {
+                int index = Rivals.Current.All.FindIndex(r => r.Name == channel.Name);
+                channel.Niche = FamousNiche(Math.Max(0, index));
+                channel.Theme = channel.Niche.Value.GetString();
+            }
+            foreach (var channel in Channels.Where(c => !c.IsFamous && !c.IsPlayer && !c.Niche.HasValue))
+            {
+                foreach (VideoCategory niche in Enum.GetValues(typeof(VideoCategory)))
+                {
+                    if (niche.GetString() == channel.Theme)
+                        channel.Niche = niche;
+                }
+                //Tema não reconhecido (ex.: idioma trocado): sorteia, para a migração não repetir
+                if (!channel.Niche.HasValue)
+                    channel.Niche = (VideoCategory)RandomHelpers.RandomInt(1, VideoCategoryHelpers.Count + 1);
+                channel.Theme = channel.Niche.Value.GetString();
+            }
+        }
     }
 }

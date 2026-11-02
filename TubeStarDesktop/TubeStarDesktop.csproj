@@ -137,6 +137,12 @@
     <Compile Include="TitlePage.xaml.cs">
       <DependentUpon>TitlePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\CalendarDialog.xaml.cs">
+      <DependentUpon>CalendarDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PeriodSummaryDialog.xaml.cs">
+      <DependentUpon>PeriodSummaryDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\AddChannelDialog.xaml.cs">
       <DependentUpon>AddChannelDialog.xaml</DependentUpon>
     </Compile>
@@ -222,6 +228,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game\Trophies\TrophyManager.cs" />
+    <Compile Include="Game\PeriodStats.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\Settings.cs" />
     <Compile Include="Game\VideoViewer.cs" />
@@ -256,6 +263,14 @@
     <Page Include="TitlePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CalendarDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\PeriodSummaryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\AddChannelDialog.xaml">
       <SubType>Designer</SubType>

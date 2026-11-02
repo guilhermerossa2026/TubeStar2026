@@ -1121,4 +1121,88 @@
     <Id>TitleTagline</Id>
     <Text>Seu caminho de zero a estrela do YouTube</Text>
   </CustomText>
+  <CustomText>
+    <Id>SummaryYesterday</Id>
+    <Text>Resumo de ontem</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryNoDayYet</Id>
+    <Text>Nenhum dia jogado ainda.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryEarned</Id>
+    <Text>Ganho</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummarySpent</Id>
+    <Text>Gasto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryBalance</Id>
+    <Text>Saldo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryNewSubscribers</Id>
+    <Text>Novos inscritos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryVideosPosted</Id>
+    <Text>Vídeos postados</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryTasksDone</Id>
+    <Text>Tarefas concluídas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryWeekTitle</Id>
+    <Text>Resumo da semana {0} · Ano {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryYearTitle</Id>
+    <Text>Resumo do ano {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryByChannel</Id>
+    <Text>Por canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryBestVideo</Id>
+    <Text>Melhor vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryNoChannels</Id>
+    <Text>Nenhum canal teve movimento.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>DaysOnline</Id>
+    <Text>Dias no ar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarTitle</Id>
+    <Text>Calendário</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarOpenHint</Id>
+    <Text>Clique para abrir o calendário</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarThisWeek</Id>
+    <Text>Esta semana até agora</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarPastSummaries</Id>
+    <Text>Resumos anteriores</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarNoHistory</Id>
+    <Text>Nenhuma semana fechada ainda. O primeiro resumo aparece no Dia 8.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarDay</Id>
+    <Text>Dia {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarToday</Id>
+    <Text>Hoje</Text>
+  </CustomText>
 </ArrayOfCustomText>

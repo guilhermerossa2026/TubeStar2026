@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-02
+- Calendário (item 3): cartão "Resumo de ontem" na Agenda, resumo automático ao fechar cada semana (dia 8, 15...) e cada ano (112 dias), com totais e tabela por canal (views, novos inscritos, melhor vídeo). Clicar na data do cabeçalho abre o Calendário: dias da semana, "Esta semana até agora" e histórico de resumos. Eventos aleatórios entram nos totais.
+- "Postar vídeo" saiu do menu lateral: posta-se pelo botão "Postar" em Meus vídeos (com botão de voltar).
+- "Ver vídeo" não abre mais em branco (o player antigo usava Flash): mostra uma ficha do vídeo.
+- Botões padronizados com cantos de 8px (chips, filtros, Loja); etiqueta da nota com 4px.
+
 ## 2026-11-01
 - Removidos da tela de título os botões Tutorial e Créditos (e a janela de créditos) e os nomes dos tradutores; removidos a opção "Creative Commons" do Novo jogo e o "?" do cabeçalho (vídeo antigo). No Top TubeStars, clicar num rival não abre mais a lista de vídeos (o perfil entra no item 2 do roadmap).
 

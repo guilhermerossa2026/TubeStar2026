@@ -177,7 +177,7 @@ namespace TubeStar
                 }
                 else
                 {
-                    ViewVideoDialog dlg = new ViewVideoDialog(Video);
+                    ViewVideoDialog dlg = new ViewVideoDialog(Video, _channel);
                     dlg.ShowDialog();
                 }
             });

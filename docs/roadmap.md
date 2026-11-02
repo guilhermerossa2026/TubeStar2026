@@ -27,7 +27,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - 20 rivais famosos com perfil completo e cerca de 500 canais genéricos. 100% offline, com volatilidade. Rankings geral, por nicho e "quem mais cresceu na semana". Variação, dias no #1, placas.
 - Dificuldade: Média. Depende de: 1 (etapa 3) e 3.
 
-**3. Calendário**
+**3. Calendário** (feito em 2026-11-02; imposto anual fica para a Economia e Awards para o item 13)
 - Semana de 7 dias, ano de 112 dias: "Ano X · Semana Y · Dia Z". Resumo diário e semanal (por canal), virada do ano com imposto anual e Awards.
 - Dificuldade: Média. Depende de: 1 (etapa 2).
 
@@ -79,6 +79,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 **15. Lado empresário**. Difícil. Depende de: 6, 9.
 **16. Empresas no exterior e bancos** (precisa de estudo próprio). Difícil. Depende de: 15.
 **17. Vida pessoal e árvore familiar**. Difícil. Depende de: 6.
+**18. Gráfico de views por dia na tela Ver vídeo** (guardar histórico diário de cada vídeo). Fácil/Média.
 
 ## Ideias guardadas
 

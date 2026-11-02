@@ -50,6 +50,7 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
         <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,16,20">
             <StackPanel>
+                <Button x:Name="btnBack" Style="{StaticResource GhostButtonStyle}" HorizontalAlignment="Left" Content="‹ My videos" Margin="0,0,0,10" Click="btnBack_Click" />
                 <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Post video" />
                 <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" Text="" />
 

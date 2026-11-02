@@ -121,6 +121,82 @@ namespace TubeStar
             txtDayHours.Text = EnglishStrings.ScheduleDayHours.Translate();
             txtAddTask.Text = "+ " + EnglishStrings.AddTask.Translate();
             txtAddTaskHint.Text = EnglishStrings.ScheduleAddTaskHint.Translate();
+            txtSummaryTitle.Text = EnglishStrings.SummaryYesterday.Translate();
+            txtNoSummary.Text = EnglishStrings.SummaryNoDayYet.Translate();
+        }
+
+        //Resumo da semana ou do ano que acabou de fechar: a MainPage mostra depois do dia
+        public PeriodStats PendingSummary { get; set; }
+        public string PendingSummaryTitle { get; set; }
+
+        //Fecha a semana a cada 7 dias (Dia 8, 15...) e o ano a cada 112 (aí só o resumo do ano)
+        private void CheckPeriodEnd()
+        {
+            int day = Player.Current.Iterations;
+            if (day <= 0 || day % 7 != 0)
+                return;
+
+            if (Player.Current.PastSummaries == null)
+                Player.Current.PastSummaries = new List<PeriodStats>();
+
+            //A semana sempre vai para o histórico (a última do ano também)
+            var week = Player.Current.CurrentWeek ?? new PeriodStats();
+            week.Title = String.Format(EnglishStrings.SummaryWeekTitle.Translate(), (day - 1) % 112 / 7 + 1, (day - 1) / 112 + 1);
+            Player.Current.PastSummaries.Add(week);
+            Player.Current.CurrentWeek = null;
+
+            if (day % 112 == 0)
+            {
+                var year = Player.Current.CurrentYear ?? new PeriodStats();
+                year.Title = String.Format(EnglishStrings.SummaryYearTitle.Translate(), day / 112);
+                Player.Current.PastSummaries.Add(year);
+                Player.Current.CurrentYear = null;
+                PendingSummary = year;
+            }
+            else
+            {
+                PendingSummary = week;
+            }
+            PendingSummaryTitle = PendingSummary.Title;
+        }
+
+        private void UpdateSummary()
+        {
+            summaryGrid.Children.Clear();
+            var day = Player.Current.LastDay;
+            txtNoSummary.Visibility = day == null ? Visibility.Visible : Visibility.Collapsed;
+            summaryGrid.Visibility = day == null ? Visibility.Collapsed : Visibility.Visible;
+            if (day == null)
+                return;
+
+            foreach (var kpi in CreateSummaryKpis(day))
+                summaryGrid.Children.Add(kpi);
+        }
+
+        //KPIs comuns ao painel do dia e às janelas de semana/ano
+        public static List<UIElement> CreateSummaryKpis(PeriodStats stats)
+        {
+            var result = new List<UIElement>();
+            result.Add(CreateKpi(EnglishStrings.SummaryEarned.Translate(), stats.Earned.ToCurrencyString(), null));
+            result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToCurrencyString(), null));
+            result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToCurrencyString(),
+                FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush")));
+            result.Add(CreateKpi(EnglishStrings.Views.Translate(), stats.Views.ToString("N0"), null));
+            result.Add(CreateKpi(EnglishStrings.SummaryNewSubscribers.Translate(), stats.NewSubscribers.ToString("N0"), null));
+            result.Add(CreateKpi(EnglishStrings.SummaryVideosPosted.Translate(), stats.VideosPosted.ToString("N0"), null));
+            result.Add(CreateKpi(EnglishStrings.SummaryTasksDone.Translate(), stats.TasksCompleted.ToString("N0"), null));
+            return result;
+        }
+
+        private static UIElement CreateKpi(string label, string value, Brush valueBrush)
+        {
+            var panel = new StackPanel { Margin = new Thickness(0, 0, 12, 0) };
+            panel.Children.Add(new TextBlock { Text = label, Style = (Style)Application.Current.FindResource("KpiLabelStyle"), TextWrapping = TextWrapping.Wrap });
+            var valueBlock = new TextBlock { Text = value, Style = (Style)Application.Current.FindResource("KpiValueStyle"), FontSize = 17 };
+            if (valueBrush != null)
+                valueBlock.Foreground = valueBrush;
+            panel.Children.Add(valueBlock);
+            return panel;
         }
 
         //Mesmo comportamento do antigo clique num horário da agenda
@@ -238,6 +314,7 @@ namespace TubeStar
 
         public void Update()
         {
+            UpdateSummary();
             UpdateHoursBar();
 
             //Cartões de tarefa
@@ -492,12 +569,15 @@ namespace TubeStar
             RemoveAppointment(task, false);
         }
 
-        private void CleanTodoList()
+        //Devolve quantas tarefas foram concluídas (para o resumo do dia)
+        private int CleanTodoList()
         {
+            int completed = 0;
             foreach (Task task in Player.Current.TasksInProgress)
             {
                 if (task.IsCompleted)
                 {
+                    completed++;
                     var studyTask = task as Study;
                     if (studyTask != null)
                     {
@@ -536,19 +616,23 @@ namespace TubeStar
             }
 
             Player.Current.TasksInProgress.RemoveAll(t => t.IsCompleted);
+            return completed;
         }
 
         public void NewDay()
         {
             _moneyAtStartOfDay = Player.Current.Money;
+            var today = new PeriodStats();
 
             Player.Current.Money -= 50; //Living Expenses
             Player.Current.Money -= Math.Max(0, Player.Current.CostOfLivingExtra);
+            today.Spent += 50 + Math.Max(0, Player.Current.CostOfLivingExtra);
 
             if(StoreItems.Current.Loan.Purchased)
             {
                 Player.Current.LoanPayOff -= StoreItems.Current.Loan.AdditionalCost;
                 Player.Current.Money -= StoreItems.Current.Loan.AdditionalCost;
+                today.Spent += StoreItems.Current.Loan.AdditionalCost;
 
                 if (Player.Current.LoanPayOff <= 0)
                 {
@@ -560,6 +644,7 @@ namespace TubeStar
             if (!Player.Current.QuitJob)
             {
                 Player.Current.Money += 100;
+                today.Earned += 100;
                 var job = new Job();
                 for (int i = 0; i <= job.HoursToComplete; i++)
                 {
@@ -568,6 +653,7 @@ namespace TubeStar
                 if (Player.Current.HasPromotion)
                 {
                     Player.Current.Money += 50;
+                    today.Earned += 50;
                     AddAppointment(job);
                     AddAppointment(job);
                 }
@@ -580,15 +666,15 @@ namespace TubeStar
                     Player.Current.Overtime = false;
                 }
             }
-            CleanTodoList();
+            today.TasksCompleted = CleanTodoList();
             Update();
 
-            RunIterations();
+            RunIterations(today);
         }
 
         //Roda na thread da tela: a simulação ficou rápida (lotes) e assim não disputa
         //Player/Rivais/RandomHelpers com a tela, e erros vão para o Crash Report
-        private void RunIterations()
+        private void RunIterations(PeriodStats today)
         {
             bool gameOver = false;
             try
@@ -599,14 +685,25 @@ namespace TubeStar
                     {
                         double dailyIncome = 0;
                         double dailyExpenses = 0;
+                        int subscribersBefore = channel.Subscribers;
+                        var channelToday = today.GetChannel(channel.Name);
                         foreach (var video in channel.Videos)
                         {
+                            int viewsBefore = video.Views;
+                            double moneyBefore = Player.Current.Money;
                             VideoViewer.Iteration(channel, video, ref dailyIncome, ref dailyExpenses);
+                            //Crowdfunding entra direto no dinheiro, fora do dailyIncome
+                            today.Earned += Math.Max(0, Player.Current.Money - moneyBefore);
                             if (video.Iterations == 1)
                             {
                                 dailyExpenses += video.Cost;
                                 dailyExpenses += video.OnceOffCost;
+                                today.VideosPosted++;
                             }
+
+                            long newViews = Math.Max(0, video.Views - viewsBefore);
+                            channelToday.Views += newViews;
+                            channelToday.AddVideoViews(video.Name, newViews);
                         }
 
                         //Channel stats
@@ -617,6 +714,12 @@ namespace TubeStar
 
                         //Player costs
                         Player.Current.Money += (dailyIncome - dailyExpenses);
+
+                        channelToday.NewSubscribers = channel.Subscribers - subscribersBefore;
+                        today.Views += channelToday.Views;
+                        today.NewSubscribers += channelToday.NewSubscribers;
+                        today.Earned += dailyIncome;
+                        today.Spent += dailyExpenses;
                     }
                 }
 
@@ -647,7 +750,13 @@ namespace TubeStar
                     TrophyManager.UnlockTrophy(Trophy.Bunsen);
                 }
 
+                //O primeiro NewDay do jogo novo (Iterations -1) só prepara o Dia 1: não entra no resumo
+                if (Player.Current.Iterations >= 0)
+                    Player.Current.RecordDay(today);
+
                 Player.Current.Iterations++;
+                CheckPeriodEnd();
+                UpdateSummary();
             }
             finally
             {

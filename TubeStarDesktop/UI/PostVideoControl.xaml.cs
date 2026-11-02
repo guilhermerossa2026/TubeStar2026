@@ -14,6 +14,13 @@ namespace TubeStar
     {
         //Vídeo postado: a MainPage atualiza cabeçalho/Meus vídeos
         public event Action VideoPosted;
+        public event Action BackRequested;
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (BackRequested != null)
+                BackRequested();
+        }
         //Botão "Criar vídeo" do estado vazio
         public event Action CreateVideoRequested;
 
@@ -37,6 +44,7 @@ namespace TubeStar
         private void Translate()
         {
             txtTitle.Text = EnglishStrings.NavPostVideo.Translate();
+            btnBack.Content = "‹ " + EnglishStrings.NavMyVideos.Translate();
             txtLead.Text = EnglishStrings.PostVideoLead.Translate();
             txtEmpty.Text = EnglishStrings.PostNoVideos.Translate();
             btnGoCreate.Content = EnglishStrings.NavCreateVideo.Translate();

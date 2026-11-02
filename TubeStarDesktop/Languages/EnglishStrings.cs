@@ -847,5 +847,68 @@ namespace TubeStar
 
         [Description("Your path from zero to YouTube star")]
         TitleTagline,
+
+        [Description("Yesterday's summary")]
+        SummaryYesterday,
+
+        [Description("No day played yet.")]
+        SummaryNoDayYet,
+
+        [Description("Earned")]
+        SummaryEarned,
+
+        [Description("Spent")]
+        SummarySpent,
+
+        [Description("Balance")]
+        SummaryBalance,
+
+        [Description("New subscribers")]
+        SummaryNewSubscribers,
+
+        [Description("Videos posted")]
+        SummaryVideosPosted,
+
+        [Description("Tasks completed")]
+        SummaryTasksDone,
+
+        [Description("Week {0} summary · Year {1}")]
+        SummaryWeekTitle,
+
+        [Description("Year {0} summary")]
+        SummaryYearTitle,
+
+        [Description("By channel")]
+        SummaryByChannel,
+
+        [Description("Best video")]
+        SummaryBestVideo,
+
+        [Description("No channel had activity.")]
+        SummaryNoChannels,
+
+        [Description("Days online")]
+        DaysOnline,
+
+        [Description("Calendar")]
+        CalendarTitle,
+
+        [Description("Click to open the calendar")]
+        CalendarOpenHint,
+
+        [Description("This week so far")]
+        CalendarThisWeek,
+
+        [Description("Past summaries")]
+        CalendarPastSummaries,
+
+        [Description("No week closed yet. The first summary appears on Day 8.")]
+        CalendarNoHistory,
+
+        [Description("Day {0}")]
+        CalendarDay,
+
+        [Description("Today")]
+        CalendarToday,
     }
 }

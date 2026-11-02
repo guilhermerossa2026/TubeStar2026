@@ -1,66 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Navigation;
 using Xceed.Wpf.Toolkit;
 
 namespace TubeStar
 {
     /// <summary>
-    /// Interaction logic for ViewVideoDialog.xaml
+    /// Ficha do vídeo: miniatura, nota e números
     /// </summary>
     public partial class ViewVideoDialog : ChildWindow
     {
-        private Video _video;
-
-        public ViewVideoDialog(Video video)
+        public ViewVideoDialog(Video video, Channel channel)
         {
             InitializeComponent();
-            _video = video;
-
-            Translate();
-
-            string id = video.YouTubeVideoId;
-
-            if (DateTime.Now.Day == 1 && DateTime.Now.Month == 4)
-            {
-                id = "oHg5SJYRHA0";
-            }
-
-            string html = "<div style=\"width:100%;height:100 %;width:610px;height:343px;float:none;clear:both;margin:2px auto;\">";
-            html += "<embed src = \"http://www.youtube.com/v/" + id + "?version=3&amp;hl=en_US&amp;rel=0&amp;autohide=1\" wmode = \"transparent\" type = \"application/x-shockwave-flash\" width = \"100%\" height = \"100%\" allowfullscreen = \"true\" title = \"Adobe Flash Player\" >";
-            html += "</div>";
-
-            this.webView.NavigateToString(html);
-        }
-
-        private void wb_LoadCompleted(object sender, NavigationEventArgs e)
-        {
-            string script = "document.body.style.overflow ='hidden'";
-            WebBrowser wb = (WebBrowser)sender;
-            wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
-        }
-
-        private void Translate()
-        {
             Caption = EnglishStrings.ViewVideo.Translate();
-            lblComments.Text = String.Format("{0} ({1})", EnglishStrings.Comments.Translate(), _video.GetCommentsCount().ToNumberString());
             btnOk.Content = EnglishStrings.Ok.Translate();
+
+            imgVideo.Source = video.GetThumbnail();
+            txtName.Text = video.Name;
+            txtChannel.Text = channel != null ? channel.Name : "";
+            txtScore.Text = String.Format(EnglishStrings.VideosScore.Translate(), (video.GenerateQuality() / 10.0).ToString("0.0"));
+
+            AddKpi(EnglishStrings.Views.Translate(), video.Views.ToNumberString());
+            AddKpi(EnglishStrings.Likes.Translate(), video.Likes.ToNumberString());
+            AddKpi(EnglishStrings.Dislikes.Translate(), video.Dislikes.ToNumberString());
+            AddKpi(EnglishStrings.Comments.Translate(), video.GetCommentsCount().ToNumberString());
+            AddKpi(EnglishStrings.DaysOnline.Translate(), video.Iterations.ToNumberString());
+        }
+
+        private void AddKpi(string label, string value)
+        {
+            var panel = new StackPanel();
+            panel.Children.Add(new TextBlock { Text = label, Style = (Style)FindResource("KpiLabelStyle") });
+            panel.Children.Add(new TextBlock { Text = value, Style = (Style)FindResource("KpiValueStyle"), FontSize = 18 });
+            kpiGrid.Children.Add(panel);
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            webView.NavigateToString("<html></html>");
             this.DialogResult = true;
-        }
-
-        private void ChildWindow_Closed(object sender, EventArgs e)
-        {
-            webView.NavigateToString("<html></html>");
         }
     }
 }

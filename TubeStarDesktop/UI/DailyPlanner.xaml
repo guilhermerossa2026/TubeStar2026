@@ -11,6 +11,15 @@
                 <TextBlock x:Name="txtTitle" Text="Schedule" Style="{StaticResource PageTitleStyle}" />
                 <TextBlock x:Name="txtLead" Text="Distribute the hours of the day." Style="{StaticResource PageLeadStyle}" />
 
+                <!-- Resumo de ontem (Calendário) -->
+                <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock x:Name="txtSummaryTitle" Text="Yesterday's summary" FontWeight="Bold" FontSize="14" />
+                        <TextBlock x:Name="txtNoSummary" Text="No day played yet." Style="{StaticResource MutedTextStyle}" Margin="0,8,0,0" />
+                        <UniformGrid x:Name="summaryGrid" Columns="7" />
+                    </StackPanel>
+                </Border>
+
                 <!-- Horas do dia -->
                 <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
                     <StackPanel>

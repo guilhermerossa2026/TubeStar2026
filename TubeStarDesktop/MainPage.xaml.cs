@@ -35,7 +35,13 @@ namespace TubeStar
                 //A cada 3 dias roda um evento; depois dele, tudo é atualizado (uma vez só)
                 bool eventDay = Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0;
                 if (eventDay)
+                {
+                    double moneyBefore = Player.Current.Money;
+                    long subscribersBefore = TotalSubscribers();
                     RandomEvents.RunEvent();
+                    Player.Current.RecordEvent(Player.Current.Money - moneyBefore, TotalSubscribers() - subscribersBefore);
+                    dailyPlanner.Update();
+                }
 
                 //Depois do evento: ele pode mudar inscritos sem mexer no dinheiro
                 UpdateHeader();
@@ -49,10 +55,14 @@ namespace TubeStar
                 if (eventDay || rivalViewer.Visibility == System.Windows.Visibility.Visible)
                     rivalViewer.Update();
 
-                if (eventDay)
-                    dailyPlanner.Update();
-
                 CheckTrophies();
+
+                //Fim de semana/ano: resumo do período
+                if (dailyPlanner.PendingSummary != null)
+                {
+                    new PeriodSummaryDialog(dailyPlanner.PendingSummaryTitle, dailyPlanner.PendingSummary).ShowDialog();
+                    dailyPlanner.PendingSummary = null;
+                }
             };
 
             //"Gravar vídeo" da Agenda abre a tela Criar vídeo; ao criar, a tarefa vai para a Agenda
@@ -63,13 +73,15 @@ namespace TubeStar
                 btnDailyPlanner_Click(null, null);
             };
 
-            //Postar vídeo: vem do menu ou do botão "Postar" de Meus vídeos
+            //Postar vídeo: só pelo botão "Postar" de Meus vídeos; ao postar ou voltar, volta para Meus vídeos
             videoManager.PostRequested += (video) => ShowPostVideo(video);
             postVideo.CreateVideoRequested += () => btnCreateVideo_Click(null, null);
+            postVideo.BackRequested += () => btnVideoPlanner_Click(null, null);
             postVideo.VideoPosted += () =>
             {
                 UpdateHeader();
                 CheckTrophies();
+                btnVideoPlanner_Click(null, null);
             };
 
             dailyPlanner.GameExit += () =>
@@ -89,7 +101,6 @@ namespace TubeStar
             txtRivals.Text = EnglishStrings.TopTubeStars.Translate();
             txtNavHome.Text = EnglishStrings.NavHome.Translate();
             txtNavCreate.Text = EnglishStrings.NavCreateVideo.Translate();
-            txtNavPost.Text = EnglishStrings.NavPostVideo.Translate();
             txtNavUniversity.Text = EnglishStrings.NavUniversity.Translate();
             txtNavEmployees.Text = EnglishStrings.NavEmployees.Translate();
             string soon = EnglishStrings.Soon.Translate();
@@ -99,6 +110,7 @@ namespace TubeStar
             txtMoneyLabel.Text = EnglishStrings.MoneyLabel.Translate();
             txtSubscribersLabel.Text = EnglishStrings.Subscribers.Translate();
             txtNewDay.Text = EnglishStrings.NextDay.Translate();
+            btnCalendar.ToolTip = EnglishStrings.CalendarOpenHint.Translate();
             txtSectionTitle.Text = txtDailyPlanner.Text;
         }
 
@@ -122,13 +134,18 @@ namespace TubeStar
             //Igual à prévia: "Dia" é o dia do ano (1 a 112)
             txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
 
+            txtSubscribers.Text = TotalSubscribers().ToString("N0");
+        }
+
+        private static long TotalSubscribers()
+        {
             long subscribers = 0;
             foreach (var channel in Player.Current.Channels)
             {
                 if (channel != Channel.UnreleasedVideos)
                     subscribers += channel.Subscribers;
             }
-            txtSubscribers.Text = subscribers.ToString("N0");
+            return subscribers;
         }
 
         private void CheckTrophies()
@@ -186,7 +203,7 @@ namespace TubeStar
         //Marca o item do menu, mostra só a tela dele e troca o título da seção
         private void ShowSection(ToggleButton navButton, UIElement screen, string title)
         {
-            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnPostVideo, btnOnlineStore, btnRivals };
+            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnRivals };
             foreach (var button in buttons)
                 button.IsChecked = button == navButton;
 
@@ -214,14 +231,10 @@ namespace TubeStar
             createVideo.Update();
         }
 
-        private void btnPostVideo_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPostVideo(null);
-        }
-
+        //Tela de postar faz parte de Meus vídeos (o menu continua marcando Meus vídeos)
         private void ShowPostVideo(Video video)
         {
-            ShowSection(btnPostVideo, postVideo, txtNavPost.Text);
+            ShowSection(btnVideoPlanner, postVideo, EnglishStrings.NavPostVideo.Translate());
             postVideo.Update(video);
         }
 
@@ -235,6 +248,11 @@ namespace TubeStar
         {
             ShowSection(btnRivals, rivalViewer, txtRivals.Text);
             rivalViewer.Update();
+        }
+
+        private void btnCalendar_Click(object sender, RoutedEventArgs e)
+        {
+            new CalendarDialog().ShowDialog();
         }
 
         private void btnNewDay_Click(object sender, RoutedEventArgs e)

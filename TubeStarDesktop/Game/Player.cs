@@ -58,6 +58,64 @@ namespace TubeStar
 
         public double LoanPayOff { get; set; }
 
+        //Calendário: resumo do último dia e totais da semana e do ano em andamento
+        public PeriodStats LastDay { get; set; }
+        public PeriodStats CurrentWeek { get; set; }
+        public PeriodStats CurrentYear { get; set; }
+        //Semanas e anos já fechados (histórico do Calendário)
+        public List<PeriodStats> PastSummaries { get; set; }
+
+        //Guarda o dia simulado nos totais da semana e do ano
+        public void RecordDay(PeriodStats day)
+        {
+            LastDay = day;
+            if (CurrentWeek == null)
+                CurrentWeek = new PeriodStats();
+            if (CurrentYear == null)
+                CurrentYear = new PeriodStats();
+            CurrentWeek.Add(day);
+            CurrentYear.Add(day);
+        }
+
+        //Evento aleatório roda depois do dia gravado: soma o efeito dele no dia, semana e ano
+        public void RecordEvent(double money, long subscribers)
+        {
+            if (LastDay == null || (money == 0 && subscribers == 0))
+                return;
+
+            var extra = new PeriodStats();
+            if (money > 0)
+                extra.Earned = money;
+            else
+                extra.Spent = -money;
+            extra.NewSubscribers = subscribers;
+
+            LastDay.Add(extra);
+
+            //Se a semana (ou o ano) fechou hoje, o evento pertence ao período fechado
+            bool weekClosed = Iterations > 0 && Iterations % 7 == 0 && PastSummaries != null && PastSummaries.Count > 0;
+            bool yearClosed = weekClosed && Iterations % 112 == 0 && PastSummaries.Count > 1;
+            if (weekClosed)
+            {
+                PastSummaries[PastSummaries.Count - 1].Add(extra);
+                if (yearClosed)
+                    PastSummaries[PastSummaries.Count - 2].Add(extra);
+            }
+            else
+            {
+                if (CurrentWeek == null)
+                    CurrentWeek = new PeriodStats();
+                CurrentWeek.Add(extra);
+            }
+
+            if (!yearClosed)
+            {
+                if (CurrentYear == null)
+                    CurrentYear = new PeriodStats();
+                CurrentYear.Add(extra);
+            }
+        }
+
         public Player()
         {
             Reset();
@@ -76,6 +134,10 @@ namespace TubeStar
             Overtime = false;
             HasPromotion = false;
             LoanPayOff = 0;
+            LastDay = null;
+            CurrentWeek = null;
+            CurrentYear = null;
+            PastSummaries = new List<PeriodStats>();
 
             TasksInProgress = new List<Task>();
             Videos = new List<Video>();

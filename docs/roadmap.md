@@ -22,7 +22,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Loja (fotos, mais imersão) e Funcionários: revisitar mais para frente.
 - Dificuldade: Média. Depende de: 0.
 
-**2. Top TubeStars** (etapa 2a, ranking vivo, feita em 2026-11-02; falta 2b: perfil P1 com melhor posição e distância para você; ranking por nicho depois do item 4; placas no item 13)
+**2. Top TubeStars** (feito em 2026-11-02: ranking vivo e perfil; ranking por nicho depois do item 4; placas no item 13)
 - Abas YouTube (ativa), Twitch e Podcast (estas duas só com o nome por enquanto).
 - 20 rivais famosos com perfil completo e cerca de 500 canais genéricos. 100% offline, com volatilidade. Rankings geral, por nicho e "quem mais cresceu na semana". Variação, dias no #1, placas.
 - Dificuldade: Média. Depende de: 1 (etapa 3) e 3.

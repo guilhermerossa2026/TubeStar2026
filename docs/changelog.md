@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-02
+- Top TubeStars, etapa 2b: clicar num canal abre o perfil (banner, avatar, tema, posição, inscritos, views, vídeos, inscritos na semana, variação desde ontem, dias no #1, melhor posição e distância para você). Números curtos vão até trilhão (1,25 tri) e o truncamento não erra mais por arredondamento.
 - Top TubeStars, etapa 2a (ranking vivo): 15 rivais famosos + 500 canais genéricos só com números (offline, sem vídeos; save mais leve), crescimento diário com volatilidade e virais, ▲▼ desde ontem, destaques da semana (maior alta, maior queda, você), abas Geral e Cresceu na semana, "Ir para minha posição", "Voltar ao #1" e paginação de 50. Renomear canal mantém o histórico no ranking.
 - Números curtos no jogo todo (12,4 mil, 1,19 mi, 2,3 bi) para inscritos, views, likes e comentários; dinheiro continua exato.
 - Cartão de Meus vídeos mostra likes, dislikes, comentários e dias no ar (views saíram da miniatura). "Ver vídeo" virou análise com abas Desempenho (views, posição no canal, aprovação, gravação e edição) e Dinheiro (custo, quanto rendeu e lucro). Cada vídeo passa a guardar quanto rendeu e gastou com views compradas.

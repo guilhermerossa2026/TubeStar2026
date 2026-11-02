@@ -1397,4 +1397,44 @@
     <Id>NumberDecimalSeparator</Id>
     <Text>,</Text>
   </CustomText>
+  <CustomText>
+    <Id>ProfilePosition</Id>
+    <Text>#{0} no ranking</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileVideos</Id>
+    <Text>Vídeos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileChange</Id>
+    <Text>Variação desde ontem</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileDaysAtTop</Id>
+    <Text>Dias no #1</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileBest</Id>
+    <Text>Melhor posição: #{0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileDistanceBehind</Id>
+    <Text>Distância para você: {0} inscritos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileDistanceAhead</Id>
+    <Text>Você está {0} inscritos à frente</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileNoChange</Id>
+    <Text>Sem mudança</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ProfileDistanceTie</Id>
+    <Text>Empatado com você</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NumberTrillion</Id>
+    <Text>tri</Text>
+  </CustomText>
 </ArrayOfCustomText>

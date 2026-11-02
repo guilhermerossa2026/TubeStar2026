@@ -137,6 +137,9 @@
     <Compile Include="TitlePage.xaml.cs">
       <DependentUpon>TitlePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\RankProfileDialog.xaml.cs">
+      <DependentUpon>RankProfileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\CalendarDialog.xaml.cs">
       <DependentUpon>CalendarDialog.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
     <Page Include="TitlePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\RankProfileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\CalendarDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

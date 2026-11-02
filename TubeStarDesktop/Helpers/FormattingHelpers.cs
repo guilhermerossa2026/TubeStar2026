@@ -18,9 +18,11 @@ namespace TubeStar
             return instance.ToString("C", CurrentCulture);
         }
 
-        //Formato curto, como no YouTube: 845, 12,4 mil, 1,19 mi, 2,3 bi (corta, não arredonda para cima)
+        //Formato curto, como no YouTube: 845, 12,4 mil, 1,19 mi, 2,34 bi, 1,25 tri (corta, não arredonda para cima)
         public static string ToShortNumber(this long instance)
         {
+            if (instance == long.MinValue)
+                instance = long.MinValue + 1;
             if (instance < 0)
                 return "-" + ToShortNumber(-instance);
             if (instance < 1000)
@@ -38,17 +40,24 @@ namespace TubeStar
                 value = instance / 1000000.0;
                 suffix = EnglishStrings.NumberMillion;
             }
-            else
+            else if (instance < 1000000000000)
             {
                 value = instance / 1000000000.0;
                 suffix = EnglishStrings.NumberBillion;
+            }
+            else
+            {
+                value = instance / 1000000000000.0;
+                suffix = EnglishStrings.NumberTrillion;
             }
 
             int decimals = value < 10 ? 2 : (value < 100 ? 1 : 0);
             if (suffix == EnglishStrings.NumberThousand)
                 decimals = Math.Min(decimals, 1);
             double factor = Math.Pow(10, decimals);
-            value = Math.Floor(value * factor) / factor;
+            //Conta em inteiros: com double, 1,15 x 100 dá 114,999... e viraria 1,14
+            long unit = suffix == EnglishStrings.NumberThousand ? 1000 : (suffix == EnglishStrings.NumberMillion ? 1000000 : (suffix == EnglishStrings.NumberBillion ? 1000000000 : 1000000000000));
+            value = (instance * (long)factor / unit) / factor;
 
             string text = value.ToString("0." + new string('#', Math.Max(decimals, 1)), CultureInfo.InvariantCulture).Replace(".", EnglishStrings.NumberDecimalSeparator.Translate());
             return text + " " + suffix.Translate();

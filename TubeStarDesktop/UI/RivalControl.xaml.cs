@@ -168,7 +168,7 @@ namespace TubeStar
                 grid.Children.Add(change);
             }
 
-            var avatar = CreateAvatar(channel.Name);
+            var avatar = CreateAvatar(channel.Name, 30);
             Grid.SetColumn(avatar, 2);
             grid.Children.Add(avatar);
 
@@ -199,25 +199,32 @@ namespace TubeStar
             Grid.SetColumn(txtViews, 6);
             grid.Children.Add(txtViews);
 
-            //Clique no canal: perfil entra na etapa 2b
-            return new Border { Style = (Style)FindResource(channel.IsPlayer ? "TableRowMeStyle" : "TableRowStyle"), Child = grid };
+            //Clique abre o perfil do canal
+            var row = new Border { Style = (Style)FindResource(channel.IsPlayer ? "TableRowMeStyle" : "TableRowStyle"), Child = grid, Cursor = System.Windows.Input.Cursors.Hand };
+            row.MouseLeftButtonUp += (s, e) => new RankProfileDialog(channel).ShowDialog();
+            return row;
         }
 
-        private static FrameworkElement CreateAvatar(string name)
+        //Cor do avatar derivada do nome (a mesma no ranking e no perfil)
+        internal static Color GetAvatarColor(string name)
+        {
+            int hash = 0;
+            foreach (char c in name ?? "")
+                hash = (hash * 31 + c) & 0x7FFFFFFF;
+            return (Color)ColorConverter.ConvertFromString(AvatarColors[hash % AvatarColors.Length]);
+        }
+
+        internal static FrameworkElement CreateAvatar(string name, double size)
         {
             if (String.IsNullOrEmpty(name))
                 name = "?";
 
-            int hash = 0;
-            foreach (char c in name)
-                hash = (hash * 31 + c) & 0x7FFFFFFF;
-
-            var color = (Color)ColorConverter.ConvertFromString(AvatarColors[hash % AvatarColors.Length]);
+            var color = GetAvatarColor(name);
             var circle = new Border
             {
-                Width = 30,
-                Height = 30,
-                CornerRadius = new CornerRadius(15),
+                Width = size,
+                Height = size,
+                CornerRadius = new CornerRadius(size / 2),
                 Background = new SolidColorBrush(color),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
@@ -226,7 +233,7 @@ namespace TubeStar
             {
                 Text = GetInitial(name),
                 FontWeight = FontWeights.Bold,
-                FontSize = 13,
+                FontSize = size * 0.43,
                 Foreground = Brushes.White,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center

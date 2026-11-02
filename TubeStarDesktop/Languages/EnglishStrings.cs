@@ -925,12 +925,32 @@ namespace TubeStar
         VideoMoneyNote,
         [Description("Week")]
         RankWeek,
+        [Description("#{0} in the ranking")]
+        ProfilePosition,
+        [Description("Videos")]
+        ProfileVideos,
+        [Description("Change since yesterday")]
+        ProfileChange,
+        [Description("No change")]
+        ProfileNoChange,
+        [Description("Tied with you")]
+        ProfileDistanceTie,
+        [Description("Days at #1")]
+        ProfileDaysAtTop,
+        [Description("Best position: #{0}")]
+        ProfileBest,
+        [Description("Distance to you: {0} subscribers")]
+        ProfileDistanceBehind,
+        [Description("You are {0} subscribers ahead")]
+        ProfileDistanceAhead,
         [Description("K")]
         NumberThousand,
         [Description("M")]
         NumberMillion,
         [Description("B")]
         NumberBillion,
+        [Description("T")]
+        NumberTrillion,
         [Description(".")]
         NumberDecimalSeparator,
         [Description("Back to #1")]

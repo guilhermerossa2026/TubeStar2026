@@ -1,0 +1,37 @@
+﻿<xctk:ChildWindow x:Class="TubeStar.RankProfileDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Caption="Channel"
+        WindowStartupLocation="Center">
+
+    <!-- Perfil do canal (P1): banner, avatar, tema e números -->
+    <StackPanel Width="560">
+        <Border x:Name="banner" Height="90" CornerRadius="8" />
+
+        <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ContentControl x:Name="avatarHost" VerticalAlignment="Center" />
+            <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="txtName" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                <TextBlock x:Name="txtSubtitle" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
+            </StackPanel>
+        </Grid>
+
+        <Border Style="{StaticResource CardBorderStyle}" Margin="0,14,0,0">
+            <StackPanel>
+                <UniformGrid x:Name="kpisTop" Columns="3" />
+                <UniformGrid x:Name="kpisBottom" Columns="3" Margin="0,14,0,0" />
+            </StackPanel>
+        </Border>
+
+        <TextBlock x:Name="txtBestAndDistance" Style="{StaticResource MutedTextStyle}" Margin="0,12,0,0" TextWrapping="Wrap" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button x:Name="btnOk" Content="OK" MinWidth="100" IsDefault="True" IsCancel="True" Style="{StaticResource PrimaryButtonStyle}" Click="OKButton_Click" />
+        </StackPanel>
+    </StackPanel>
+</xctk:ChildWindow>

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace TubeStar
 {
@@ -25,7 +26,12 @@ namespace TubeStar
             UpdateHeader();
             //Remove ao sair da tela: cada jogo novo cria outra MainPage
             Player.Current.MoneyChanged += Player_MoneyChanged;
-            Unloaded += (s, e) => Player.Current.MoneyChanged -= Player_MoneyChanged;
+            Unloaded += (s, e) =>
+            {
+                Player.Current.MoneyChanged -= Player_MoneyChanged;
+                ActiveChannel.Changed -= ActiveChannel_Changed;
+            };
+            ActiveChannel.Changed += ActiveChannel_Changed;
 
             dailyPlanner.NewDayCompleted += () =>
             {
@@ -137,8 +143,87 @@ namespace TubeStar
             //Igual à prévia: "Dia" é o dia do ano (1 a 112)
             txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
 
-            txtSubscribers.Text = TotalSubscribers().ToShortNumber();
+            //Inscritos do canal escolhido no seletor (ou de todos, na Visão geral)
+            txtSubscribers.Text = ActiveChannel.Subscribers.ToShortNumber();
+            UpdateChannelSelector();
         }
+
+        #region Seletor de canal
+
+        private void ActiveChannel_Changed()
+        {
+            UpdateHeader();
+            videoManager.ShowActiveChannel();
+        }
+
+        private void UpdateChannelSelector()
+        {
+            var channel = ActiveChannel.Current;
+            if (channel == null)
+            {
+                txtSelectorName.Text = EnglishStrings.ChannelOverview.Translate();
+                int count = Player.Current.Channels.Count(c => c != Channel.UnreleasedVideos);
+                txtSelectorInfo.Text = count == 1 ? EnglishStrings.ChannelOverviewInfoOne.Translate() : String.Format(EnglishStrings.ChannelOverviewInfo.Translate(), count);
+                selectorAvatar.Content = RivalControl.CreateAvatar(txtSelectorName.Text, 28);
+            }
+            else
+            {
+                txtSelectorName.Text = channel.Name;
+                txtSelectorInfo.Text = channel.Niche.HasValue ? channel.Niche.Value.GetString() : "";
+                selectorAvatar.Content = RivalControl.CreateAvatar(channel.Name, 28);
+            }
+        }
+
+        private void btnChannelSelector_Click(object sender, RoutedEventArgs e)
+        {
+            channelOptions.Children.Clear();
+            channelOptions.Children.Add(CreateChannelOption(EnglishStrings.ChannelOverview.Translate(), null, null));
+            foreach (var channel in Player.Current.Channels.Where(c => c != Channel.UnreleasedVideos))
+                channelOptions.Children.Add(CreateChannelOption(channel.Name, channel.Niche.HasValue ? channel.Niche.Value.GetString() : null, channel));
+
+            var add = new Button { Content = EnglishStrings.VideosNewChannel.Translate(), Style = (Style)FindResource("GhostButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 4, 0, 0) };
+            add.Click += (s, args) =>
+            {
+                popupChannels.IsOpen = false;
+                var dialog = new AddChannelDialog();
+                dialog.ShowDialog(() =>
+                {
+                    if (dialog.Channel != null)
+                    {
+                        Player.Current.Channels.Add(dialog.Channel);
+                        ActiveChannel.Select(dialog.Channel);
+                        videoManager.Update();
+                    }
+                });
+            };
+            channelOptions.Children.Add(add);
+            popupChannels.IsOpen = true;
+        }
+
+        private Button CreateChannelOption(string name, string info, Channel channel)
+        {
+            var panel = new StackPanel { Orientation = Orientation.Horizontal };
+            panel.Children.Add(RivalControl.CreateAvatar(name, 24));
+            var texts = new StackPanel { Margin = new Thickness(8, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+            texts.Children.Add(new TextBlock { Text = name, FontWeight = FontWeights.SemiBold });
+            if (!String.IsNullOrEmpty(info))
+                texts.Children.Add(new TextBlock { Text = info, FontSize = 11, Foreground = (Brush)FindResource("YtTextSecondaryBrush") });
+            panel.Children.Add(texts);
+
+            var option = new Button { Content = panel, Style = (Style)FindResource("GhostButtonStyle"), HorizontalContentAlignment = HorizontalAlignment.Left, Padding = new Thickness(8, 5, 8, 5) };
+            if (channel == ActiveChannel.Current)
+                option.Background = (Brush)FindResource("YtDarkCardHoverBrush");
+            option.Click += (s, e) =>
+            {
+                popupChannels.IsOpen = false;
+                ActiveChannel.Select(channel);
+                //Mesmo canal já ativo: a grade pode estar em "Não lançados", então mostra de novo
+                videoManager.ShowActiveChannel();
+            };
+            return option;
+        }
+
+        #endregion
 
         private static long TotalSubscribers()
         {

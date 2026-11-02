@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-02
+- Canais e nichos, etapa 4b: seletor de canal no menu lateral (com "Visão geral" e "+ Novo canal"), sincronizado com os chips de Meus vídeos; cabeçalho mostra os inscritos do canal escolhido ou a soma. Painel do canal com nicho, RPM, posição no ranking e gráfico de inscritos por dia; Visão geral lista cada canal e o total.
 - Canais e nichos, etapa 4c: filtro por nicho no Top TubeStars (Todos os nichos + 15), combinável com Geral e Cresceu na semana. Rivais famosos e genéricos com nicho (rankings antigos migrados), mensagem para filtro vazio.
 - Canais e nichos, etapa 4a: 15 nichos substituem as 18 categorias (vídeo e canal). Nicho do canal escolhido na criação e fixo, com ganho por view (RPM ×0,6 a ×1,8) e concorrência (views de busca ×0,8 a ×1,15) próprios. Vídeo fora do nicho: 25% menos inscritos assistem, mas 30% mais chance de inscrição; aviso ao postar. Troféus migrados para os nichos equivalentes.
 - Resumos mostram a origem do ganho (Salário, Canal, Outros). "Ver vídeo" mostra os inscritos que o vídeo trouxe. Abas de Ver vídeo com o mesmo tamanho.

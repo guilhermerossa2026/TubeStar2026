@@ -22,7 +22,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Loja (fotos, mais imersão) e Funcionários: revisitar mais para frente.
 - Dificuldade: Média. Depende de: 0.
 
-**2. Top TubeStars** (feito em 2026-11-02: ranking vivo e perfil; ranking por nicho depois do item 4; placas no item 13)
+**2. Top TubeStars** (feito em 2026-11-02: ranking vivo, perfil e ranking por nicho; placas no item 13)
 - Abas YouTube (ativa), Twitch e Podcast (estas duas só com o nome por enquanto).
 - 20 rivais famosos com perfil completo e cerca de 500 canais genéricos. 100% offline, com volatilidade. Rankings geral, por nicho e "quem mais cresceu na semana". Variação, dias no #1, placas.
 - Dificuldade: Média. Depende de: 1 (etapa 3) e 3.
@@ -32,13 +32,6 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Dificuldade: Média. Depende de: 1 (etapa 2).
 
 ## Próximo (diversão e equilíbrio)
-
-**4. Canais e nichos** (etapas 4a nichos e 4c ranking por nicho feitas em 2026-11-02; falta 4b: seletor de canal no cabeçalho e painel)
-- Canais ilimitados; nicho escolhido na criação, fixo depois. Vídeo no nicho rende mais; fora do nicho rende menos, mas atrai público novo.
-- Nichos (substituem as 18 categorias antigas), cada um com RPM e concorrência próprios: Games, Vlog/Lifestyle, Tecnologia, Humor, Educação, Finanças, Fitness/Saúde, Culinária, Música, Beleza/Moda, Esportes, Reacts, Mistério/True Crime, Viagem, Infantil.
-- Cabeçalho com canal ativo e seletor (inclui "Visão geral" = soma). Painel do canal: views e ganhos totais, inscritos, RPM, nº de vídeos, gráfico.
-- Dinheiro global; inscritos e algoritmo por canal.
-- Dificuldade: Difícil (mexe no save). Depende de: 0, 1.
 
 **5. Criação de vídeo nova**
 - Atributos atuais REMOVIDOS. Entra "tipo de vídeo" (Tutorial, Review, React, Desafio, Vlog, Top 10, Documentário; cada um combina com certos nichos) + até 2 "iscas" (título chamativo, thumbnail com rosto, tendência, participação especial, sorteio). Nº de iscas cresce com roteiro e roteirista. Prévia mostra os efeitos.

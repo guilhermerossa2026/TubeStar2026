@@ -51,7 +51,7 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="280" />
                 </Grid.ColumnDefinitions>
 
                 <ScrollViewer x:Name="gridViewer" Grid.Column="0" BorderThickness="0" VerticalScrollBarVisibility="Auto">
@@ -70,6 +70,7 @@
                 <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}" Margin="12,0,0,0" VerticalAlignment="Top">
                     <StackPanel>
                         <TextBlock x:Name="txtPanelTitle" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
+                        <TextBlock x:Name="txtPanelNiche" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
                         <TextBlock x:Name="txtPanelStatus" Style="{StaticResource MutedTextStyle}" Foreground="{StaticResource YtLossBrush}" FontWeight="Bold" Margin="0,4,0,0" Visibility="Collapsed" />
 
                         <StackPanel x:Name="panelKpis">
@@ -79,10 +80,23 @@
                             <TextBlock x:Name="txtKpiIncome" Style="{StaticResource KpiValueStyle}" Foreground="{StaticResource YtGainBrush}" />
                             <TextBlock x:Name="lblSubs" Style="{StaticResource KpiLabelStyle}" />
                             <TextBlock x:Name="txtKpiSubs" Style="{StaticResource KpiValueStyle}" />
+                            <TextBlock x:Name="lblRpm" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" />
+                            <TextBlock x:Name="lblRank" Style="{StaticResource KpiLabelStyle}" />
+                            <TextBlock x:Name="txtKpiRank" Style="{StaticResource KpiValueStyle}" />
                         </StackPanel>
 
                         <TextBlock x:Name="lblVideos" Style="{StaticResource KpiLabelStyle}" />
                         <TextBlock x:Name="txtKpiVideos" Style="{StaticResource KpiValueStyle}" />
+
+                        <!-- gráfico de inscritos (canal escolhido) -->
+                        <StackPanel x:Name="panelChart" Margin="0,12,0,0">
+                            <TextBlock x:Name="lblChart" Style="{StaticResource KpiLabelStyle}" />
+                            <Canvas x:Name="chartCanvas" Height="70" Margin="0,6,0,0" ClipToBounds="True" SizeChanged="chartCanvas_SizeChanged" />
+                        </StackPanel>
+
+                        <!-- Visão geral: uma linha por canal -->
+                        <StackPanel x:Name="panelOverview" Margin="0,8,0,0" />
 
                         <TextBlock x:Name="txtUnreleasedHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,12,0,0" />
 

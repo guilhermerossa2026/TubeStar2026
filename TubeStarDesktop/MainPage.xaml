@@ -53,6 +53,25 @@
                     <TextBlock Text="TubeStar" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" VerticalAlignment="Center" Margin="9,0,0,0" />
                 </StackPanel>
 
+                <!-- Seletor de canal (Visão geral ou um canal), como a conta no YouTube Studio -->
+                <Grid DockPanel.Dock="Top" Margin="0,0,0,4">
+                    <Button x:Name="btnChannelSelector" Style="{StaticResource GhostButtonStyle}" HorizontalContentAlignment="Stretch" Padding="10,8" Click="btnChannelSelector_Click">
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Right" Text="▾" Foreground="{StaticResource YtTextSecondaryBrush}" VerticalAlignment="Center" Margin="6,0,0,0" />
+                            <ContentControl x:Name="selectorAvatar" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock x:Name="txtSelectorName" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock x:Name="txtSelectorInfo" FontSize="11" Foreground="{StaticResource YtTextSecondaryBrush}" TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Button>
+                    <Popup x:Name="popupChannels" PlacementTarget="{Binding ElementName=btnChannelSelector}" Placement="Bottom" StaysOpen="False" AllowsTransparency="True">
+                        <Border Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="4" MinWidth="216">
+                            <StackPanel x:Name="channelOptions" />
+                        </Border>
+                    </Popup>
+                </Grid>
+
                 <StackPanel Margin="0,8,0,0">
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconHome}">
                         <DockPanel LastChildFill="True">

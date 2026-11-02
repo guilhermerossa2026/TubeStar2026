@@ -925,6 +925,22 @@ namespace TubeStar
         VideoMoneyNote,
         [Description("Week")]
         RankWeek,
+        [Description("Overview")]
+        ChannelOverview,
+        [Description("{0} channels")]
+        ChannelOverviewInfo,
+        [Description("1 channel")]
+        ChannelOverviewInfoOne,
+        [Description("RPM")]
+        ChannelRpm,
+        [Description("Ranking")]
+        ChannelRank,
+        [Description("Subscribers per day")]
+        ChannelSubscribersChart,
+        [Description("The chart appears after a few days.")]
+        ChannelChartEmpty,
+        [Description("Total")]
+        ChannelTotal,
         [Description("All niches")]
         RankAllNiches,
         [Description("No channel here yet.")]

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace TubeStar
 {
@@ -15,7 +17,9 @@ namespace TubeStar
 
         private enum VideoFilter { Recent, MostViewed, BestScore }
 
+        //_currentChannel nulo + _overview = Visão geral (todos os canais)
         private Channel _currentChannel;
+        private bool _overview;
         private VideoFilter _filter = VideoFilter.Recent;
         private int _page;
         private bool _showAll;
@@ -45,6 +49,9 @@ namespace TubeStar
             lblViews.Text = EnglishStrings.VideosTotalViews.Translate().ToUpper();
             lblIncome.Text = EnglishStrings.VideosTotalEarnings.Translate().ToUpper();
             lblSubs.Text = EnglishStrings.Subscribers.Translate().ToUpper();
+            lblRpm.Text = EnglishStrings.ChannelRpm.Translate().ToUpper();
+            lblRank.Text = EnglishStrings.ChannelRank.Translate().ToUpper();
+            lblChart.Text = EnglishStrings.ChannelSubscribersChart.Translate().ToUpper();
             txtUnreleasedHint.Text = EnglishStrings.VideosUnreleasedHint.Translate();
             btnStats.Content = EnglishStrings.VideosStatistics.Translate();
             btnEdit.Content = EnglishStrings.VideosEditChannel.Translate();
@@ -60,6 +67,8 @@ namespace TubeStar
                     {
                         Player.Current.Channels.Add(channelDialog.Channel);
                         Update();
+                        //Canal novo vira o ativo (atualiza o seletor e o cabeçalho)
+                        ActiveChannel.Select(channelDialog.Channel);
                     }
                 });
         }
@@ -80,7 +89,7 @@ namespace TubeStar
             }
 
             //O canal atual pode ter sumido (novo jogo / jogo carregado)
-            if (_currentChannel == null || (_currentChannel != Channel.UnreleasedVideos && !Player.Current.Channels.Contains(_currentChannel)))
+            if (!_overview && (_currentChannel == null || (_currentChannel != Channel.UnreleasedVideos && !Player.Current.Channels.Contains(_currentChannel))))
             {
                 SelectChannel(Channel.UnreleasedVideos);
                 return;
@@ -90,8 +99,27 @@ namespace TubeStar
             ShowChannel();
         }
 
-        private void SelectChannel(Channel channel)
+        //Seletor do menu lateral mudou: mostra o mesmo canal (ou a Visão geral)
+        public void ShowActiveChannel()
         {
+            var active = ActiveChannel.Current;
+            if (active == null ? !_overview : active != _currentChannel)
+                SelectChannel(active, true);
+        }
+
+        //Canal dono do vídeo (na Visão geral a grade mistura canais)
+        private Channel ChannelOf(Video video)
+        {
+            if (!_overview)
+                return _currentChannel;
+            return Player.Current.Channels.FirstOrDefault(c => c != Channel.UnreleasedVideos && c.Videos.Contains(video));
+        }
+
+        private void SelectChannel(Channel channel, bool overview = false)
+        {
+            _overview = overview && channel == null;
+            if (channel == null && !_overview)
+                channel = Channel.UnreleasedVideos;
             _currentChannel = channel;
             _page = 0;
             _filter = VideoFilter.Recent;
@@ -114,10 +142,27 @@ namespace TubeStar
         private void RenderChannelChips()
         {
             channelChips.Children.Clear();
+
+            //Visão geral (só faz sentido com canal criado)
+            if (Player.Current.Channels.Any(c => c != Channel.UnreleasedVideos))
+            {
+                var overviewChip = new Button { Content = EnglishStrings.ChannelOverview.Translate() };
+                overviewChip.Style = (Style)FindResource(_overview ? "ChipActiveButtonStyle" : "ChipButtonStyle");
+                overviewChip.Click += (s, e) =>
+                {
+                    if (!_overview)
+                    {
+                        SelectChannel(null, true);
+                        ActiveChannel.Select(null);
+                    }
+                };
+                channelChips.Children.Add(overviewChip);
+            }
+
             foreach (var channel in OrderedChannels())
             {
                 var chip = new Button();
-                bool active = channel == _currentChannel;
+                bool active = !_overview && channel == _currentChannel;
                 chip.Style = (Style)FindResource(active ? "ChipActiveButtonStyle" : "ChipButtonStyle");
 
                 if (channel == Channel.UnreleasedVideos)
@@ -137,8 +182,13 @@ namespace TubeStar
                 var target = channel;
                 chip.Click += (s, e) =>
                 {
-                    if (target != _currentChannel)
+                    if (_overview || target != _currentChannel)
+                    {
                         SelectChannel(target);
+                        //Chip de canal também troca o seletor do menu lateral ("Não lançados" não é canal)
+                        if (target != Channel.UnreleasedVideos)
+                            ActiveChannel.Select(target);
+                    }
                 };
                 channelChips.Children.Add(chip);
             }
@@ -148,7 +198,9 @@ namespace TubeStar
         {
             var channel = _currentChannel;
             //Ordem de insercao = mais antigo primeiro; "mais recentes" inverte
-            IEnumerable<Video> videos = channel.Videos.Reverse();
+            IEnumerable<Video> videos = _overview
+                ? Player.Current.Channels.Where(c => c != Channel.UnreleasedVideos).SelectMany(c => c.Videos.Reverse())
+                : channel.Videos.Reverse();
 
             string search = (txtSearch.Text ?? String.Empty).Trim();
             if (search.Length > 0)
@@ -157,6 +209,9 @@ namespace TubeStar
             }
 
             var list = videos.ToList();
+            //Visão geral: "mais recentes" pelos dias no ar (cada canal vem em blocos)
+            if (_overview && _filter == VideoFilter.Recent)
+                list = list.OrderBy(v => v.Iterations).ToList();
             if (_filter == VideoFilter.MostViewed)
             {
                 list = list.OrderByDescending(v => v.Views).ToList();
@@ -174,7 +229,7 @@ namespace TubeStar
         {
             var channel = _currentChannel;
 
-            if (channel.Videos.Count >= 100)
+            if (channel != null && channel.Videos.Count >= 100)
                 TrophyManager.UnlockTrophy(Trophy.OCD);
 
             UpdatePanel(channel);
@@ -189,7 +244,7 @@ namespace TubeStar
             videoPanelGrid.Children.Clear();
             foreach (var video in visible)
             {
-                var videoBlock = new VideoBlockGrid(channel, video);
+                var videoBlock = new VideoBlockGrid(ChannelOf(video), video);
                 videoBlock.UploadClick += (s, e) =>
                 {
                     UploadVideo(videoBlock.Video);
@@ -215,29 +270,122 @@ namespace TubeStar
 
         private void UpdatePanel(Channel channel)
         {
-            bool unreleased = channel == Channel.UnreleasedVideos;
+            bool unreleased = !_overview && channel == Channel.UnreleasedVideos;
+            bool single = !_overview && !unreleased;
 
-            txtPanelTitle.Text = String.Format(EnglishStrings.VideosPanel.Translate(),
-                unreleased ? EnglishStrings.VideosUnreleasedChip.Translate() : channel.Name);
+            if (_overview)
+                txtPanelTitle.Text = EnglishStrings.ChannelOverview.Translate();
+            else
+                txtPanelTitle.Text = String.Format(EnglishStrings.VideosPanel.Translate(),
+                    unreleased ? EnglishStrings.VideosUnreleasedChip.Translate() : channel.Name);
 
-            txtPanelStatus.Visibility = (!unreleased && channel.IsSuspended) ? Visibility.Visible : Visibility.Collapsed;
+            txtPanelNiche.Visibility = single && channel.Niche.HasValue ? Visibility.Visible : Visibility.Collapsed;
+            if (single && channel.Niche.HasValue)
+                txtPanelNiche.Text = channel.Niche.Value.GetString() + " · " + AddChannelDialog.GetNicheInfo(channel.Niche.Value);
+            txtPanelNiche.TextWrapping = TextWrapping.Wrap;
+
+            txtPanelStatus.Visibility = (single && channel.IsSuspended) ? Visibility.Visible : Visibility.Collapsed;
             txtPanelStatus.Text = EnglishStrings.Suspended.Translate().ToUpper();
 
-            panelKpis.Visibility = unreleased ? Visibility.Collapsed : Visibility.Visible;
-            panelChannelButtons.Visibility = unreleased ? Visibility.Collapsed : Visibility.Visible;
+            panelKpis.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
+            panelChart.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
+            panelChannelButtons.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
+            panelOverview.Visibility = _overview ? Visibility.Visible : Visibility.Collapsed;
             txtUnreleasedHint.Visibility = unreleased ? Visibility.Visible : Visibility.Collapsed;
 
             lblVideos.Text = (unreleased ? EnglishStrings.VideosReady.Translate() : EnglishStrings.Videos.Translate()).ToUpper();
-            txtKpiVideos.Text = channel.Videos.Count.ToNumberString();
+            txtKpiVideos.Text = _overview
+                ? Player.Current.Channels.Where(c => c != Channel.UnreleasedVideos).Sum(c => c.Videos.Count).ToNumberString()
+                : channel.Videos.Count.ToNumberString();
 
-            if (!unreleased)
+            if (single)
             {
                 long totalViews = channel.Videos.Sum(v => (long)v.Views);
-                txtKpiViews.Text = ((long)totalViews).ToShortNumber();
+                txtKpiViews.Text = totalViews.ToShortNumber();
                 txtKpiIncome.Text = channel.Income.ToCurrencyString();
                 txtKpiSubs.Text = channel.Subscribers.ToShortNumber();
+                txtKpiRpm.Text = ActiveChannel.GetRpm(channel).ToCurrencyString();
+                Ranking.Current.Refresh(false);
+                var entry = Ranking.Current.Channels.FirstOrDefault(c => c.IsPlayer && c.PlayerChannelId == channel.RankId);
+                txtKpiRank.Text = entry != null && entry.Position > 0 ? "#" + entry.Position : "-";
+                DrawChart();
             }
+
+            if (_overview)
+                BuildOverview();
         }
+
+        //2B: uma linha por canal (inscritos, ganhos, RPM) e o total
+        private void BuildOverview()
+        {
+            panelOverview.Children.Clear();
+            var channels = Player.Current.Channels.Where(c => c != Channel.UnreleasedVideos).ToList();
+            foreach (var channel in channels)
+                panelOverview.Children.Add(CreateOverviewRow(channel.Name, channel.Niche.HasValue ? channel.Niche.Value.GetString() : "",
+                    channel.Subscribers, channel.Income, ActiveChannel.GetRpm(channel).ToCurrencyString(), false));
+
+            panelOverview.Children.Add(CreateOverviewRow(EnglishStrings.ChannelTotal.Translate(), "",
+                channels.Sum(c => (long)c.Subscribers), channels.Sum(c => c.Income), null, true));
+        }
+
+        private UIElement CreateOverviewRow(string name, string niche, long subscribers, double income, string rpm, bool total)
+        {
+            var grid = new Grid { Margin = new Thickness(0, 6, 0, 0) };
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var left = new StackPanel();
+            left.Children.Add(new TextBlock { Text = name, FontWeight = total ? FontWeights.Bold : FontWeights.SemiBold, TextTrimming = TextTrimming.CharacterEllipsis });
+            string info = String.IsNullOrEmpty(niche) ? "" : niche;
+            if (rpm != null)
+                info += (info.Length > 0 ? " · " : "") + EnglishStrings.ChannelRpm.Translate() + " " + rpm;
+            if (info.Length > 0)
+                left.Children.Add(new TextBlock { Text = info, Style = (Style)FindResource("MutedTextStyle"), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis });
+            grid.Children.Add(left);
+
+            var right = new StackPanel { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(8, 0, 0, 0) };
+            right.Children.Add(new TextBlock { Text = subscribers.ToShortNumber(), HorizontalAlignment = HorizontalAlignment.Right, FontWeight = total ? FontWeights.Bold : FontWeights.Normal });
+            right.Children.Add(new TextBlock { Text = income.ToCurrencyString(), HorizontalAlignment = HorizontalAlignment.Right, FontSize = 11, Foreground = (Brush)FindResource("YtGainBrush") });
+            Grid.SetColumn(right, 1);
+            grid.Children.Add(right);
+
+            return new Border { BorderBrush = (Brush)FindResource("YtDarkBorderBrush"), BorderThickness = new Thickness(0, total ? 1 : 0, 0, 0), Padding = new Thickness(0, total ? 6 : 0, 0, 0), Child = grid };
+        }
+
+        //2A: inscritos dia a dia (histórico que o canal já guarda)
+        private void DrawChart()
+        {
+            chartCanvas.Children.Clear();
+            var channel = _currentChannel;
+            if (channel == null || _overview || channel == Channel.UnreleasedVideos)
+                return;
+
+            var data = channel.SubscribersOverTime;
+            double width = chartCanvas.ActualWidth, height = chartCanvas.Height;
+            if (data == null || data.Count < 2 || width <= 0)
+            {
+                chartCanvas.Children.Add(new TextBlock { Text = EnglishStrings.ChannelChartEmpty.Translate(), Style = (Style)FindResource("MutedTextStyle"), FontSize = 11 });
+                return;
+            }
+
+            double max = Math.Max(1, data.Max()), min = data.Min();
+            double range = Math.Max(1, max - min);
+            var line = new Polyline { Stroke = (Brush)FindResource("YtRedBrush"), StrokeThickness = 2 };
+            for (int i = 0; i < data.Count; i++)
+            {
+                double x = width * i / (data.Count - 1);
+                double y = height - 4 - (height - 8) * (data[i] - min) / range;
+                line.Points.Add(new Point(x, y));
+            }
+            chartCanvas.Children.Add(new Line { X1 = 0, X2 = width, Y1 = height - 1, Y2 = height - 1, Stroke = (Brush)FindResource("YtDarkBorderBrush"), StrokeThickness = 1 });
+            chartCanvas.Children.Add(line);
+        }
+
+        private void chartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DrawChart();
+        }
+
 
         private void UpdateFilterChips()
         {
@@ -266,7 +414,7 @@ namespace TubeStar
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtSearchPlaceholder.Visibility = String.IsNullOrEmpty(txtSearch.Text) ? Visibility.Visible : Visibility.Collapsed;
-            if (_currentChannel == null || Player.Current == null) return;
+            if ((_currentChannel == null && !_overview) || Player.Current == null) return;
             _page = 0;
             ShowChannel();
         }
@@ -313,14 +461,15 @@ namespace TubeStar
 
         private void HandleLawyerClick(Video video)
         {
-            if (_currentChannel.IsSuspended)
+            var owner = ChannelOf(video);
+            if (owner != null && owner.IsSuspended)
             {
                 CustomMessageBox.ShowDialog(EnglishStrings.LawyerStoreItem.Translate(), String.Format(EnglishStrings.RemoveChannelSuspension.Translate(), StoreItems.Current.Lawyer.AdditionalCost.ToCurrencyString()), MessagePicture.Legal, (result) =>
                 {
                     if (result == true)
                     {
-                        _currentChannel.IsSuspended = false;
-                        foreach (var v in _currentChannel.Videos)
+                        owner.IsSuspended = false;
+                        foreach (var v in owner.Videos)
                         {
                             v.IsSuspended = false;
                         }
@@ -367,7 +516,9 @@ namespace TubeStar
             }
             else
             {
-                _currentChannel.Videos.Remove(video);
+                var owner = ChannelOf(video);
+                if (owner != null)
+                    owner.Videos.Remove(video);
             }
 
             Update();

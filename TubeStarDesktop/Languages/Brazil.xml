@@ -1509,4 +1509,36 @@
     <Id>RankEmpty</Id>
     <Text>Nenhum canal aqui por enquanto.</Text>
   </CustomText>
+  <CustomText>
+    <Id>ChannelOverview</Id>
+    <Text>Visão geral</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelOverviewInfo</Id>
+    <Text>{0} canais</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelRpm</Id>
+    <Text>RPM</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelRank</Id>
+    <Text>Posição no ranking</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelSubscribersChart</Id>
+    <Text>Inscritos por dia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelChartEmpty</Id>
+    <Text>O gráfico aparece depois de alguns dias.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelTotal</Id>
+    <Text>Total</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelOverviewInfoOne</Id>
+    <Text>1 canal</Text>
+  </CustomText>
 </ArrayOfCustomText>

@@ -1205,4 +1205,72 @@
     <Id>CalendarToday</Id>
     <Text>Hoje</Text>
   </CustomText>
+  <CustomText>
+    <Id>VideoDaysOnline</Id>
+    <Text>{0} dias</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoTabPerformance</Id>
+    <Text>Desempenho</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoTabMoney</Id>
+    <Text>Dinheiro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoWhyScore</Id>
+    <Text>Por que a nota ficou assim</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoShooting</Id>
+    <Text>Gravação</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoEditing</Id>
+    <Text>Edição</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoNotEdited</Id>
+    <Text>sem edição</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoPoints</Id>
+    <Text>{0} pontos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoAttributesList</Id>
+    <Text>Atributos: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoRankInChannel</Id>
+    <Text>Posição no canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoRankValue</Id>
+    <Text>{0}º de {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoApproval</Id>
+    <Text>Aprovação</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCost</Id>
+    <Text>Custo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoIncome</Id>
+    <Text>Rendeu</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoProfit</Id>
+    <Text>Lucro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoProfitHeader</Id>
+    <Text>Lucro: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoMoneyNote</Id>
+    <Text>Inclui anúncios e crowdfunding, somados dia a dia desde que o vídeo foi postado.</Text>
+  </CustomText>
 </ArrayOfCustomText>

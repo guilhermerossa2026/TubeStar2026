@@ -6,7 +6,7 @@
         Caption="View Video"
         WindowStartupLocation="Center">
 
-    <!-- Ficha do vídeo (o antigo player em Flash não funciona mais) -->
+    <!-- Análise do vídeo: cabeçalho + abas Desempenho e Dinheiro (os números simples ficam no cartão) -->
     <StackPanel Width="640">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Width="320" Height="180" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" ClipToBounds="True">
+            <Border Width="256" Height="144" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" ClipToBounds="True">
                 <Image x:Name="imgVideo" Stretch="UniformToFill" />
             </Border>
 
@@ -24,11 +24,29 @@
                 <Border x:Name="scorePill" Style="{StaticResource PillSoftStyle}" HorizontalAlignment="Left" Margin="0,10,0,0">
                     <TextBlock x:Name="txtScore" Style="{StaticResource InheritTextStyle}" />
                 </Border>
+                <TextBlock x:Name="txtProfitHeader" FontWeight="SemiBold" Margin="0,10,0,0" />
             </StackPanel>
         </Grid>
 
-        <Border Style="{StaticResource CardBorderStyle}" Margin="0,14,0,0">
-            <UniformGrid x:Name="kpiGrid" Columns="5" />
+        <!-- abas -->
+        <StackPanel Orientation="Horizontal" Margin="0,16,0,8">
+            <Button x:Name="btnTabPerformance" Click="btnTabPerformance_Click" />
+            <Button x:Name="btnTabMoney" Margin="8,0,0,0" Click="btnTabMoney_Click" />
+        </StackPanel>
+
+        <Border Style="{StaticResource CardBorderStyle}">
+            <Grid>
+                <StackPanel x:Name="panelPerformance">
+                    <UniformGrid x:Name="performanceKpis" Columns="3" />
+                    <TextBlock x:Name="txtWhyScore" FontWeight="Bold" Margin="0,14,0,8" />
+                    <StackPanel x:Name="qualityRows" />
+                    <TextBlock x:Name="txtAttributes" Style="{StaticResource MutedTextStyle}" Margin="0,10,0,0" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel x:Name="panelMoney" Visibility="Collapsed">
+                    <UniformGrid x:Name="moneyKpis" Columns="3" />
+                    <TextBlock x:Name="txtMoneyNote" Style="{StaticResource MutedTextStyle}" Margin="0,12,0,0" TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
         </Border>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">

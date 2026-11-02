@@ -889,6 +889,40 @@ namespace TubeStar
 
         [Description("Days online")]
         DaysOnline,
+        [Description("{0} days")]
+        VideoDaysOnline,
+        [Description("Performance")]
+        VideoTabPerformance,
+        [Description("Money")]
+        VideoTabMoney,
+        [Description("Why the score")]
+        VideoWhyScore,
+        [Description("Shooting")]
+        VideoShooting,
+        [Description("Editing")]
+        VideoEditing,
+        [Description("not edited")]
+        VideoNotEdited,
+        [Description("{0} points")]
+        VideoPoints,
+        [Description("Attributes: {0}")]
+        VideoAttributesList,
+        [Description("Rank in channel")]
+        VideoRankInChannel,
+        [Description("{0} of {1}")]
+        VideoRankValue,
+        [Description("Approval")]
+        VideoApproval,
+        [Description("Cost")]
+        VideoCost,
+        [Description("Earned")]
+        VideoIncome,
+        [Description("Profit")]
+        VideoProfit,
+        [Description("Profit: {0}")]
+        VideoProfitHeader,
+        [Description("Earnings include ads and crowdfunding, counted day by day since the video was posted.")]
+        VideoMoneyNote,
 
         [Description("Calendar")]
         CalendarTitle,

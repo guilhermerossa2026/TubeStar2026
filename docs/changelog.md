@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-02
+- Cartão de Meus vídeos mostra likes, dislikes, comentários e dias no ar (views saíram da miniatura). "Ver vídeo" virou análise com abas Desempenho (views, posição no canal, aprovação, gravação e edição) e Dinheiro (custo, quanto rendeu e lucro). Cada vídeo passa a guardar quanto rendeu e gastou com views compradas.
 - Calendário (item 3): cartão "Resumo de ontem" na Agenda, resumo automático ao fechar cada semana (dia 8, 15...) e cada ano (112 dias), com totais e tabela por canal (views, novos inscritos, melhor vídeo). Clicar na data do cabeçalho abre o Calendário: dias da semana, "Esta semana até agora" e histórico de resumos. Eventos aleatórios entram nos totais.
 - "Postar vídeo" saiu do menu lateral: posta-se pelo botão "Postar" em Meus vídeos (com botão de voltar).
 - "Ver vídeo" não abre mais em branco (o player antigo usava Flash): mostra uma ficha do vídeo.

@@ -34,12 +34,14 @@ namespace TubeStar
                     txtName.Text = _video.Name;
                     txtName.ToolTip = _video.Name;
                     string views = GetNumberOfViews();
-                    txtViews.Text = views;
                     txtViewsLine.Text = String.Format(EnglishStrings.VideosViewsCount.Translate(), views);
+                    txtLikes.Text = _video.Likes.ToNumberString();
+                    txtDislikes.Text = _video.Dislikes.ToNumberString();
                     txtComments.Text = _video.GetCommentsCount().ToNumberString();
+                    txtDays.Text = String.Format(EnglishStrings.VideoDaysOnline.Translate(), _video.Iterations);
 
                     var released = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
-                    viewsBadge.Visibility = txtViewsLine.Visibility = panelComments.Visibility = released;
+                    txtViewsLine.Visibility = panelStats.Visibility = released;
 
                     bool canViewQuality = !isUnreleasedChannel || Player.Current.CanViewQualityBeforeUpload;
                     scorePill.Visibility = canViewQuality ? Visibility.Visible : Visibility.Collapsed;

@@ -16,9 +16,6 @@
                 <Grid x:Name="thumbGrid" Height="151" SizeChanged="thumbGrid_SizeChanged">
                     <Rectangle Fill="{StaticResource YtDarkSurfaceBrush}" />
                     <Image x:Name="imgVideo" Stretch="UniformToFill" />
-                    <Border x:Name="viewsBadge" Style="{StaticResource ThumbBadgeStyle}">
-                        <TextBlock x:Name="txtViews" FontSize="11" Foreground="{StaticResource YtOnAccentBrush}" />
-                    </Border>
                 </Grid>
 
                 <!-- titulo -->
@@ -32,12 +29,20 @@
                     </Border>
                 </Grid>
 
-                <!-- comentarios + acoes -->
+                <!-- likes, dislikes, comentarios e dias no ar -->
+                <WrapPanel x:Name="panelStats" Margin="0,8,0,0">
+                    <Path Data="{StaticResource IconThumbUp}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <TextBlock x:Name="txtLikes" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
+                    <Path Data="{StaticResource IconThumbDown}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <TextBlock x:Name="txtDislikes" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
+                    <Path Data="{StaticResource IconComment}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <TextBlock x:Name="txtComments" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
+                    <Path Data="{StaticResource IconCalendar}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <TextBlock x:Name="txtDays" Style="{StaticResource MutedTextStyle}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                </WrapPanel>
+
+                <!-- acoes -->
                 <Grid Margin="0,8,0,0">
-                    <StackPanel x:Name="panelComments" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <Path Data="{StaticResource IconComment}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
-                        <TextBlock x:Name="txtComments" Style="{StaticResource MutedTextStyle}" Margin="5,0,0,0" VerticalAlignment="Center" />
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="btnDelete" Style="{StaticResource GhostButtonStyle}" FontSize="12" Padding="9,3" MinHeight="0" Content="Delete" Click="btnDelete_Click" />
                         <Button x:Name="btnUpload" Style="{StaticResource SmallPrimaryButtonStyle}" FontSize="12" Padding="10,3" Margin="6,0,0,0" Content="Post" Click="btnUpload_Click" />

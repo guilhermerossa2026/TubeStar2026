@@ -28,6 +28,10 @@ namespace TubeStar
         public int ExtraShootingHours { get; set; }
         public int ExtraEditingHours { get; set; }
         public int Cost { get; set; }
+        //Quanto o vídeo já rendeu (anúncios + crowdfunding), somado a cada dia
+        public double Income { get; set; }
+        //Gastos do vídeo depois de postado (views compradas)
+        public double Expenses { get; set; }
 
         public int Iterations { get; set; }
 

@@ -691,9 +691,14 @@ namespace TubeStar
                         {
                             int viewsBefore = video.Views;
                             double moneyBefore = Player.Current.Money;
+                            double incomeBefore = dailyIncome;
+                            double expensesBefore = dailyExpenses;
                             VideoViewer.Iteration(channel, video, ref dailyIncome, ref dailyExpenses);
                             //Crowdfunding entra direto no dinheiro, fora do dailyIncome
-                            today.Earned += Math.Max(0, Player.Current.Money - moneyBefore);
+                            double crowdfunding = Math.Max(0, Player.Current.Money - moneyBefore);
+                            today.Earned += crowdfunding;
+                            video.Income += (dailyIncome - incomeBefore) + crowdfunding;
+                            video.Expenses += dailyExpenses - expensesBefore;
                             if (video.Iterations == 1)
                             {
                                 dailyExpenses += video.Cost;

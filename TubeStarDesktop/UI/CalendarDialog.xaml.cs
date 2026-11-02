@@ -112,7 +112,7 @@ namespace TubeStar
 
                 var views = new TextBlock
                 {
-                    Text = String.Format("{0} {1}", summary.Views.ToString("N0"), EnglishStrings.Views.Translate().ToLower()),
+                    Text = String.Format("{0} {1}", summary.Views.ToShortNumber(), EnglishStrings.Views.Translate().ToLower()),
                     Foreground = FindBrush("YtTextSecondaryBrush"),
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = new Thickness(16, 0, 16, 0)

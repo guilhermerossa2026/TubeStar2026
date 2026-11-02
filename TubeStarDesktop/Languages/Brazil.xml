@@ -1273,4 +1273,128 @@
     <Id>VideoMoneyNote</Id>
     <Text>Inclui anúncios e crowdfunding, somados dia a dia desde que o vídeo foi postado.</Text>
   </CustomText>
+  <CustomText>
+    <Id>RankWeek</Id>
+    <Text>Semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankTabAll</Id>
+    <Text>Geral</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankTabWeek</Id>
+    <Text>Cresceu na semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankGoToMe</Id>
+    <Text>Ir para minha posição</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankPage</Id>
+    <Text>Página {0} de {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankBiggestRise</Id>
+    <Text>Maior alta da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankBiggestFall</Id>
+    <Text>Maior queda da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankThisWeek</Id>
+    <Text> na semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankNoChannel</Id>
+    <Text>Crie um canal para entrar no ranking</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeGames</Id>
+    <Text>Games</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeVlog</Id>
+    <Text>Vlog / Lifestyle</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeTech</Id>
+    <Text>Tecnologia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeComedy</Id>
+    <Text>Humor</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeEducation</Id>
+    <Text>Educação</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeFinance</Id>
+    <Text>Finanças</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeFitness</Id>
+    <Text>Fitness / Saúde</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeCooking</Id>
+    <Text>Culinária</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeMusic</Id>
+    <Text>Música</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeBeauty</Id>
+    <Text>Beleza / Moda</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeSports</Id>
+    <Text>Esportes</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeReacts</Id>
+    <Text>Reacts</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeMystery</Id>
+    <Text>Mistério / True Crime</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeTravel</Id>
+    <Text>Viagem</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThemeKids</Id>
+    <Text>Infantil</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankSubscribersWeek</Id>
+    <Text>Inscritos na semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankViewsWeek</Id>
+    <Text>Views na semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RankGoToTop</Id>
+    <Text>Voltar ao #1</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NumberThousand</Id>
+    <Text>mil</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NumberMillion</Id>
+    <Text>mi</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NumberBillion</Id>
+    <Text>bi</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NumberDecimalSeparator</Id>
+    <Text>,</Text>
+  </CustomText>
 </ArrayOfCustomText>

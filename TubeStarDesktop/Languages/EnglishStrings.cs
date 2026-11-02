@@ -923,6 +923,68 @@ namespace TubeStar
         VideoProfitHeader,
         [Description("Earnings include ads and crowdfunding, counted day by day since the video was posted.")]
         VideoMoneyNote,
+        [Description("Week")]
+        RankWeek,
+        [Description("K")]
+        NumberThousand,
+        [Description("M")]
+        NumberMillion,
+        [Description("B")]
+        NumberBillion,
+        [Description(".")]
+        NumberDecimalSeparator,
+        [Description("Back to #1")]
+        RankGoToTop,
+        [Description("Subs this week")]
+        RankSubscribersWeek,
+        [Description("Views this week")]
+        RankViewsWeek,
+        [Description("Overall")]
+        RankTabAll,
+        [Description("Grew this week")]
+        RankTabWeek,
+        [Description("Go to my position")]
+        RankGoToMe,
+        [Description("Page {0} of {1}")]
+        RankPage,
+        [Description("Biggest rise of the week")]
+        RankBiggestRise,
+        [Description("Biggest fall of the week")]
+        RankBiggestFall,
+        [Description(" this week")]
+        RankThisWeek,
+        [Description("Create a channel to join the ranking")]
+        RankNoChannel,
+        [Description("Games")]
+        ThemeGames,
+        [Description("Vlog / Lifestyle")]
+        ThemeVlog,
+        [Description("Technology")]
+        ThemeTech,
+        [Description("Comedy")]
+        ThemeComedy,
+        [Description("Education")]
+        ThemeEducation,
+        [Description("Finance")]
+        ThemeFinance,
+        [Description("Fitness / Health")]
+        ThemeFitness,
+        [Description("Cooking")]
+        ThemeCooking,
+        [Description("Music")]
+        ThemeMusic,
+        [Description("Beauty / Fashion")]
+        ThemeBeauty,
+        [Description("Sports")]
+        ThemeSports,
+        [Description("Reacts")]
+        ThemeReacts,
+        [Description("Mystery / True Crime")]
+        ThemeMystery,
+        [Description("Travel")]
+        ThemeTravel,
+        [Description("Kids")]
+        ThemeKids,
 
         [Description("Calendar")]
         CalendarTitle,

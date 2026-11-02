@@ -22,7 +22,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Loja (fotos, mais imersão) e Funcionários: revisitar mais para frente.
 - Dificuldade: Média. Depende de: 0.
 
-**2. Top TubeStars**
+**2. Top TubeStars** (etapa 2a, ranking vivo, feita em 2026-11-02; falta 2b: perfil P1 com melhor posição e distância para você; ranking por nicho depois do item 4; placas no item 13)
 - Abas YouTube (ativa), Twitch e Podcast (estas duas só com o nome por enquanto).
 - 20 rivais famosos com perfil completo e cerca de 500 canais genéricos. 100% offline, com volatilidade. Rankings geral, por nicho e "quem mais cresceu na semana". Variação, dias no #1, placas.
 - Dificuldade: Média. Depende de: 1 (etapa 3) e 3.
@@ -48,6 +48,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 **6. Economia**
 - Impostos progressivos, custos fixos, investimentos. Moeda: dólar. Ganho = views monetizáveis / 1000 × RPM (nicho, época, qualidade, marketing, algoritmo), visível. Patrocínio separado.
+- Observação do dono (02/11/2026): empregado sobra dinheiro; ao sair do emprego o custo fixo quebra o jogador rápido. Equilibrar a transição para viver só do canal.
 - Dificuldade: Média. Depende de: 3, 4.
 
 **7. Dificuldade**: escolhida no início; rever o que foi registrado no item 0. Fácil. Depende de: 6.

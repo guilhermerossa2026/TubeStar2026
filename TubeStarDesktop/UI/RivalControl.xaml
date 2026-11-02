@@ -7,13 +7,13 @@
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
 
-        <!-- Ranking (S.top) -->
+        <!-- Ranking: destaques da semana + abas + tabela paginada -->
         <ScrollViewer x:Name="rankingView" BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,24,20">
             <StackPanel>
                 <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Top TubeStars" />
                 <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" />
 
-                <!-- .tabs -->
+                <!-- .tabs (plataformas) -->
                 <Border BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,12">
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource TabActiveBorderStyle}">
@@ -41,55 +41,53 @@
                     </StackPanel>
                 </Border>
 
+                <!-- destaques da semana -->
+                <UniformGrid x:Name="highlights" Columns="3" Margin="-6,0,-6,12" />
+
+                <!-- filtros (nichos entram aqui depois) -->
+                <Grid Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnTabAll" Click="btnTabAll_Click" />
+                        <Button x:Name="btnTabWeek" Click="btnTabWeek_Click" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button x:Name="btnGoToTop" Style="{StaticResource GhostButtonStyle}" Click="btnGoToTop_Click" />
+                        <Button x:Name="btnGoToMe" Margin="8,0,0,0" Style="{StaticResource GhostButtonStyle}" Click="btnGoToMe_Click" />
+                    </StackPanel>
+                </Grid>
+
                 <!-- .card > .tbl -->
                 <Border Style="{StaticResource CardBorderStyle}" Padding="0">
                     <StackPanel>
                         <Border Style="{StaticResource TableHeaderRowStyle}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="44"/>
+                                    <ColumnDefinition Width="52"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="46"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="140"/>
-                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Style="{StaticResource TableHeaderTextStyle}" Text="#" />
-                                <TextBlock x:Name="thChannel" Grid.Column="2" Style="{StaticResource TableHeaderTextStyle}" Text="CHANNEL" />
-                                <TextBlock x:Name="thSubscribers" Grid.Column="3" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Right" Text="SUBSCRIBERS" />
-                                <TextBlock x:Name="thViews" Grid.Column="4" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Right" Text="VIEWS" />
+                                <TextBlock x:Name="thChannel" Grid.Column="3" Style="{StaticResource TableHeaderTextStyle}" Text="CHANNEL" />
+                                <TextBlock x:Name="thSubscribers" Grid.Column="4" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Right" Text="SUBSCRIBERS" />
+                                <TextBlock x:Name="thWeek" Grid.Column="5" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Right" Text="WEEK" />
+                                <TextBlock x:Name="thViews" Grid.Column="6" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Right" Text="VIEWS" />
                             </Grid>
                         </Border>
                         <StackPanel x:Name="rankingPanel" />
                     </StackPanel>
                 </Border>
+
+                <!-- paginação -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+                    <Button x:Name="btnPrevPage" Content="‹" MinWidth="36" Click="btnPrevPage_Click" />
+                    <TextBlock x:Name="txtPage" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" Margin="14,0" />
+                    <Button x:Name="btnNextPage" Content="›" MinWidth="36" Click="btnNextPage_Click" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
-
-        <!-- Videos do rival escolhido -->
-        <Grid x:Name="channelView" Visibility="Collapsed" Margin="24,16,24,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid Margin="0,0,0,12">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="btnBack" Grid.Column="0" Style="{StaticResource GhostButtonStyle}" Content="‹ Back to Top" VerticalAlignment="Center" Click="btnBack_Click" />
-
-                <StackPanel Grid.Column="1" Margin="14,0" VerticalAlignment="Center">
-                    <TextBlock x:Name="channelNameTextBlock" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
-                    <TextBlock x:Name="channelSummaryTextBlock" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
-                </StackPanel>
-            </Grid>
-
-            <ScrollViewer x:Name="gridViewer" Grid.Row="1" BorderThickness="0" VerticalScrollBarVisibility="Auto">
-                <UniformGrid x:Name="videoPanelGrid" Columns="3" VerticalAlignment="Top" />
-            </ScrollViewer>
-        </Grid>
     </Grid>
 </UserControl>

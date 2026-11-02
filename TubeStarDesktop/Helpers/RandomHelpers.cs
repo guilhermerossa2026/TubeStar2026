@@ -44,6 +44,12 @@ namespace TubeStar
             return _random.Value.NextDouble() > 0.5;
         }
 
+        //Número entre 0 e 1
+        public static double RandomDouble()
+        {
+            return _random.Value.NextDouble();
+        }
+
         //Normal padrão (Box-Muller)
         public static double Gaussian()
         {

@@ -35,9 +35,9 @@ namespace TubeStar
                     txtName.ToolTip = _video.Name;
                     string views = GetNumberOfViews();
                     txtViewsLine.Text = String.Format(EnglishStrings.VideosViewsCount.Translate(), views);
-                    txtLikes.Text = _video.Likes.ToNumberString();
-                    txtDislikes.Text = _video.Dislikes.ToNumberString();
-                    txtComments.Text = _video.GetCommentsCount().ToNumberString();
+                    txtLikes.Text = _video.Likes.ToShortNumber();
+                    txtDislikes.Text = _video.Dislikes.ToShortNumber();
+                    txtComments.Text = _video.GetCommentsCount().ToShortNumber();
                     txtDays.Text = String.Format(EnglishStrings.VideoDaysOnline.Translate(), _video.Iterations);
 
                     var released = isUnreleasedChannel ? Visibility.Collapsed : Visibility.Visible;
@@ -124,7 +124,7 @@ namespace TubeStar
         {
             if (_video.Views > 301 && Video.Iterations == 1)
                 return "301+";
-            return _video.Views.ToNumberString();
+            return _video.Views.ToShortNumber();
         }
 
         private void SuspendedAdorner_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

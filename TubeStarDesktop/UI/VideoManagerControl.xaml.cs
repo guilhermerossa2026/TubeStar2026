@@ -233,9 +233,9 @@ namespace TubeStar
             if (!unreleased)
             {
                 long totalViews = channel.Videos.Sum(v => (long)v.Views);
-                txtKpiViews.Text = ((int)Math.Min(totalViews, int.MaxValue)).ToNumberString();
+                txtKpiViews.Text = ((long)totalViews).ToShortNumber();
                 txtKpiIncome.Text = channel.Income.ToCurrencyString();
-                txtKpiSubs.Text = channel.Subscribers.ToNumberString();
+                txtKpiSubs.Text = channel.Subscribers.ToShortNumber();
             }
         }
 

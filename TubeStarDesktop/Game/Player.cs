@@ -64,6 +64,8 @@ namespace TubeStar
         public PeriodStats CurrentYear { get; set; }
         //Semanas e anos já fechados (histórico do Calendário)
         public List<PeriodStats> PastSummaries { get; set; }
+        //Top TubeStars (rivais só com números)
+        public Ranking Ranking { get; set; }
 
         //Guarda o dia simulado nos totais da semana e do ano
         public void RecordDay(PeriodStats day)
@@ -138,6 +140,7 @@ namespace TubeStar
             CurrentWeek = null;
             CurrentYear = null;
             PastSummaries = new List<PeriodStats>();
+            Ranking = null;
 
             TasksInProgress = new List<Task>();
             Videos = new List<Video>();

@@ -116,7 +116,7 @@ namespace TubeStar
                             }
                             if (total > 0)
                             {
-                                ShowMessage(String.Format(EnglishStrings.LoseSubscribers.Translate(), total.ToNumberString()), MessagePicture.Sad);
+                                ShowMessage(String.Format(EnglishStrings.LoseSubscribers.Translate(), total.ToShortNumber()), MessagePicture.Sad);
                             }
                         }
                         break;
@@ -252,7 +252,7 @@ namespace TubeStar
                             }
                             if (total > 0)
                             {
-                                ShowMessage(String.Format(EnglishStrings.GainSubscribers.Translate(), total.ToNumberString()), MessagePicture.Happy);
+                                ShowMessage(String.Format(EnglishStrings.GainSubscribers.Translate(), total.ToShortNumber()), MessagePicture.Happy);
                             }
                         }
                         break;

@@ -48,11 +48,11 @@ namespace TubeStar
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
 
                 AddCell(grid, 0, channel.Name, HorizontalAlignment.Left);
-                AddCell(grid, 1, channel.Views.ToString("N0"), HorizontalAlignment.Right);
-                AddCell(grid, 2, channel.NewSubscribers.ToString("N0"), HorizontalAlignment.Right);
+                AddCell(grid, 1, channel.Views.ToShortNumber(), HorizontalAlignment.Right);
+                AddCell(grid, 2, channel.NewSubscribers.ToShortNumber(), HorizontalAlignment.Right);
 
                 var best = channel.BestVideo;
-                var bestCell = AddCell(grid, 3, best == null ? "-" : String.Format("{0} ({1} {2})", best.Name, best.Views.ToString("N0"), EnglishStrings.Views.Translate().ToLower()), HorizontalAlignment.Left);
+                var bestCell = AddCell(grid, 3, best == null ? "-" : String.Format("{0} ({1} {2})", best.Name, best.Views.ToShortNumber(), EnglishStrings.Views.Translate().ToLower()), HorizontalAlignment.Left);
                 bestCell.Margin = new Thickness(16, 0, 0, 0);
 
                 channelRows.Children.Add(new Border { Style = (Style)FindResource("TableRowStyle"), Child = grid });

@@ -49,17 +49,9 @@ namespace TubeStar
                 obj.Studies = Studies.Current;
                 obj.StoreItems = StoreItems.Current;
 
+                //Rivais não guardam mais canal com vídeos (os números ficam em Player.Ranking)
                 foreach (var rival in Rivals.Current.All)
-                {
-                    rival.Channel.SubscribersOverTime.Clear();
-                    rival.Channel.IncomeOverTime.Clear();
-                    rival.Channel.ExpensesOverTime.Clear();
-
-                    foreach (var video in rival.Channel.Videos)
-                    {
-                        video.Comments.Clear();
-                    }
-                }
+                    rival.Channel = null;
                 obj.Rivals = Rivals.Current.All;
                 obj.DailyAgenda = DailyPlanner.GetCurrentAgendaForSave();
                 obj.MoneyAtStartOfDay = DailyPlanner.GetMoneyAtStartOfDayForSave();

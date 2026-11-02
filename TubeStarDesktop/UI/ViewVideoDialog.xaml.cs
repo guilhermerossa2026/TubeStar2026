@@ -49,7 +49,7 @@ namespace TubeStar
 
         private void PopulatePerformance(Video video, Channel channel)
         {
-            AddKpi(performanceKpis, EnglishStrings.Views.Translate(), video.Views.ToNumberString(), null);
+            AddKpi(performanceKpis, EnglishStrings.Views.Translate(), video.Views.ToShortNumber(), null);
 
             //Posição do vídeo no canal, pelo número de views
             string rank = "-";

@@ -181,8 +181,8 @@ namespace TubeStar
             result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToCurrencyString(), null));
             result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToCurrencyString(),
                 FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush")));
-            result.Add(CreateKpi(EnglishStrings.Views.Translate(), stats.Views.ToString("N0"), null));
-            result.Add(CreateKpi(EnglishStrings.SummaryNewSubscribers.Translate(), stats.NewSubscribers.ToString("N0"), null));
+            result.Add(CreateKpi(EnglishStrings.Views.Translate(), stats.Views.ToShortNumber(), null));
+            result.Add(CreateKpi(EnglishStrings.SummaryNewSubscribers.Translate(), stats.NewSubscribers.ToShortNumber(), null));
             result.Add(CreateKpi(EnglishStrings.SummaryVideosPosted.Translate(), stats.VideosPosted.ToString("N0"), null));
             result.Add(CreateKpi(EnglishStrings.SummaryTasksDone.Translate(), stats.TasksCompleted.ToString("N0"), null));
             return result;
@@ -728,18 +728,7 @@ namespace TubeStar
                     }
                 }
 
-                double rivalDailyIncome = 0;
-                double refDailyExpenses = 0;
-                foreach (var rival in Rivals.Current.All)
-                {
-                    if (rival.Channel != null && rival.Channel.Videos != null)
-                    {
-                        foreach (var video in rival.Channel.Videos.ToList())
-                        {
-                            VideoViewer.Iteration(rival.Channel, video, ref rivalDailyIncome, ref refDailyExpenses);
-                        }
-                    }
-                }
+                //Rivais não têm mais vídeos: crescem pelo Top TubeStars (Ranking.NewDay)
 
                 //Game over: o dia para aqui (sem troféu, eventos ou atualização de tela)
                 if (Player.Current.Money < 0)

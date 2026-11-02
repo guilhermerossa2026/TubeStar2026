@@ -32,6 +32,9 @@ namespace TubeStar
                 this.IsEnabled = true;
                 progress.Visibility = System.Windows.Visibility.Collapsed;
 
+                //Top TubeStars: rivais crescem e as posições do dia são calculadas
+                Ranking.Current.NewDay(Player.Current.Iterations);
+
                 //A cada 3 dias roda um evento; depois dele, tudo é atualizado (uma vez só)
                 bool eventDay = Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0;
                 if (eventDay)
@@ -134,7 +137,7 @@ namespace TubeStar
             //Igual à prévia: "Dia" é o dia do ano (1 a 112)
             txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
 
-            txtSubscribers.Text = TotalSubscribers().ToString("N0");
+            txtSubscribers.Text = TotalSubscribers().ToShortNumber();
         }
 
         private static long TotalSubscribers()
@@ -260,8 +263,6 @@ namespace TubeStar
             this.IsEnabled = false;
             progress.Visibility = System.Windows.Visibility.Visible;
 
-            //Rivais primeiro: a simulação do dia já considera os vídeos novos deles
-            rivalViewer.NewDay();
             dailyPlanner.NewDay();
         }
 

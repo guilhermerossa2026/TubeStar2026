@@ -1082,6 +1082,22 @@
     <Text>Busca pelo título; 1 busca na API a cada 50 miniaturas.</Text>
   </CustomText>
   <CustomText>
+    <Id>SeriesLabel</Id>
+    <Text>Séries</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SeriesContinue</Id>
+    <Text>Continuar série</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SeriesLast</Id>
+    <Text>{0} · último #{1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SeriesNone</Id>
+    <Text>Nenhuma série ainda. Termine um título com #1 para começar.</Text>
+  </CustomText>
+  <CustomText>
     <Id>ThumbChosen</Id>
     <Text>Miniatura escolhida.</Text>
   </CustomText>

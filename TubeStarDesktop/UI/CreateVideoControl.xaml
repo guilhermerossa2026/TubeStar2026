@@ -42,7 +42,11 @@
                         <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
                             <StackPanel>
                                 <TextBlock x:Name="lblName" Style="{StaticResource FieldLabelStyle}" Text="Name" />
-                                <TextBox x:Name="txtName" FontSize="15" MaxLength="100" LostKeyboardFocus="txtName_LostFocus" AutomationProperties.AutomationId="txtName" />
+                                <DockPanel>
+                                    <ComboBox x:Name="cmbSeries" DockPanel.Dock="Right" Width="150" FontSize="13" Margin="8,0,0,0" SelectionChanged="cmbSeries_SelectionChanged" DropDownClosed="cmbSeries_DropDownClosed" />
+                                    <Button x:Name="btnNextInSeries" DockPanel.Dock="Right" Style="{StaticResource SmallButtonStyle}" Content="+1" Margin="8,0,0,0" Focusable="False" Click="btnNextInSeries_Click" />
+                                    <TextBox x:Name="txtName" MinWidth="200" FontSize="15" MaxLength="100" LostKeyboardFocus="txtName_LostFocus" AutomationProperties.AutomationId="txtName" />
+                                </DockPanel>
                                 <TextBlock x:Name="lblCategory" Style="{StaticResource FieldLabelSecStyle}" Text="Category" />
                                 <WrapPanel x:Name="categoryPanel" />
                             </StackPanel>
@@ -115,7 +119,7 @@
                     <!-- Resumo -->
                     <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" VerticalAlignment="Top">
                         <StackPanel>
-                            <TextBlock x:Name="lblSummary" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Summary" Margin="0,0,0,10" />
+                            <TextBlock x:Name="lblSummary" FontSize="17" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Summary" Margin="0,0,0,10" />
                             <Border Height="146" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" ClipToBounds="True">
                                 <Image x:Name="imgPreview" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>

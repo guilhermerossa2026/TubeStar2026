@@ -66,13 +66,136 @@ namespace TubeStar
             lblSumCost.Text = EnglishStrings.Cost.Translate();
             lblSumHours.Text = EnglishStrings.Hours.Translate();
             txtCreate.Text = EnglishStrings.NavCreateVideo.Translate();
+            btnNextInSeries.ToolTip = EnglishStrings.SeriesContinue.Translate();
+            cmbSeries.ToolTip = EnglishStrings.SeriesContinue.Translate();
         }
 
         //Chamado ao abrir a tela: dinheiro pode ter mudado
         public void Update()
         {
             UpdateSummary();
+            BuildSeriesList();
         }
+
+        #region Séries
+
+        private bool _buildingSeries;
+
+        //Item 0 é só o rótulo "Séries"; os outros são as séries do jogador
+        private void BuildSeriesList()
+        {
+            _buildingSeries = true;
+            cmbSeries.Items.Clear();
+            cmbSeries.Items.Add(new ComboBoxItem { Content = EnglishStrings.SeriesLabel.Translate() });
+            var list = SeriesHelper.GetSeries();
+            if (list.Count == 0)
+            {
+                cmbSeries.Items.Add(new ComboBoxItem { Content = EnglishStrings.SeriesNone.Translate(), IsEnabled = false });
+            }
+            else
+            {
+                foreach (var series in list)
+                    cmbSeries.Items.Add(new ComboBoxItem
+                    {
+                        Content = String.Format(EnglishStrings.SeriesLast.Translate(), series.Name, series.LastNumber),
+                        Tag = series.Name
+                    });
+            }
+            cmbSeries.SelectedIndex = 0;
+            _buildingSeries = false;
+        }
+
+        private void cmbSeries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Com a lista aberta, só navega; a série é aplicada ao fechar (DropDownClosed)
+            if (_buildingSeries || cmbSeries.IsDropDownOpen)
+                return;
+            var item = cmbSeries.SelectedItem as ComboBoxItem;
+            if (item == null || item.Tag == null)
+                return;
+            //Seta com o combo fechado: não muda o título
+            ResetSeriesCombo();
+        }
+
+        private void cmbSeries_DropDownClosed(object sender, EventArgs e)
+        {
+            var item = cmbSeries.SelectedItem as ComboBoxItem;
+            if (item == null || item.Tag == null)
+            {
+                //Fechou sem escolher: o título digitado ainda precisa da busca
+                SearchIfTitleChanged();
+                return;
+            }
+            string name = (string)item.Tag;
+            ResetSeriesCombo();
+            ApplyNextTitle(name);
+        }
+
+        private void ResetSeriesCombo()
+        {
+            _buildingSeries = true;
+            cmbSeries.SelectedIndex = 0;
+            _buildingSeries = false;
+        }
+
+        //O novo foco está no combo de séries (ou dentro dele) ou no botão +1?
+        private bool IsSeriesControl(IInputElement focus)
+        {
+            DependencyObject d = focus as DependencyObject;
+            while (d != null)
+            {
+                if (d == cmbSeries)
+                    return true;
+                DependencyObject parent = null;
+                if (d is System.Windows.Media.Visual || d is System.Windows.Media.Media3D.Visual3D)
+                    parent = System.Windows.Media.VisualTreeHelper.GetParent(d);
+                if (parent == null)
+                    parent = LogicalTreeHelper.GetParent(d);
+                d = parent;
+            }
+            return false;
+        }
+
+        private void btnNextInSeries_Click(object sender, RoutedEventArgs e)
+        {
+            ApplyNextTitle(txtName.Text);
+        }
+
+        //Põe o próximo título no campo e faz o mesmo que ao sair do campo (resumo e busca de miniatura)
+        private void ApplyNextTitle(string typed)
+        {
+            string next = SeriesHelper.NextTitle(typed);
+            if (String.IsNullOrEmpty(next) || next == txtName.Text)
+                return;
+            txtName.Text = next;
+            txtName.CaretIndex = next.Length;
+            ApplySeriesDefaults(SeriesHelper.FindSeries(next));
+            UpdateSummary();
+            if (next != _lastTitleSearched)
+                SearchByTitle();
+        }
+
+        //Série existente: marca o nicho e o tipo do último episódio (o jogador pode trocar depois)
+        private void ApplySeriesDefaults(SeriesInfo series)
+        {
+            if (series == null)
+                return;
+            SelectCategory(series.Category);
+            if (series.Type.HasValue)
+            {
+                foreach (Button b in typePanel.Children)
+                {
+                    if ((VideoType)b.Tag == series.Type.Value)
+                    {
+                        _type = series.Type.Value;
+                        SelectChip(typePanel, b);
+                    }
+                }
+            }
+            UpdateTypeMatch();
+        }
+
+        #endregion
 
         #region Chips
 
@@ -257,6 +380,21 @@ namespace TubeStar
         private void txtName_LostFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             UpdateSummary();
+            //Indo para o combo de séries: se ele abrir, busca ao fechar; se só recebeu o foco (Tab), busca agora
+            if (IsSeriesControl(e.NewFocus))
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (!cmbSeries.IsDropDownOpen)
+                        SearchIfTitleChanged();
+                }), System.Windows.Threading.DispatcherPriority.Input);
+                return;
+            }
+            SearchIfTitleChanged();
+        }
+
+        private void SearchIfTitleChanged()
+        {
             string title = txtName.Text.Trim();
             if (title.Length > 0 && title != _lastTitleSearched)
                 SearchByTitle();
@@ -573,6 +711,9 @@ namespace TubeStar
 
             if (VideoCreated != null)
                 VideoCreated(shootVideoTask);
+
+            //Reconstrói depois que a tarefa foi adicionada
+            BuildSeriesList();
         }
 
         private void ResetForm()

@@ -85,6 +85,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 - **Iscas no vídeo (ex-5b)**: título chamativo, thumbnail com rosto, tendência, participação especial, sorteio; 1 isca, 2ª com roteiro/roteirista. Adiada em 02/11/2026: fica solta sem Tendências (Eventos 2.0) e Collabs (item 11).
 - **Personalidade dos tipos de vídeo** (sobra do item 5, feito em 03/11/2026): ex.: Tutorial dura mais, React pico rápido, Documentário nota maior. Rever depois de jogar com os tipos.
+- **Título aleatório em Criar vídeo** (ideia do dono, 03/11/2026): gerar título pelo tipo de vídeo e nicho, em português. Condição: nunca repetir. Lembrar que a miniatura é buscada pelo título.
 - **Reformulação completa da Loja** (pedido do dono, 03/11/2026): mais opções, fotos, ganhos e valores revistos. Depois da Economia.
 - **Instagram** e **Kick**: futuro, talvez.
 - **Caminho C (estúdio ilustrado)**: descartado, falta arte.

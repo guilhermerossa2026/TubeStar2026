@@ -81,6 +81,7 @@
     <Compile Include="Game\SaveLoad\SaveObj.cs" />
     <Compile Include="Game\SaveLoad\SaveLoadHelper.cs" />
     <Compile Include="Helpers\SerializationHelpers.cs" />
+    <Compile Include="Helpers\SeriesHelper.cs" />
     <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="Helpers\UIHelpers.cs" />
     <Compile Include="Helpers\StreamHelpers.cs" />

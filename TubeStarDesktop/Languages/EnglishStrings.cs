@@ -818,6 +818,18 @@ namespace TubeStar
         [Description("Searches by title; 1 API search for every 50 thumbnails.")]
         ThumbHint,
 
+        [Description("Series")]
+        SeriesLabel,
+
+        [Description("Continue series")]
+        SeriesContinue,
+
+        [Description("{0} · last #{1}")]
+        SeriesLast,
+
+        [Description("No series yet. End a title with #1 to start one.")]
+        SeriesNone,
+
         [Description("Thumbnail chosen.")]
         ThumbChosen,
 

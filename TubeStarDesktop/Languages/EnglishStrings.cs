@@ -1142,7 +1142,7 @@ namespace TubeStar
         [Description("Raises the video score by up to +{0}.")]
         InvestmentInfo,
 
-        [Description("Shooting: {0}h · Editing: {1}h")]
+        [Description("Shoot now: {0}h · Then edit: {1}h (add it to the schedule when shooting is done)")]
         HoursFixedInfo,
 
         [Description("Time drops as your shooting and editing skills grow (Studies).")]

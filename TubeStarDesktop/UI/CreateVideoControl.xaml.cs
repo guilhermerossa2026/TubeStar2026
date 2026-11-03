@@ -215,7 +215,7 @@ namespace TubeStar
             //Horas fixas pela habilidade atual (gravar + editar)
             int shoot = ShootVideo.HoursForSkill(Player.Current.ShootingSkill);
             int edit = EditVideo.HoursForSkill(Player.Current.PostProductionSkill);
-            txtSumHours.Text = (shoot + edit) + "h";
+            txtSumHours.Text = shoot + "h + " + edit + "h";
             txtHoursInfo.Text = String.Format(EnglishStrings.HoursFixedInfo.Translate(), shoot, edit);
             txtHoursHint.Text = EnglishStrings.HoursFixedHint.Translate();
             txtSumPoints.Text = String.Format("{0}: {1}", EnglishStrings.TypeLabel.Translate(),

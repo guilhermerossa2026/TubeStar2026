@@ -1627,7 +1627,7 @@
   </CustomText>
   <CustomText>
     <Id>HoursFixedInfo</Id>
-    <Text>Gravar: {0}h · Editar: {1}h</Text>
+    <Text>Gravar agora: {0}h · Depois: editar {1}h (adicione na agenda quando a gravação terminar)</Text>
   </CustomText>
   <CustomText>
     <Id>HoursFixedHint</Id>

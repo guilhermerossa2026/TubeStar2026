@@ -178,15 +178,15 @@ namespace TubeStar
         {
             var result = new List<UIElement>();
             //Ganho com a origem embaixo: salário, canal e outros (eventos)
-            var earned = (StackPanel)CreateKpi(EnglishStrings.SummaryEarned.Translate(), stats.Earned.ToCurrencyString(), null);
+            var earned = (StackPanel)CreateKpi(EnglishStrings.SummaryEarned.Translate(), stats.Earned.ToShortCurrencyString(), null, stats.Earned.ToCurrencyString());
             earned.Children.Add(CreateEarnedLine(EnglishStrings.SummarySalary.Translate(), stats.Salary));
             earned.Children.Add(CreateEarnedLine(EnglishStrings.SummaryChannel.Translate(), stats.ChannelEarned));
             if (stats.OtherEarned > 0)
                 earned.Children.Add(CreateEarnedLine(EnglishStrings.SummaryOther.Translate(), stats.OtherEarned));
             result.Add(earned);
-            result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToCurrencyString(), null));
-            result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToCurrencyString(),
-                FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush")));
+            result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToShortCurrencyString(), null, stats.Spent.ToCurrencyString()));
+            result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToShortCurrencyString(),
+                FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush"), stats.Balance.ToCurrencyString()));
             result.Add(CreateKpi(EnglishStrings.Views.Translate(), stats.Views.ToShortNumber(), null));
             result.Add(CreateKpi(EnglishStrings.SummaryNewSubscribers.Translate(), stats.NewSubscribers.ToShortNumber(), null));
             result.Add(CreateKpi(EnglishStrings.SummaryVideosPosted.Translate(), stats.VideosPosted.ToString("N0"), null));
@@ -196,17 +196,25 @@ namespace TubeStar
 
         private static TextBlock CreateEarnedLine(string label, double value)
         {
-            return new TextBlock { Text = label + " " + value.ToCurrencyString(), Style = (Style)Application.Current.FindResource("MutedTextStyle"), FontSize = 11 };
+            return new TextBlock { Text = label + " " + value.ToShortCurrencyString(), ToolTip = label + " " + value.ToCurrencyString(), Style = (Style)Application.Current.FindResource("MutedTextStyle"), FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis };
         }
 
         private static UIElement CreateKpi(string label, string value, Brush valueBrush)
         {
-            var panel = new StackPanel { Margin = new Thickness(0, 0, 12, 0) };
+            return CreateKpi(label, value, valueBrush, null);
+        }
+
+        private static UIElement CreateKpi(string label, string value, Brush valueBrush, string tooltip)
+        {
+            var panel = new StackPanel { Margin = new Thickness(0, 0, 8, 0) };
             panel.Children.Add(new TextBlock { Text = label, Style = (Style)Application.Current.FindResource("KpiLabelStyle"), TextWrapping = TextWrapping.Wrap });
             var valueBlock = new TextBlock { Text = value, Style = (Style)Application.Current.FindResource("KpiValueStyle"), FontSize = 17 };
             if (valueBrush != null)
                 valueBlock.Foreground = valueBrush;
-            panel.Children.Add(valueBlock);
+            if (tooltip != null)
+                valueBlock.ToolTip = tooltip;
+            //Rede de segurança: se o valor for largo demais, encolhe em vez de vazar do cartão
+            panel.Children.Add(new Viewbox { Child = valueBlock, StretchDirection = StretchDirection.DownOnly, HorizontalAlignment = HorizontalAlignment.Left });
             return panel;
         }
 

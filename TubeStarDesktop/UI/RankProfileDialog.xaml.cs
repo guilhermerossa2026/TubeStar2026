@@ -73,7 +73,7 @@ namespace TubeStar
             var txtValue = new TextBlock { Text = value, Style = (Style)FindResource("KpiValueStyle"), FontSize = 18 };
             if (valueBrush != null)
                 txtValue.Foreground = valueBrush;
-            panel.Children.Add(txtValue);
+            panel.Children.Add(new Viewbox { Child = txtValue, StretchDirection = StretchDirection.DownOnly, HorizontalAlignment = HorizontalAlignment.Left });
             target.Children.Add(panel);
         }
 

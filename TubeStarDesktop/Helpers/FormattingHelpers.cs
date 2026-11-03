@@ -63,6 +63,39 @@ namespace TubeStar
             return text + " " + suffix.Translate();
         }
 
+        //Dinheiro curto: abaixo de 1.000 igual ToCurrencyString; acima, $1,08 mil, $2,4 mi, $1,3 bi (arredonda)
+        public static string ToShortCurrencyString(this double instance)
+        {
+            if (double.IsNaN(instance) || double.IsInfinity(instance))
+                return instance.ToCurrencyString();
+            double abs = Math.Abs(instance);
+            if (Math.Round(abs, 2) < 1000)
+                return instance.ToCurrencyString();
+
+            EnglishStrings[] suffixes = { EnglishStrings.NumberThousand, EnglishStrings.NumberMillion, EnglishStrings.NumberBillion, EnglishStrings.NumberTrillion };
+            int index = 0;
+            double value = abs / 1000.0;
+            while (index < suffixes.Length - 1 && value >= 1000)
+            {
+                value /= 1000.0;
+                index++;
+            }
+
+            int decimals = value < 10 ? 2 : (value < 100 ? 1 : 0);
+            double rounded = Math.Round(value, decimals);
+            //Arredondar pode virar 1000 (ex.: 999,96 mil): sobe para a próxima unidade
+            if (rounded >= 1000 && index < suffixes.Length - 1)
+            {
+                value /= 1000.0;
+                index++;
+                decimals = 2;
+                rounded = Math.Round(value, decimals);
+            }
+
+            string text = rounded.ToString("0." + new string('#', Math.Max(decimals, 1)), CultureInfo.InvariantCulture).Replace(".", EnglishStrings.NumberDecimalSeparator.Translate());
+            return (instance < 0 ? "-" : "") + "$" + text + " " + suffixes[index].Translate();
+        }
+
         public static string ToShortNumber(this int instance)
         {
             return ((long)instance).ToShortNumber();

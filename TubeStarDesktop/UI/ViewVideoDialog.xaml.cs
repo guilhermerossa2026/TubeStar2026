@@ -32,14 +32,15 @@ namespace TubeStar
 
             double cost = video.Cost + video.OnceOffCost + video.Expenses;
             double profit = video.Income - cost;
-            txtProfitHeader.Text = String.Format(EnglishStrings.VideoProfitHeader.Translate(), profit.ToCurrencyString());
+            txtProfitHeader.Text = String.Format(EnglishStrings.VideoProfitHeader.Translate(), profit.ToShortCurrencyString());
+            txtProfitHeader.ToolTip = String.Format(EnglishStrings.VideoProfitHeader.Translate(), profit.ToCurrencyString());
             txtProfitHeader.Foreground = FindBrush(profit < 0 ? "YtLossBrush" : "YtGainBrush");
 
             PopulatePerformance(video, channel);
 
-            AddKpi(moneyKpis, EnglishStrings.VideoCost.Translate(), cost.ToCurrencyString(), null);
-            AddKpi(moneyKpis, EnglishStrings.VideoIncome.Translate(), video.Income.ToCurrencyString(), null);
-            AddKpi(moneyKpis, EnglishStrings.VideoProfit.Translate(), profit.ToCurrencyString(), FindBrush(profit < 0 ? "YtLossBrush" : "YtGainBrush"));
+            AddKpi(moneyKpis, EnglishStrings.VideoCost.Translate(), cost.ToShortCurrencyString(), null, cost.ToCurrencyString());
+            AddKpi(moneyKpis, EnglishStrings.VideoIncome.Translate(), video.Income.ToShortCurrencyString(), null, video.Income.ToCurrencyString());
+            AddKpi(moneyKpis, EnglishStrings.VideoProfit.Translate(), profit.ToShortCurrencyString(), FindBrush(profit < 0 ? "YtLossBrush" : "YtGainBrush"), profit.ToCurrencyString());
 
             ShowTab(true);
         }
@@ -113,12 +114,19 @@ namespace TubeStar
 
         private void AddKpi(UniformGrid target, string label, string value, Brush valueBrush)
         {
+            AddKpi(target, label, value, valueBrush, null);
+        }
+
+        private void AddKpi(UniformGrid target, string label, string value, Brush valueBrush, string tooltip)
+        {
             var panel = new StackPanel();
             panel.Children.Add(new TextBlock { Text = label, Style = (Style)FindResource("KpiLabelStyle") });
             var txtValue = new TextBlock { Text = value, Style = (Style)FindResource("KpiValueStyle"), FontSize = 18 };
             if (valueBrush != null)
                 txtValue.Foreground = valueBrush;
-            panel.Children.Add(txtValue);
+            if (tooltip != null)
+                txtValue.ToolTip = tooltip;
+            panel.Children.Add(new Viewbox { Child = txtValue, StretchDirection = StretchDirection.DownOnly, HorizontalAlignment = HorizontalAlignment.Left });
             target.Children.Add(panel);
         }
 

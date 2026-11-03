@@ -302,9 +302,11 @@ namespace TubeStar
             {
                 long totalViews = channel.Videos.Sum(v => (long)v.Views);
                 txtKpiViews.Text = totalViews.ToShortNumber();
-                txtKpiIncome.Text = channel.Income.ToCurrencyString();
+                txtKpiIncome.Text = channel.Income.ToShortCurrencyString();
+                txtKpiIncome.ToolTip = channel.Income.ToCurrencyString();
                 txtKpiSubs.Text = channel.Subscribers.ToShortNumber();
-                txtKpiRpm.Text = ActiveChannel.GetRpm(channel).ToCurrencyString();
+                txtKpiRpm.Text = ActiveChannel.GetRpm(channel).ToShortCurrencyString();
+                txtKpiRpm.ToolTip = ActiveChannel.GetRpm(channel).ToCurrencyString();
                 Ranking.Current.Refresh(false);
                 var entry = Ranking.Current.Channels.FirstOrDefault(c => c.IsPlayer && c.PlayerChannelId == channel.RankId);
                 txtKpiRank.Text = entry != null && entry.Position > 0 ? "#" + entry.Position : "-";

@@ -22,7 +22,7 @@ namespace TubeStar
         {
             InitializeComponent();
             Translate();
-            txtMoney.Text = Player.Current.Money.ToCurrencyString();
+            SetMoneyText();
             UpdateHeader();
             //Remove ao sair da tela: cada jogo novo cria outra MainPage
             Player.Current.MoneyChanged += Player_MoneyChanged;
@@ -135,11 +135,19 @@ namespace TubeStar
             txtSectionTitle.Text = txtDailyPlanner.Text;
         }
 
+        //Dinheiro do cabeçalho: curto a partir de 1 milhão (valor exato no ToolTip), para não empurrar o layout
+        private void SetMoneyText()
+        {
+            double money = Player.Current.Money;
+            txtMoney.Text = Math.Abs(money) >= 1000000 ? money.ToShortCurrencyString() : money.ToCurrencyString();
+            txtMoney.ToolTip = money.ToCurrencyString();
+        }
+
         private void Player_MoneyChanged()
         {
             Dispatcher.BeginInvoke(new Action(delegate()
             {
-                txtMoney.Text = Player.Current.Money.ToCurrencyString();
+                SetMoneyText();
                 UpdateHeader();
             }));
         }

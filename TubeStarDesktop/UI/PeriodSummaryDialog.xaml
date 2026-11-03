@@ -5,7 +5,7 @@
         Caption="Summary"
         WindowStartupLocation="Center">
 
-    <StackPanel Width="720">
+    <StackPanel Width="760">
         <!-- Totais do período -->
         <Border Style="{StaticResource CardBorderStyle}">
             <UniformGrid x:Name="kpiGrid" Columns="7" />

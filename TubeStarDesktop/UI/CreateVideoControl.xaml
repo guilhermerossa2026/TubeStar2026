@@ -124,7 +124,7 @@
                             <UniformGrid Columns="2">
                                 <StackPanel>
                                     <TextBlock x:Name="lblSumCost" Style="{StaticResource KpiLabelStyle}" Text="Cost" />
-                                    <TextBlock x:Name="txtSumCost" Style="{StaticResource KpiValueStyle}" Text="$0" />
+                                    <TextBlock x:Name="txtSumCost" Style="{StaticResource KpiValueStyle}" Text="$0" TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
                                 <StackPanel>
                                     <TextBlock x:Name="lblSumHours" Style="{StaticResource KpiLabelStyle}" Text="Hours" />

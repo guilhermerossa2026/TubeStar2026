@@ -75,13 +75,13 @@
 
                         <StackPanel x:Name="panelKpis">
                             <TextBlock x:Name="lblViews" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiViews" Style="{StaticResource KpiValueStyle}" />
+                            <TextBlock x:Name="txtKpiViews" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
                             <TextBlock x:Name="lblIncome" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiIncome" Style="{StaticResource KpiValueStyle}" Foreground="{StaticResource YtGainBrush}" />
+                            <TextBlock x:Name="txtKpiIncome" Style="{StaticResource KpiValueStyle}" Foreground="{StaticResource YtGainBrush}" TextTrimming="CharacterEllipsis" />
                             <TextBlock x:Name="lblSubs" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiSubs" Style="{StaticResource KpiValueStyle}" />
+                            <TextBlock x:Name="txtKpiSubs" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
                             <TextBlock x:Name="lblRpm" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" />
+                            <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
                             <TextBlock x:Name="lblRank" Style="{StaticResource KpiLabelStyle}" />
                             <TextBlock x:Name="txtKpiRank" Style="{StaticResource KpiValueStyle}" />
                         </StackPanel>

@@ -212,8 +212,8 @@ namespace TubeStar
             }
 
             var list = videos.ToList();
-            //Visão geral: "mais recentes" pelos dias no ar (cada canal vem em blocos)
-            if (_overview && _filter == VideoFilter.Recent)
+            //"Mais recentes" pelos dias no ar: Videos é HashSet, a ordem de inserção se perde ao excluir
+            if (_filter == VideoFilter.Recent)
                 list = list.OrderBy(v => v.Iterations).ToList();
             if (_filter == VideoFilter.MostViewed)
             {

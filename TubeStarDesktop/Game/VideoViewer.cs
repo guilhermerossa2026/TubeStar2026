@@ -134,7 +134,8 @@ namespace TubeStar
             var searchEngineViews = video.Views / (50 * video.Iterations);
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
             //Concorrência do nicho: nicho lotado recebe menos views de busca e de qualidade
-            var iterationViews = (searchEngineViews + qualityViews) * video.Category.GetCompetitionMultiplier() + tempShares;
+            //Tipo que combina com o nicho: +10% nessas views
+            var iterationViews = (searchEngineViews + qualityViews) * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;
 
             //Total de views orgânicas: mesmo laço antigo de pulos de 4 ou 5, só somando (sem ver view por view)
             int organicViews = 0;

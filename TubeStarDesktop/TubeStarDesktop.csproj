@@ -217,6 +217,7 @@
     <Compile Include="Video\UniqueObject.cs" />
     <Compile Include="Video\Video.cs" />
     <Compile Include="Video\VideoCategory.cs" />
+    <Compile Include="Video\VideoType.cs" />
     <Compile Include="YouTube API\YouTubeAPI.cs" />
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>

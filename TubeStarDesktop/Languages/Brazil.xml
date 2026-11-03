@@ -1541,4 +1541,60 @@
     <Id>ChannelOverviewInfoOne</Id>
     <Text>1 canal</Text>
   </CustomText>
+  <CustomText>
+    <Id>TypeLabel</Id>
+    <Text>Tipo de vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeTutorial</Id>
+    <Text>Tutorial</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeReview</Id>
+    <Text>Review</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeReact</Id>
+    <Text>React</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeChallenge</Id>
+    <Text>Desafio</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeVlog</Id>
+    <Text>Vlog</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeTop10</Id>
+    <Text>Top 10</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeDocumentary</Id>
+    <Text>Documentário</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeGameplay</Id>
+    <Text>Jogatina</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeMatches</Id>
+    <Text>Combina com {0}: +10% de views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeNoMatch</Id>
+    <Text>Não combina com {0}: sem bônus</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeMatchesList</Id>
+    <Text>Combina com: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TypeChooseHint</Id>
+    <Text>Escolha um tipo. Tipos que combinam com o nicho do vídeo ganham +10% de views.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MissingType</Id>
+    <Text>Escolha o tipo do vídeo.</Text>
+  </CustomText>
 </ArrayOfCustomText>

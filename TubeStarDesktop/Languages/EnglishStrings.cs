@@ -1078,5 +1078,47 @@ namespace TubeStar
 
         [Description("Today")]
         CalendarToday,
+
+        [Description("Video type")]
+        TypeLabel,
+
+        [Description("Tutorial")]
+        TypeTutorial,
+
+        [Description("Review")]
+        TypeReview,
+
+        [Description("React")]
+        TypeReact,
+
+        [Description("Challenge")]
+        TypeChallenge,
+
+        [Description("Vlog")]
+        TypeVlog,
+
+        [Description("Top 10")]
+        TypeTop10,
+
+        [Description("Documentary")]
+        TypeDocumentary,
+
+        [Description("Gameplay")]
+        TypeGameplay,
+
+        [Description("Matches {0}: +10% views")]
+        TypeMatches,
+
+        [Description("Doesn't match {0}: no bonus")]
+        TypeNoMatch,
+
+        [Description("Matches: {0}")]
+        TypeMatchesList,
+
+        [Description("Choose a type. Types that match the video's niche get +10% views.")]
+        TypeChooseHint,
+
+        [Description("Choose the video type.")]
+        MissingType,
     }
 }

@@ -89,11 +89,13 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Atributos -->
+                        <!-- Tipo de vídeo -->
                         <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,14">
                             <StackPanel>
-                                <TextBlock x:Name="lblAttributes" Style="{StaticResource FieldLabelStyle}" Text="Attributes" />
-                                <WrapPanel x:Name="attributeGrid" />
+                                <TextBlock x:Name="lblType" Style="{StaticResource FieldLabelStyle}" Text="Video type" />
+                                <WrapPanel x:Name="typePanel" />
+                                <TextBlock x:Name="txtTypeMatch" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,10,0,0" />
+                                <TextBlock x:Name="txtTypeNiches" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,4,0,0" />
                             </StackPanel>
                         </Border>
 

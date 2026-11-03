@@ -11,6 +11,7 @@ namespace TubeStar
     {
         public string Name { get; set; }
         public VideoCategory Category { get; set; }
+        public VideoType? Type { get; set; }
 
         public int? ShootQuality { get; set; }
         public int? EditQuality { get; set; }

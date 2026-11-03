@@ -45,9 +45,7 @@ namespace TubeStar
                     PostProductionII,
                     PostProductionIII,
 
-                    AudienceAnalysisI,
-                    AudienceAnalysisII,
-
+                    //AudienceAnalysisI e II escondidos: davam pontos de atributo, que saíram com o tipo de vídeo (item 5a)
                     QualityAnalysis,
                 };
             }

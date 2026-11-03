@@ -99,6 +99,8 @@ namespace TubeStar
             ShowVideoImage();
             txtVideoName.Text = _selected.Name;
             string info = _selected.Category.GetString();
+            if (_selected.Type.HasValue)
+                info += " · " + _selected.GetTypeString();
             if (Player.Current.CanViewQualityBeforeUpload)
                 info += " · " + String.Format(EnglishStrings.VideosScore.Translate(), (_selected.GenerateQuality() / 10.0).ToString("0.0"));
             txtVideoInfo.Text = info;
@@ -142,6 +144,8 @@ namespace TubeStar
                 sub.Style = (Style)FindResource("MutedTextStyle");
                 sub.TextTrimming = TextTrimming.CharacterEllipsis;
                 sub.Text = video.Category.GetString();
+                if (video.Type.HasValue)
+                    sub.Text += " · " + video.GetTypeString();
                 if (Player.Current.CanViewQualityBeforeUpload)
                     sub.Text += " · " + String.Format(EnglishStrings.VideosScore.Translate(), (video.GenerateQuality() / 10.0).ToString("0.0"));
                 texts.Children.Add(sub);

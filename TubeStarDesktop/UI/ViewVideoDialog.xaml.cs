@@ -26,6 +26,8 @@ namespace TubeStar
             imgVideo.Source = video.GetThumbnail();
             txtName.Text = video.Name;
             txtChannel.Text = channel != null ? channel.Name : "";
+            if (video.Type.HasValue)
+                txtChannel.Text += (txtChannel.Text.Length > 0 ? " · " : "") + video.GetTypeString();
             txtScore.Text = String.Format(EnglishStrings.VideosScore.Translate(), (video.GenerateQuality() / 10.0).ToString("0.0"));
 
             double cost = video.Cost + video.OnceOffCost + video.Expenses;

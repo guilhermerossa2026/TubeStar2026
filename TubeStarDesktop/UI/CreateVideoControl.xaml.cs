@@ -24,8 +24,7 @@ namespace TubeStar
         private VideoCategory? _category;
         private int _hours = 2;
         private int _costStep;
-        private List<VideoAttribute> _currentAttributes = new List<VideoAttribute>();
-        private bool _ignoreSelectEvent;
+        private VideoType? _type;
 
         //Carrossel de miniaturas
         private int _searchGeneration;
@@ -44,7 +43,8 @@ namespace TubeStar
             InitializeComponent();
             Translate();
             BuildCategoryChips();
-            BuildAttributeButtons();
+            BuildTypeChips();
+            UpdateTypeMatch();
             BuildChips(hoursPanel, HourOptions.Select(h => h + "h").ToArray(), 0, (i) => { _hours = HourOptions[i]; UpdateSummary(); });
             BuildChips(costPanel, CostOptions.Select(c => "$" + (c * 100)).ToArray(), 0, (i) => { _costStep = CostOptions[i]; UpdateSummary(); });
             ResetThumbnails();
@@ -65,16 +65,16 @@ namespace TubeStar
             txtThumbHint.Text = EnglishStrings.ThumbHint.Translate();
             lblHours.Text = EnglishStrings.Hours.Translate();
             lblCost.Text = EnglishStrings.Cost.Translate();
+            lblType.Text = EnglishStrings.TypeLabel.Translate();
             lblSummary.Text = EnglishStrings.CreateVideoSummary.Translate();
             lblSumCost.Text = EnglishStrings.Cost.Translate();
             lblSumHours.Text = EnglishStrings.Hours.Translate();
             txtCreate.Text = EnglishStrings.NavCreateVideo.Translate();
         }
 
-        //Chamado ao abrir a tela: dinheiro e pontos podem ter mudado
+        //Chamado ao abrir a tela: dinheiro pode ter mudado
         public void Update()
         {
-            UpdateAttributeButtons();
             UpdateSummary();
         }
 
@@ -123,6 +123,7 @@ namespace TubeStar
                 {
                     _category = category;
                     SelectChip(categoryPanel, chip);
+                    UpdateTypeMatch();
                 };
                 categoryPanel.Children.Add(chip);
             }
@@ -145,77 +146,54 @@ namespace TubeStar
 
         #endregion
 
-        #region Atributos (mesmas regras do antigo AddVideoDialog2)
+        #region Tipo de vídeo
 
-        private void BuildAttributeButtons()
+        private void BuildTypeChips()
         {
-            VideoAttribute[] attributes = { VideoAttributes.LearnFromMistakes, VideoAttributes.CopyCat, VideoAttributes.Memetic,
-                VideoAttributes.ProductPlacement, VideoAttributes.Cats, VideoAttributes.SoBad, VideoAttributes.AboveBoard,
-                VideoAttributes.Crowdfunding, VideoAttributes.SecondTime, VideoAttributes.GenreBuster, VideoAttributes.Hypnotic,
-                VideoAttributes.FanBoyBait };
-
-            attributeGrid.Children.Clear();
-            foreach (var attribute in attributes)
+            typePanel.Children.Clear();
+            foreach (VideoType type in Enum.GetValues(typeof(VideoType)))
             {
-                var button = new SelectButton();
-                button.VideoAttribute = attribute;
-                button.Width = 250;
-                button.SelectedChanged += SelectButton_SelectedChanged;
-                attributeGrid.Children.Add(button);
+                var t = type;
+                var chip = new Button();
+                chip.Content = t.GetString();
+                chip.Tag = t;
+                chip.Style = (Style)FindResource("ChipButtonStyle");
+                chip.Click += (s, e) =>
+                {
+                    _type = t;
+                    SelectChip(typePanel, chip);
+                    UpdateTypeMatch();
+                    UpdateSummary();
+                };
+                typePanel.Children.Add(chip);
             }
         }
 
-        private int UsedAttributePoints()
+        //Selo "Combina com [nicho]" e lista dos nichos que combinam com o tipo escolhido
+        private void UpdateTypeMatch()
         {
-            int total = 0;
-            _currentAttributes.ForEach(a => total += a.Cost);
-            return total;
-        }
-
-        private void SelectButton_SelectedChanged(object sender, EventArgs e)
-        {
-            if (_ignoreSelectEvent)
+            if (!_type.HasValue)
+            {
+                txtTypeMatch.Text = "";
+                txtTypeNiches.Text = EnglishStrings.TypeChooseHint.Translate();
                 return;
+            }
 
-            var selectButton = sender as SelectButton;
-            if (selectButton == null)
-                return;
+            txtTypeNiches.Text = String.Format(EnglishStrings.TypeMatchesList.Translate(),
+                String.Join(", ", _type.Value.GetMatchingNiches().Select(n => n.GetString())));
 
-            if (selectButton.Selected)
-                _currentAttributes.Add(selectButton.VideoAttribute);
+            if (!_category.HasValue)
+                txtTypeMatch.Text = "";
+            else if (_type.Value.Matches(_category.Value))
+            {
+                txtTypeMatch.Text = "✓ " + String.Format(EnglishStrings.TypeMatches.Translate(), _category.Value.GetString());
+                txtTypeMatch.Foreground = (System.Windows.Media.Brush)FindResource("YtGainBrush");
+            }
             else
-                _currentAttributes.Remove(selectButton.VideoAttribute);
-
-            if (UsedAttributePoints() > Player.Current.VideoAttributePoints)
             {
-                _ignoreSelectEvent = true;
-                selectButton.Selected = false;
-                _currentAttributes.Remove(selectButton.VideoAttribute);
-                _ignoreSelectEvent = false;
+                txtTypeMatch.Text = String.Format(EnglishStrings.TypeNoMatch.Translate(), _category.Value.GetString());
+                txtTypeMatch.Foreground = (System.Windows.Media.Brush)FindResource("YtTextSecondaryBrush");
             }
-
-            UpdateAttributeButtons();
-            UpdateSummary();
-        }
-
-        private void UpdateAttributeButtons()
-        {
-            //Pontos podem ter caído (novo jogo/save): limpa o que não cabe mais
-            if (UsedAttributePoints() > Player.Current.VideoAttributePoints)
-            {
-                _ignoreSelectEvent = true;
-                foreach (SelectButton b in attributeGrid.Children)
-                    b.Selected = false;
-                _currentAttributes.Clear();
-                _ignoreSelectEvent = false;
-            }
-
-            int totalCost = UsedAttributePoints();
-            foreach (SelectButton button in attributeGrid.Children)
-                button.IsEnabled = button.Selected || button.VideoAttribute.Cost + totalCost <= Player.Current.VideoAttributePoints;
-
-            lblAttributes.Text = String.Format("{0} ({1} {2})", EnglishStrings.Attributes.Translate(),
-                Player.Current.VideoAttributePoints - totalCost, EnglishStrings.PointsLeft.Translate());
         }
 
         #endregion
@@ -224,8 +202,8 @@ namespace TubeStar
         {
             txtSumCost.Text = "$" + (_costStep * 100);
             txtSumHours.Text = _hours + "h";
-            txtSumPoints.Text = String.Format("{0}: {1}", EnglishStrings.Attributes.Translate(),
-                _currentAttributes.Count == 0 ? "-" : String.Join(", ", _currentAttributes.Select(a => a.Name)));
+            txtSumPoints.Text = String.Format("{0}: {1}", EnglishStrings.TypeLabel.Translate(),
+                _type.HasValue ? _type.Value.GetString() : "-");
             txtPreviewName.Text = txtName.Text.Trim();
             txtPreviewThumb.Text = _chosenId != null ? EnglishStrings.ThumbChosen.Translate() : EnglishStrings.ThumbAuto.Translate();
         }
@@ -542,6 +520,12 @@ namespace TubeStar
                 return;
             }
 
+            if (!_type.HasValue)
+            {
+                CustomMessageBox.ShowDialog(EnglishStrings.MissingValueHeader.Translate(), EnglishStrings.MissingType.Translate(), MessagePicture.Puzzle);
+                return;
+            }
+
             if (Player.Current.Money - (_costStep * 100) < 0)
             {
                 CustomMessageBox.ShowDialog(EnglishStrings.LowCashHeader.Translate(), EnglishStrings.LowCashMessage.Translate(), MessagePicture.Money);
@@ -553,7 +537,7 @@ namespace TubeStar
             video.Category = _category.Value;
             video.ExtraShootingHours = _hours - ShootVideo.MinimumShootTime;
             video.Cost = _costStep * 100;
-            video.Attributes = new List<VideoAttribute>(_currentAttributes);
+            video.Type = _type.Value;
 
             //Miniatura: a escolhida; senão a 1ª da busca atual; senão busca pelo título agora
             if (_chosenId != null)
@@ -580,17 +564,15 @@ namespace TubeStar
         private void ResetForm()
         {
             txtName.Text = "";
-            _ignoreSelectEvent = true;
-            foreach (SelectButton b in attributeGrid.Children)
-                b.Selected = false;
-            _ignoreSelectEvent = false;
-            _currentAttributes.Clear();
+            _type = null;
+            foreach (Button b in typePanel.Children)
+                b.Style = (Style)FindResource("ChipButtonStyle");
             _hours = HourOptions[0];
             _costStep = CostOptions[0];
             SelectChip(hoursPanel, (Button)hoursPanel.Children[0]);
             SelectChip(costPanel, (Button)costPanel.Children[0]);
             ResetThumbnails();
-            UpdateAttributeButtons();
+            UpdateTypeMatch();
             UpdateSummary();
         }
     }

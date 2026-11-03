@@ -351,7 +351,7 @@ namespace TubeStar
             dailyPlanner.NewDay();
         }
 
-        private void Save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (!Directory.Exists(SaveLoadHelper.SaveDirectory))
             {
@@ -376,10 +376,33 @@ namespace TubeStar
         //então as horas já marcadas ficam como estão (antes eram tiradas aqui)
         private void DoSave()
         {
-            SaveLoadHelper.Save(SaveLoadHelper.SaveFile);
+            if (SaveLoadHelper.Save(SaveLoadHelper.SaveFile))
+                ShowSavedNotice();
         }
 
-        private void Exit_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private System.Windows.Threading.DispatcherTimer savedTimer;
+
+        //Aviso curto "Jogo salvo" no cabeçalho; clicar de novo reinicia os 2 segundos
+        private void ShowSavedNotice()
+        {
+            txtSaved.Text = EnglishStrings.GameSaved.Translate() + " ✓";
+            txtSaved.Visibility = System.Windows.Visibility.Visible;
+
+            if (savedTimer == null)
+            {
+                savedTimer = new System.Windows.Threading.DispatcherTimer();
+                savedTimer.Interval = TimeSpan.FromSeconds(2);
+                savedTimer.Tick += (s, args) =>
+                {
+                    savedTimer.Stop();
+                    txtSaved.Visibility = System.Windows.Visibility.Collapsed;
+                };
+            }
+            savedTimer.Stop();
+            savedTimer.Start();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             CustomMessageBox.ShowDialog(EnglishStrings.Confirm.Translate(), EnglishStrings.LeaveGame.Translate(), MessagePicture.Question, (result) =>
             {

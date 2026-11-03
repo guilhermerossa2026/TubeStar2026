@@ -1168,5 +1168,8 @@ namespace TubeStar
 
         [Description("Promoted views don't pay ads: they help the channel grow. The better the video, the more subscribers.")]
         PromoteNoAds,
+
+        [Description("Game saved")]
+        GameSaved,
     }
 }

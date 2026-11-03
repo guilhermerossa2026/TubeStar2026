@@ -48,4 +48,6 @@ Decisões do dono para esta etapa:
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
-3. Pedir ao Claude: "seguir o roadmap: item 2 Top TubeStars e item 3 Calendário" (discutir com o planejador antes). O Visual novo (V1 Studio) terminou em 31/10/2026: etapas 1 a 4 (4a Agenda, 4b Meus vídeos, 4c Criar vídeo, 4d Postar vídeo, 4e janelas e título). A etapa 4 foi dividida: 4a Agenda (feita), 4b Meus vídeos (feita; sem RPM e sem "Que mais rendem", que dependem da Economia), 4c Criar vídeo (tela + carrossel de miniatura), 4d Postar vídeo (tela), 4e janelas e tela de título. A Agenda mantém 15 horas (as 8h da prévia são regra do item 5). Etapas 1 (cores e fonte Inter), 2 (menu lateral e cabeçalho) e 3 (cartões, Loja e Top TubeStars em tabela) feitas em 31/10/2026. O "Continuar" agora volta ao mesmo dia (agenda salva). Textos novos só precisam de PT-BR (decisão do dono)..
+3. Situação em 03/11/2026: itens 1 (Visual novo), 2 (Top TubeStars), 3 (Calendário), 4 (vários canais) e 5 (tipo de vídeo, horas e Promover vídeo) estão feitos. Também foram corrigidas as faixas pretas nas miniaturas e o botão Salvar (clique normal e aviso "Jogo salvo").
+4. Próximo passo: pedir ao Claude "seguir o roadmap: item 6 Economia, etapa 6a RPM". A proposta da 6a está no `roadmap.md` e aguarda o "pode fazer" do dono.
+5. Textos novos só precisam de PT-BR (decisão do dono).

@@ -1661,4 +1661,8 @@
     <Id>PromoteNoAds</Id>
     <Text>Views promovidas não pagam anúncio: servem para o canal crescer. Quanto melhor o vídeo, mais inscritos.</Text>
   </CustomText>
+  <CustomText>
+    <Id>GameSaved</Id>
+    <Text>Jogo salvo</Text>
+  </CustomText>
 </ArrayOfCustomText>

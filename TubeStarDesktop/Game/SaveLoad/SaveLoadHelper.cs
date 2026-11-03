@@ -32,7 +32,7 @@ namespace TubeStar
             }
         }
 
-        public static void Save(string fileName)
+        public static bool Save(string fileName)
         {
             try
             {
@@ -58,10 +58,12 @@ namespace TubeStar
 
                 var json = JsonConvert.SerializeObject(obj, JsonSettings);
                 File.WriteAllText(fileName, json);
+                return true;
             }
             catch(Exception)
             {
                 CustomMessageBox.ShowDialog(EnglishStrings.Failure.Translate(), EnglishStrings.SaveFail.Translate(), MessagePicture.Error);
+                return false;
             }
         }
 

@@ -149,8 +149,9 @@
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="imgSave" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconSave}" PreviewMouseLeftButtonDown="Save_MouseLeftButtonDown" />
-                    <Button x:Name="gridExit" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconExit}" PreviewMouseLeftButtonDown="Exit_MouseLeftButtonDown" />
+                    <TextBlock x:Name="txtSaved" Foreground="{StaticResource YtGainBrush}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0" Visibility="Collapsed" />
+                    <Button x:Name="imgSave" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconSave}" Click="Save_Click" />
+                    <Button x:Name="gridExit" Style="{StaticResource HeaderIconButtonStyle}" Tag="{StaticResource IconExit}" Click="Exit_Click" />
                 </StackPanel>
             </Grid>
         </Border>

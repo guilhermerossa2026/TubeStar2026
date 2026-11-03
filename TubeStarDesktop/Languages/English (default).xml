@@ -1156,4 +1156,8 @@ Pay back {1} per day. {2}% interest.</Text>
     <Id>TitleTagline</Id>
     <Text>Your path from zero to YouTube star</Text>
   </CustomText>
+  <CustomText>
+    <Id>GameSaved</Id>
+    <Text>Game saved</Text>
+  </CustomText>
 </ArrayOfCustomText>

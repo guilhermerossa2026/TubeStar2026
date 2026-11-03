@@ -38,7 +38,13 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Observação do dono (02/11/2026): empregado sobra dinheiro; ao sair do emprego o custo fixo quebra o jogador rápido. Equilibrar a transição para viver só do canal.
 - **Em planejamento (03/11/2026), sem código ainda.** Hoje: canal paga $0,02-0,08/view pela estratégia + bônus √(inscritos/1000)×0,01 (até +$0,50/view) × nicho (`VideoViewer.ViewIncome`); 1 mi de inscritos ≈ $534/mil views. Sair do emprego = −$50/dia.
 - Decisões do dono: manter escala de jogo (preços atuais); etapas 6a RPM, 6b meio período (4h, metade do salário), 6c imposto semanal sobre o lucro do canal (no resumo da semana), 6d investimentos por último.
-- **6a proposta, aguardando "pode fazer":** base da estratégia igual ($40/mil na Normal); bônus de inscritos vira ≈5×log10(inscritos/100): +$5 (1 mil), +$10 (10 mil), +$15 (100 mil), +$20 (1 mi), teto +$25. RPM em $/mil visível no painel do canal (com "?") e em Ver vídeo (aba Dinheiro). Saves avançados perdem bastante renda.
+- Observação do dono (03/11/2026): só trabalhando juntou $9 mil (salário $100 − custo $50 = +$50/dia) e a loja inteira custa $9 mil; o RPM "só aumenta".
+- **Plano aprovado em 03/11/2026** (substitui a proposta 6a anterior). Uma etapa por vez, com teste do dono em cada uma:
+  - **6a RPM por nicho e época** ($/mil views): Finanças 60, Tecnologia 45, Educação 40, Viagem 35, Fitness 35, Culinária 30, Beleza 30, Esportes 30, Mistério 25, Games 25, Vlog 25, Humor 20, Música 20, React 20, Infantil 15. Época pelo calendário: semanas 1-2 −25%, 13-16 até +30%. Variação semanal ±5%. Estratégia e qualidade até ±20%. Inscritos dão bônus pequeno, teto +15%. Canal grande ganha por ter mais views, não por RPM maior. RPM visível no painel do canal (com "?"), em Ver vídeo e em Criar canal.
+  - **6b Emprego só paga as contas**: salário $100 (promoção $150); custo de vida $80/dia (promoção soma +$30); sobra ~$20/dia. Meio período: 4h por $50. Gasto detalhado nos resumos (custo de vida, vídeos, promoção, empréstimo), e aviso claro quando um evento aumenta o custo de vida (hoje +$20/dia acumulativo, sem mostrar na tela).
+  - **6c Loja mais cara**: Câmera e Edição com 5 níveis ($600, $2.500, $8.000, $20.000, $50.000); Consultor $10 mil; Advogado $6 mil. Saves antigos mantêm o que compraram.
+  - **6d Imposto semanal**: 15% sobre o lucro da semana (salário + canal), no resumo da semana; semana com prejuízo não paga.
+  - **6e Investimentos**: discutir quando chegar.
 - Dificuldade: Média. Depende de: 3, 4.
 
 **7. Dificuldade**: escolhida no início; rever o que foi registrado no item 0. Fácil. Depende de: 6.
@@ -76,6 +82,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 - **Iscas no vídeo (ex-5b)**: título chamativo, thumbnail com rosto, tendência, participação especial, sorteio; 1 isca, 2ª com roteiro/roteirista. Adiada em 02/11/2026: fica solta sem Tendências (Eventos 2.0) e Collabs (item 11).
 - **Personalidade dos tipos de vídeo** (sobra do item 5, feito em 03/11/2026): ex.: Tutorial dura mais, React pico rápido, Documentário nota maior. Rever depois de jogar com os tipos.
+- **Reformulação completa da Loja** (pedido do dono, 03/11/2026): mais opções, fotos, ganhos e valores revistos. Depois da Economia.
 - **Instagram** e **Kick**: futuro, talvez.
 - **Caminho C (estúdio ilustrado)**: descartado, falta arte.
 - **Trocar de tecnologia**: descartado.

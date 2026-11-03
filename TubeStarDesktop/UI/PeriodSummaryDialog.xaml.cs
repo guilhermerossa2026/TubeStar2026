@@ -67,6 +67,12 @@ namespace TubeStar
             return cell;
         }
 
+        //Usado pela barra de espaço para fechar o resumo
+        public void Confirm()
+        {
+            DialogResult = true;
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;

@@ -30,6 +30,18 @@ namespace TubeStar
             {
                 Player.Current.MoneyChanged -= Player_MoneyChanged;
                 ActiveChannel.Changed -= ActiveChannel_Changed;
+                if (hostWindow != null)
+                    hostWindow.PreviewKeyDown -= Window_PreviewKeyDown;
+            };
+            //Barra de espaço: passa o dia ou fecha avisos só com OK (escuta na janela, vale com qualquer foco)
+            Loaded += (s, e) =>
+            {
+                hostWindow = Window.GetWindow(this);
+                if (hostWindow != null)
+                {
+                    hostWindow.PreviewKeyDown -= Window_PreviewKeyDown;
+                    hostWindow.PreviewKeyDown += Window_PreviewKeyDown;
+                }
             };
             ActiveChannel.Changed += ActiveChannel_Changed;
 
@@ -341,6 +353,56 @@ namespace TubeStar
         private void btnCalendar_Click(object sender, RoutedEventArgs e)
         {
             new CalendarDialog().ShowDialog();
+        }
+
+        private Window hostWindow;
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Space || !IsVisible)
+                return;
+            //Tecla segurada: continua bloqueando onde o espaço é bloqueado, mas só age no primeiro toque
+            bool firstPress = !e.IsRepeat;
+
+            //Digitando: o espaço continua sendo espaço
+            if (Keyboard.FocusedElement is TextBoxBase)
+                return;
+
+            //Janela aberta: só fecha avisos com OK; confirmações (OK/Cancelar) ignoram o espaço;
+            //nas demais janelas o espaço segue normal (ativa o botão focado)
+            var root = LogicalTreeHelper.FindLogicalNode(Application.Current.MainWindow, "LayoutRoot") as Grid;
+            if (root != null)
+            {
+                var dialog = root.Children.OfType<Xceed.Wpf.Toolkit.ChildWindow>().LastOrDefault();
+                if (dialog != null)
+                {
+                    var summary = dialog as PeriodSummaryDialog;
+                    if (summary != null)
+                    {
+                        e.Handled = true;
+                        if (firstPress)
+                            summary.Confirm();
+                        return;
+                    }
+
+                    var messageBox = dialog as CustomMessageBox;
+                    if (messageBox != null)
+                    {
+                        e.Handled = true;
+                        if (messageBox.IsOkOnly && firstPress)
+                            messageBox.Confirm();
+                    }
+                    return;
+                }
+            }
+
+            //Telas de criação e loja: o espaço não passa o dia (evita pular dia sem querer)
+            if (createVideo.IsVisible || postVideo.IsVisible || onlineStore.IsVisible)
+                return;
+
+            e.Handled = true;
+            if (firstPress && IsEnabled && btnNewDay.IsEnabled && btnNewDay.IsVisible)
+                btnNewDay_Click(btnNewDay, new RoutedEventArgs());
         }
 
         private void btnNewDay_Click(object sender, RoutedEventArgs e)

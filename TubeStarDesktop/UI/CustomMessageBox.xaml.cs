@@ -50,6 +50,17 @@ namespace TubeStar
             btnOk.IsCancel = true;
         }
 
+        public bool IsOkOnly
+        {
+            get { return btnCancel.Visibility == System.Windows.Visibility.Collapsed; }
+        }
+
+        //Usado pela barra de espaço para fechar avisos só com OK
+        public void Confirm()
+        {
+            this.DialogResult = true;
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;

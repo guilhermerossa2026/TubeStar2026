@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-03
+- Criação de vídeo, etapa 5d: "Comprar views" virou "Promover vídeo" com campanhas Pequena $500 (~3 mil views), Média $1.000 (~8 mil) e Grande $2.000 (~18 mil), entregues em 3 dias. Antes de postar, mostra a estimativa de views e inscritos (depende da nota e do nicho). Views promovidas não pagam anúncio.
+
 ## 2026-11-02
 - Criação de vídeo, etapa 5c: horas de gravar/editar agora são fixas pela habilidade (iniciante 4h + 6h, até 1h + 2h no nível mestre); saíram os chips de horas e o slider de edição. "Custo" virou "Investimento na produção" em 4 níveis (Nenhum $0, Básico $100 até +8 de nota, Bom $300 até +15, Premium $800 até +25).
 - Criação de vídeo, etapa 5a: os atributos saíram e entrou o "Tipo de vídeo" (Tutorial, Review, React, Desafio, Vlog, Top 10, Documentário, Jogatina), obrigatório. Tipo que combina com o nicho dá +10% de views, com selo "Combina com…". O tipo aparece em Postar e Ver vídeo; vídeos antigos mantêm seus atributos. Cursos "Análise de Público I e II" escondidos.

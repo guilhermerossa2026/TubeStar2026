@@ -113,6 +113,7 @@
 
                             <TextBlock x:Name="lblPromote" Style="{StaticResource FieldLabelStyle}" Text="Promote video" />
                             <WrapPanel x:Name="viewsPanel" />
+                            <TextBlock x:Name="txtPromoteEstimate" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,8,0,0" />
 
                             <Border Background="{StaticResource YtDarkSurfaceBrush}" CornerRadius="8" Padding="12" Margin="0,14,0,0">
                                 <DockPanel>

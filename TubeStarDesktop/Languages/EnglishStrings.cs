@@ -1147,5 +1147,26 @@ namespace TubeStar
 
         [Description("Time drops as your shooting and editing skills grow (Studies).")]
         HoursFixedHint,
+
+        [Description("Small")]
+        PromoteSmall,
+
+        [Description("Medium")]
+        PromoteMedium,
+
+        [Description("Large")]
+        PromoteLarge,
+
+        [Description("No promotion: the video only gets organic views.")]
+        PromoteNoneInfo,
+
+        [Description("≈ {0} views over {1} days")]
+        PromoteEstimateViews,
+
+        [Description("{0} to {1} subscribers")]
+        PromoteEstimateSubs,
+
+        [Description("Promoted views don't pay ads: they help the channel grow. The better the video, the more subscribers.")]
+        PromoteNoAds,
     }
 }

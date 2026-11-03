@@ -1633,4 +1633,32 @@
     <Id>HoursFixedHint</Id>
     <Text>O tempo diminui conforme suas habilidades de gravação e edição crescem (Estudos).</Text>
   </CustomText>
+  <CustomText>
+    <Id>PromoteSmall</Id>
+    <Text>Pequena</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteMedium</Id>
+    <Text>Média</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteLarge</Id>
+    <Text>Grande</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteNoneInfo</Id>
+    <Text>Sem promoção: o vídeo recebe só views orgânicas.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteEstimateViews</Id>
+    <Text>≈ {0} views em {1} dias</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteEstimateSubs</Id>
+    <Text>{0} a {1} inscritos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PromoteNoAds</Id>
+    <Text>Views promovidas não pagam anúncio: servem para o canal crescer. Quanto melhor o vídeo, mais inscritos.</Text>
+  </CustomText>
 </ArrayOfCustomText>

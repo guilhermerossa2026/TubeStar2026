@@ -122,6 +122,8 @@ namespace TubeStar
             {
                 _videoShares[video.Id] = 0;
                 _videoBoughtViews[video.Id] = 0;
+                video.PromotionViewsLeft = 0;
+                video.PromotionDaysLeft = 0;
                 return;
             }
 
@@ -130,6 +132,8 @@ namespace TubeStar
 
             int payedViews = _videoBoughtViews.ContainsKey(video.Id) ? _videoBoughtViews[video.Id] : 0;
             _videoBoughtViews[video.Id] = 0;
+            //Campanha "Promover vídeo": parte das views entra a cada dia (sem renda de anúncio, como as compradas)
+            payedViews += Promotion.TakeTodayViews(video);
 
             var searchEngineViews = video.Views / (50 * video.Iterations);
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
@@ -289,6 +293,15 @@ namespace TubeStar
                 var subscribers = RandomHelpers.RandomInt((int)(25000 * (Player.Current.ChallengeMode ? 0.02 : 0.05)));
                 _videoShares[video.Id] += (int)(subscribers * 0.25);
             }
+        }
+
+        //Estimativa de inscritos vindos das views promovidas: interessados x curtiram (nota) x se inscrevem
+        public static int EstimateSubscribers(Channel channel, Video video, int views)
+        {
+            if (views <= 0 || channel == null)
+                return 0;
+            double pLike = ChanceProb(video.GenerateQuality());
+            return (int)Math.Round(views * InterestProb(video) * pLike * SubscriptionProb(channel, video));
         }
 
         private static double SubscriptionProb(Channel channel, Video video)

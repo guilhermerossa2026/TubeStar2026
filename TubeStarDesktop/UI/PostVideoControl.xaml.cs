@@ -189,24 +189,35 @@ namespace TubeStar
             }
         }
 
-        //Mesmas opções/valores do antigo UploadVideoDialog
+        //Campanhas de "Promover vídeo" (item 5d): nome, preço e views estimadas
         private string ViewOptionText(int option)
         {
-            string views = EnglishStrings.Views.Translate();
-            switch (option)
+            if (option <= 0)
+                return EnglishStrings.None.Translate();
+            return String.Format("{0} · ${1:N0} · ~{2} {3}", Promotion.GetName(option), Promotion.Costs[option],
+                ((long)Promotion.Views[option]).ToShortNumber(), EnglishStrings.Views.Translate().ToLower());
+        }
+
+        //"≈ 8 mil views em 3 dias · 40 a 90 inscritos"
+        private string PromotionEstimate()
+        {
+            if (_viewsOption <= 0 || _selected == null)
+                return EnglishStrings.PromoteNoneInfo.Translate();
+            int views = Promotion.Views[_viewsOption];
+            string text = String.Format(EnglishStrings.PromoteEstimateViews.Translate(), ((long)views).ToShortNumber(), Promotion.Days);
+            if (_channel != null)
             {
-                case 1: return String.Format("1000 {0} · $100", views);
-                case 2: return String.Format("2000 {0} · $200", views);
-                case 3: return String.Format("1000 {0} · $0.02 {1}", views, EnglishStrings.PerView.Translate());
-                case 4: return String.Format("2000 {0} · $0.04 {1}", views, EnglishStrings.PerView.Translate());
-                default: return EnglishStrings.None.Translate();
+                int subs = VideoViewer.EstimateSubscribers(_channel, _selected, views);
+                text += " · " + String.Format(EnglishStrings.PromoteEstimateSubs.Translate(),
+                    ((long)(subs * 0.7)).ToShortNumber(), ((long)Math.Ceiling(subs * 1.3)).ToShortNumber());
             }
+            return text + "\n" + EnglishStrings.PromoteNoAds.Translate();
         }
 
         private void RenderViewOptions()
         {
             viewsPanel.Children.Clear();
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i < Promotion.Costs.Length; i++)
             {
                 int option = i;
                 var chip = new Button();
@@ -228,7 +239,8 @@ namespace TubeStar
                 return;
             txtSummary.Text = String.Format("{0}: {1}\n{2}: {3}",
                 EnglishStrings.Channel.Translate(), _channel != null ? _channel.Name : "-",
-                EnglishStrings.BuyViews.Translate(), ViewOptionText(_viewsOption));
+                EnglishStrings.PostPromote.Translate(), ViewOptionText(_viewsOption));
+            txtPromoteEstimate.Text = PromotionEstimate();
 
             //Aviso de vídeo fora do nicho do canal
             bool outOfNiche = _channel != null && !_selected.IsInNiche(_channel);
@@ -412,28 +424,11 @@ namespace TubeStar
                 return;
             }
 
-            switch (_viewsOption)
+            //Promover vídeo: cobra no dia da postagem (OnceOffCost) e entrega as views em Promotion.Days dias
+            if (_viewsOption > 0)
             {
-                case 1:
-                    if (!HasMoney(100)) return;
-                    video.OnceOffCost += 100;
-                    VideoViewer.BuyViews(video, 1000);
-                    break;
-                case 2:
-                    if (!HasMoney(200)) return;
-                    video.OnceOffCost += 200;
-                    VideoViewer.BuyViews(video, 2000);
-                    break;
-                case 3:
-                    if (!HasMoney(20)) return;
-                    VideoViewer.BuyViews(video, 1000);
-                    video.CostPerView = 0.02;
-                    break;
-                case 4:
-                    if (!HasMoney(80)) return;
-                    VideoViewer.BuyViews(video, 2000);
-                    video.CostPerView = 0.04;
-                    break;
+                if (!HasMoney(Promotion.Costs[_viewsOption])) return;
+                Promotion.Start(video, _viewsOption);
             }
 
             var channel = Settings.LastChannel = _channel;

@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-03 — Promover vídeo caro e sem reembolso
+**Decisão:** campanhas de $500/$1.000/$2.000 (preços inflados pelo dono), views em 3 dias, sem renda de anúncio. Se o canal/vídeo for suspenso, a campanha acaba e o dinheiro não volta.
+**Motivo:** promover deve ser investimento de quem já ganha, não atalho; a suspensão é risco do jogo. As opções "por view" (baratas demais) foram descartadas.
+
 ## 2026-11-02 — Horas pela habilidade e investimento em níveis
 **Decisão:** gravar 4/3/2/1h e editar 6/4/3/2h conforme a habilidade (<40, 40-59, 60-79, 80+); horas extras não dão mais nota. Investimento em níveis fixos com retorno decrescente. Iscas (5b) adiadas.
 **Motivo:** a evolução fica visível e não dá para "comprar" nota com horas. Iscas ficariam soltas sem Tendências e Collabs.

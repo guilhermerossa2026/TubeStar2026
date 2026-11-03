@@ -13,6 +13,10 @@ namespace TubeStar
         public VideoCategory Category { get; set; }
         public VideoType? Type { get; set; }
 
+        //Campanha "Promover vídeo" em andamento (views ainda por entregar e dias restantes)
+        public int PromotionViewsLeft { get; set; }
+        public int PromotionDaysLeft { get; set; }
+
         public int? ShootQuality { get; set; }
         public int? EditQuality { get; set; }
         public int? Quality { get; set; }

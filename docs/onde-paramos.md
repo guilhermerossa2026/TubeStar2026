@@ -49,5 +49,5 @@ Decisões do dono para esta etapa:
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
 3. Situação em 03/11/2026: itens 1 (Visual novo), 2 (Top TubeStars), 3 (Calendário), 4 (vários canais) e 5 (tipo de vídeo, horas e Promover vídeo) estão feitos. Também foram corrigidas as faixas pretas nas miniaturas e o botão Salvar (clique normal e aviso "Jogo salvo").
-4. Próximo passo: pedir ao Claude "seguir o roadmap: item 6 Economia, etapa 6a RPM". A proposta da 6a está no `roadmap.md` e aguarda o "pode fazer" do dono.
+4. Próximo passo: pedir ao Claude "pode fazer a 6a RPM". O plano técnico aprovado (passos e números) está no `roadmap.md`, item 6. Começar pelos passos 1 a 3 e parar para o dono testar. Também já feitos em 03/11/2026: barra de espaço passa o dia e fecha avisos; valores grandes em formato curto.
 5. Textos novos só precisam de PT-BR (decisão do dono).

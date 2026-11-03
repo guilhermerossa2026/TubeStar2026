@@ -37,7 +37,9 @@ namespace TubeStar
             lblHoursSelect.Text = EnglishStrings.Hours.Translate() + ":";
             btnOk.Content = EnglishStrings.Ok.Translate();
             btnCancel.Content = EnglishStrings.Cancel.Translate();
-            lblHours.Text = "4 " + EnglishStrings.Hours.Translate().ToLower();
+            //Horas fixas pela habilidade de edição
+            lblHours.Text = EditVideo.HoursForSkill(Player.Current.PostProductionSkill) + " " + EnglishStrings.Hours.Translate().ToLower();
+            lblHoursHint.Text = EnglishStrings.HoursFixedHint.Translate();
         }
 
         private Dictionary<Video, string> GetData(List<Video> videos)
@@ -59,19 +61,12 @@ namespace TubeStar
             }
 
             Video = (Video)cmbVideo.SelectedValue;
-            Video.ExtraEditingHours = (int)sldrHours.Value - EditVideo.MinimumEditTime;
             this.DialogResult = true;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-        }
-
-        private void sldrHours_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (lblHours != null)
-                lblHours.Text = String.Format("{0} {1}", (int)sldrHours.Value, EnglishStrings.Hours.Translate().ToLower());
         }
     }
 }

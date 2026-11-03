@@ -10,14 +10,8 @@
         <ComboBox x:Name="cmbVideo" FontSize="15" Margin="0,0,0,14" />
 
         <TextBlock x:Name="lblHoursSelect" Text="Hours: " Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
-        <Grid Margin="0,0,0,18">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Slider x:Name="sldrHours" Minimum="4" Maximum="8" TickFrequency="1" Value="4" VerticalAlignment="Center" Height="12" SmallChange="1" IsSnapToTickEnabled="True" ValueChanged="sldrHours_ValueChanged" Style="{StaticResource FlatSlider}" />
-            <TextBlock x:Name="lblHours" Grid.Column="1" FontSize="14" FontWeight="SemiBold" Text="4 hours" VerticalAlignment="Center" Margin="14,0,0,0" />
-        </Grid>
+        <TextBlock x:Name="lblHours" FontSize="14" FontWeight="SemiBold" Text="4 hours" Margin="0,0,0,4" />
+        <TextBlock x:Name="lblHoursHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,0,0,18" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Margin="0,0,8,0" Click="CancelButton_Click"/>

@@ -96,6 +96,17 @@ namespace TubeStar
             return true;
         }
 
+        //Investimento na produção (item 5c): níveis $0/$100/$300/$800 dão até +0/+8/+15/+25 de nota.
+        //Outros valores (vídeos antigos, custo de $200/$400) seguem a regra antiga: até +5 a cada $100
+        public static readonly int[] InvestmentLevels = { 0, 100, 300, 800 };
+        public static readonly int[] InvestmentBonuses = { 0, 8, 15, 25 };
+
+        public static int InvestmentMaxBonus(int cost)
+        {
+            int index = Array.IndexOf(InvestmentLevels, cost);
+            return index >= 0 ? InvestmentBonuses[index] : (cost / 100) * 5;
+        }
+
         public int GenerateQuality()
         {
             if (ExternalQuality && Quality.HasValue)
@@ -125,7 +136,7 @@ namespace TubeStar
                 ShootQuality += RandomHelpers.RandomInt(schoolSkill);
                 ShootQuality += RandomHelpers.RandomInt(itemSkill);
                 ShootQuality += RandomHelpers.RandomInt(ExtraShootingHours * 2);
-                ShootQuality += RandomHelpers.RandomInt((Cost / 100) * 5);
+                ShootQuality += RandomHelpers.RandomInt(InvestmentMaxBonus(Cost));
 
                 if (Attributes.Contains(VideoAttributes.LearnFromMistakes))
                 {

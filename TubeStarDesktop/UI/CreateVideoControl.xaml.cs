@@ -18,12 +18,9 @@ namespace TubeStar
         public event Action<Task> VideoCreated;
 
         private const int ThumbPageSize = 50;
-        private static readonly int[] HourOptions = { 2, 3, 4 };
-        private static readonly int[] CostOptions = { 0, 1, 2, 3, 4 }; //x 100
 
         private VideoCategory? _category;
-        private int _hours = 2;
-        private int _costStep;
+        private int _investment; //índice em Video.InvestmentLevels
         private VideoType? _type;
 
         //Carrossel de miniaturas
@@ -45,8 +42,7 @@ namespace TubeStar
             BuildCategoryChips();
             BuildTypeChips();
             UpdateTypeMatch();
-            BuildChips(hoursPanel, HourOptions.Select(h => h + "h").ToArray(), 0, (i) => { _hours = HourOptions[i]; UpdateSummary(); });
-            BuildChips(costPanel, CostOptions.Select(c => "$" + (c * 100)).ToArray(), 0, (i) => { _costStep = CostOptions[i]; UpdateSummary(); });
+            BuildChips(costPanel, InvestmentLabels(), 0, (i) => { _investment = i; UpdateSummary(); });
             ResetThumbnails();
             UpdateSummary();
         }
@@ -64,7 +60,7 @@ namespace TubeStar
             btnSearchOthers.Content = EnglishStrings.ThumbSearchOthers.Translate();
             txtThumbHint.Text = EnglishStrings.ThumbHint.Translate();
             lblHours.Text = EnglishStrings.Hours.Translate();
-            lblCost.Text = EnglishStrings.Cost.Translate();
+            lblCost.Text = EnglishStrings.InvestmentLabel.Translate();
             lblType.Text = EnglishStrings.TypeLabel.Translate();
             lblSummary.Text = EnglishStrings.CreateVideoSummary.Translate();
             lblSumCost.Text = EnglishStrings.Cost.Translate();
@@ -96,6 +92,17 @@ namespace TubeStar
                 };
                 panel.Children.Add(chip);
             }
+        }
+
+        //"Nenhum $0", "Básico $100", "Bom $300", "Premium $800"
+        private static string[] InvestmentLabels()
+        {
+            string[] names = { EnglishStrings.InvestmentNone.Translate(), EnglishStrings.InvestmentBasic.Translate(),
+                EnglishStrings.InvestmentGood.Translate(), EnglishStrings.InvestmentPremium.Translate() };
+            var labels = new string[names.Length];
+            for (int i = 0; i < names.Length; i++)
+                labels[i] = names[i] + " $" + Video.InvestmentLevels[i];
+            return labels;
         }
 
         private void SelectChip(WrapPanel panel, Button selected)
@@ -200,8 +207,17 @@ namespace TubeStar
 
         private void UpdateSummary()
         {
-            txtSumCost.Text = "$" + (_costStep * 100);
-            txtSumHours.Text = _hours + "h";
+            int cost = Video.InvestmentLevels[_investment];
+            txtSumCost.Text = "$" + cost;
+            txtCostInfo.Text = cost == 0 ? EnglishStrings.InvestmentNoneInfo.Translate()
+                : String.Format(EnglishStrings.InvestmentInfo.Translate(), Video.InvestmentBonuses[_investment]);
+
+            //Horas fixas pela habilidade atual (gravar + editar)
+            int shoot = ShootVideo.HoursForSkill(Player.Current.ShootingSkill);
+            int edit = EditVideo.HoursForSkill(Player.Current.PostProductionSkill);
+            txtSumHours.Text = (shoot + edit) + "h";
+            txtHoursInfo.Text = String.Format(EnglishStrings.HoursFixedInfo.Translate(), shoot, edit);
+            txtHoursHint.Text = EnglishStrings.HoursFixedHint.Translate();
             txtSumPoints.Text = String.Format("{0}: {1}", EnglishStrings.TypeLabel.Translate(),
                 _type.HasValue ? _type.Value.GetString() : "-");
             txtPreviewName.Text = txtName.Text.Trim();
@@ -526,7 +542,7 @@ namespace TubeStar
                 return;
             }
 
-            if (Player.Current.Money - (_costStep * 100) < 0)
+            if (Player.Current.Money - Video.InvestmentLevels[_investment] < 0)
             {
                 CustomMessageBox.ShowDialog(EnglishStrings.LowCashHeader.Translate(), EnglishStrings.LowCashMessage.Translate(), MessagePicture.Money);
                 return;
@@ -535,8 +551,7 @@ namespace TubeStar
             var video = new Video();
             video.Name = name;
             video.Category = _category.Value;
-            video.ExtraShootingHours = _hours - ShootVideo.MinimumShootTime;
-            video.Cost = _costStep * 100;
+            video.Cost = Video.InvestmentLevels[_investment];
             video.Type = _type.Value;
 
             //Miniatura: a escolhida; senão a 1ª da busca atual; senão busca pelo título agora
@@ -553,7 +568,6 @@ namespace TubeStar
             Settings.LastCategory = video.Category;
 
             var shootVideoTask = new ShootVideo(video);
-            shootVideoTask.ExtraHours = video.ExtraShootingHours;
 
             ResetForm();
 
@@ -567,9 +581,7 @@ namespace TubeStar
             _type = null;
             foreach (Button b in typePanel.Children)
                 b.Style = (Style)FindResource("ChipButtonStyle");
-            _hours = HourOptions[0];
-            _costStep = CostOptions[0];
-            SelectChip(hoursPanel, (Button)hoursPanel.Children[0]);
+            _investment = 0;
             SelectChip(costPanel, (Button)costPanel.Children[0]);
             ResetThumbnails();
             UpdateTypeMatch();

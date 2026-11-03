@@ -1597,4 +1597,40 @@
     <Id>MissingType</Id>
     <Text>Escolha o tipo do vídeo.</Text>
   </CustomText>
+  <CustomText>
+    <Id>InvestmentLabel</Id>
+    <Text>Investimento na produção</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentNone</Id>
+    <Text>Nenhum</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentBasic</Id>
+    <Text>Básico</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentGood</Id>
+    <Text>Bom</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentPremium</Id>
+    <Text>Premium</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentNoneInfo</Id>
+    <Text>Sem investimento extra: a nota depende só das suas habilidades.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>InvestmentInfo</Id>
+    <Text>Aumenta a nota do vídeo em até +{0}.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HoursFixedInfo</Id>
+    <Text>Gravar: {0}h · Editar: {1}h</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HoursFixedHint</Id>
+    <Text>O tempo diminui conforme suas habilidades de gravação e edição crescem (Estudos).</Text>
+  </CustomText>
 </ArrayOfCustomText>

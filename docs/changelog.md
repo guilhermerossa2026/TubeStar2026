@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-02
+- Criação de vídeo, etapa 5c: horas de gravar/editar agora são fixas pela habilidade (iniciante 4h + 6h, até 1h + 2h no nível mestre); saíram os chips de horas e o slider de edição. "Custo" virou "Investimento na produção" em 4 níveis (Nenhum $0, Básico $100 até +8 de nota, Bom $300 até +15, Premium $800 até +25).
 - Criação de vídeo, etapa 5a: os atributos saíram e entrou o "Tipo de vídeo" (Tutorial, Review, React, Desafio, Vlog, Top 10, Documentário, Jogatina), obrigatório. Tipo que combina com o nicho dá +10% de views, com selo "Combina com…". O tipo aparece em Postar e Ver vídeo; vídeos antigos mantêm seus atributos. Cursos "Análise de Público I e II" escondidos.
 - Canais e nichos, etapa 4b: seletor de canal no menu lateral (com "Visão geral" e "+ Novo canal"), sincronizado com os chips de Meus vídeos; cabeçalho mostra os inscritos do canal escolhido ou a soma. Painel do canal com nicho, RPM, posição no ranking e gráfico de inscritos por dia; Visão geral lista cada canal e o total.
 - Canais e nichos, etapa 4c: filtro por nicho no Top TubeStars (Todos os nichos + 15), combinável com Geral e Cresceu na semana. Rivais famosos e genéricos com nicho (rankings antigos migrados), mensagem para filtro vazio.

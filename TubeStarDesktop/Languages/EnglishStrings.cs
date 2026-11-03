@@ -1120,5 +1120,32 @@ namespace TubeStar
 
         [Description("Choose the video type.")]
         MissingType,
+
+        [Description("Production investment")]
+        InvestmentLabel,
+
+        [Description("None")]
+        InvestmentNone,
+
+        [Description("Basic")]
+        InvestmentBasic,
+
+        [Description("Good")]
+        InvestmentGood,
+
+        [Description("Premium")]
+        InvestmentPremium,
+
+        [Description("No extra investment: the score depends only on your skills.")]
+        InvestmentNoneInfo,
+
+        [Description("Raises the video score by up to +{0}.")]
+        InvestmentInfo,
+
+        [Description("Shooting: {0}h · Editing: {1}h")]
+        HoursFixedInfo,
+
+        [Description("Time drops as your shooting and editing skills grow (Studies).")]
+        HoursFixedHint,
     }
 }

@@ -9,12 +9,25 @@ namespace TubeStar
 
         public Video Video { get; set; }
 
+        //Horas definidas pela habilidade na criação (null = tarefa de save antigo, usa o mínimo + ExtraHours)
+        public int? FixedHours { get; set; }
+
         public ShootVideo()
         { }
 
         public ShootVideo(Video video)
         {
             Video = video;
+            FixedHours = HoursForSkill(Player.Current.ShootingSkill);
+        }
+
+        //Gravar fica mais rápido com a habilidade: <40 = 4h, 40-59 = 3h, 60-79 = 2h, 80+ = 1h
+        public static int HoursForSkill(int skill)
+        {
+            if (skill >= 80) return 1;
+            if (skill >= 60) return 2;
+            if (skill >= 40) return 3;
+            return 4;
         }
 
         public override TaskType TaskType
@@ -34,7 +47,7 @@ namespace TubeStar
 
         public override int HoursToComplete
         {
-            get { return MinimumShootTime; }
+            get { return FixedHours.HasValue ? FixedHours.Value : MinimumShootTime; }
         }
     }
 }

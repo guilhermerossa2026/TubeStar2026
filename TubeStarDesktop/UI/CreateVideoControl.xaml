@@ -103,9 +103,11 @@
                         <Border Style="{StaticResource CardBorderStyle}">
                             <StackPanel>
                                 <TextBlock x:Name="lblHours" Style="{StaticResource FieldLabelStyle}" Text="Hours" />
-                                <WrapPanel x:Name="hoursPanel" />
+                                <TextBlock x:Name="txtHoursInfo" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" />
+                                <TextBlock x:Name="txtHoursHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,4,0,0" />
                                 <TextBlock x:Name="lblCost" Style="{StaticResource FieldLabelSecStyle}" Text="Cost" />
                                 <WrapPanel x:Name="costPanel" />
+                                <TextBlock x:Name="txtCostInfo" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,8,0,0" />
                             </StackPanel>
                         </Border>
                     </StackPanel>

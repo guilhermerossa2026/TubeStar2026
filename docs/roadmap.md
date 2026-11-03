@@ -33,10 +33,9 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Próximo (diversão e equilíbrio)
 
-**5. Criação de vídeo nova** (5a Tipo de vídeo feita em 2026-11-02; faltam 5b iscas, 5c horas e investimento, 5d promover)
-- 5b: "iscas" (título chamativo, thumbnail com rosto, tendência, participação especial, sorteio): 1 isca agora, 2ª quando existir roteiro/roteirista. Prévia mostra os efeitos.
-- 5c: investimento em níveis fixos (ex.: Nenhum/Básico/Bom/Premium).
-- Depois das iscas: "personalidade" de cada tipo (ex.: Tutorial dura mais, React pico rápido, Documentário nota maior).
+**5. Criação de vídeo nova** (5a Tipo de vídeo e 5c Horas/Investimento feitas em 2026-11-02; falta 5d Promover vídeo)
+- 5d: "Promover vídeo" ao postar, com estimativa de views e inscritos; "Comprar views" sai.
+- Depois: "personalidade" de cada tipo (ex.: Tutorial dura mais, React pico rápido, Documentário nota maior).
 - Horas fixas pela experiência: gravar/editar fica mais rápido com a habilidade; sliders de horas saem.
 - "Custo" vira "investimento na produção" (aumenta a nota). "Comprar views" REMOVIDO. "Promover vídeo" na hora de postar, com estimativa de views e inscritos antes de confirmar.
 - Dificuldade: Média. Depende de: 4.
@@ -79,6 +78,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Ideias guardadas
 
+- **Iscas no vídeo (ex-5b)**: título chamativo, thumbnail com rosto, tendência, participação especial, sorteio; 1 isca, 2ª com roteiro/roteirista. Adiada em 02/11/2026: fica solta sem Tendências (Eventos 2.0) e Collabs (item 11).
 - **Preço das views compradas "por view"**: após a correção do custo, $0,02/$0,04 (=$20/$80) ficou bem mais barato que os pacotes de $100/$200. O dono quer aumentar; rever com o planejador junto do "Promover vídeo".
 - **Instagram** e **Kick**: futuro, talvez.
 - **Caminho C (estúdio ilustrado)**: descartado, falta arte.

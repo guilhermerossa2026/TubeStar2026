@@ -36,6 +36,9 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 **6. Economia**
 - Impostos progressivos, custos fixos, investimentos. Moeda: dólar. Ganho = views monetizáveis / 1000 × RPM (nicho, época, qualidade, marketing, algoritmo), visível. Patrocínio separado.
 - Observação do dono (02/11/2026): empregado sobra dinheiro; ao sair do emprego o custo fixo quebra o jogador rápido. Equilibrar a transição para viver só do canal.
+- **Em planejamento (03/11/2026), sem código ainda.** Hoje: canal paga $0,02-0,08/view pela estratégia + bônus √(inscritos/1000)×0,01 (até +$0,50/view) × nicho (`VideoViewer.ViewIncome`); 1 mi de inscritos ≈ $534/mil views. Sair do emprego = −$50/dia.
+- Decisões do dono: manter escala de jogo (preços atuais); etapas 6a RPM, 6b meio período (4h, metade do salário), 6c imposto semanal sobre o lucro do canal (no resumo da semana), 6d investimentos por último.
+- **6a proposta, aguardando "pode fazer":** base da estratégia igual ($40/mil na Normal); bônus de inscritos vira ≈5×log10(inscritos/100): +$5 (1 mil), +$10 (10 mil), +$15 (100 mil), +$20 (1 mi), teto +$25. RPM em $/mil visível no painel do canal (com "?") e em Ver vídeo (aba Dinheiro). Saves avançados perdem bastante renda.
 - Dificuldade: Média. Depende de: 3, 4.
 
 **7. Dificuldade**: escolhida no início; rever o que foi registrado no item 0. Fácil. Depende de: 6.

@@ -154,7 +154,7 @@
     <!-- Titulos de pagina (h2 + .lead) -->
     <Style x:Key="PageTitleStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontSize" Value="26" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
     </Style>
@@ -221,8 +221,8 @@
     </Style>
     <Style x:Key="KpiValueStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
-        <Setter Property="FontSize" Value="22" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
     </Style>
 

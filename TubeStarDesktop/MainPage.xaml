@@ -134,11 +134,11 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <StackPanel VerticalAlignment="Center" Margin="0,0,22,0">
                         <TextBlock x:Name="txtMoneyLabel" Text="Money" Style="{StaticResource StatLabelStyle}" />
-                        <TextBlock x:Name="txtMoney" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Text="$1,000.00" />
+                        <TextBlock x:Name="txtMoney" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtGainBrush}" Text="$1,000.00" />
                     </StackPanel>
                     <StackPanel VerticalAlignment="Center" Margin="0,0,22,0">
                         <TextBlock x:Name="txtSubscribersLabel" Text="Subscribers" Style="{StaticResource StatLabelStyle}" />
-                        <TextBlock x:Name="txtSubscribers" FontSize="16" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="0" />
+                        <TextBlock x:Name="txtSubscribers" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="0" />
                     </StackPanel>
 
                     <Button x:Name="btnNewDay" Style="{StaticResource PrimaryButtonStyle}" Click="btnNewDay_Click" Margin="0,0,10,0" VerticalAlignment="Center">

@@ -19,7 +19,7 @@
                 </Grid>
 
                 <!-- titulo -->
-                <TextBlock x:Name="txtName" Margin="0,8,0,6" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                <TextBlock x:Name="txtName" Margin="0,8,0,6" FontSize="14" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
 
                 <!-- views + nota -->
                 <Grid MinHeight="20">

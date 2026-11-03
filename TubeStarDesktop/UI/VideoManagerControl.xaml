@@ -69,7 +69,7 @@
                 <!-- Painel do canal -->
                 <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}" Margin="12,0,0,0" VerticalAlignment="Top">
                     <StackPanel>
-                        <TextBlock x:Name="txtPanelTitle" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
+                        <TextBlock x:Name="txtPanelTitle" FontSize="17" FontWeight="Bold" TextWrapping="Wrap" />
                         <TextBlock x:Name="txtPanelNiche" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
                         <TextBlock x:Name="txtPanelStatus" Style="{StaticResource MutedTextStyle}" Foreground="{StaticResource YtLossBrush}" FontWeight="Bold" Margin="0,4,0,0" Visibility="Collapsed" />
 

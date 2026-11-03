@@ -1010,6 +1010,14 @@
     <Text>Editar canal</Text>
   </CustomText>
   <CustomText>
+    <Id>VideosDeleteChannel</Id>
+    <Text>Excluir canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideosDeleteChannelConfirm</Id>
+    <Text>Excluir o canal {0}? Todos os vídeos dele serão apagados ({1} no total). Isso não pode ser desfeito.</Text>
+  </CustomText>
+  <CustomText>
     <Id>VideosNone</Id>
     <Text>Nenhum vídeo por aqui.</Text>
   </CustomText>

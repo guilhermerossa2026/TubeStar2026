@@ -764,6 +764,12 @@ namespace TubeStar
         [Description("Edit channel")]
         VideosEditChannel,
 
+        [Description("Delete channel")]
+        VideosDeleteChannel,
+
+        [Description("Delete channel {0}? All of its videos will be erased ({1} in total). This cannot be undone.")]
+        VideosDeleteChannelConfirm,
+
         [Description("No videos here yet.")]
         VideosNone,
 

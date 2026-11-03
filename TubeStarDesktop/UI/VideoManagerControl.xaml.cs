@@ -25,6 +25,8 @@ namespace TubeStar
         private bool _showAll;
 
         public event Action<Video> PostRequested;
+        //Canal excluído: a MainPage atualiza o cabeçalho
+        public event Action ChannelDeleted;
 
         public VideoManagerControl()
         {
@@ -55,6 +57,7 @@ namespace TubeStar
             txtUnreleasedHint.Text = EnglishStrings.VideosUnreleasedHint.Translate();
             btnStats.Content = EnglishStrings.VideosStatistics.Translate();
             btnEdit.Content = EnglishStrings.VideosEditChannel.Translate();
+            btnDeleteChannel.Content = EnglishStrings.VideosDeleteChannel.Translate();
             UpdateViewAllText();
         }
 
@@ -459,6 +462,43 @@ namespace TubeStar
                     Update();
                 }
             });
+        }
+
+        private void btnDeleteChannel_Click(object sender, RoutedEventArgs e)
+        {
+            var channel = _currentChannel;
+            if (_overview || channel == null || channel == Channel.UnreleasedVideos) return;
+
+            CustomMessageBox.ShowDialog(EnglishStrings.Delete.Translate(),
+                String.Format(EnglishStrings.VideosDeleteChannelConfirm.Translate(), channel.Name, channel.Videos.Count),
+                MessagePicture.Question, (result) =>
+                {
+                    if (result == true)
+                        DeleteChannel(channel);
+                });
+        }
+
+        //Vídeos em produção ficam em Player.Videos (sem canal), então só os postados somem com o canal
+        private void DeleteChannel(Channel channel)
+        {
+            foreach (var video in channel.Videos)
+                VideoViewer.Forget(video);
+
+            //Seletor volta para a Visão geral antes de o canal sair da lista
+            ActiveChannel.Select(null);
+            Player.Current.Channels.Remove(channel);
+            if (Settings.LastChannel == channel)
+                Settings.LastChannel = null;
+            Ranking.Current.Refresh(false);
+
+            if (Player.Current.Channels.Any(c => c != Channel.UnreleasedVideos))
+                SelectChannel(null, true);
+            else
+                SelectChannel(Channel.UnreleasedVideos);
+            Update();
+
+            if (ChannelDeleted != null)
+                ChannelDeleted();
         }
 
         private void HandleLawyerClick(Video video)

@@ -55,6 +55,7 @@ namespace TubeStar
             btnAddChannel.Content = EnglishStrings.VideosNewChannel.Translate();
             lblPromote.Text = EnglishStrings.PostPromote.Translate();
             txtPost.Text = EnglishStrings.NavPostVideo.Translate();
+            btnDeleteVideo.Content = EnglishStrings.Delete.Translate();
         }
 
         private static List<Video> ReadyVideos()
@@ -403,6 +404,28 @@ namespace TubeStar
                 return false;
             }
             return true;
+        }
+
+        //Mesma lógica de VideoManagerControl.DeleteVideo (vídeo ainda não lançado)
+        private void btnDeleteVideo_Click(object sender, RoutedEventArgs e)
+        {
+            var video = _selected;
+            if (video == null)
+                return;
+
+            CustomMessageBox.ShowDialog(EnglishStrings.Delete.Translate(), EnglishStrings.DeleteVideo.Translate(), MessagePicture.Question, (result) =>
+            {
+                if (result != true)
+                    return;
+
+                if (video.Attributes.Contains(VideoAttributes.Cats))
+                    TrophyManager.UnlockTrophy(Trophy.CatInBin);
+
+                Player.Current.Videos.Remove(video);
+                video.OnImageFetched -= ShowVideoImage;
+                _selected = null;
+                Update();
+            });
         }
 
         //Mesma lógica de UploadVideoDialog.OKButton_Click + VideoManagerControl.UploadVideo

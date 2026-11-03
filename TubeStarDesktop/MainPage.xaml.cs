@@ -96,6 +96,7 @@ namespace TubeStar
 
             //Postar vídeo: só pelo botão "Postar" de Meus vídeos; ao postar ou voltar, volta para Meus vídeos
             videoManager.PostRequested += (video) => ShowPostVideo(video);
+            videoManager.ChannelDeleted += () => UpdateHeader();
             postVideo.CreateVideoRequested += () => btnCreateVideo_Click(null, null);
             postVideo.BackRequested += () => btnVideoPlanner_Click(null, null);
             postVideo.VideoPosted += () =>

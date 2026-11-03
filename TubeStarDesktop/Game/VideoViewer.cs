@@ -89,6 +89,14 @@ namespace TubeStar
             _videoBoughtViews = new ConcurrentDictionary<Guid, int>();
         }
 
+        //Tira um vídeo apagado dos dicionários (não entram no save)
+        public static void Forget(Video video)
+        {
+            int ignored;
+            _videoShares.TryRemove(video.Id, out ignored);
+            _videoBoughtViews.TryRemove(video.Id, out ignored);
+        }
+
         public static void BuyViews(Video video, int number)
         {
             if (!_videoBoughtViews.ContainsKey(video.Id))

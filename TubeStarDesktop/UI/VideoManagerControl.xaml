@@ -103,6 +103,7 @@
                         <StackPanel x:Name="panelChannelButtons" Margin="0,16,0,0">
                             <Button x:Name="btnStats" Style="{StaticResource SmallButtonStyle}" Padding="9,6" Content="Statistics" Click="btnStats_Click" />
                             <Button x:Name="btnEdit" Style="{StaticResource SmallButtonStyle}" Padding="9,6" Margin="0,8,0,0" Content="Edit channel" Click="btnEdit_Click" />
+                            <Button x:Name="btnDeleteChannel" Style="{StaticResource GhostButtonStyle}" Padding="9,6" Margin="0,8,0,0" Content="Delete channel" Click="btnDeleteChannel_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Border>

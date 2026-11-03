@@ -120,6 +120,7 @@
                                     <Button x:Name="btnPost" DockPanel.Dock="Right" Style="{StaticResource PrimaryButtonStyle}" Click="btnPost_Click" VerticalAlignment="Center">
                                         <TextBlock x:Name="txtPost" Text="Post video" />
                                     </Button>
+                                    <Button x:Name="btnDeleteVideo" DockPanel.Dock="Right" Style="{StaticResource GhostButtonStyle}" Click="btnDeleteVideo_Click" VerticalAlignment="Center" Margin="0,0,8,0" Content="Delete" />
                                     <TextBlock x:Name="txtSummary" Foreground="{StaticResource YtTextPrimaryBrush}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,12,0" />
                                 </DockPanel>
                             </Border>

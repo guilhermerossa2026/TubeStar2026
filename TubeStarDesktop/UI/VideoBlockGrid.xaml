@@ -15,7 +15,7 @@
                 <!-- .thumb 16:9 com selo de views -->
                 <Grid x:Name="thumbGrid" Height="151" SizeChanged="thumbGrid_SizeChanged">
                     <Rectangle Fill="{StaticResource YtDarkSurfaceBrush}" />
-                    <Image x:Name="imgVideo" Stretch="UniformToFill" />
+                    <Image x:Name="imgVideo" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
 
                 <!-- titulo -->

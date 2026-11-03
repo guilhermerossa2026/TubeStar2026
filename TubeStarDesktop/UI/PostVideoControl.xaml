@@ -89,7 +89,7 @@
                                 <Button x:Name="btnPrev" Grid.Column="0" Style="{StaticResource ArrowButtonStyle}" Content="‹" Click="btnPrev_Click" Margin="0,0,14,0" Visibility="Hidden" />
                                 <Border Grid.Column="1" Width="320" Height="180" CornerRadius="8" Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" ClipToBounds="True">
                                     <Grid>
-                                        <Image x:Name="imgThumb" Stretch="UniformToFill" />
+                                        <Image x:Name="imgThumb" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         <TextBlock x:Name="txtThumbStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16" />
                                     </Grid>
                                 </Border>

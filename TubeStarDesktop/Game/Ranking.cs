@@ -25,6 +25,8 @@ namespace TubeStar
         //Tendência diária de crescimento (ex.: 0,004 = 0,4%) e quanto ela oscila
         public double Trend { get; set; }
         public double Volatility { get; set; }
+        //Teto de inscritos: o crescimento freia perto dele (0 = save antigo, ainda sem teto)
+        public long Ceiling { get; set; }
 
         //0 = ainda sem posição
         public int Position { get; set; }
@@ -84,9 +86,12 @@ namespace TubeStar
                     Player.Current.Ranking = Create();
                     Player.Current.Ranking.Refresh(false);
                 }
-                else if (Player.Current.Ranking.Channels.Any(c => !c.IsPlayer && !c.Niche.HasValue))
+                else
                 {
-                    Player.Current.Ranking.MigrateNiches();
+                    if (Player.Current.Ranking.Channels.Any(c => !c.IsPlayer && !c.Niche.HasValue))
+                        Player.Current.Ranking.MigrateNiches();
+                    if (Player.Current.Ranking.Channels.Any(c => !c.IsPlayer && c.Ceiling == 0))
+                        Player.Current.Ranking.MigrateCeilings();
                 }
                 return Player.Current.Ranking;
             }
@@ -132,10 +137,29 @@ namespace TubeStar
                 VideoCount = 20 + RandomHelpers.RandomInt(600),
                 Trend = -0.001 + RandomHelpers.RandomDouble() * 0.008,
                 Volatility = 0.002 + RandomHelpers.RandomDouble() * 0.01,
+                Ceiling = RollCeiling(subscribers, famous),
                 WeekStartSubscribers = subscribers
             };
             channel.WeekStartViews = channel.Views;
             return channel;
+        }
+
+        private const long FamousMaxCeiling = 150000000;
+        private const long GenericMaxCeiling = 20000000;
+
+        //Sorteia o teto (escala log): famosos 5 mi a 150 mi; genéricos de ~5x os inscritos até 20 mi (sempre >= 1,5x)
+        private static long RollCeiling(long subscribers, bool famous)
+        {
+            double ceiling;
+            if (famous)
+                ceiling = Math.Pow(10, 6.7 + RandomHelpers.RandomDouble() * 1.48);
+            else
+            {
+                double low = Math.Min(Math.Max(1, subscribers) * 5.0, GenericMaxCeiling);
+                ceiling = low * Math.Pow(GenericMaxCeiling / low, RandomHelpers.RandomDouble());
+            }
+            ceiling = Math.Max(ceiling, subscribers * 1.5);
+            return (long)Math.Min(ceiling, famous ? FamousMaxCeiling : GenericMaxCeiling);
         }
 
         //Fim do dia: rivais crescem (ou caem), canais do jogador são atualizados e as posições recalculadas
@@ -143,13 +167,21 @@ namespace TubeStar
         {
             foreach (var channel in Channels.Where(c => !c.IsPlayer))
             {
-                //Tendência muda devagar; de vez em quando um viral
-                channel.Trend = Math.Max(-0.004, Math.Min(0.012, channel.Trend + RandomHelpers.Gaussian() * 0.0005));
+                //Tendência muda devagar e volta para a média; de vez em quando um viral
+                channel.Trend += (0.002 - channel.Trend) * 0.02 + RandomHelpers.Gaussian() * 0.0005;
+                channel.Trend = Math.Max(-0.004, Math.Min(0.008, channel.Trend));
                 double rate = channel.Trend + RandomHelpers.Gaussian() * channel.Volatility;
                 if (RandomHelpers.RandomInt(1000) < 3)
                     rate += 0.03 + RandomHelpers.RandomDouble() * 0.1;
 
-                long growth = (long)(channel.Subscribers * rate) + RandomHelpers.RandomInt(0, 15);
+                //Crescimento logístico: freia perto do teto; acima dele o canal cai devagar
+                double room = 1.0 - (double)channel.Subscribers / channel.Ceiling;
+                if (room <= 0)
+                    rate = -0.002 * Math.Min(5, 1 - room * 10);
+                else if (rate > 0)
+                    rate *= room;
+
+                long growth = (long)(channel.Subscribers * rate) + (room > 0 ? RandomHelpers.RandomInt(0, 15) : 0);
                 channel.Subscribers = Math.Max(0, channel.Subscribers + growth);
                 channel.Views += (long)(channel.Subscribers * (0.01 + RandomHelpers.RandomDouble() * 0.05));
                 if (RandomHelpers.RandomInt(100) < 40)
@@ -263,6 +295,27 @@ namespace TubeStar
         private static VideoCategory FamousNiche(int index)
         {
             return index < FamousNiches.Length ? FamousNiches[index] : VideoCategory.Vlog;
+        }
+
+        //Rankings criados antes do teto: sorteia o teto e traz para baixo quem já passou dele (nunca mexe no jogador)
+        private void MigrateCeilings()
+        {
+            foreach (var channel in Channels.Where(c => !c.IsPlayer && c.Ceiling == 0))
+            {
+                long max = channel.IsFamous ? FamousMaxCeiling : GenericMaxCeiling;
+                //Passou do máximo: fica no máximo (o teto abaixo é calculado com os inscritos já limitados)
+                long subs = Math.Min(channel.Subscribers, max);
+                channel.Ceiling = RollCeiling(subs, channel.IsFamous);
+                if (channel.Subscribers > channel.Ceiling)
+                {
+                    double ratio = channel.Subscribers > 0 ? (double)channel.Ceiling / channel.Subscribers : 1;
+                    channel.Views = (long)(channel.Views * ratio);
+                    channel.Subscribers = channel.Ceiling;
+                    channel.WeekStartSubscribers = channel.Subscribers;
+                    channel.WeekStartViews = channel.Views;
+                }
+                channel.Trend = Math.Max(-0.004, Math.Min(0.008, channel.Trend));
+            }
         }
 
         //Rankings criados antes dos nichos: descobre o nicho pelo tema gravado (genéricos) ou pela ordem (famosos)

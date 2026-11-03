@@ -49,5 +49,6 @@ Decisões do dono para esta etapa:
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.
 3. Situação em 03/11/2026: itens 1 (Visual novo), 2 (Top TubeStars), 3 (Calendário), 4 (vários canais) e 5 (tipo de vídeo, horas e Promover vídeo) estão feitos. Também foram corrigidas as faixas pretas nas miniaturas e o botão Salvar (clique normal e aviso "Jogo salvo").
-4. Próximo passo: pedir ao Claude "pode fazer a 6a RPM". O plano técnico aprovado (passos e números) está no `roadmap.md`, item 6. Começar pelos passos 1 a 3 e parar para o dono testar. Também já feitos em 03/11/2026: barra de espaço passa o dia e fecha avisos; valores grandes em formato curto.
+4. Próximo passo: pedir ao Claude "pode fazer a 6a RPM". O plano técnico aprovado (passos e números) está no `roadmap.md`, item 6. Começar pelos passos 1 a 3 e parar para o dono testar. Também já feitos em 03/11/2026: barra de espaço passa o dia e fecha avisos; valores grandes em formato curto; excluir canal e excluir vídeo na tela Postar; números do cartão numa linha só; ordem de "Mais recentes"; teto de inscritos dos rivais (maior rival fica ~30-90 mi; top 10 pede ~8 mi).
+6. Pendente, adiado pelo dono (medo de estragar a resolução): telas em vários tamanhos. No notebook (1366×768) o painel do canal corta Estatísticas/Editar/Excluir; no monitor grande os cartões esticam (3 colunas fixas). Proposta: cartões de tamanho fixo com colunas variáveis e barras de rolagem; fazer com commit antes e uma tela por vez.
 5. Textos novos só precisam de PT-BR (decisão do dono).

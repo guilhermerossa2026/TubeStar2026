@@ -29,8 +29,9 @@
                     </Border>
                 </Grid>
 
-                <!-- likes, dislikes, comentarios e dias no ar -->
-                <WrapPanel x:Name="panelStats" Margin="0,8,0,0">
+                <!-- likes, dislikes, comentarios e dias no ar: sempre numa linha; encolhe em vez de quebrar -->
+                <Viewbox x:Name="panelStats" Stretch="Uniform" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,8,0,0">
+                <StackPanel Orientation="Horizontal">
                     <Path Data="{StaticResource IconThumbUp}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
                     <TextBlock x:Name="txtLikes" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
                     <Path Data="{StaticResource IconThumbDown}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
@@ -39,7 +40,8 @@
                     <TextBlock x:Name="txtComments" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
                     <Path Data="{StaticResource IconCalendar}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
                     <TextBlock x:Name="txtDays" Style="{StaticResource MutedTextStyle}" Margin="5,0,0,0" VerticalAlignment="Center" />
-                </WrapPanel>
+                </StackPanel>
+                </Viewbox>
 
                 <!-- acoes -->
                 <Grid Margin="0,8,0,0">

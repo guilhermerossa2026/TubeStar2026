@@ -1705,4 +1705,8 @@
     <Id>SeriesRemoveText</Id>
     <Text>Remover "{0}" da lista de séries? Os vídeos não serão apagados. Se você criar um novo episódio, ela volta para a lista.</Text>
   </CustomText>
+  <CustomText>
+    <Id>ThumbLimitReached</Id>
+    <Text>(limite atingido)</Text>
+  </CustomText>
 </ArrayOfCustomText>

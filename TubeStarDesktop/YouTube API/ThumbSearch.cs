@@ -94,7 +94,11 @@ namespace TubeStar
         //"Buscas hoje: 12/100"
         public static string UsageText
         {
-            get { return String.Format(EnglishStrings.ThumbSearchesToday.Translate(), SearchesToday, DailyLimit); }
+            get
+            {
+                string text = String.Format(EnglishStrings.ThumbSearchesToday.Translate(), QuotaReached ? DailyLimit : SearchesToday, DailyLimit);
+                return QuotaReached ? text + " " + EnglishStrings.ThumbLimitReached.Translate() : text;
+            }
         }
 
         //Mensagem de erro certa: cota esgotada ou sem internet/chave

@@ -75,6 +75,7 @@ namespace TubeStar
         {
             UpdateSummary();
             BuildSeriesList();
+            UpdateUsage();
         }
 
         #region Séries
@@ -573,11 +574,10 @@ namespace TubeStar
             UpdateThumbButtons();
         }
 
-        //Contador de buscas do dia, ao lado do termo buscado
+        //Contador de buscas do dia, sempre visível embaixo da dica
         private void UpdateUsage()
         {
-            if (_query != null)
-                txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), _query) + "  ·  " + ThumbSearch.UsageText;
+            txtThumbHint.Text = EnglishStrings.ThumbHint.Translate() + "\n" + ThumbSearch.UsageText;
         }
 
         private void ShowNoResults()

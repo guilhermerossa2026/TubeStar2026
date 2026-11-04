@@ -815,6 +815,9 @@ namespace TubeStar
         [Description("Searches today: {0}/{1}")]
         ThumbSearchesToday,
 
+        [Description("(limit reached)")]
+        ThumbLimitReached,
+
         [Description("Type the title to see thumbnails.")]
         ThumbTypeTitle,
 

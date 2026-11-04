@@ -83,6 +83,8 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 
 ## Ideias guardadas
 
+- **Miniaturas por nicho como reserva da busca**: quando a cota de 100 buscas/dia acabar ou o título não achar nada, usar miniaturas recentes de canais reais do nicho (playlistItems, cota geral de 10.000). Falta o plano do planejador.
+
 - **Iscas no vídeo (ex-5b)**: título chamativo, thumbnail com rosto, tendência, participação especial, sorteio; 1 isca, 2ª com roteiro/roteirista. Adiada em 02/11/2026: fica solta sem Tendências (Eventos 2.0) e Collabs (item 11).
 - **Personalidade dos tipos de vídeo** (sobra do item 5, feito em 03/11/2026): ex.: Tutorial dura mais, React pico rápido, Documentário nota maior. Rever depois de jogar com os tipos.
 - **Título aleatório em Criar vídeo** (ideia do dono, 03/11/2026): gerar título pelo tipo de vídeo e nicho, em português. Condição: nunca repetir. Lembrar que a miniatura é buscada pelo título.

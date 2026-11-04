@@ -1,6 +1,6 @@
 # Onde paramos
 
-*Atualizado em 31/10/2026. Use este arquivo para retomar o trabalho em outra máquina ou sessão.*
+*Atualizado em 04/11/2026. Use este arquivo para retomar o trabalho em outra máquina ou sessão.*
 
 ## Decisões gerais
 - Todo o plano está em [roadmap.md](roadmap.md). Cada ideia é discutida a fundo, uma por vez, e a versão final é apresentada ao dono antes de qualquer código.
@@ -50,5 +50,9 @@ Decisões do dono para esta etapa:
 2. Ler o `CLAUDE.md` e este arquivo.
 3. Situação em 03/11/2026: itens 1 (Visual novo), 2 (Top TubeStars), 3 (Calendário), 4 (vários canais) e 5 (tipo de vídeo, horas e Promover vídeo) estão feitos. Também foram corrigidas as faixas pretas nas miniaturas e o botão Salvar (clique normal e aviso "Jogo salvo").
 4. Próximo passo: pedir ao Claude "pode fazer a 6a RPM". O plano técnico aprovado (passos e números) está no `roadmap.md`, item 6. Começar pelos passos 1 a 3 e parar para o dono testar. Também já feitos em 03/11/2026: barra de espaço passa o dia e fecha avisos; valores grandes em formato curto; excluir canal e excluir vídeo na tela Postar; números do cartão numa linha só; ordem de "Mais recentes"; teto de inscritos dos rivais (maior rival fica ~30-90 mi; top 10 pede ~8 mi); "Continuar série" em Criar vídeo (lista de séries por "#número", botão +1, ignora maiúsculas e acentos, puxa nicho e tipo do último episódio); fonte: Poppins testada e recusada (ficou borrada), mantida a Inter com títulos e números maiores e em negrito.
-6. Pendente, adiado pelo dono (medo de estragar a resolução): telas em vários tamanhos. No notebook (1366×768) o painel do canal corta Estatísticas/Editar/Excluir; no monitor grande os cartões esticam (3 colunas fixas). Proposta: cartões de tamanho fixo com colunas variáveis e barras de rolagem; fazer com commit antes e uma tela por vez.
-5. Textos novos só precisam de PT-BR (decisão do dono).
+5. Feito em 04/11/2026: vermelho mais suave (#E53935) e texto no modo "Ideal"; memória de buscas de miniatura (`YouTube API/ThumbSearch.cs`, `Saves\search_cache.json`) com contador "Buscas hoje: x/100" e aviso de cota; "×" para tirar série da lista "Continuar série".
+6. **Em discussão (04/11/2026), escolher a ordem com o dono:**
+   - **Miniaturas sem depender da cota de buscas.** A cota do YouTube é de 100 *buscas*/dia (a cota geral é de 10.000 unidades). Proposta recomendada: quando a busca por título acabar ou não achar nada, cair automaticamente em miniaturas por nicho, puxadas da lista de vídeos de canais reais escolhidos por nicho (`playlistItems`, 1 unidade e 50 vídeos por chamada). Próximo passo: o planejador monta o plano (canais por nicho, como guardar, como aparece na tela). Descartados: ler a página do YouTube sem API e espelhos como Invidious/Piped (contra as regras e instáveis). Pedir aumento de cota ao Google pode ser feito em paralelo.
+   - **Economia 6a (RPM):** antes de programar, o dono decide 4 pontos: (1) Finanças paga 4× Infantil, compensar com mais views nos nichos de RPM baixo?; (2) conferir se "Promover vídeo" ainda compensa com ganhos menores; (3) testar 6a e 6b em sequência antes da 6c; (4) aviso "temporada de anúncios" no Calendário (opcional).
+7. Pendente, adiado pelo dono (medo de estragar a resolução): telas em vários tamanhos. No notebook (1366×768) o painel do canal corta Estatísticas/Editar/Excluir; no monitor grande os cartões esticam (3 colunas fixas). Proposta: cartões de tamanho fixo com colunas variáveis e barras de rolagem; fazer com commit antes e uma tela por vez.
+8. Textos novos só precisam de PT-BR (decisão do dono).

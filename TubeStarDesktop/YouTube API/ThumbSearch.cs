@@ -21,6 +21,9 @@ namespace TubeStar
         {
             public List<string> Ids = new List<string>();
             public string NextPageToken;
+            //Veio da memória (não gastou busca); não é salvo
+            [Newtonsoft.Json.JsonIgnore]
+            public bool FromCache;
         }
 
         private class CacheData
@@ -133,6 +136,7 @@ namespace TubeStar
             Page cached;
             if (Data.Pages.TryGetValue(key, out cached) && cached != null && cached.Ids != null)
             {
+                cached.FromCache = true;
                 onDone(cached);
                 return;
             }
@@ -174,7 +178,8 @@ namespace TubeStar
                             {
                                 foreach (var entry in response.Entries)
                                 {
-                                    if (entry != null && entry.Id != null && !String.IsNullOrEmpty(entry.Id.VideoId))
+                                    if (entry != null && entry.Id != null && !String.IsNullOrEmpty(entry.Id.VideoId)
+                                        && !(entry.Snippet != null && ThumbLibrary.IsShortTitle(entry.Snippet.Title)))
                                         page.Ids.Add(entry.Id.VideoId);
                                 }
                             }

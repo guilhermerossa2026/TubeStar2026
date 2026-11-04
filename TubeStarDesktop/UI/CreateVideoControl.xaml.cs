@@ -40,6 +40,7 @@ namespace TubeStar
         private const int OriginSearch = 2;
         private const int OriginNiche = 3;
         private const int OriginLibraryPartial = 4; //biblioteca, meio-acerto no nicho
+        private const int OriginSearchCached = 5;   //busca guardada na memória (não gastou)
         private Dictionary<string, int> _originOf = new Dictionary<string, int>();
         private bool _titleSearch; //a busca atual veio do título (não da busca manual)
         private bool _moreDone; //"Buscar mais" já foi usado para este título
@@ -458,7 +459,7 @@ namespace TubeStar
             btnUseThis.IsEnabled = _thumbIndex >= 0 && _shownId != null && _thumbCache.ContainsKey(_shownId);
 
             //"Buscar mais (API)": só com miniaturas da biblioteca, uma vez por busca, e se a API puder responder
-            bool canSearchMore = !_moreDone && !_loadingPage && _query != null && (_originOf.ContainsValue(OriginLibrary) || _originOf.ContainsValue(OriginLibraryPartial))
+            bool canSearchMore = !_moreDone && !_loadingPage && _query != null && (_originOf.ContainsValue(OriginLibrary) || _originOf.ContainsValue(OriginLibraryPartial) || _originOf.ContainsValue(OriginNiche))
                 && YouTubeAPI.HasApiKey && (!ThumbSearch.QuotaReached || ThumbSearch.IsCached(_query, ThumbPageSize, null));
             btnSearchMore.Visibility = canSearchMore ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -474,6 +475,8 @@ namespace TubeStar
                 return EnglishStrings.ThumbFromLibraryPartial.Translate();
             if (origin == OriginNiche)
                 return EnglishStrings.ThumbFromNiche.Translate();
+            if (origin == OriginSearchCached)
+                return EnglishStrings.ThumbFromSearchCached.Translate();
             return EnglishStrings.ThumbFromSearch.Translate();
         }
 
@@ -581,6 +584,24 @@ namespace TubeStar
             txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), query);
             _usedIds = UsedThumbIds();
 
+            //Título que é só o nome de um nicho ("Tecnologia #1", "Games #3"): miniaturas variadas do nicho, sem gastar busca
+            VideoCategory? titleNiche = NicheFromTitle(query);
+            if (categoryFallback && titleNiche.HasValue)
+            {
+                var ofNiche = ThumbLibrary.RandomOfNiche(titleNiche.Value, ThumbPageSize, _usedIds);
+                if (ofNiche.Count > 0)
+                {
+                    foreach (var id in ofNiche)
+                    {
+                        _thumbIds.Add(id);
+                        _originOf[id] = OriginNiche;
+                    }
+                    _loadingPage = false;
+                    ShowThumb(0);
+                    return;
+                }
+            }
+
             //1º a biblioteca (sem gastar busca da API), tanto pelo título quanto em "Buscar outras"
             {
                 var fromLibrary = ThumbLibrary.Match(query, _category, _usedIds);
@@ -666,7 +687,7 @@ namespace TubeStar
                     if (!_thumbIds.Contains(id) && !_usedIds.Contains(id))
                     {
                         _thumbIds.Add(id);
-                        _originOf[id] = OriginSearch;
+                        _originOf[id] = page.FromCache ? OriginSearchCached : OriginSearch;
                     }
                 }
                 //Guarda a próxima página mesmo se esta veio toda filtrada (miniaturas já usadas)
@@ -690,6 +711,37 @@ namespace TubeStar
                     UpdateThumbButtons();
                 }
             });
+        }
+
+        //O título (já sem "#número") é só o nome de um nicho? Aceita o nome na tela ("Vlog / Lifestyle" vale "Vlog" ou "Lifestyle"),
+        //o nome em inglês do enum e ignora maiúsculas e acentos
+        private static VideoCategory? NicheFromTitle(string query)
+        {
+            string title = Plain(query);
+            if (title.Length == 0)
+                return null;
+            foreach (VideoCategory category in Enum.GetValues(typeof(VideoCategory)))
+            {
+                if (Plain(category.ToString()) == title || Plain(category.GetString()) == title)
+                    return category;
+                foreach (var part in category.GetString().Split('/'))
+                {
+                    if (Plain(part) == title)
+                        return category;
+                }
+            }
+            return null;
+        }
+
+        private static string Plain(string text)
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (char c in (text ?? "").Normalize(System.Text.NormalizationForm.FormD))
+            {
+                if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark)
+                    sb.Append(c);
+            }
+            return sb.ToString().Trim().ToLowerInvariant();
         }
 
         //Miniaturas que algum vídeo do jogador já usa: não aparecem de novo no carrossel (excluir o vídeo libera)

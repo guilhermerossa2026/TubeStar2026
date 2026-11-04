@@ -1726,6 +1726,10 @@
     <Text>Da busca</Text>
   </CustomText>
   <CustomText>
+    <Id>ThumbFromSearchCached</Id>
+    <Text>Da busca (memória, não gastou)</Text>
+  </CustomText>
+  <CustomText>
     <Id>ThumbFromNiche</Id>
     <Text>Do nicho (aleatória)</Text>
   </CustomText>

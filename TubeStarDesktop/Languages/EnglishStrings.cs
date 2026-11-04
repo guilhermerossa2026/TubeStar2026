@@ -835,6 +835,8 @@ namespace TubeStar
 
         [Description("From search")]
         ThumbFromSearch,
+        [Description("From search (saved, no cost)")]
+        ThumbFromSearchCached,
 
         [Description("From the niche (random)")]
         ThumbFromNiche,

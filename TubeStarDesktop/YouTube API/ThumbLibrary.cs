@@ -22,7 +22,7 @@ namespace TubeStar
         private const int MaxAgeDays = 7;
         private const int PagesPerChannel = 2;
         private const int PagesPerGamesChannel = 10; //canais de Games têm muitos vídeos antigos (500)
-        private const int CurrentVersion = 2; //versão menor = biblioteca antiga, baixa de novo uma vez
+        private const int CurrentVersion = 3; //versão menor = biblioteca antiga, baixa de novo uma vez
         private const int MaxResults = 10;
 
         public class Entry
@@ -315,32 +315,24 @@ namespace TubeStar
                     uploads = (string)token;
                 }
 
-                var videos = new List<Entry>();
-                string pageToken = null;
-                int pages = line.Niche == VideoCategory.Games.ToString() ? PagesPerGamesChannel : PagesPerChannel;
-                for (int page = 0; page < pages; page++)
+                //Primeiro a playlist só de vídeos longos (UULF: sem Shorts e sem lives); se não existir ou vier vazia, usa a de uploads
+                List<Entry> videos = null;
+                try
                 {
-                    var json = JObject.Parse(Download(YouTubeAPI.PlaylistItemsUri(uploads, pageToken)));
-                    JArray items = json["items"] as JArray;
-                    if (items != null)
-                    {
-                        foreach (var item in items)
-                        {
-                            JToken title = item.SelectToken("snippet.title");
-                            JToken id = item.SelectToken("snippet.resourceId.videoId");
-                            if (title == null || id == null)
-                                continue;
-                            string t = (string)title;
-                            if (t == "Private video" || t == "Deleted video")
-                                continue;
-                            videos.Add(new Entry { Id = (string)id, Title = t, Niche = line.Niche, Channel = line.Name });
-                        }
-                    }
-                    JToken next = json["nextPageToken"];
-                    if (next == null)
-                        break;
-                    pageToken = (string)next;
+                    videos = FetchPlaylist("UULF" + uploads.Substring(2), line);
                 }
+                catch (WebException ex)
+                {
+                    //404 etc. só cai para o fallback; cota/chave para tudo
+                    if (IsStopError(ex))
+                    {
+                        stop = true;
+                        return null;
+                    }
+                }
+                catch { }
+                if (videos == null || videos.Count == 0)
+                    videos = FetchPlaylist(uploads, line);
                 return videos;
             }
             catch (WebException ex)
@@ -353,6 +345,47 @@ namespace TubeStar
             {
                 return null;
             }
+        }
+
+        //Baixa as páginas de uma playlist, sem Shorts marcados no título; erros de rede sobem para quem chamou
+        private static List<Entry> FetchPlaylist(string playlistId, ChannelLine line)
+        {
+            var videos = new List<Entry>();
+            string pageToken = null;
+            int pages = line.Niche == VideoCategory.Games.ToString() ? PagesPerGamesChannel : PagesPerChannel;
+            for (int page = 0; page < pages; page++)
+            {
+                var json = JObject.Parse(Download(YouTubeAPI.PlaylistItemsUri(playlistId, pageToken)));
+                JArray items = json["items"] as JArray;
+                if (items != null)
+                {
+                    foreach (var item in items)
+                    {
+                        JToken title = item.SelectToken("snippet.title");
+                        JToken id = item.SelectToken("snippet.resourceId.videoId");
+                        if (title == null || id == null)
+                            continue;
+                        string t = (string)title;
+                        if (t == "Private video" || t == "Deleted video" || IsShortTitle(t))
+                            continue;
+                        videos.Add(new Entry { Id = (string)id, Title = t, Niche = line.Niche, Channel = line.Name });
+                    }
+                }
+                JToken next = json["nextPageToken"];
+                if (next == null)
+                    break;
+                pageToken = (string)next;
+            }
+            return videos;
+        }
+
+        //Título com "#short" ou "#shorts" (sem diferenciar maiúsculas nem acentos)
+        public static bool IsShortTitle(string title)
+        {
+            if (String.IsNullOrEmpty(title))
+                return false;
+            //Só a hashtag inteira: "#short" e "#shorts" sim; "#shortfilm" e "#shortcut" não
+            return System.Text.RegularExpressions.Regex.IsMatch(title, @"#shorts?(?![\p{L}\p{N}_-])", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         }
 
         //Lê o corpo do erro uma vez: true = cota esgotada ou chave inválida/não configurada

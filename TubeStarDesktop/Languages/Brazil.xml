@@ -1731,7 +1731,7 @@
   </CustomText>
   <CustomText>
     <Id>ThumbSearchMore</Id>
-    <Text>Buscar mais</Text>
+    <Text>Buscar mais (API)</Text>
   </CustomText>
   <CustomText>
     <Id>SeriesRemove</Id>

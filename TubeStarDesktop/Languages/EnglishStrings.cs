@@ -839,7 +839,7 @@ namespace TubeStar
         [Description("From the niche (random)")]
         ThumbFromNiche,
 
-        [Description("Search more")]
+        [Description("Search more (API)")]
         ThumbSearchMore,
 
         [Description("Updating thumbnails… {0}% · channel {1} of {2}")]

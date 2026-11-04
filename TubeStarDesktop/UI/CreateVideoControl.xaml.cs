@@ -457,8 +457,8 @@ namespace TubeStar
             btnNext.IsEnabled = _thumbIndex >= 0 && !_loadingPage && (_thumbIndex + 1 < _thumbIds.Count || _nextPageToken != null);
             btnUseThis.IsEnabled = _thumbIndex >= 0 && _shownId != null && _thumbCache.ContainsKey(_shownId);
 
-            //"Buscar mais": só com miniaturas da biblioteca, uma vez por título, e se a API puder responder
-            bool canSearchMore = _titleSearch && !_moreDone && !_loadingPage && _query != null && (_originOf.ContainsValue(OriginLibrary) || _originOf.ContainsValue(OriginLibraryPartial))
+            //"Buscar mais (API)": só com miniaturas da biblioteca, uma vez por busca, e se a API puder responder
+            bool canSearchMore = !_moreDone && !_loadingPage && _query != null && (_originOf.ContainsValue(OriginLibrary) || _originOf.ContainsValue(OriginLibraryPartial))
                 && YouTubeAPI.HasApiKey && (!ThumbSearch.QuotaReached || ThumbSearch.IsCached(_query, ThumbPageSize, null));
             btnSearchMore.Visibility = canSearchMore ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -581,8 +581,7 @@ namespace TubeStar
             txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), query);
             _usedIds = UsedThumbIds();
 
-            //1º a biblioteca (sem gastar busca da API)
-            if (categoryFallback)
+            //1º a biblioteca (sem gastar busca da API), tanto pelo título quanto em "Buscar outras"
             {
                 var fromLibrary = ThumbLibrary.Match(query, _category, _usedIds);
                 if (fromLibrary.Count > 0)

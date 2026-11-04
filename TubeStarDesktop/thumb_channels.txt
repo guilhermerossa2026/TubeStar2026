@@ -9,9 +9,10 @@ Games | UCyzHoCLLsX39f-MH3wp6XmA | Geleia
 Games | UCiIZY89KwQkxAW-4Le7U7zg | Viniccius13
 Games | @AM3NIC | AM3NIC
 Games | UCIXguhHCl8eDTkXpEuiGPUA | Jazzghost
-Games | @Cadres | Cadres
-Games | @RobinHoodGamer | Robin Hood Gamer
-Games | @SkorpionGamer | Skorpion Gamer
+Games | UCbWYmIdZ2hpVMpPhRI9pI5Q | Cadres
+Games | UCYtaoJSk9iIrFxx8eZB15ag | Robin Hood Gamer
+Games | UCHDV3JN5aqxAy9hwTTVHJow | Skorpion Gamer
+Games | UCIPA6iWNaoetaa1T46RkzXw | Authentic Games
 Games | UCHuZmQ0lSW8TG81dVZZh5rw | LipaoGamer
 Games | UCjBO43ykxlSs3j7F7EXcBUQ | TazerCraft
 Games | UC-4iZ6Hq-oSERqZnVbuYsUg | Felps
@@ -29,6 +30,16 @@ Games | UCNDzLI-hyihpAx3zKtwhGZw | Techy Plays (Roblox)
 Games | UCx3vXwbAuXVxIIKTK8FaUgA | zapzap do roblox (Roblox)
 Games | UCIvR3Ho3T0huHo_-LdDR2Tg | Arktetando (ARK)
 Games | UCGDI3T92XGq6SKH-1LSb9Fw | FIFA TRADE BRASIL (EA FC)
+
+# Games - playlists de Minecraft (pedido do dono)
+# Referencia que comeca com PL (ou link com list=) e playlist direta. Canal das playlists: EduKof
+Games | PLF4tVuPIOu1vKQiMzFtvrbrtDHI1YAHKi | EduKof - Minecraft 1
+Games | PLF4tVuPIOu1s9UIk33dLAq9Bctzg5MSoC | EduKof - Minecraft 2
+Games | PLF4tVuPIOu1uL6zQqOnHd70QkcLpoh3gA | EduKof - Minecraft 3
+Games | PLF4tVuPIOu1sshOGB2rTQXms-q7d7KRq1 | EduKof - Minecraft 4
+Games | PLF4tVuPIOu1vKADQfeTDAjO5o0K04nNOb | EduKof - Minecraft 5
+Games | PLF4tVuPIOu1sXvhWygWUyYaYDqt3Br9yd | EduKof - Minecraft 6
+Games | PLF4tVuPIOu1uXIkB7l4Z62jjlJCapeCmy | EduKof - Minecraft 7
 
 # Technology
 Technology | UC9cmdQ9LLtIzKMrK06QFOhg | Lopess

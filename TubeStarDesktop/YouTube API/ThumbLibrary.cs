@@ -22,8 +22,8 @@ namespace TubeStar
         private const int MaxAgeDays = 7;
         private const int PagesPerChannel = 2;
         private const int PagesPerGamesChannel = 10; //canais de Games têm muitos vídeos antigos (500)
-        private const int CurrentVersion = 3; //versão menor = biblioteca antiga, baixa de novo uma vez
-        private const int MaxResults = 10;
+        private const int CurrentVersion = 4; //versão menor = biblioteca antiga, baixa de novo uma vez
+        private const int MaxResults = 50;
 
         public class Entry
         {
@@ -300,6 +300,11 @@ namespace TubeStar
             stop = false;
             try
             {
+                //Playlist direta (PL...) ou link com list=: sem UULF e sem channels.list
+                string playlist = PlaylistIdOf(line.Reference);
+                if (playlist != null)
+                    return FetchPlaylist(playlist, line);
+
                 string uploads;
                 if (line.Reference.Length == 24 && line.Reference.StartsWith("UC"))
                 {
@@ -345,6 +350,21 @@ namespace TubeStar
             {
                 return null;
             }
+        }
+
+        //ID da playlist se a referência for uma (começa com PL ou é um link com list=); senão null
+        private static string PlaylistIdOf(string reference)
+        {
+            int pos = reference.IndexOf("list=", StringComparison.OrdinalIgnoreCase);
+            if (pos >= 0)
+            {
+                string id = reference.Substring(pos + 5);
+                int end = id.IndexOfAny(new[] { '&', '#', ' ' });
+                if (end >= 0)
+                    id = id.Substring(0, end);
+                return id.Length > 0 ? id : null;
+            }
+            return reference.StartsWith("PL") ? reference : null;
         }
 
         //Baixa as páginas de uma playlist, sem Shorts marcados no título; erros de rede sobem para quem chamou
@@ -509,7 +529,21 @@ namespace TubeStar
             return Math.Max(2, (count + 1) / 2);
         }
 
-        //Até 10 ids cujo título combina com o do jogador; mesmo nicho primeiro, depois mais palavras batendo
+        private static void Shuffle<T>(List<T> list)
+        {
+            lock (_random)
+            {
+                for (int i = list.Count - 1; i > 0; i--)
+                {
+                    int j = _random.Next(i + 1);
+                    T temp = list[i];
+                    list[i] = list[j];
+                    list[j] = temp;
+                }
+            }
+        }
+
+        //Até 50 ids cujo título combina com o do jogador; mesmo nicho primeiro, depois mais palavras batendo
         public static List<string> Match(string title, VideoCategory? niche, HashSet<string> exclude = null)
         {
             var ids = new List<string>();
@@ -535,6 +569,9 @@ namespace TubeStar
                     found.Add(new KeyValuePair<int, Entry>(hits, entry));
             }
 
+            //Embaralha antes: a ordenação estável abaixo mantém a prioridade e deixa cada grupo igual em ordem aleatória
+            Shuffle(found);
+
             //Ordenação estável: mesmo nicho, depois mais palavras
             var indexed = new List<KeyValuePair<int, KeyValuePair<int, Entry>>>();
             for (int i = 0; i < found.Count; i++)
@@ -559,7 +596,7 @@ namespace TubeStar
             return ids;
         }
 
-        //Meio-acerto: até 10 ids do nicho escolhido que batem pelo menos 1 palavra do título (mais palavras primeiro)
+        //Meio-acerto: até 50 ids do nicho escolhido que batem pelo menos 1 palavra do título (mais palavras primeiro)
         public static List<string> MatchPartial(string title, VideoCategory niche, HashSet<string> exclude = null)
         {
             var ids = new List<string>();
@@ -583,6 +620,9 @@ namespace TubeStar
                 if (hits >= 1)
                     found.Add(new KeyValuePair<int, Entry>(hits, entry));
             }
+
+            //Embaralha antes: a ordenação estável abaixo mantém a prioridade e deixa cada grupo igual em ordem aleatória
+            Shuffle(found);
 
             //Ordenação estável: mais palavras primeiro
             var indexed = new List<KeyValuePair<int, KeyValuePair<int, Entry>>>();

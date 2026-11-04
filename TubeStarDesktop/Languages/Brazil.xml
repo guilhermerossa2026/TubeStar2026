@@ -1698,6 +1698,42 @@
     <Text>Buscas hoje: {0}/{1}</Text>
   </CustomText>
   <CustomText>
+    <Id>ThumbLibUpdating</Id>
+    <Text>Atualizando miniaturas… {0}% · canal {1} de {2}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbLibReady</Id>
+    <Text>Miniaturas prontas ✓ ({0} vídeos)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbLibFailed</Id>
+    <Text>Miniaturas: não deu para atualizar, usando a biblioteca anterior ({0} vídeos)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbLibShort</Id>
+    <Text>Biblioteca: atualizando {0}%</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbFromLibrary</Id>
+    <Text>Da biblioteca</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbFromLibraryPartial</Id>
+    <Text>Da biblioteca (parecida)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbFromSearch</Id>
+    <Text>Da busca</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbFromNiche</Id>
+    <Text>Do nicho (aleatória)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbSearchMore</Id>
+    <Text>Buscar mais</Text>
+  </CustomText>
+  <CustomText>
     <Id>SeriesRemove</Id>
     <Text>Remover série da lista</Text>
   </CustomText>

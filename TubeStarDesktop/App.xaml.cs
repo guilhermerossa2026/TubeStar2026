@@ -21,6 +21,7 @@ namespace TubeStar
             catch { }
 
             base.OnStartup(e);
+            ThumbLibrary.StartBackground();
             this.Dispatcher.UnhandledException += Dispatcher_UnhandledException;
             this.Exit += App_Exit;
         }

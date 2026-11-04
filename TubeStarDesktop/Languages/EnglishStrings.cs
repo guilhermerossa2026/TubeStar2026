@@ -827,6 +827,33 @@ namespace TubeStar
         [Description("Searches by title; 1 API search for every 50 thumbnails.")]
         ThumbHint,
 
+        [Description("From the library")]
+        ThumbFromLibrary,
+
+        [Description("From the library (similar)")]
+        ThumbFromLibraryPartial,
+
+        [Description("From search")]
+        ThumbFromSearch,
+
+        [Description("From the niche (random)")]
+        ThumbFromNiche,
+
+        [Description("Search more")]
+        ThumbSearchMore,
+
+        [Description("Updating thumbnails… {0}% · channel {1} of {2}")]
+        ThumbLibUpdating,
+
+        [Description("Thumbnails ready ✓ ({0} videos)")]
+        ThumbLibReady,
+
+        [Description("Thumbnails: couldn't update, using the previous library ({0} videos)")]
+        ThumbLibFailed,
+
+        [Description("Library: updating {0}%")]
+        ThumbLibShort,
+
         [Description("Series")]
         SeriesLabel,
 

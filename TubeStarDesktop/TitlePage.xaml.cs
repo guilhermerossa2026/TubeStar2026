@@ -21,6 +21,80 @@ namespace TubeStar
             InitializeComponent();
 
             Refresh();
+
+            Loaded += (s, e) =>
+            {
+                ThumbLibrary.ProgressChanged -= OnLibraryProgress;
+                ThumbLibrary.ProgressChanged += OnLibraryProgress;
+                _wasUpdating = ThumbLibrary.IsUpdating;
+                UpdateLibraryStatus();
+            };
+            Unloaded += (s, e) =>
+            {
+                ThumbLibrary.ProgressChanged -= OnLibraryProgress;
+                _hideTimer.Stop();
+            };
+            _hideTimer.Interval = TimeSpan.FromSeconds(4);
+            _hideTimer.Tick += (s, e) =>
+            {
+                _hideTimer.Stop();
+                barThumbLib.Visibility = Visibility.Collapsed;
+            };
+        }
+
+        private bool _wasUpdating;
+        private readonly System.Windows.Threading.DispatcherTimer _hideTimer = new System.Windows.Threading.DispatcherTimer();
+
+        //Vem da thread de fundo: passa para a thread da tela
+        private void OnLibraryProgress()
+        {
+            Dispatcher.BeginInvoke(new Action(UpdateLibraryStatus));
+        }
+
+        private void UpdateLibraryStatus()
+        {
+            if (ThumbLibrary.IsUpdating)
+            {
+                _wasUpdating = true;
+                _hideTimer.Stop();
+                int total = ThumbLibrary.ChannelsTotal;
+                int done = ThumbLibrary.ChannelsDone;
+                int percent = total > 0 ? Math.Min(100, done * 100 / total) : 0;
+                txtThumbLib.Text = String.Format(EnglishStrings.ThumbLibUpdating.Translate(), percent, Math.Min(done + 1, total), total);
+                barThumbLib.Value = percent;
+                barThumbLib.Visibility = Visibility.Visible;
+                return;
+            }
+
+            int videos = ThumbLibrary.VideoCount;
+            if (videos == 0)
+            {
+                //Sem biblioteca (sem chave/internet): não mostra nada
+                txtThumbLib.Text = "";
+                barThumbLib.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            txtThumbLib.Text = String.Format((ThumbLibrary.LastUpdateFailed ? EnglishStrings.ThumbLibFailed : EnglishStrings.ThumbLibReady).Translate(), videos);
+            if (_wasUpdating)
+            {
+                //Acabou de terminar: a barra fica cheia por uns 4 s
+                _wasUpdating = false;
+                _hideTimer.Stop();
+                if (ThumbLibrary.LastUpdateFailed)
+                {
+                    barThumbLib.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    barThumbLib.Value = 100;
+                    _hideTimer.Start();
+                }
+            }
+            else
+            {
+                barThumbLib.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)
@@ -67,6 +141,7 @@ namespace TubeStar
             btnNewGame.Content = EnglishStrings.NewGame.Translate();
             btnExit.Content = EnglishStrings.Exit.Translate();
             txtTagline.Text = EnglishStrings.TitleTagline.Translate();
+            UpdateLibraryStatus();
         }
 
         private void imgGeorgia_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

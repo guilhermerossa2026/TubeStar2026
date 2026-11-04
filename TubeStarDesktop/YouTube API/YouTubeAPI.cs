@@ -50,6 +50,23 @@ namespace TubeStar
             return new Uri(uriString);
         }
 
+        //Biblioteca de miniaturas: canal por @handle (1 unidade de cota)
+        public static Uri ChannelUploadsUri(string handle)
+        {
+            var uriString = String.Format("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle={0}&fields=items(contentDetails(relatedPlaylists(uploads)))&key={1}",
+                HttpHelpers.UrlEncoding(handle), ApiKey);
+            return new Uri(uriString);
+        }
+
+        //Biblioteca de miniaturas: até 50 vídeos de uma playlist de uploads (1 unidade de cota)
+        public static Uri PlaylistItemsUri(string playlistId, string pageToken)
+        {
+            var uriString = String.Format("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId={0}&maxResults=50&fields=nextPageToken,items(snippet(title,resourceId(videoId)))&key={1}{2}",
+                HttpHelpers.UrlEncoding(playlistId), ApiKey,
+                String.IsNullOrEmpty(pageToken) ? "" : "&pageToken=" + HttpHelpers.UrlEncoding(pageToken));
+            return new Uri(uriString);
+        }
+
         public static Uri GetRandomImagesWithTitle(string search, int max)
         {
             search = search.Replace(' ', ',');

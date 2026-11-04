@@ -1,0 +1,141 @@
+﻿# Canais usados na biblioteca de miniaturas por nicho (atualizada ao abrir o jogo, no maximo 1 vez a cada 7 dias).
+# Formato: Nicho | @handle ou ID do canal (UC...) | Nome
+# Nicho = nome do enum VideoCategory: Games, Vlog, Technology, Comedy, Education, Finance, Fitness, Cooking, Music, Beauty, Sports, Reacts, Mystery, Travel, Kids
+# Linhas com # sao comentarios. Pode editar a vontade.
+
+# Games
+Games | UCdm1fwk5iqteE0MVOBUuE8Q | Venom Extreme
+Games | UCyzHoCLLsX39f-MH3wp6XmA | Geleia
+Games | UCiIZY89KwQkxAW-4Le7U7zg | Viniccius13
+Games | @AM3NIC | AM3NIC
+Games | UCIXguhHCl8eDTkXpEuiGPUA | Jazzghost
+Games | @Cadres | Cadres
+Games | @RobinHoodGamer | Robin Hood Gamer
+Games | @SkorpionGamer | Skorpion Gamer
+Games | UCHuZmQ0lSW8TG81dVZZh5rw | LipaoGamer
+Games | UCjBO43ykxlSs3j7F7EXcBUQ | TazerCraft
+Games | UC-4iZ6Hq-oSERqZnVbuYsUg | Felps
+Games | UC7_YxT-KID8kRbqZo7MyscQ | Markiplier
+Games | UC50nSp5z6jKUXtyqbTBy9Tw | Rubius
+
+# Games - jogos variados (pedido do dono)
+Games | UCvp2rct896qzl9qaG20mjNg | GamerCosta (GTA V)
+Games | UCSHPi-QNj738HQUZvNBD1IA | Force Games (GTA V)
+Games | UC1HuyLUIQ_c8ODEjXc3oOdg | OLD BOB (GTA 5 policial)
+Games | UCW9NYaS2mMMBb9gjx6N7KSw | Brazilia Rp (GTA RP)
+Games | UCespVTmhTUY4z9GBLgnN3YA | Chove Games (GTA RP)
+Games | UCHCwb6dKt4534vxX3F9OHKQ | nobrainjames (Roblox)
+Games | UCNDzLI-hyihpAx3zKtwhGZw | Techy Plays (Roblox)
+Games | UCx3vXwbAuXVxIIKTK8FaUgA | zapzap do roblox (Roblox)
+Games | UCIvR3Ho3T0huHo_-LdDR2Tg | Arktetando (ARK)
+Games | UCGDI3T92XGq6SKH-1LSb9Fw | FIFA TRADE BRASIL (EA FC)
+
+# Technology
+Technology | UC9cmdQ9LLtIzKMrK06QFOhg | Lopess
+Technology | UCjTGBll7Sz8VCYiPPkIZpaw | Geek Antenado
+Technology | UCM0PAjdepJb2YNGpzm_fbqA | Jorge Dejorge
+Technology | UCYLI6otElj7r8Uj4B9NAR5w | TEK
+Technology | UCxfiU1Yr2qwbhrvibG03aBw | Linuxbrs
+Technology | UCXuqSBlHAE6Xw-yeJA0Tunw | Linus Tech Tips
+Technology | UCOhHO2ICt0ti9KAh-QHvttQ | Technical Guruji
+Technology | UCBJycsmduvYEL83R_U4JriQ | Marques Brownlee (MKBHD)
+Technology | UCsTcErHg8oDvUnTzoqsYeNw | Unbox Therapy
+Technology | UCdmGjywrxeOPfC7vDllmSgQ | TecMundo
+
+# Vlog
+Vlog | @caseyneistat | Casey Neistat
+Vlog | @RyanTrahan | Ryan Trahan
+Vlog | UCvK4bOhULCpmLabd2pDMtnA | Yes Theory
+Vlog | UC3DkFux8Iv-aYnTRWzwaiBA | Peter McKinnon
+Vlog | UCV306eHqgo0LvBf3Mh36AHg | Felipe Neto
+Vlog | UCbTVTephX30ZhQF5zwFppBg | Rezende Evil
+
+# Cooking
+Cooking | UCh8qpZhEwzejZ55cajXimqQ | Ana Maria Brogui
+Cooking | @TPMReceitas | TPM Receitas
+Cooking | UCu_r5ZmwHn02bLo1k8Ro47A | Mohamad Hindi
+Cooking | @tasty | Tasty
+Cooking | UChBEbMKI1eCcejTtmI32UEw | Joshua Weissman
+Cooking | @BabishCulinaryUniverse | Babish Culinary Universe
+
+# Education
+Education | UCKHhA5hN2UohhFDfNXB_cvQ | Manual do Mundo
+Education | UClu474HMt895mVxZdlIHXEA | Nerdologia
+Education | UCn9Erjy00mpnWeLnRqhsA1g | Ciência Todo Dia
+Education | UCsXVk37bltHxD1rDPwtNM8Q | Kurzgesagt
+Education | UCHnyfMqiRRG1u-2MsSQLbXA | Veritasium
+Education | UC6nSFpj9HTCZ5t-N3Rm3-HA | Vsauce
+
+# Finance
+Finance | UC8mDF5mWNGE-Kpfcvnn0bUg | Me Poupe!
+Finance | UCT4nDeU5pv1XIGySbSK-GgA | Primo Rico
+Finance | UCrp0zmecZ3TNV8FSR-tjv7A | Economista Sincero
+Finance | UCV6KDgJskWaEckne5aPA0aQ | Graham Stephan
+Finance | UCGy7SkBjcIAgTiwkXEtPnYg | Andrei Jikh
+Finance | UCoOae5nYA7VqaXzerajD0lg | Ali Abdaal
+
+# Fitness
+Fitness | UCPlemwX82_QEWRDC6yYnOCg | Leandro Twin
+Fitness | UCPX0gLduKAfgr-HJENa7CFw | Renato Cariani
+Fitness | UCw_S3AgRp0t-iXw4x5aaZ_Q | Carol Borba
+Fitness | UCCgLoMYIyP0U56dEhEL1wXQ | Chloe Ting
+Fitness | UC68TLK0mAEzUyHx5x5k-S1Q | Jeff Nippard
+Fitness | UCe0TLA0EsQbE-MjuHXevj2A | Athlean-X
+
+# Music
+Music | UCffDXn7ycAzwL2LDlbyWOTw | KondZilla
+Music | @GusttavoLima | Gusttavo Lima
+Music | UCqjjyPUghDSSKFBABM_CXMw | Anitta
+Music | UC0C-w0YjGpqDXGB8IHb662A | Ed Sheeran
+Music | UCqECaJ8Gagnn7YCbPEzWH6g | Taylor Swift
+Music | @MariliaMendoncaOficial | Marília Mendonça
+
+# Beauty
+Beauty | @BrunaTavares | Bruna Tavares
+Beauty | UCcHR0RvLYk33ppkjBw3UaEA | Mari Maria
+Beauty | UCAkZ7bimIU9m7wT6Th0FcEw | Niina Secrets
+Beauty | UCucot-Zp428OwkyRm2I7v2Q | James Charles
+Beauty | UCzTKskwIc_-a0cGvCXA848Q | NikkieTutorials
+
+# Sports
+Sports | @geglobo | ge
+Sports | UCFjrDmEnxrG5TRGVO0TPHLA | Desimpedidos
+Sports | UCWJ2lWNubArHWmf3FIHbfcQ | NBA
+Sports | UCiWLfSweyRNmLpgEHekhoAg | ESPN
+Sports | UCRijo3ddMTht_IHyNSNXpNQ | Dude Perfect
+
+# Reacts
+Reacts | UCDh8LnjLHFUSYrq9S6Zp12A | Casimiro
+Reacts | @EiNerd | Ei Nerd
+Reacts | UC5ZTRH1zclthyc6b_D3m2Pw | Gaules
+Reacts | UCAcqWLNfTmEDetgGQ9h3TXA | xQc
+Reacts | UC7zsxKqd5MicTf4VhS9Y74g | Kurtis Conner
+Reacts | UCq6VFHwMzcMXbuKyG7SQYIg | penguinz0
+
+# Mystery
+Mystery | UCbAiIkPobUFy71zlmwVw3jw | Fatos Desconhecidos
+Mystery | UCKijjvu6bN1c-ZHVwR7-5WA | BuzzFeed Unsolved
+Mystery | UCtPrkXdtCM5DACLufB9jbsA | MrBallen
+Mystery | UCpFFItkfZz1qz5PpHpqzYBw | Nexpo
+
+# Travel
+Travel | UCyEd6QBSgat5kkC6svyjudA | Mark Wiens
+Travel | UC0Ize0RLIbGdH5x4wI45G-A | Drew Binsky
+Travel | UC4ijq8Cg-8zQKx8OH12dUSw | Kara and Nate
+# Yes Theory já está em Vlog (canal repetido sobrescreve o nicho)
+Travel | UCecmeXxb-JUyVtLaGcig3ag | Viaje na Viagem (cand.)
+
+# Comedy
+Comedy | UCEWHPFNilsT0IfQfutVzsag | Porta dos Fundos
+Comedy | @Parafernalha | Parafernalha
+Comedy | UCnMrFH0xuvWQSHCscGFV9Gw | Embrulha pra Viagem
+Comedy | UCY30JRSgfhYXA6i6xX1erWg | Smosh
+Comedy | UCh9IfI45mmk59eDvSWtuuhQ | Ryan George
+
+# Kids
+Kids | UC_gV70G_Y51LTa3qhu8KiEA | Luccas Neto
+Kids | UCBAb_DK4GYZqZR9MFA7y2Xg | Galinha Pintadinha
+Kids | UCKe6w0exI94U-RzqAyoY1VA | Maria Clara & JP
+Kids | UCbCmjCuTUZos6Inko4u57UQ | Cocomelon
+Kids | @LikeNastya | Like Nastya
+Kids | UCvlE5gTbOvjiolFlEm-c_Ow | Vlad and Niki

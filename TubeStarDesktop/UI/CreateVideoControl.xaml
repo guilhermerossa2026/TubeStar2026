@@ -76,12 +76,14 @@
                                     <Button x:Name="btnNext" Grid.Column="2" Style="{StaticResource ArrowButtonStyle}" Content="›" Click="btnNext_Click" Margin="14,0,0,0" IsEnabled="False" />
                                 </Grid>
 
+                                <TextBlock x:Name="txtOrigin" Style="{StaticResource MutedTextStyle}" FontSize="11" HorizontalAlignment="Center" Margin="0,6,0,0" />
                                 <TextBlock x:Name="txtCounter" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="{StaticResource YtTextPrimaryBrush}" Margin="0,10,0,0" />
                                 <TextBlock x:Name="txtQueryInfo" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" />
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                                     <Button x:Name="btnUseThis" Style="{StaticResource SmallPrimaryButtonStyle}" Content="Use this" Click="btnUseThis_Click" Margin="0,0,8,0" IsEnabled="False" />
-                                    <Button x:Name="btnSearchOthers" Style="{StaticResource SmallButtonStyle}" Content="Search others" Click="btnSearchOthers_Click" />
+                                    <Button x:Name="btnSearchOthers" Style="{StaticResource SmallButtonStyle}" Content="Search others" Click="btnSearchOthers_Click" Margin="0,0,8,0" />
+                                    <Button x:Name="btnSearchMore" Style="{StaticResource SmallButtonStyle}" Content="Search more" Click="btnSearchMore_Click" Visibility="Collapsed" />
                                 </StackPanel>
 
                                 <DockPanel x:Name="queryPanel" Margin="0,10,0,0" Visibility="Collapsed">
@@ -90,6 +92,7 @@
                                 </DockPanel>
 
                                 <TextBlock x:Name="txtThumbHint" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0" />
+                                <TextBlock x:Name="txtLibraryProgress" Style="{StaticResource MutedTextStyle}" FontSize="11" HorizontalAlignment="Center" Margin="0,2,0,0" Visibility="Collapsed" />
                             </StackPanel>
                         </Border>
 

@@ -61,7 +61,7 @@ Não há Visual Studio nesta máquina. O build usa o MSBuild que vem com o Windo
 Detalhes:
 - O MSBuild do Windows só aceita **C# 5**: nada de `?.`, `$"..."`, `nameof`, propriedades `=>` ou `out var`.
 - A chave da API precisa estar em `TubeStarDesktop/youtube_api_key.txt` (o build copia para a saída) ou na variável `YOUTUBE_API_KEY`. Sem ela, as miniaturas não carregam.
-- O save fica em `bin\Release\Saves\save.tss`, separado do save de `../Jogar_TubeStar/`. Essa pasta é a cópia "oficial" para jogar e é atualizada à mão.
+- O save fica em `bin\Release\Saves\save.tss`. O dono joga direto por essa pasta (a cópia `../Jogar_TubeStar/` foi apagada em 04/11/2026).
 - O git não está no PATH da sessão do Claude: usar `$env:Path += ";C:\Program Files\Git\cmd"`.
 - Não há testes automatizados.
 
@@ -73,6 +73,7 @@ Detalhes:
 - Textos: escrever em inglês em `Languages/EnglishStrings.cs` e usar `.Translate()`. As traduções ficam em `Languages/*.xml` (PT-BR = `Brazil.xml`).
 - Save: JSON (Newtonsoft, `TypeNameHandling.Auto`) via `Game/SaveLoad/`. Precisa continuar lendo saves XML antigos.
 - YouTube Data API v3 (`YouTube API/YouTubeAPI.cs`) só é chamada para os vídeos do jogador. Nunca colocar a chave no código. Os rivais são offline de propósito, para poupar cota; não reintroduzir chamadas para eles.
+- Exceção aprovada: a biblioteca de miniaturas (`YouTube API/ThumbLibrary.cs`, canais em `thumb_channels.txt`) chama `channels`/`playlistItems` em segundo plano, 1×/semana (~600 unidades), fora das 100 buscas/dia (`ThumbSearch.cs`).
 - GameJolt e mods (ModLauncher/RIVALMOD) foram removidos. Os troféus são locais, em `Game/Trophies/TrophyManager.cs`.
 
 ## Economia de tokens

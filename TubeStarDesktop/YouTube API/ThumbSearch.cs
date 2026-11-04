@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace TubeStar
@@ -107,9 +108,17 @@ namespace TubeStar
             get { return QuotaReached ? EnglishStrings.ThumbQuotaReached.Translate() : EnglishStrings.ThumbOffline.Translate(); }
         }
 
+        //Minúsculas, sem "#número" (nem "#" solto) e com espaços normalizados: "Minecraft #18" e "#19" são a mesma busca
+        public static string CleanQuery(string query)
+        {
+            string text = Regex.Replace(query ?? "", @"#\s*\d*", " ");
+            text = Regex.Replace(text, @"\s+", " ");
+            return text.Trim().ToLowerInvariant();
+        }
+
         private static string Key(string query, int max, string pageToken)
         {
-            return query.Trim().ToLowerInvariant() + "|" + max + "|" + (pageToken ?? "");
+            return CleanQuery(query) + "|" + max + "|" + (pageToken ?? "");
         }
 
         public static bool IsCached(string query, int max, string pageToken)
@@ -198,10 +207,10 @@ namespace TubeStar
                         callback.Value();
                 }
             };
-            client.DownloadStringAsync(YouTubeAPI.SearchVideos(query ?? "", max, pageToken));
+            client.DownloadStringAsync(YouTubeAPI.SearchVideos(CleanQuery(query), max, pageToken));
         }
 
-        private static bool IsQuotaError(Exception error)
+        internal static bool IsQuotaError(Exception error)
         {
             var web = error as WebException;
             if (web == null)

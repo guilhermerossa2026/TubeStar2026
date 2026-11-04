@@ -22,6 +22,12 @@
                     <Button x:Name="btnExit" Content="Exit" FontSize="15" Height="42" Style="{StaticResource GhostButtonStyle}" Click="Exit_Click" />
                 </StackPanel>
 
+                <!-- Progresso da biblioteca de miniaturas -->
+                <StackPanel Width="300" Margin="0,4,0,0">
+                    <TextBlock x:Name="txtThumbLib" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                    <ProgressBar x:Name="barThumbLib" Height="4" Margin="0,6,0,0" Minimum="0" Maximum="100" BorderThickness="0" Background="{StaticResource YtDarkCardBrush}" Foreground="{StaticResource YtRedBrush}" Visibility="Collapsed" />
+                </StackPanel>
+
                 <!-- Idiomas -->
                 <WrapPanel HorizontalAlignment="Center" MaxWidth="340" Margin="0,28,0,0">
                     <Image x:Name="imgUK" Height="26" Margin="3" Cursor="Hand" Source="Resources/Languages/English.png" MouseLeftButtonDown="imgUK_MouseLeftButtonDown"/>

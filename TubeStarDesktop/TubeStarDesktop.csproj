@@ -220,6 +220,7 @@
     <Compile Include="Video\VideoCategory.cs" />
     <Compile Include="Video\VideoType.cs" />
     <Compile Include="Video\Promotion.cs" />
+    <Compile Include="YouTube API\ThumbLibrary.cs" />
     <Compile Include="YouTube API\ThumbSearch.cs" />
     <Compile Include="YouTube API\YouTubeAPI.cs" />
     <Page Include="MainPage.xaml">
@@ -424,6 +425,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="youtube_api_key.txt" Condition="Exists('youtube_api_key.txt')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="thumb_channels.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Resource Include="Languages\Poland.xml" />

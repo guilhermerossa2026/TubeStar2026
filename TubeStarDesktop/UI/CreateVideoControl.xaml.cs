@@ -35,6 +35,15 @@ namespace TubeStar
         private string _shownId;
         private string _chosenId;
 
+        //Origem de cada miniatura do carrossel: 1 = biblioteca, 2 = busca, 3 = nicho (aleatória)
+        private const int OriginLibrary = 1;
+        private const int OriginSearch = 2;
+        private const int OriginNiche = 3;
+        private const int OriginLibraryPartial = 4; //biblioteca, meio-acerto no nicho
+        private Dictionary<string, int> _originOf = new Dictionary<string, int>();
+        private bool _titleSearch; //a busca atual veio do título (não da busca manual)
+        private bool _moreDone; //"Buscar mais" já foi usado para este título
+
         public CreateVideoControl()
         {
             InitializeComponent();
@@ -45,6 +54,33 @@ namespace TubeStar
             BuildChips(costPanel, InvestmentLabels(), 0, (i) => { _investment = i; UpdateSummary(); });
             ResetThumbnails();
             UpdateSummary();
+
+            Loaded += (s, e) =>
+            {
+                ThumbLibrary.ProgressChanged -= OnLibraryProgress;
+                ThumbLibrary.ProgressChanged += OnLibraryProgress;
+                UpdateLibraryProgress();
+            };
+            Unloaded += (s, e) => ThumbLibrary.ProgressChanged -= OnLibraryProgress;
+        }
+
+        //Vem da thread de fundo: passa para a thread da tela
+        private void OnLibraryProgress()
+        {
+            Dispatcher.BeginInvoke(new Action(UpdateLibraryProgress));
+        }
+
+        private void UpdateLibraryProgress()
+        {
+            if (!ThumbLibrary.IsUpdating)
+            {
+                txtLibraryProgress.Visibility = Visibility.Collapsed;
+                return;
+            }
+            int total = ThumbLibrary.ChannelsTotal;
+            int percent = total > 0 ? Math.Min(100, ThumbLibrary.ChannelsDone * 100 / total) : 0;
+            txtLibraryProgress.Text = String.Format(EnglishStrings.ThumbLibShort.Translate(), percent);
+            txtLibraryProgress.Visibility = Visibility.Visible;
         }
 
         private void Translate()
@@ -58,6 +94,7 @@ namespace TubeStar
             btnQuerySearch.Content = EnglishStrings.ThumbSearch.Translate();
             btnUseThis.Content = EnglishStrings.ThumbUseThis.Translate();
             btnSearchOthers.Content = EnglishStrings.ThumbSearchOthers.Translate();
+            btnSearchMore.Content = EnglishStrings.ThumbSearchMore.Translate();
             txtThumbHint.Text = EnglishStrings.ThumbHint.Translate();
             lblHours.Text = EnglishStrings.Hours.Translate();
             lblCost.Text = EnglishStrings.InvestmentLabel.Translate();
@@ -401,6 +438,10 @@ namespace TubeStar
             _thumbIndex = -1;
             _shownId = null;
             _chosenId = null;
+            _originOf.Clear();
+            _titleSearch = false;
+            _moreDone = false;
+            txtOrigin.Text = "";
             imgThumb.Source = null;
             imgPreview.Source = null;
             txtThumbStatus.Text = EnglishStrings.ThumbTypeTitle.Translate();
@@ -415,6 +456,25 @@ namespace TubeStar
             btnPrev.IsEnabled = _thumbIndex > 0;
             btnNext.IsEnabled = _thumbIndex >= 0 && !_loadingPage && (_thumbIndex + 1 < _thumbIds.Count || _nextPageToken != null);
             btnUseThis.IsEnabled = _thumbIndex >= 0 && _shownId != null && _thumbCache.ContainsKey(_shownId);
+
+            //"Buscar mais": só com miniaturas da biblioteca, uma vez por título, e se a API puder responder
+            bool canSearchMore = _titleSearch && !_moreDone && !_loadingPage && _query != null && (_originOf.ContainsValue(OriginLibrary) || _originOf.ContainsValue(OriginLibraryPartial))
+                && YouTubeAPI.HasApiKey && (!ThumbSearch.QuotaReached || ThumbSearch.IsCached(_query, ThumbPageSize, null));
+            btnSearchMore.Visibility = canSearchMore ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private string OriginText(string id)
+        {
+            int origin;
+            if (id == null || !_originOf.TryGetValue(id, out origin))
+                return "";
+            if (origin == OriginLibrary)
+                return EnglishStrings.ThumbFromLibrary.Translate();
+            if (origin == OriginLibraryPartial)
+                return EnglishStrings.ThumbFromLibraryPartial.Translate();
+            if (origin == OriginNiche)
+                return EnglishStrings.ThumbFromNiche.Translate();
+            return EnglishStrings.ThumbFromSearch.Translate();
         }
 
         //Só busca ao sair do campo (nunca a cada tecla), e só se o título mudou
@@ -486,18 +546,78 @@ namespace TubeStar
         {
             _searchGeneration++;
             int generation = _searchGeneration;
+            //Sem "#número": "#18" e "#19" reaproveitam a mesma busca. Título só com "#5" não busca nada
+            string cleaned = ThumbSearch.CleanQuery(query);
+            if (cleaned.Length == 0)
+            {
+                _thumbIds.Clear();
+                _thumbIndex = -1;
+                _shownId = null;
+                _query = null;
+                _nextPageToken = null;
+                _titleSearch = false;
+                _moreDone = false;
+                _loadingPage = false;
+                _originOf.Clear();
+                imgThumb.Source = null;
+                txtOrigin.Text = "";
+                txtCounter.Text = "";
+                txtThumbStatus.Text = EnglishStrings.ThumbTypeTitle.Translate();
+                UpdateThumbButtons();
+                return;
+            }
+            query = cleaned;
             _query = query;
             _thumbIds.Clear();
             _nextPageToken = null;
             _thumbIndex = -1;
             _shownId = null;
+            _originOf.Clear();
+            _titleSearch = categoryFallback;
+            _moreDone = false;
+            txtOrigin.Text = "";
             imgThumb.Source = null;
             txtCounter.Text = "";
             txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), query);
 
+            //1º a biblioteca (sem gastar busca da API)
+            if (categoryFallback)
+            {
+                var fromLibrary = ThumbLibrary.Match(query, _category);
+                if (fromLibrary.Count > 0)
+                {
+                    foreach (var id in fromLibrary)
+                    {
+                        _thumbIds.Add(id);
+                        _originOf[id] = OriginLibrary;
+                    }
+                    _loadingPage = false;
+                    ShowThumb(0);
+                    return;
+                }
+
+                //Meio-acerto: vídeos do nicho escolhido que batem pelo menos 1 palavra
+                if (_category.HasValue)
+                {
+                    var partial = ThumbLibrary.MatchPartial(query, _category.Value);
+                    if (partial.Count > 0)
+                    {
+                        foreach (var id in partial)
+                        {
+                            _thumbIds.Add(id);
+                            _originOf[id] = OriginLibraryPartial;
+                        }
+                        _loadingPage = false;
+                        ShowThumb(0);
+                        return;
+                    }
+                }
+            }
+
             if (!YouTubeAPI.HasApiKey || (ThumbSearch.QuotaReached && !ThumbSearch.IsCached(query, ThumbPageSize, null)))
             {
-                ShowOffline();
+                if (!ShowNicheFallback())
+                    ShowOffline();
                 return;
             }
 
@@ -544,7 +664,10 @@ namespace TubeStar
                 foreach (var id in page.Ids)
                 {
                     if (!_thumbIds.Contains(id))
+                    {
                         _thumbIds.Add(id);
+                        _originOf[id] = OriginSearch;
+                    }
                 }
                 _nextPageToken = _thumbIds.Count > before ? page.NextPageToken : null;
                 UpdateUsage();
@@ -556,7 +679,10 @@ namespace TubeStar
                 _loadingPage = false;
                 UpdateUsage();
                 if (_thumbIds.Count == 0)
-                    ShowOffline();
+                {
+                    if (!ShowNicheFallback())
+                        ShowOffline();
+                }
                 else
                 {
                     txtThumbStatus.Text = ThumbSearch.ErrorText;
@@ -565,9 +691,52 @@ namespace TubeStar
             });
         }
 
+        //Cota do dia acabou (ou sem chave) e nada veio da busca: mostra miniaturas aleatórias do nicho escolhido, da biblioteca
+        private bool ShowNicheFallback()
+        {
+            if (!_titleSearch || !_category.HasValue || _thumbIds.Count > 0)
+                return false;
+            if (YouTubeAPI.HasApiKey && !ThumbSearch.QuotaReached)
+                return false;
+            var ids = ThumbLibrary.RandomOfNiche(_category.Value, ThumbPageSize);
+            if (ids.Count == 0)
+                return false;
+            foreach (var id in ids)
+            {
+                _thumbIds.Add(id);
+                _originOf[id] = OriginNiche;
+            }
+            _nextPageToken = null;
+            _loadingPage = false;
+            UpdateUsage();
+            ShowThumb(0);
+            return true;
+        }
+
+        //Busca da API pelo título, depois das miniaturas da biblioteca (1 busca; as novas entram no fim do carrossel)
+        private void btnSearchMore_Click(object sender, RoutedEventArgs e)
+        {
+            if (_moreDone || _loadingPage || _query == null)
+                return;
+            _moreDone = true;
+            int generation = _searchGeneration;
+            int next = _thumbIds.Count;
+            _loadingPage = true;
+            txtThumbStatus.Text = EnglishStrings.ThumbSearching.Translate();
+            UpdateThumbButtons();
+            RequestPage(_query, null, generation, (found) =>
+            {
+                if (found)
+                    ShowThumb(next);
+                else
+                    ShowThumb(_thumbIndex);
+            });
+        }
+
         private void ShowOffline()
         {
             _loadingPage = false;
+            txtOrigin.Text = "";
             imgThumb.Source = LoadInternetDown();
             txtThumbStatus.Text = "";
             txtCounter.Text = ThumbSearch.ErrorText;
@@ -584,6 +753,7 @@ namespace TubeStar
         {
             _loadingPage = false;
             imgThumb.Source = null;
+            txtOrigin.Text = "";
             txtThumbStatus.Text = EnglishStrings.ThumbNoResults.Translate();
             UpdateThumbButtons();
         }
@@ -628,6 +798,7 @@ namespace TubeStar
             string id = _thumbIds[index];
             _shownId = id;
             txtCounter.Text = String.Format(EnglishStrings.ThumbCounter.Translate(), index + 1, _thumbIds.Count);
+            txtOrigin.Text = OriginText(id);
 
             byte[] cached;
             if (_thumbCache.TryGetValue(id, out cached))

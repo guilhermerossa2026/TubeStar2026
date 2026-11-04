@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="BlackColor">#FF000000</Color>
-    <Color x:Key="AccentColor">#FFFF0000</Color>
-    <Color x:Key="AccentColor2">#FFFF3333</Color>
+    <Color x:Key="AccentColor">#FFE53935</Color>
+    <Color x:Key="AccentColor2">#FFEF5350</Color>
 
     <SolidColorBrush x:Key="SliderThumbDisabled" Color="#FF333333" />
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FF2E2E2E" />

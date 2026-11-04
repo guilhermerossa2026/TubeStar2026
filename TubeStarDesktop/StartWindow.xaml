@@ -9,7 +9,7 @@
         WindowState="Maximized"
         ResizeMode="CanResize"
         UseLayoutRounding="True"
-        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="ClearType"
         RenderOptions.BitmapScalingMode="HighQuality"
         FontFamily="{StaticResource YtFontFamily}"

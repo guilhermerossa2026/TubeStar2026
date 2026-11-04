@@ -9,8 +9,8 @@
     <Color x:Key="YtDarkCardColor">#1F1F1F</Color>
     <Color x:Key="YtDarkCardHoverColor">#262626</Color>
     <Color x:Key="YtDarkBorderColor">#2D2D2D</Color>
-    <Color x:Key="YtRedColor">#FF0000</Color>
-    <Color x:Key="YtRedHoverColor">#FF3333</Color>
+    <Color x:Key="YtRedColor">#E53935</Color>
+    <Color x:Key="YtRedHoverColor">#EF5350</Color>
     <Color x:Key="YtTextPrimaryColor">#F1F1F1</Color>
     <Color x:Key="YtTextSecondaryColor">#AAAAAA</Color>
     <Color x:Key="YtGainColor">#3EA66B</Color>

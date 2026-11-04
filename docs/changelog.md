@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-04
+- Vermelho de destaque mais suave (#E53935, era #FF0000) e texto no modo "Ideal" do WPF, sem letras serrilhadas.
+
 ## 2026-11-03
 - Criação de vídeo, etapa 5d: "Comprar views" virou "Promover vídeo" com campanhas Pequena $500 (~3 mil views), Média $1.000 (~8 mil) e Grande $2.000 (~18 mil), entregues em 3 dias. Antes de postar, mostra a estimativa de views e inscritos (depende da nota e do nicho). Views promovidas não pagam anúncio.
 

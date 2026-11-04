@@ -809,6 +809,12 @@ namespace TubeStar
         [Description("Couldn't load thumbnails. Check your internet or the API key.")]
         ThumbOffline,
 
+        [Description("Daily YouTube search limit reached. It resets tomorrow.")]
+        ThumbQuotaReached,
+
+        [Description("Searches today: {0}/{1}")]
+        ThumbSearchesToday,
+
         [Description("Type the title to see thumbnails.")]
         ThumbTypeTitle,
 

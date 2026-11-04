@@ -1689,4 +1689,12 @@
     <Id>GameSaved</Id>
     <Text>Jogo salvo</Text>
   </CustomText>
+  <CustomText>
+    <Id>ThumbQuotaReached</Id>
+    <Text>Limite diário de buscas do YouTube atingido. Volta amanhã de madrugada.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ThumbSearchesToday</Id>
+    <Text>Buscas hoje: {0}/{1}</Text>
+  </CustomText>
 </ArrayOfCustomText>

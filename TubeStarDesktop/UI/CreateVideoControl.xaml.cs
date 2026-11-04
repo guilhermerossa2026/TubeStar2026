@@ -454,7 +454,7 @@ namespace TubeStar
             txtCounter.Text = "";
             txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), query);
 
-            if (!YouTubeAPI.HasApiKey)
+            if (!YouTubeAPI.HasApiKey || (ThumbSearch.QuotaReached && !ThumbSearch.IsCached(query, ThumbPageSize, null)))
             {
                 ShowOffline();
                 return;
@@ -494,31 +494,33 @@ namespace TubeStar
         //Uma chamada à API: até 50 ids, guardados na lista
         private void RequestPage(string query, string pageToken, int generation, Action<bool> onDone)
         {
-            WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(query, ThumbPageSize, pageToken), (response) =>
+            ThumbSearch.Search(query, ThumbPageSize, pageToken, (page) =>
             {
                 if (generation != _searchGeneration)
                     return;
                 _loadingPage = false;
                 int before = _thumbIds.Count;
-                if (response != null && response.Entries != null)
+                foreach (var id in page.Ids)
                 {
-                    foreach (var entry in response.Entries)
-                    {
-                        if (entry != null && entry.Id != null && !String.IsNullOrEmpty(entry.Id.VideoId) && !_thumbIds.Contains(entry.Id.VideoId))
-                            _thumbIds.Add(entry.Id.VideoId);
-                    }
+                    if (!_thumbIds.Contains(id))
+                        _thumbIds.Add(id);
                 }
-                _nextPageToken = response != null && _thumbIds.Count > before ? response.NextPageToken : null;
+                _nextPageToken = _thumbIds.Count > before ? page.NextPageToken : null;
+                UpdateUsage();
                 onDone(_thumbIds.Count > before);
             }, () =>
             {
                 if (generation != _searchGeneration)
                     return;
                 _loadingPage = false;
+                UpdateUsage();
                 if (_thumbIds.Count == 0)
                     ShowOffline();
                 else
+                {
+                    txtThumbStatus.Text = ThumbSearch.ErrorText;
                     UpdateThumbButtons();
+                }
             });
         }
 
@@ -527,8 +529,15 @@ namespace TubeStar
             _loadingPage = false;
             imgThumb.Source = LoadInternetDown();
             txtThumbStatus.Text = "";
-            txtCounter.Text = EnglishStrings.ThumbOffline.Translate();
+            txtCounter.Text = ThumbSearch.ErrorText;
             UpdateThumbButtons();
+        }
+
+        //Contador de buscas do dia, ao lado do termo buscado
+        private void UpdateUsage()
+        {
+            if (_query != null)
+                txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), _query) + "  ·  " + ThumbSearch.UsageText;
         }
 
         private void ShowNoResults()

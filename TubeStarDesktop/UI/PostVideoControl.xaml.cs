@@ -312,20 +312,19 @@ namespace TubeStar
             Action onError = () =>
             {
                 if (generation != _searchGeneration) return;
-                txtCounter.Text = EnglishStrings.ThumbOffline.Translate();
+                btnChangeThumb.IsEnabled = true;
+                txtCounter.Text = ThumbSearch.ErrorText;
                 if (video.ImageBytes == null)
                     video.SetErrorImage();
             };
 
-            Func<YouTubeSearchResponse, bool> add = (response) =>
+            Func<ThumbSearch.Page, bool> add = (page) =>
             {
-                if (response == null || response.Entries == null)
-                    return false;
                 int before = _thumbIds.Count;
-                foreach (var entry in response.Entries)
+                foreach (var id in page.Ids)
                 {
-                    if (entry != null && entry.Id != null && !String.IsNullOrEmpty(entry.Id.VideoId) && !_thumbIds.Contains(entry.Id.VideoId))
-                        _thumbIds.Add(entry.Id.VideoId);
+                    if (!_thumbIds.Contains(id))
+                        _thumbIds.Add(id);
                 }
                 return _thumbIds.Count > before;
             };
@@ -338,21 +337,26 @@ namespace TubeStar
                 UpdateArrows();
             };
 
-            WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(video.Name, ThumbPageSize, null), (response) =>
+            ThumbSearch.Search(video.Name, ThumbPageSize, null, (page) =>
             {
                 if (generation != _searchGeneration) return;
-                if (add(response))
+                txtThumbStatus.Text = ThumbSearch.UsageText;
+                if (add(page))
                 {
                     showFirstNew();
                     return;
                 }
-                WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(video.Category.GetString(), ThumbPageSize, null), (r) =>
+                ThumbSearch.Search(video.Category.GetString(), ThumbPageSize, null, (p) =>
                 {
                     if (generation != _searchGeneration) return;
-                    if (add(r))
+                    txtThumbStatus.Text = ThumbSearch.UsageText;
+                    if (add(p))
                         showFirstNew();
                     else
+                    {
+                        btnChangeThumb.IsEnabled = true;
                         txtCounter.Text = EnglishStrings.ThumbNoResults.Translate();
+                    }
                 }, onError);
             }, onError);
         }

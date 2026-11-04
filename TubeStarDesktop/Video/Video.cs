@@ -253,18 +253,19 @@ namespace TubeStar
         //Sem sorteio: usa o 1º resultado (ordem de relevância)
         public void FetchFirstImage()
         {
-            WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(Name, 1, null), (response) =>
+            //Mesmo tamanho de página do Criar vídeo (50): aproveita a memória de buscas
+            ThumbSearch.Search(Name, 50, null, (page) =>
             {
-                if (HasFirstId(response))
+                if (page.Ids.Count > 0)
                 {
-                    SetImageFromId(response.Entries[0].Id.VideoId);
+                    SetImageFromId(page.Ids[0]);
                 }
                 else
                 {
-                    WebClientHelpers.Download<YouTubeSearchResponse>(YouTubeAPI.SearchVideos(Category.GetString(), 1, null), (r) =>
+                    ThumbSearch.Search(Category.GetString(), 50, null, (p) =>
                     {
-                        if (HasFirstId(r))
-                            SetImageFromId(r.Entries[0].Id.VideoId);
+                        if (p.Ids.Count > 0)
+                            SetImageFromId(p.Ids[0]);
                         else
                             SetErrorImage();
                     }, () =>
@@ -278,11 +279,6 @@ namespace TubeStar
             });
         }
 
-        private static bool HasFirstId(YouTubeSearchResponse response)
-        {
-            return response != null && response.Entries != null && response.Entries.Count > 0
-                && response.Entries[0] != null && response.Entries[0].Id != null && !String.IsNullOrEmpty(response.Entries[0].Id.VideoId);
-        }
 
         //Última imagem pedida: respostas antigas (cliques rápidos) são ignoradas
         private string _requestedImageId;

@@ -833,6 +833,12 @@ namespace TubeStar
         [Description("{0} · last #{1}")]
         SeriesLast,
 
+        [Description("Remove series from list")]
+        SeriesRemove,
+
+        [Description("Remove \"{0}\" from the series list? The videos will not be deleted.")]
+        SeriesRemoveText,
+
         [Description("No series yet. End a title with #1 to start one.")]
         SeriesNone,
 

@@ -50,6 +50,24 @@ namespace TubeStar
             return map.Values.OrderBy(s => s.Recency).ThenBy(s => s.Name).ToList();
         }
 
+        //Séries da lista "Continuar série": sem as removidas pelo jogador (voltam com um episódio novo)
+        public static List<SeriesInfo> GetVisibleSeries()
+        {
+            var hidden = Player.Current.HiddenSeries;
+            if (hidden == null || hidden.Count == 0)
+                return GetSeries();
+            int last;
+            return GetSeries().Where(s => !hidden.TryGetValue(Key(s.Name), out last) || s.LastNumber > last).ToList();
+        }
+
+        //Tira a série da lista; os vídeos continuam no canal
+        public static void Hide(SeriesInfo series)
+        {
+            if (Player.Current.HiddenSeries == null)
+                Player.Current.HiddenSeries = new Dictionary<string, int>();
+            Player.Current.HiddenSeries[Key(series.Name)] = series.LastNumber;
+        }
+
         private static void Add(Video video, bool inProduction, HashSet<Video> seen, Dictionary<string, SeriesInfo> map)
         {
             if (video == null || video.Name == null || !seen.Add(video))

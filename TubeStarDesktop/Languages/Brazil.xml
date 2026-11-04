@@ -1697,4 +1697,12 @@
     <Id>ThumbSearchesToday</Id>
     <Text>Buscas hoje: {0}/{1}</Text>
   </CustomText>
+  <CustomText>
+    <Id>SeriesRemove</Id>
+    <Text>Remover série da lista</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SeriesRemoveText</Id>
+    <Text>Remover "{0}" da lista de séries? Os vídeos não serão apagados. Se você criar um novo episódio, ela volta para a lista.</Text>
+  </CustomText>
 </ArrayOfCustomText>

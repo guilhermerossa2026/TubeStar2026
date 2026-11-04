@@ -87,7 +87,7 @@ namespace TubeStar
             _buildingSeries = true;
             cmbSeries.Items.Clear();
             cmbSeries.Items.Add(new ComboBoxItem { Content = EnglishStrings.SeriesLabel.Translate() });
-            var list = SeriesHelper.GetSeries();
+            var list = SeriesHelper.GetVisibleSeries();
             if (list.Count == 0)
             {
                 cmbSeries.Items.Add(new ComboBoxItem { Content = EnglishStrings.SeriesNone.Translate(), IsEnabled = false });
@@ -97,12 +97,52 @@ namespace TubeStar
                 foreach (var series in list)
                     cmbSeries.Items.Add(new ComboBoxItem
                     {
-                        Content = String.Format(EnglishStrings.SeriesLast.Translate(), series.Name, series.LastNumber),
-                        Tag = series.Name
+                        Content = CreateSeriesItem(series),
+                        Tag = series.Name,
+                        HorizontalContentAlignment = HorizontalAlignment.Stretch
                     });
             }
             cmbSeries.SelectedIndex = 0;
             _buildingSeries = false;
+        }
+
+        //Nome da série + "×" para tirar da lista (os vídeos continuam)
+        private object CreateSeriesItem(SeriesInfo series)
+        {
+            var remove = new Button
+            {
+                Content = "×",
+                Style = (Style)FindResource("SmallButtonStyle"),
+                Padding = new Thickness(6, 0, 6, 0),
+                Margin = new Thickness(8, 0, 0, 0),
+                Focusable = false,
+                ToolTip = EnglishStrings.SeriesRemove.Translate()
+            };
+            remove.Click += (s, e) =>
+            {
+                e.Handled = true;
+                cmbSeries.IsDropDownOpen = false;
+                CustomMessageBox.ShowDialog(EnglishStrings.SeriesRemove.Translate(),
+                    String.Format(EnglishStrings.SeriesRemoveText.Translate(), series.Name), MessagePicture.Question, (result) =>
+                {
+                    if (result == true)
+                    {
+                        SeriesHelper.Hide(series);
+                        BuildSeriesList();
+                    }
+                });
+            };
+            DockPanel.SetDock(remove, Dock.Right);
+
+            var panel = new DockPanel { LastChildFill = true };
+            panel.Children.Add(remove);
+            panel.Children.Add(new TextBlock
+            {
+                Text = String.Format(EnglishStrings.SeriesLast.Translate(), series.Name, series.LastNumber),
+                VerticalAlignment = VerticalAlignment.Center,
+                TextTrimming = TextTrimming.CharacterEllipsis
+            });
+            return panel;
         }
 
         private void cmbSeries_SelectionChanged(object sender, SelectionChangedEventArgs e)

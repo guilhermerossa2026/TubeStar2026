@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-04
+- Criar vídeo: botão "×" na lista "Continuar série" tira a série da lista (os vídeos continuam); ela volta se um episódio novo for criado.
 - Miniaturas: buscas na API ficam guardadas (Saves\search_cache.json) e o mesmo título não gasta cota de novo; contador "Buscas hoje: x/100" e aviso certo quando o limite diário do YouTube acaba.
 - Vermelho de destaque mais suave (#E53935, era #FF0000) e texto no modo "Ideal" do WPF, sem letras serrilhadas.
 

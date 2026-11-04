@@ -579,11 +579,12 @@ namespace TubeStar
             imgThumb.Source = null;
             txtCounter.Text = "";
             txtQueryInfo.Text = String.Format(EnglishStrings.ThumbQuery.Translate(), query);
+            _usedIds = UsedThumbIds();
 
             //1º a biblioteca (sem gastar busca da API)
             if (categoryFallback)
             {
-                var fromLibrary = ThumbLibrary.Match(query, _category);
+                var fromLibrary = ThumbLibrary.Match(query, _category, _usedIds);
                 if (fromLibrary.Count > 0)
                 {
                     foreach (var id in fromLibrary)
@@ -599,7 +600,7 @@ namespace TubeStar
                 //Meio-acerto: vídeos do nicho escolhido que batem pelo menos 1 palavra
                 if (_category.HasValue)
                 {
-                    var partial = ThumbLibrary.MatchPartial(query, _category.Value);
+                    var partial = ThumbLibrary.MatchPartial(query, _category.Value, _usedIds);
                     if (partial.Count > 0)
                     {
                         foreach (var id in partial)
@@ -663,13 +664,14 @@ namespace TubeStar
                 int before = _thumbIds.Count;
                 foreach (var id in page.Ids)
                 {
-                    if (!_thumbIds.Contains(id))
+                    if (!_thumbIds.Contains(id) && !_usedIds.Contains(id))
                     {
                         _thumbIds.Add(id);
                         _originOf[id] = OriginSearch;
                     }
                 }
-                _nextPageToken = _thumbIds.Count > before ? page.NextPageToken : null;
+                //Guarda a próxima página mesmo se esta veio toda filtrada (miniaturas já usadas)
+                _nextPageToken = page.NextPageToken;
                 UpdateUsage();
                 onDone(_thumbIds.Count > before);
             }, () =>
@@ -691,6 +693,37 @@ namespace TubeStar
             });
         }
 
+        //Miniaturas que algum vídeo do jogador já usa: não aparecem de novo no carrossel (excluir o vídeo libera)
+        private HashSet<string> _usedIds = new HashSet<string>();
+
+        private static HashSet<string> UsedThumbIds()
+        {
+            var used = new HashSet<string>();
+            foreach (var channel in Player.Current.Channels)
+            {
+                foreach (var video in channel.Videos)
+                    AddUsed(used, video);
+            }
+            foreach (var video in Player.Current.Videos)
+                AddUsed(used, video);
+            foreach (var task in Player.Current.TasksInProgress)
+            {
+                var shoot = task as ShootVideo;
+                if (shoot != null)
+                    AddUsed(used, shoot.Video);
+                var edit = task as EditVideo;
+                if (edit != null)
+                    AddUsed(used, edit.Video);
+            }
+            return used;
+        }
+
+        private static void AddUsed(HashSet<string> used, Video video)
+        {
+            if (video != null && !String.IsNullOrEmpty(video.YouTubeVideoId))
+                used.Add(video.YouTubeVideoId);
+        }
+
         //Cota do dia acabou (ou sem chave) e nada veio da busca: mostra miniaturas aleatórias do nicho escolhido, da biblioteca
         private bool ShowNicheFallback()
         {
@@ -698,7 +731,7 @@ namespace TubeStar
                 return false;
             if (YouTubeAPI.HasApiKey && !ThumbSearch.QuotaReached)
                 return false;
-            var ids = ThumbLibrary.RandomOfNiche(_category.Value, ThumbPageSize);
+            var ids = ThumbLibrary.RandomOfNiche(_category.Value, ThumbPageSize, _usedIds);
             if (ids.Count == 0)
                 return false;
             foreach (var id in ids)
@@ -921,7 +954,7 @@ namespace TubeStar
             else if (_thumbIds.Count > 0)
                 video.SetImageFromId(_thumbIds[0]);
             else
-                video.FetchFirstImage();
+                video.FetchFirstImage(UsedThumbIds());
 
             Settings.LastCategory = video.Category;
 

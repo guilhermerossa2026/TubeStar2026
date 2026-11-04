@@ -249,23 +249,38 @@ namespace TubeStar
                 OnImageFetched();
         }
 
+        private static string FirstUnused(List<string> ids, HashSet<string> exclude)
+        {
+            foreach (var id in ids)
+            {
+                if (exclude == null || !exclude.Contains(id))
+                    return id;
+            }
+            return null;
+        }
+
         //Miniatura automática: busca só pelo título; sem resultado, pela categoria.
         //Sem sorteio: usa o 1º resultado (ordem de relevância)
-        public void FetchFirstImage()
+        //exclude: miniaturas já usadas por outros vídeos (não repetir)
+        public void FetchFirstImage(HashSet<string> exclude = null)
         {
             //Mesmo tamanho de página do Criar vídeo (50): aproveita a memória de buscas
             ThumbSearch.Search(Name, 50, null, (page) =>
             {
-                if (page.Ids.Count > 0)
+                string first = FirstUnused(page.Ids, exclude);
+                if (first != null)
                 {
-                    SetImageFromId(page.Ids[0]);
+                    SetImageFromId(first);
                 }
                 else
                 {
                     ThumbSearch.Search(Category.GetString(), 50, null, (p) =>
                     {
-                        if (p.Ids.Count > 0)
-                            SetImageFromId(p.Ids[0]);
+                        string firstOfCategory = FirstUnused(p.Ids, exclude);
+                        if (firstOfCategory != null)
+                            SetImageFromId(firstOfCategory);
+                        else if (p.Ids.Count > 0)
+                            SetImageFromId(p.Ids[0]); //Tudo já usado: repete em vez de ficar sem miniatura
                         else
                             SetErrorImage();
                     }, () =>

@@ -477,7 +477,7 @@ namespace TubeStar
         }
 
         //Até 10 ids cujo título combina com o do jogador; mesmo nicho primeiro, depois mais palavras batendo
-        public static List<string> Match(string title, VideoCategory? niche)
+        public static List<string> Match(string title, VideoCategory? niche, HashSet<string> exclude = null)
         {
             var ids = new List<string>();
             var data = _snapshot;
@@ -490,7 +490,7 @@ namespace TubeStar
             var found = new List<KeyValuePair<int, Entry>>();
             foreach (var entry in data.Videos)
             {
-                if (entry.Words == null)
+                if (entry.Words == null || (exclude != null && exclude.Contains(entry.Id)))
                     continue;
                 int hits = 0;
                 foreach (var word in words)
@@ -527,7 +527,7 @@ namespace TubeStar
         }
 
         //Meio-acerto: até 10 ids do nicho escolhido que batem pelo menos 1 palavra do título (mais palavras primeiro)
-        public static List<string> MatchPartial(string title, VideoCategory niche)
+        public static List<string> MatchPartial(string title, VideoCategory niche, HashSet<string> exclude = null)
         {
             var ids = new List<string>();
             var data = _snapshot;
@@ -539,7 +539,7 @@ namespace TubeStar
             var found = new List<KeyValuePair<int, Entry>>();
             foreach (var entry in data.Videos)
             {
-                if (entry.Words == null || entry.Niche != nicheName)
+                if (entry.Words == null || entry.Niche != nicheName || (exclude != null && exclude.Contains(entry.Id)))
                     continue;
                 int hits = 0;
                 foreach (var word in words)
@@ -572,7 +572,7 @@ namespace TubeStar
         }
 
         //Vídeos aleatórios do nicho (usado quando a cota da busca acabou)
-        public static List<string> RandomOfNiche(VideoCategory niche, int count)
+        public static List<string> RandomOfNiche(VideoCategory niche, int count, HashSet<string> exclude = null)
         {
             var ids = new List<string>();
             var data = _snapshot;
@@ -582,7 +582,7 @@ namespace TubeStar
             string nicheName = niche.ToString();
             foreach (var entry in data.Videos)
             {
-                if (entry.Niche == nicheName)
+                if (entry.Niche == nicheName && (exclude == null || !exclude.Contains(entry.Id)))
                     ids.Add(entry.Id);
             }
 

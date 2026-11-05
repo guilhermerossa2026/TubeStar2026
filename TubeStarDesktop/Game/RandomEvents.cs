@@ -96,7 +96,7 @@ namespace TubeStar
                                 Player.Current.QuitJob = true;
                                 ShowMessage(EnglishStrings.Fired.Translate(), MessagePicture.Axe);
 
-                                if (!TrophyManager.HasTrophy(Trophy.GiveAndTake) && Player.Current.HasPromotion)
+                                if (!TrophyManager.HasTrophy(Trophy.GiveAndTake) && !Player.Current.PartTime)
                                     TrophyManager.UnlockTrophy(Trophy.GiveAndTake);
                             }
                         }
@@ -170,11 +170,7 @@ namespace TubeStar
                         break;
                     case RandomEvent.Promotion:
                         {
-                            if (!Player.Current.QuitJob && !Player.Current.HasPromotion)
-                            {
-                                Player.Current.HasPromotion = true;
-                                ShowMessage(EnglishStrings.Promoted.Translate(), MessagePicture.Work);
-                            }
+                            //Promoção removida na etapa 6b: não faz nada (valor do enum mantido)
                         }
                         break;
                     case RandomEvent.BeautyContest:

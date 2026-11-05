@@ -526,7 +526,35 @@
   </CustomText>
   <CustomText>
     <Id>QuitJobText</Id>
-    <Text>Ao confirmar, estará deixando seu trabalho. Tem certeza?</Text>
+    <Text>Ao confirmar, você deixará seu trabalho de vez e não poderá voltar. Tem certeza?</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PartTimeButton</Id>
+    <Text>Meio período</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FullTimeButton</Id>
+    <Text>Período integral</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ShiftChangeWait</Id>
+    <Text>Pode trocar de novo em {0} dia(s)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChangeShiftHeader</Id>
+    <Text>Trocar turno de trabalho</Text>
+  </CustomText>
+  <CustomText>
+    <Id>PartTimeText</Id>
+    <Text>Passar para meio período?
+Você trabalhará 4 horas por dia e ganhará $50 por dia (em vez de 9 horas e $100).
+Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FullTimeText</Id>
+    <Text>Passar para período integral?
+Você trabalhará 9 horas por dia e ganhará $100 por dia (em vez de 4 horas e $50).
+Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
   </CustomText>
   <CustomText>
     <Id>RiseUp</Id>

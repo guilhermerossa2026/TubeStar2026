@@ -37,6 +37,10 @@ namespace TubeStar
         public bool QuitJob { get; set; }
         public bool HasPromotion { get; set; }
         public bool Overtime { get; set; }
+        //Meio período: 4h e $50 por dia (integral: 9h e $100)
+        public bool PartTime { get; set; }
+        //Dia (Iterations) da última troca de turno; só pode trocar de novo após 7 dias
+        public int LastShiftChangeDay { get; set; }
 
         public List<Channel> Channels { get; set; }
         public List<Task> TasksInProgress { get; set; }
@@ -141,6 +145,8 @@ namespace TubeStar
             CostOfLivingExtra = 0;
             Overtime = false;
             HasPromotion = false;
+            PartTime = false;
+            LastShiftChangeDay = -999;
             LoanPayOff = 0;
             LastDay = null;
             CurrentWeek = null;

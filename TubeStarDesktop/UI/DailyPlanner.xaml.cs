@@ -260,6 +260,21 @@ namespace TubeStar
             });
         }
 
+        private void AskChangeShift()
+        {
+            bool toPartTime = !Player.Current.PartTime;
+            string text = toPartTime ? EnglishStrings.PartTimeText.Translate() : EnglishStrings.FullTimeText.Translate();
+            CustomMessageBox.ShowDialog(EnglishStrings.ChangeShiftHeader.Translate(), text, MessagePicture.Work, (result) =>
+            {
+                if (result == true)
+                {
+                    Player.Current.PartTime = toPartTime;
+                    Player.Current.LastShiftChangeDay = Player.Current.Iterations;
+                    Update();
+                }
+            });
+        }
+
         private void AskRemoveTask(Task task)
         {
             bool isStudy = task is Study;
@@ -545,6 +560,17 @@ namespace TubeStar
                 var quit = NewSmallButton(EnglishStrings.QuitJobHeader.Translate());
                 quit.Click += (s, ev) => AskQuitJob();
                 buttons.Children.Add(quit);
+
+                var shift = NewSmallButton(Player.Current.PartTime ? EnglishStrings.FullTimeButton.Translate() : EnglishStrings.PartTimeButton.Translate());
+                int daysLeft = 7 - (Player.Current.Iterations - Player.Current.LastShiftChangeDay);
+                if (daysLeft > 0)
+                {
+                    shift.IsEnabled = false;
+                    ToolTipService.SetShowOnDisabled(shift, true);
+                    shift.ToolTip = String.Format(EnglishStrings.ShiftChangeWait.Translate(), daysLeft);
+                }
+                shift.Click += (s, ev) => AskChangeShift();
+                buttons.Children.Add(shift);
             }
             else
             {
@@ -655,9 +681,9 @@ namespace TubeStar
             _moneyAtStartOfDay = Player.Current.Money;
             var today = new PeriodStats();
 
-            Player.Current.Money -= 50; //Living Expenses
+            Player.Current.Money -= 80; //Living Expenses
             Player.Current.Money -= Math.Max(0, Player.Current.CostOfLivingExtra);
-            today.Spent += 50 + Math.Max(0, Player.Current.CostOfLivingExtra);
+            today.Spent += 80 +Math.Max(0, Player.Current.CostOfLivingExtra);
 
             if(StoreItems.Current.Loan.Purchased)
             {
@@ -674,20 +700,15 @@ namespace TubeStar
             Appointments = new List<Task>();
             if (!Player.Current.QuitJob)
             {
-                Player.Current.Money += 100;
-                today.Earned += 100;
-                today.Salary += 100;
+                bool partTime = Player.Current.PartTime;
+                int salary = partTime ? 50 : 100;
+                int shiftHours = partTime ? 4 : 9;
+                Player.Current.Money += salary;
+                today.Earned += salary;
+                today.Salary += salary;
                 var job = new Job();
-                for (int i = 0; i <= job.HoursToComplete; i++)
+                for (int i = 0; i < shiftHours; i++)
                 {
-                    AddAppointment(job);
-                }
-                if (Player.Current.HasPromotion)
-                {
-                    Player.Current.Money += 50;
-                    today.Earned += 50;
-                    today.Salary += 50;
-                    AddAppointment(job);
                     AddAppointment(job);
                 }
                 if (!Player.Current.QuitJob && Player.Current.Overtime)

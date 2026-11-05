@@ -401,8 +401,26 @@ namespace TubeStar
         [Description("Quit your job")]
         QuitJobHeader,
 
-        [Description("Taking this action will quit your job. \nAre you sure?")]
+        [Description("Taking this action will quit your job for good. You will not be able to get it back.\nAre you sure?")]
         QuitJobText,
+
+        [Description("Part-time")]
+        PartTimeButton,
+
+        [Description("Full-time")]
+        FullTimeButton,
+
+        [Description("You can change again in {0} day(s)")]
+        ShiftChangeWait,
+
+        [Description("Change work shift")]
+        ChangeShiftHeader,
+
+        [Description("Switch to part-time?\nYou will work 4 hours a day and earn $50 a day (instead of 9 hours and $100).\nIt starts tomorrow, and you can only change again after 7 days.")]
+        PartTimeText,
+
+        [Description("Switch to full-time?\nYou will work 9 hours a day and earn $100 a day (instead of 4 hours and $50).\nIt starts tomorrow, and you can only change again after 7 days.")]
+        FullTimeText,
 
         [Description("Rise up!")]
         RiseUp,

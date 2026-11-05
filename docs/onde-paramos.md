@@ -1,6 +1,6 @@
 # Onde paramos
 
-*Atualizado em 04/11/2026. Use este arquivo para retomar o trabalho em outra máquina ou sessão.*
+*Atualizado em 05/11/2026. Use este arquivo para retomar o trabalho em outra máquina ou sessão.*
 
 ## Decisões gerais
 - Todo o plano está em [roadmap.md](roadmap.md). Cada ideia é discutida a fundo, uma por vez, e a versão final é apresentada ao dono antes de qualquer código.
@@ -61,6 +61,7 @@ Decisões do dono para esta etapa:
    - Pasta `../Jogar_TubeStar` apagada; o dono joga pelo `bin\Release`.
    - Depois (04/11/2026): "Buscar outras" também usa a biblioteca antes da API; botão "Buscar mais (API)"; Shorts fora (biblioteca usa a playlist `UULF` do canal + filtro "#short/#shorts" no título, também na busca); etiqueta "Da busca (memória, não gastou)"; título que é só nome de nicho ("Tecnologia #1", "Games #3", "Lifestyle") mostra miniaturas aleatórias daquele nicho sem gastar busca (o nicho do título vence o nicho escolhido).
    - Fim do dia 04/11/2026: biblioteca lê playlists (referência "PL..." ou link com "list=" no `thumb_channels.txt`); 7 playlists de Minecraft do EduKof; canais corrigidos (Authentic Games, Cadres, Robin Hood Gamer, Skorpion); falta o @ do AM3NIC. Acerto e "parecida" mostram até 50 miniaturas embaralhadas.
+   - **Feito em 05/11/2026: views mais realistas (3 entregas, commits c2834db, 4be6035, b0cacb1).** Alcance pela nota e sorte do vídeo (flop/normal/bom/viral, `Game/VideoLuck.cs`); empurrão para canais pequenos (80 views/dia nos 3 primeiros dias, some aos 2000 inscritos); impulso do canal (`Channel.Momentum`, 0,7–1,4, sobe com vídeos bons e cai parado); perda suave de inscritos (vídeo fraco até 0,5%, espalhada; canal parado >14 dias perde 0,05%/dia, teto 5%; suspenso não perde; frações acumuladas); avisos no "Resumo de ontem" (viral, flop, indo bem, inscritos perdidos; só vídeos com até 3 dias). Antiga `CheckUnsubscriptions` removida. Pendente pequeno: avisos de vídeo não reaparecem ao reabrir o jogo.
    - **Próxima conversa (o dono vai retomar): discutir a 6a.** Levar as 4 decisões abaixo e as sugestões da estratégia de anúncios anotadas no `roadmap.md` (item 6a).
    - **Próximos, escolher com o dono:**
    - **Economia 6a (RPM):** antes de programar, o dono decide 4 pontos: (1) Finanças paga 4× Infantil, compensar com mais views nos nichos de RPM baixo?; (2) conferir se "Promover vídeo" ainda compensa com ganhos menores; (3) testar 6a e 6b em sequência antes da 6c; (4) aviso "temporada de anúncios" no Calendário (opcional).

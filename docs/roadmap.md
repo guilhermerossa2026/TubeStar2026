@@ -44,7 +44,11 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
   - **6b Emprego só paga as contas: feita em 05/11/2026** (ver changelog).
   - **6c Loja mais cara: feita em 05/11/2026** (vale só o maior nível; ver changelog).
   - **6d Imposto semanal: feito em 05/11/2026** (progressivo sobre o lucro do canal, dívida fiscal, Advogado Fiscal; ver changelog).
-  - **6e Investimentos**: discutir quando chegar.
+  - **6e Investimentos (decidido em 05/11/2026)**: item novo "Finanças" no menu (abaixo da Loja; o "Principal" continua reservado ao painel de visão geral do item 8). Tela com abas: agora só **Mercado** funciona; as outras mostram "Em breve" (Colecionáveis, Cripto, Negócios, Impostos).
+    - Poupança: deposita e saca quando quiser, ~0,2%/semana, sem risco. Ações/fundo: média ~0,5%/semana, de −5% a +6%, resgate pelo valor do dia. Imóvel: aluguel ~0,4%/semana + valorização lenta; vender leva 2-4 semanas.
+    - Mínimo $1.000. Imposto 15% sobre o lucro, cobrado no resgate. Saldo, rendimento e gráfico na tela; linha "Investimentos: +$X" no resumo da semana.
+    - Próximo: designer desenha a tela (prévia para o dono aprovar), depois plano do tech-leader.
+  - **6f Ativos colecionáveis** (aba da tela Finanças, depois da 6e): vinhos raros, carros clássicos, moedas históricas, cards e quadrinhos. Preços oscilam e tendem a valorizar. Cards "crus" vão para certificadoras fictícias (sem usar PSA/Beckett/CGC), que dão nota 1-10 após alguns dias e taxa; nota 10 vale até 100× a nota 7. Ideia: vinho valoriza com o tempo, carro tem manutenção. Detalhar quando chegar.
 - Dificuldade: Média. Depende de: 3, 4.
 
 **7. Dificuldade**: escolhida no início; rever o que foi registrado no item 0. Fácil. Depende de: 6.
@@ -85,7 +89,10 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - **Iscas no vídeo (ex-5b)**: título chamativo, thumbnail com rosto, tendência, participação especial, sorteio; 1 isca, 2ª com roteiro/roteirista. Adiada em 02/11/2026: fica solta sem Tendências (Eventos 2.0) e Collabs (item 11).
 - **Personalidade dos tipos de vídeo** (sobra do item 5, feito em 03/11/2026): ex.: Tutorial dura mais, React pico rápido, Documentário nota maior. Rever depois de jogar com os tipos.
 - **Título aleatório em Criar vídeo** (ideia do dono, 03/11/2026): gerar título pelo tipo de vídeo e nicho, em português. Condição: nunca repetir. Lembrar que a miniatura é buscada pelo título.
-- **Ecossistema fiscal** (ideia do dono, 05/11/2026): banco central com tela de impostos (histórico pago, quando vence, dívidas fiscais), fiscalização. A 6d já guarda o total pago.
+- **Ecossistema fiscal** (ideia do dono, 05/11/2026): banco central com tela de impostos (histórico pago, quando vence, dívidas fiscais), fiscalização. A 6d já guarda o total pago. Vira a aba "Impostos" da tela Finanças.
+- **Finanças, abas futuras** (ideias do dono, 05/11/2026): **cripto** (vai ser feito), investir em negócios, comprar participações em empresas, projetos imobiliários, criar indústrias (ligar aos itens 15 e 16).
+- **Eventos de mercado** (para os Eventos 2.0): crise na bolsa, bairro valorizou etc.; pensar com calma como notificar e como funciona.
+- **Meta de monetização**: feita em 05/11/2026 (5k inscritos + 160k views, análise 3-7 dias).
 - **Reformulação completa da Loja** (pedido do dono, 03/11/2026): mais opções, fotos, ganhos e valores revistos. Depois da Economia.
 - **Instagram** e **Kick**: futuro, talvez.
 - **Caminho C (estúdio ilustrado)**: descartado, falta arte.

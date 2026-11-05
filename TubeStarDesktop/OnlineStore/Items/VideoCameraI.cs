@@ -22,7 +22,7 @@ namespace TubeStar
 
         public override int Cost
         {
-            get { return 500; }
+            get { return 600; }
         }
 
         public override int SkillModifier

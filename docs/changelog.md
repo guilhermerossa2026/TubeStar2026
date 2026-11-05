@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-11-05
+- Etapa 6c: loja mais cara. Câmera e Edição com 5 níveis ($600 a $50.000; +4/+10/+16/+22/+30), vale só o maior nível e a compra segue a ordem; Consultor $10 mil; Advogado $6 mil.
+- Troféus desligados (`TrophyManager.Enabled = false`); código mantido para religar se quiser.
 - Etapa 6b (parte 2): "Gasto" do resumo detalhado (custo de vida, vídeos, promoção de vídeo, empréstimo); aviso de custo de vida mostra o valor ("subiu $20/dia, agora $100/dia"); evento de promoção do emprego saiu do sorteio.
 - Etapa 6b (parte 1): meio período (4h por $50) com botão no cartão do Emprego, troca 1×/semana valendo no dia seguinte; promoção do emprego removida (integral sempre $100); custo de vida base $80/dia; sair do emprego avisa que é definitivo; troféu GiveAndTake = demitido em período integral.
 - Etapa 6a: o canal paga por RPM do nicho (Games ~$25/mil views, Finanças $60, Infantil $15), com época do ano, variação semanal, anúncios, qualidade e inscritos (`Game/RpmCalculator.cs`). Era ~$43/mil e subia sem limite.

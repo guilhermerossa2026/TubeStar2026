@@ -563,6 +563,42 @@ namespace TubeStar
         [Description("The ultimate in video editing software! 20 different star swipes to choose from!")]
         EditingSoftwareIIStoreItemDescription,
 
+        [Description("Cinema Camera Pro 4K")]
+        VideoCameraIIIStoreItem,
+
+        [Description("Shoots like a real film set. Your videos will look expensive.")]
+        VideoCameraIIIStoreItemDescription,
+
+        [Description("Studio Cinema Rig 6K")]
+        VideoCameraIVStoreItem,
+
+        [Description("A full studio rig with lenses, lights and a crew-sized price tag.")]
+        VideoCameraIVStoreItemDescription,
+
+        [Description("Hollywood Cinema Rig 8K")]
+        VideoCameraVStoreItem,
+
+        [Description("The same camera the blockbusters use. Overkill? Never.")]
+        VideoCameraVStoreItemDescription,
+
+        [Description("Cut-Master Studio Pro")]
+        EditingSoftwareIIIStoreItem,
+
+        [Description("Pro-grade timeline, color grading and sound mixing.")]
+        EditingSoftwareIIIStoreItemDescription,
+
+        [Description("Hollywood Suite Ultra")]
+        EditingSoftwareIVStoreItem,
+
+        [Description("The suite real editors fight over. Effects for everything.")]
+        EditingSoftwareIVStoreItemDescription,
+
+        [Description("Blockbuster Studio Infinite")]
+        EditingSoftwareVStoreItem,
+
+        [Description("Unlimited tracks, unlimited effects, almost unlimited price.")]
+        EditingSoftwareVStoreItemDescription,
+
         [Description("Wright & Wrong Attorneys")]
         LawyerStoreItem,
 
@@ -613,6 +649,9 @@ namespace TubeStar
 
         [Description("Buy for {0}?")]
         BuyItem,
+
+        [Description("Requires: {0}")]
+        RequiresItem,
 
         [Description("Next")]
         Next,

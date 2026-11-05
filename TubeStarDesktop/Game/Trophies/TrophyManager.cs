@@ -30,6 +30,9 @@ namespace TubeStar
 
     public class TrophyManager
     {
+        // Troféus desligados: mude para true para reativar
+        public const bool Enabled = false;
+
         private static List<Trophy> _achievedTrophies;
 
         static TrophyManager()
@@ -44,7 +47,7 @@ namespace TubeStar
 
         public static void UnlockTrophy(Trophy trophy)
         {
-            if (HasTrophy(trophy))
+            if (!Enabled || HasTrophy(trophy))
                 return;
 
             _achievedTrophies.Add(trophy);

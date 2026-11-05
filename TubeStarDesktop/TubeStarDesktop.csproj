@@ -99,6 +99,12 @@
     <Compile Include="OnlineStore\Items\EditingSoftwareII.cs" />
     <Compile Include="OnlineStore\Items\EditingSoftwareI.cs" />
     <Compile Include="OnlineStore\Items\VideoCameraII.cs" />
+    <Compile Include="OnlineStore\Items\VideoCameraIII.cs" />
+    <Compile Include="OnlineStore\Items\VideoCameraIV.cs" />
+    <Compile Include="OnlineStore\Items\VideoCameraV.cs" />
+    <Compile Include="OnlineStore\Items\EditingSoftwareIII.cs" />
+    <Compile Include="OnlineStore\Items\EditingSoftwareIV.cs" />
+    <Compile Include="OnlineStore\Items\EditingSoftwareV.cs" />
     <Compile Include="OnlineStore\Items\VideoCameraI.cs" />
     <Compile Include="OnlineStore\StoreItems.cs" />
     <Compile Include="OnlineStore\StoreItem.cs" />

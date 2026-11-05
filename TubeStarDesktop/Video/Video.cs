@@ -144,7 +144,7 @@ namespace TubeStar
                 StoreItems.Current.All.ForEach(s =>
                 {
                     if (s.Purchased && s.SkillModifierType == SkillModifierType.Shooting)
-                        itemSkill += s.SkillModifier;
+                        itemSkill = Math.Max(itemSkill, s.SkillModifier); // só vale o maior nível comprado
                 });
 
                 ShootQuality += RandomHelpers.RandomInt(Player.Current.ShootingSkill - schoolSkill);
@@ -185,7 +185,7 @@ namespace TubeStar
                     StoreItems.Current.All.ForEach(s =>
                     {
                         if (s.Purchased && s.SkillModifierType == SkillModifierType.PostProduction)
-                            itemSkill += s.SkillModifier;
+                            itemSkill = Math.Max(itemSkill, s.SkillModifier); // só vale o maior nível comprado
                     });
                     EditQuality += RandomHelpers.RandomInt(Player.Current.PostProductionSkill - schoolSkill);
                     EditQuality += RandomHelpers.RandomInt(schoolSkill);

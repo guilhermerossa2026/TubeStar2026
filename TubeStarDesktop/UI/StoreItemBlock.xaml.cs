@@ -31,6 +31,11 @@ namespace TubeStar
                     btnBuy.Visibility = _storeItem.Purchased ? Visibility.Collapsed : Visibility.Visible;
                     pillPurchased.Visibility = _storeItem.Purchased ? Visibility.Visible : Visibility.Collapsed;
                     LayoutRoot.Cursor = _storeItem.Purchased ? Cursors.Arrow : Cursors.Hand;
+                    var missing = GetMissingRequirement();
+                    btnBuy.IsEnabled = missing == null;
+                    string tip = missing == null ? null : String.Format(EnglishStrings.RequiresItem.Translate(), missing.Name);
+                    btnBuy.ToolTip = tip;
+                    LayoutRoot.ToolTip = tip;
                     imgItem.Source = new BitmapImage(new Uri(String.Format("../Resources/StoreItems/{0}.jpg", _storeItem.ImageName), UriKind.Relative));
                 }
             }
@@ -42,6 +47,13 @@ namespace TubeStar
             btnBuy.Content = EnglishStrings.Buy.Translate();
             txtPurchased.Text = EnglishStrings.Purchased.Translate();
             StoreItem = item;
+        }
+
+        // Item anterior da linha que ainda não foi comprado (ou null se pode comprar)
+        private StoreItem GetMissingRequirement()
+        {
+            var required = StoreItems.Current.GetRequiredItem(_storeItem);
+            return (required != null && !required.Purchased) ? required : null;
         }
 
         private void btnBuy_Click(object sender, RoutedEventArgs e)
@@ -56,7 +68,7 @@ namespace TubeStar
 
         private void TryBuy()
         {
-            if (_storeItem == null || _storeItem.Purchased)
+            if (_storeItem == null || _storeItem.Purchased || GetMissingRequirement() != null)
                 return;
 
             this.PlayAnimation(() =>

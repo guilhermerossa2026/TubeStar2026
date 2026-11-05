@@ -745,6 +745,54 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
     <Text>O melhor dos softwares de edição de vídeo! 20 estrelas diferentes para você escolher!</Text>
   </CustomText>
   <CustomText>
+    <Id>VideoCameraIIIStoreItem</Id>
+    <Text>Câmera de Cinema Pro 4K</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCameraIIIStoreItemDescription</Id>
+    <Text>Filma como um set de cinema de verdade. Seus vídeos vão parecer caros.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCameraIVStoreItem</Id>
+    <Text>Estúdio de Cinema 6K</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCameraIVStoreItemDescription</Id>
+    <Text>Um equipamento de estúdio completo, com lentes, luzes e preço de equipe inteira.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCameraVStoreItem</Id>
+    <Text>Câmera de Hollywood 8K</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoCameraVStoreItemDescription</Id>
+    <Text>A mesma câmera dos blockbusters. Exagero? Nunca.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareIIIStoreItem</Id>
+    <Text>Cut-Master Studio Pro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareIIIStoreItemDescription</Id>
+    <Text>Linha do tempo profissional, correção de cor e mixagem de som.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareIVStoreItem</Id>
+    <Text>Hollywood Suite Ultra</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareIVStoreItemDescription</Id>
+    <Text>A suíte pela qual editores de verdade brigam. Efeitos para tudo.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareVStoreItem</Id>
+    <Text>Blockbuster Studio Infinite</Text>
+  </CustomText>
+  <CustomText>
+    <Id>EditingSoftwareVStoreItemDescription</Id>
+    <Text>Trilhas ilimitadas, efeitos ilimitados e preço quase ilimitado.</Text>
+  </CustomText>
+  <CustomText>
     <Id>LawyerStoreItem</Id>
     <Text>Wright and Wrong Advocacia</Text>
   </CustomText>
@@ -811,6 +859,10 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
   <CustomText>
     <Id>BuyItem</Id>
     <Text>Comprar por {0}?</Text>
+  </CustomText>
+  <CustomText>
+    <Id>RequiresItem</Id>
+    <Text>Requer: {0}</Text>
   </CustomText>
   <CustomText>
     <Id>Next</Id>

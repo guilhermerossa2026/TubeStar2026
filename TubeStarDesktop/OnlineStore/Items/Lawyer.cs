@@ -22,7 +22,7 @@ namespace TubeStar
 
         public override int Cost
         {
-            get { return 2000; }
+            get { return 6000; }
         }
 
         public double AdditionalCost

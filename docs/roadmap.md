@@ -42,8 +42,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - **Plano aprovado em 03/11/2026** (substitui a proposta 6a anterior). Uma etapa por vez, com teste do dono em cada uma:
   - **6a RPM por nicho e época: feita em 05/11/2026** (ver changelog e decisões).
   - **6b Emprego só paga as contas: feita em 05/11/2026** (ver changelog).
-- **Pendência (05/11/2026):** o dono nunca recebeu troféus em anos de jogo; investigar se `Game/Trophies/TrophyManager.cs` funciona e onde aparecem (depois da 6b).
-  - **6c Loja mais cara**: Câmera e Edição com 5 níveis ($600, $2.500, $8.000, $20.000, $50.000); Consultor $10 mil; Advogado $6 mil. Saves antigos mantêm o que compraram.
+  - **6c Loja mais cara: feita em 05/11/2026** (vale só o maior nível; ver changelog).
   - **6d Imposto semanal**: 15% sobre o lucro da semana (salário + canal), no resumo da semana; semana com prejuízo não paga.
   - **6e Investimentos**: discutir quando chegar.
 - Dificuldade: Média. Depende de: 3, 4.

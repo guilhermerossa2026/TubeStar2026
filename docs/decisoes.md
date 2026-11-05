@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-05 — Equipamento: vale só o melhor nível
+**Decisão:** Câmera/Edição contam só o maior nível comprado e exigem o anterior. Troféus desligados.
+**Motivo:** somar os 5 níveis levava a nota média a 8,7 (66% dos vídeos ≥9); com o maior nível fica ~5,3. Alternativa descartada: manter soma com bônus menores. Troféus nunca funcionaram para o dono e não agregam agora.
+
 ## 2026-11-05 — RPM por nicho, compensado com views
 **Decisão:** RPM fixo por nicho (Infantil 15 a Finanças 60) e nichos baratos ganham views a mais (expoente 0,35), sem inscritos a mais. Promover vídeo continua sem lucro: serve para crescer.
 **Motivo:** realismo do YouTube; sem compensação ninguém escolheria nichos baratos. A quantidade de anúncios não faz perder inscritos (perda vem de nota baixa e canal parado); regra nova só se o dono pedir.

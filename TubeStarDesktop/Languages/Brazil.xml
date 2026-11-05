@@ -1154,6 +1154,26 @@
     <Text>Nenhum dia jogado ainda.</Text>
   </CustomText>
   <CustomText>
+    <Id>AlertVideoViral</Id>
+    <Text>Seu vídeo "{0}" viralizou! O algoritmo está empurrando ele.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertVideoFlop</Id>
+    <Text>"{0}" não pegou: o algoritmo quase não mostrou.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertVideoGood</Id>
+    <Text>"{0}" está indo acima do normal.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertUnsubsWeak</Id>
+    <Text>Você perdeu {0} inscritos por vídeos fracos.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertUnsubsIdle</Id>
+    <Text>Você perdeu {0} inscritos por ficar sem postar.</Text>
+  </CustomText>
+  <CustomText>
     <Id>SummaryEarned</Id>
     <Text>Ganho</Text>
   </CustomText>

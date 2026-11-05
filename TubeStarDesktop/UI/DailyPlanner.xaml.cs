@@ -160,9 +160,13 @@ namespace TubeStar
             PendingSummaryTitle = PendingSummary.Title;
         }
 
+        //Avisos de sorte dos vídeos do último dia (viral, flop, bom)
+        private readonly List<string> _videoAlerts = new List<string>();
+
         private void UpdateSummary()
         {
             summaryGrid.Children.Clear();
+            summaryAlerts.Children.Clear();
             var day = Player.Current.LastDay;
             txtNoSummary.Visibility = day == null ? Visibility.Visible : Visibility.Collapsed;
             summaryGrid.Visibility = day == null ? Visibility.Collapsed : Visibility.Visible;
@@ -171,6 +175,14 @@ namespace TubeStar
 
             foreach (var kpi in CreateSummaryKpis(day))
                 summaryGrid.Children.Add(kpi);
+
+            var alerts = new List<string>(_videoAlerts);
+            if (day.UnsubsWeakVideos > 0)
+                alerts.Add(String.Format(EnglishStrings.AlertUnsubsWeak.Translate(), day.UnsubsWeakVideos.ToString("N0")));
+            if (day.UnsubsIdle > 0)
+                alerts.Add(String.Format(EnglishStrings.AlertUnsubsIdle.Translate(), day.UnsubsIdle.ToString("N0")));
+            foreach (var alert in alerts)
+                summaryAlerts.Children.Add(new TextBlock { Text = alert, Style = (Style)Application.Current.FindResource("MutedTextStyle"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 2, 0, 0) });
         }
 
         //KPIs comuns ao painel do dia e às janelas de semana/ano
@@ -698,6 +710,7 @@ namespace TubeStar
         private void RunIterations(PeriodStats today)
         {
             bool gameOver = false;
+            _videoAlerts.Clear();
             try
             {
                 foreach (var channel in Player.Current.Channels)
@@ -737,6 +750,22 @@ namespace TubeStar
                             channelToday.Views += newViews;
                             channelToday.AddVideoViews(video.Name, newViews);
                             channelToday.UnsubsWeakVideos += Math.Max(0, video.UnsubsTaken - unsubsTakenBefore);
+
+                            //Avisos de sorte do vídeo (só do jogador), depois do 1º dia, quando já há views
+                            if (!channel.IsRivalChannel && !video.LuckAnnounced && video.Iterations >= 1 && video.Views > 0)
+                            {
+                                //Vídeos com mais de 3 dias (saves antigos) são marcados em silêncio
+                                if (video.Iterations > 3)
+                                { }
+                                else if (video.LuckTier == VideoLuck.TierViral)
+                                    _videoAlerts.Add(String.Format(EnglishStrings.AlertVideoViral.Translate(), video.Name));
+                                else if (video.LuckTier == VideoLuck.TierFlop)
+                                    _videoAlerts.Add(String.Format(EnglishStrings.AlertVideoFlop.Translate(), video.Name));
+                                else if (video.LuckTier == VideoLuck.TierGood)
+                                    _videoAlerts.Add(String.Format(EnglishStrings.AlertVideoGood.Translate(), video.Name));
+                                if (video.LuckTier >= VideoLuck.TierFlop)
+                                    video.LuckAnnounced = true;
+                            }
                         }
 
                         //Momento e canal parado (só canais do jogador com vídeos)

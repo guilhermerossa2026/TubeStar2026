@@ -17,6 +17,7 @@
                         <TextBlock x:Name="txtSummaryTitle" Text="Yesterday's summary" FontWeight="Bold" FontSize="14" />
                         <TextBlock x:Name="txtNoSummary" Text="No day played yet." Style="{StaticResource MutedTextStyle}" Margin="0,8,0,0" />
                         <UniformGrid x:Name="summaryGrid" Columns="7" />
+                        <StackPanel x:Name="summaryAlerts" Margin="0,8,0,0" />
                     </StackPanel>
                 </Border>
 

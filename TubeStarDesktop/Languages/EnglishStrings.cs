@@ -916,6 +916,21 @@ namespace TubeStar
         [Description("No day played yet.")]
         SummaryNoDayYet,
 
+        [Description("Your video \"{0}\" went viral! The algorithm is pushing it.")]
+        AlertVideoViral,
+
+        [Description("\"{0}\" didn't catch on: the algorithm barely showed it.")]
+        AlertVideoFlop,
+
+        [Description("\"{0}\" is doing better than usual.")]
+        AlertVideoGood,
+
+        [Description("You lost {0} subscribers because of weak videos.")]
+        AlertUnsubsWeak,
+
+        [Description("You lost {0} subscribers for not posting.")]
+        AlertUnsubsIdle,
+
         [Description("Earned")]
         SummaryEarned,
 

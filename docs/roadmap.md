@@ -43,7 +43,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
   - **6a RPM por nicho e época: feita em 05/11/2026** (ver changelog e decisões).
   - **6b Emprego só paga as contas: feita em 05/11/2026** (ver changelog).
   - **6c Loja mais cara: feita em 05/11/2026** (vale só o maior nível; ver changelog).
-  - **6d Imposto semanal**: 15% sobre o lucro da semana (salário + canal), no resumo da semana; semana com prejuízo não paga.
+  - **6d Imposto semanal: feito em 05/11/2026** (progressivo sobre o lucro do canal, dívida fiscal, Advogado Fiscal; ver changelog).
   - **6e Investimentos**: discutir quando chegar.
 - Dificuldade: Média. Depende de: 3, 4.
 

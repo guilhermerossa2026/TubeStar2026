@@ -165,6 +165,17 @@ namespace TubeStar
             ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, organicViews, false);
             ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, payedViews, true);
 
+            //Desinscrição suave do vídeo (planejada ao postar)
+            if (!channel.IsRivalChannel)
+            {
+                int step = VideoLuck.UnsubsStep(video.UnsubsPlanned, video.UnsubsTaken);
+                if (step > 0)
+                {
+                    video.UnsubsTaken += step;
+                    channel.Subscribers = Math.Max(Math.Min(channel.Subscribers, channel.MinimumSubsribers), channel.Subscribers - step);
+                }
+            }
+
             if (channel.Subscribers < channel.MinimumSubsribers)
                 channel.Subscribers = channel.MinimumSubsribers;
         }
@@ -256,24 +267,6 @@ namespace TubeStar
                     ShareVideo(video, dislikes, pInterest);
                 }
             }
-
-            //Chance of unsubscribe because of dislike or disinterest in category
-            CheckUnsubscriptions(channel, video, dislikes + (numViews - interested), payedView);
-        }
-
-        //numChecks = quantas views passariam pela checagem de desinscrição
-        private static void CheckUnsubscriptions(Channel channel, Video video, int numChecks, bool payedView)
-        {
-            if (numChecks <= 0) return;
-            if (!channel.IsRivalChannel && !payedView)
-            {
-                int chance = (int)Math.Min(100.0, channel.Subscribers * 100.0 / Math.Max(1, video.Views));
-                if (!Player.Current.ChallengeMode) chance = chance / 2;
-                double p = ChanceProb(25) * UnsubscriptionProb(channel) * ChanceProb(chance);
-                int unsubs = RandomHelpers.Binomial(numChecks, p);
-                if (unsubs > 0)
-                    channel.Subscribers = Math.Max(0, channel.Subscribers - unsubs);
-            }
         }
 
         //numViews = quantas views tentam compartilhar
@@ -351,18 +344,6 @@ namespace TubeStar
             if (!video.IsInNiche(channel))
                 p = Math.Min(1.0, p * 1.3);
             return p;
-        }
-
-        private static double UnsubscriptionProb(Channel channel)
-        {
-            switch (channel.Advertising)
-            {
-                case (AdvertisingStrategy.Low): return ChanceProb(10);
-                case (AdvertisingStrategy.Normal): return ChanceProb(20);
-                case (AdvertisingStrategy.High): return ChanceProb(40);
-                case (AdvertisingStrategy.Aggressive): return ChanceProb(60);
-                default: throw new NotSupportedException();
-            }
         }
 
         private static double ViewIncome(Channel channel, Video video, bool payedView, int numViews)

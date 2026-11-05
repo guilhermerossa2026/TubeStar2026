@@ -718,6 +718,7 @@ namespace TubeStar
                             double incomeBefore = dailyIncome;
                             double expensesBefore = dailyExpenses;
                             int videoSubscribersBefore = channel.Subscribers;
+                            int unsubsTakenBefore = video.UnsubsTaken;
                             VideoViewer.Iteration(channel, video, ref dailyIncome, ref dailyExpenses);
                             //Crowdfunding entra direto no dinheiro, fora do dailyIncome
                             double crowdfunding = Math.Max(0, Player.Current.Money - moneyBefore);
@@ -735,6 +736,24 @@ namespace TubeStar
                             long newViews = Math.Max(0, video.Views - viewsBefore);
                             channelToday.Views += newViews;
                             channelToday.AddVideoViews(video.Name, newViews);
+                            channelToday.UnsubsWeakVideos += Math.Max(0, video.UnsubsTaken - unsubsTakenBefore);
+                        }
+
+                        //Momento e canal parado (só canais do jogador com vídeos)
+                        if (!channel.IsRivalChannel && !channel.IsSuspended && channel.Videos.Count > 0)
+                        {
+                            int daysIdle = channel.Videos.Min(v => v.Iterations);
+                            channel.Momentum = VideoLuck.MomentumDaily(channel.Momentum, daysIdle);
+                            double idleFraction = channel.IdleUnsubsFraction;
+                            int idleLoss = VideoLuck.IdleUnsubs(daysIdle, channel.Subscribers, channel.IdleUnsubsTaken, ref idleFraction);
+                            channel.IdleUnsubsFraction = idleFraction;
+                            idleLoss = Math.Min(idleLoss, Math.Max(0, channel.Subscribers - channel.MinimumSubsribers));
+                            if (idleLoss > 0)
+                            {
+                                channel.Subscribers -= idleLoss;
+                                channel.IdleUnsubsTaken += idleLoss;
+                                channelToday.UnsubsIdle += idleLoss;
+                            }
                         }
 
                         //Channel stats
@@ -749,6 +768,8 @@ namespace TubeStar
                         channelToday.NewSubscribers = channel.Subscribers - subscribersBefore;
                         today.Views += channelToday.Views;
                         today.NewSubscribers += channelToday.NewSubscribers;
+                        today.UnsubsWeakVideos += channelToday.UnsubsWeakVideos;
+                        today.UnsubsIdle += channelToday.UnsubsIdle;
                         today.Earned += dailyIncome;
                         today.Spent += dailyExpenses;
                     }

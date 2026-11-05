@@ -16,6 +16,9 @@ namespace TubeStar
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
         public int VideosPosted { get; set; }
+        //Inscritos perdidos no período por motivo (vídeos fracos / canal parado)
+        public long UnsubsWeakVideos { get; set; }
+        public long UnsubsIdle { get; set; }
         public int TasksCompleted { get; set; }
         public List<ChannelPeriodStats> Channels { get; set; }
 
@@ -58,6 +61,8 @@ namespace TubeStar
             Views += other.Views;
             NewSubscribers += other.NewSubscribers;
             VideosPosted += other.VideosPosted;
+            UnsubsWeakVideos += other.UnsubsWeakVideos;
+            UnsubsIdle += other.UnsubsIdle;
             TasksCompleted += other.TasksCompleted;
 
             foreach (var otherChannel in other.Channels)
@@ -65,6 +70,8 @@ namespace TubeStar
                 var channel = GetChannel(otherChannel.Name);
                 channel.Views += otherChannel.Views;
                 channel.NewSubscribers += otherChannel.NewSubscribers;
+                channel.UnsubsWeakVideos += otherChannel.UnsubsWeakVideos;
+                channel.UnsubsIdle += otherChannel.UnsubsIdle;
                 foreach (var video in otherChannel.Videos)
                     channel.AddVideoViews(video.Name, video.Views);
             }
@@ -76,6 +83,8 @@ namespace TubeStar
         public string Name { get; set; }
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
+        public long UnsubsWeakVideos { get; set; }
+        public long UnsubsIdle { get; set; }
         //Views de cada vídeo no período (para achar o melhor vídeo)
         public List<VideoPeriodStats> Videos { get; set; }
 

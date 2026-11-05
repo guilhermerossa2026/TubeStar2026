@@ -69,6 +69,81 @@ namespace TubeStar
             return 0.8 + 0.5 * u;
         }
 
+        //Momento do canal: ao postar (nota = Quality/10 e sorte do vídeo), limitado de 0,7 a 1,4
+        public const double MomentumMin = 0.7;
+        public const double MomentumMax = 1.4;
+
+        public static double ClampMomentum(double m)
+        {
+            return Math.Max(MomentumMin, Math.Min(MomentumMax, m));
+        }
+
+        public static double MomentumOnPost(double momentum, double grade, int luckTier)
+        {
+            if (grade >= 9) momentum += 0.08;
+            else if (grade >= 7) momentum += 0.05;
+            else if (grade <= 4) momentum -= 0.06;
+            if (luckTier == TierViral) momentum += 0.10;
+            return ClampMomentum(momentum);
+        }
+
+        //Todo dia: a partir do 4º dia sem postar cai 0,01; depois volta 2% do caminho até 1
+        public static double MomentumDaily(double momentum, int daysIdle)
+        {
+            if (daysIdle >= 4) momentum -= 0.01;
+            momentum += (1 - momentum) * 0.02;
+            return ClampMomentum(momentum);
+        }
+
+        //Ao postar: aplica o momento e zera a perda do canal parado (chamar depois de SubscriberView)
+        public static void OnPost(Video video, Channel channel)
+        {
+            double grade = video.GenerateQuality() / 10.0;
+            channel.Momentum = MomentumOnPost(channel.Momentum, grade, video.LuckTier);
+            channel.IdleUnsubsTaken = 0;
+            channel.IdleUnsubsFraction = 0;
+            video.UnsubsPlanned = PlanUnsubs(grade, channel.Subscribers, RandomHelpers.RandomDouble(), RandomHelpers.RandomDouble());
+            video.UnsubsTaken = 0;
+        }
+
+        //Desinscrição suave de vídeo fraco: inscritos x uniforme(0, taxa da nota), teto de 0,5% dos inscritos
+        //u2 decide o arredondamento: floor(x) e mais 1 com probabilidade igual à parte fracionária
+        public static int PlanUnsubs(double grade, int subscribers, double u, double u2)
+        {
+            double rate;
+            if (grade >= 5) rate = 0;
+            else if (grade >= 4) rate = 0.002;
+            else if (grade >= 3) rate = 0.004;
+            else rate = 0.006;
+            double planned = subscribers * u * rate;
+            planned = Math.Min(planned, subscribers * 0.005);
+            int whole = (int)Math.Floor(planned);
+            if (u2 < planned - whole) whole++;
+            return whole;
+        }
+
+        //Quanto tirar hoje: 1/3 do que falta (pelo menos 1 se faltar)
+        public static int UnsubsStep(int planned, int taken)
+        {
+            int remaining = planned - taken;
+            if (remaining <= 0) return 0;
+            return Math.Min(remaining, Math.Max(1, remaining / 3));
+        }
+
+        //Canal parado: depois de 14 dias sem postar perde 0,05% por dia, até 5% acumulado
+        public const int IdleUnsubsDays = 14;
+
+        //A fração que sobra fica guardada no canal (fraction) para não se perder
+        public static int IdleUnsubs(int daysIdle, int subscribers, int idleTaken, ref double fraction)
+        {
+            if (daysIdle <= IdleUnsubsDays) return 0;
+            int cap = (int)((subscribers + idleTaken) * 0.05);
+            fraction += subscribers * 0.0005;
+            int loss = (int)fraction;
+            fraction -= loss;
+            return Math.Max(0, Math.Min(loss, cap - idleTaken));
+        }
+
         //Empurrão de busca nos primeiros 3 dias: canais pequenos ganham um mínimo de views de busca
         public const int SearchFloorDays = 3;
 

@@ -13,9 +13,11 @@ namespace TubeStar
         //Liga o canal à linha dele no Top TubeStars (não muda ao renomear)
         public string RankId { get; set; }
         public int MinimumSubsribers { get; set; }
-        //Momento do canal (sobe e desce com os vídeos recentes); 1 = neutro
+        //Momento do canal (0,7 a 1,4; 1 = neutro): sobe com vídeos bons e virais, cai com fracos e com dias sem postar, e volta devagar para 1
         public double Momentum { get; set; }
         public int IdleUnsubsTaken { get; set; }
+        //Fração de inscrito da perda por ficar parado, guardada até somar 1
+        public double IdleUnsubsFraction { get; set; }
 
         private AdvertisingStrategy _advertising;
         public AdvertisingStrategy Advertising

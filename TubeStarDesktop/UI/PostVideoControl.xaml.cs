@@ -469,6 +469,9 @@ namespace TubeStar
             //Subscriber views
             VideoViewer.SubscriberView(channel, video);
 
+            //Momento do canal e desinscrição planejada (depois das views, para afetar os próximos vídeos)
+            VideoLuck.OnPost(video, channel);
+
             //Consultant fee
             if (StoreItems.Current.Consultant.Purchased)
             {

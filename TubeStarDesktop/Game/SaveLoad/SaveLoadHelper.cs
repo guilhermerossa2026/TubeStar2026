@@ -112,6 +112,16 @@ namespace TubeStar
 
                 //Se o save tem a agenda, o próximo DailyPlanner volta ao mesmo dia
                 DailyPlanner.SetAgendaToRestore(saveObj.DailyAgenda, saveObj.MoneyAtStartOfDay);
+
+                //Saves antigos não têm sorte nem momento: valor neutro
+                foreach (var channel in Player.Current.Channels)
+                {
+                    if (channel.Momentum <= 0) channel.Momentum = 1;
+                    foreach (var video in channel.Videos)
+                        if (video.Luck <= 0) video.Luck = 1;
+                }
+                foreach (var video in Player.Current.Videos)
+                    if (video.Luck <= 0) video.Luck = 1;
             }
             catch (Exception)
             {

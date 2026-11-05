@@ -460,10 +460,14 @@ namespace TubeStar
 
             var channel = Settings.LastChannel = _channel;
 
+            //A nota precisa existir antes da sorte e das views dos inscritos
+            video.GenerateQuality();
+
+            //Sorte do vídeo
+            VideoLuck.DrawLuck(video, channel);
+
             //Subscriber views
             VideoViewer.SubscriberView(channel, video);
-
-            video.GenerateQuality();
 
             //Consultant fee
             if (StoreItems.Current.Consultant.Purchased)

@@ -42,6 +42,14 @@ namespace TubeStar
 
         public int Iterations { get; set; }
 
+        //Sorte do vídeo (sorteada ao postar): multiplica as views orgânicas
+        public double Luck { get; set; }
+        //0 normal, 1 flop, 2 bom, 3 viral
+        public int LuckTier { get; set; }
+        public int UnsubsPlanned { get; set; }
+        public int UnsubsTaken { get; set; }
+        public bool LuckAnnounced { get; set; }
+
         public double CostPerView { get; set; }
         public double OnceOffCost { get; set; }
 
@@ -83,6 +91,7 @@ namespace TubeStar
         public Video()
             : base()
         {
+            Luck = 1;
             Comments = new List<VideoComment>();
             Attributes = new List<VideoAttribute>();
         }

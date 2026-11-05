@@ -13,6 +13,9 @@ namespace TubeStar
         //Liga o canal à linha dele no Top TubeStars (não muda ao renomear)
         public string RankId { get; set; }
         public int MinimumSubsribers { get; set; }
+        //Momento do canal (sobe e desce com os vídeos recentes); 1 = neutro
+        public double Momentum { get; set; }
+        public int IdleUnsubsTaken { get; set; }
 
         private AdvertisingStrategy _advertising;
         public AdvertisingStrategy Advertising
@@ -53,6 +56,7 @@ namespace TubeStar
         public Channel()
             : base()
         {
+            Momentum = 1;
             Videos = new HashSet<Video>();
             Advertising = AdvertisingStrategy.Normal;
             IncomeOverTime = new List<double>();

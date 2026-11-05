@@ -118,7 +118,9 @@ namespace TubeStar
             Initialize(video);
             //Fora do nicho do canal, menos inscritos assistem
             double nicheFactor = video.IsInNiche(channel) ? 1.0 : 0.75;
-            _videoShares[video.Id] += (int)(channel.Subscribers * (Player.Current.ChallengeMode ? 0.2 : 0.4) * nicheFactor);
+            //Alcance depende da nota; momento do canal e sorte do vídeo multiplicam
+            double reach = VideoLuck.ReachPercent(video.GenerateQuality() / 10.0) * channel.Momentum * video.Luck;
+            _videoShares[video.Id] += (int)(channel.Subscribers * (Player.Current.ChallengeMode ? reach / 2 : reach) * nicheFactor);
         }
 
         public static void Iteration(Channel channel, Video video, ref double dailyIncome, ref double dailyExpenses)
@@ -143,11 +145,14 @@ namespace TubeStar
             //Campanha "Promover vídeo": parte das views entra a cada dia (sem renda de anúncio, como as compradas)
             payedViews += Promotion.TakeTodayViews(video);
 
-            var searchEngineViews = video.Views / (50 * video.Iterations);
+            double searchEngineViews = video.Views / (50 * video.Iterations);
+            //Empurrão: nos primeiros dias canais pequenos têm um mínimo de views de busca
+            if (video.Iterations <= VideoLuck.SearchFloorDays && !channel.IsRivalChannel)
+                searchEngineViews = Math.Max(searchEngineViews, VideoLuck.SearchFloor(channel.Subscribers));
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
             //Concorrência do nicho: nicho lotado recebe menos views de busca e de qualidade
             //Tipo que combina com o nicho: +10% nessas views
-            var iterationViews = (searchEngineViews + qualityViews) * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;
+            var iterationViews = (searchEngineViews + qualityViews) * video.Luck * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;
 
             //Total de views orgânicas: mesmo laço antigo de pulos de 4 ou 5, só somando (sem ver view por view)
             int organicViews = 0;
@@ -292,15 +297,21 @@ namespace TubeStar
                 double value = 4.5 * sharers + Math.Sqrt(8.25 * sharers) * RandomHelpers.Gaussian();
                 friends = (int)Math.Max(0, Math.Min(9.0 * sharers, Math.Round(value)));
             }
-            _videoShares[video.Id] += RandomHelpers.Binomial(friends, pInterest);
+            int gained = RandomHelpers.Binomial(friends, pInterest);
 
             //Owner of site - share video on site (Chance(1)&&Chance(10) = 2% * 11% = 0,22%)
             int owners = RandomHelpers.Binomial(sharers, ChanceProb(1) * ChanceProb(10));
             for (int o = 0; o < owners; o++)
             {
                 var subscribers = RandomHelpers.RandomInt((int)(25000 * (Player.Current.ChallengeMode ? 0.02 : 0.05)));
-                _videoShares[video.Id] += (int)(subscribers * 0.25);
+                gained += (int)(subscribers * 0.25);
             }
+
+            //Sorte nos compartilhamentos, com trava: no máximo x3 e, acima de 1, até numViews/2 por lote
+            int luckyGain = (int)(gained * Math.Min(video.Luck, 3.0));
+            if (video.Luck > 1)
+                luckyGain = Math.Min(luckyGain, Math.Max(gained, numViews / 2));
+            _videoShares[video.Id] += luckyGain;
         }
 
         //Estimativa de inscritos vindos das views promovidas: interessados x curtiram (nota) x se inscrevem

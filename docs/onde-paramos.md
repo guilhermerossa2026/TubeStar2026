@@ -1,4 +1,4 @@
-# Onde paramos
+﻿# Onde paramos
 
 *Atualizado em 05/11/2026. Use este arquivo para retomar o trabalho em outra máquina ou sessão.*
 
@@ -65,6 +65,6 @@ Decisões do dono para esta etapa:
    - **Ajustes depois do teste do dono (commit a4e2f2e):** selo de texto VIRAL (vermelho) / EM ALTA (verde) / FLOPOU (cinza) no cartão (`UI/VideoBlockGrid`), sem emoji (ficaria sem cor); alcance nota 0–2 = 0,5%; empurrão e "cauda de busca" (`qualityViews`) multiplicados por `SearchFloorGradeFactor` (nota 7+ = 1, 5 = 0,6, 3 = 0,25, ≤2 = 0); flop nota <3 = 60%, nota 3–5 = 40%.
    - **Números do teste do dono (canal ~230-530 inscritos):** nota 3,4 → 682 views e nota 4,4 → 1,8k (antes da cauda pela nota); nota 6,9 → 5,4k e subindo (cauda total ~10k em ~2 meses, independe do tamanho do canal). Decisão: **deixar a cauda assim** e rever só depois da 6a, se os inscritos crescerem rápido demais (opções: B = cauda pela metade; C = cauda cheia só em EM ALTA/VIRAL).
    - **Feito em 05/11/2026: etapa 6a (RPM por nicho e época), aprovada pelo dono.** Detalhes no changelog. Rever a cauda de views só se os inscritos crescerem rápido demais.
-   - **6b parte 1 feita e aprovada (05/11/2026):** meio período, promoção removida, custo de vida $80. **6b parte 2 feita e aprovada no mesmo dia** (gasto detalhado, aviso com valores, Promotion fora do sorteio). **6c feita e aprovada (05/11/2026)**; troféus desligados. **Próximo: 6d (imposto semanal)**, ou jogar um pouco para sentir a economia nova. Ideias abertas: tirar views promovidas da conta do RPM mostrado; textos novos só em PT/EN.
+   - **6b parte 1 feita e aprovada (05/11/2026):** meio período, promoção removida, custo de vida $80. **6b parte 2 feita e aprovada no mesmo dia** (gasto detalhado, aviso com valores, Promotion fora do sorteio). **6c feita e aprovada (05/11/2026)**; troféus desligados. 6d (imposto semanal + dívida fiscal) feita em 05/11/2026. **Próximo: discutir meta de monetização (10k inscritos/500k views?) com o dono.** Ideias abertas: tirar views promovidas da conta do RPM mostrado; textos novos só em PT/EN.
 7. Pendente, adiado pelo dono (medo de estragar a resolução): telas em vários tamanhos. No notebook (1366×768) o painel do canal corta Estatísticas/Editar/Excluir; no monitor grande os cartões esticam (3 colunas fixas). Proposta: cartões de tamanho fixo com colunas variáveis e barras de rolagem; fazer com commit antes e uma tela por vez.
 8. Textos novos só precisam de PT-BR (decisão do dono).

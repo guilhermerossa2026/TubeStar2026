@@ -141,6 +141,7 @@ namespace TubeStar
 
             //A semana sempre vai para o histórico (a última do ano também)
             var week = Player.Current.CurrentWeek ?? new PeriodStats();
+            ChargeWeeklyTax(week, day);
             week.Title = String.Format(EnglishStrings.SummaryWeekTitle.Translate(), (day - 1) % 112 / 7 + 1, (day - 1) / 112 + 1);
             Player.Current.PastSummaries.Add(week);
             Player.Current.CurrentWeek = null;
@@ -158,6 +159,43 @@ namespace TubeStar
                 PendingSummary = week;
             }
             PendingSummaryTitle = PendingSummary.Title;
+        }
+
+        //Cobra o imposto do lucro do canal na semana que fechou (uma vez por semana; semanas antigas de saves velhos não são cobradas)
+        private void ChargeWeeklyTax(PeriodStats week, int day)
+        {
+            int weekIndex = day / 7;
+            if (weekIndex <= Player.Current.LastTaxWeekIndex)
+                return;
+            Player.Current.LastTaxWeekIndex = weekIndex;
+
+            //Devido = imposto da semana + dívida anterior; paga só o que o dinheiro cobre (nunca fica negativo)
+            double due = TaxCalculator.Tax(TaxCalculator.WeeklyProfit(week), StoreItems.Current.TaxLawyer.Purchased) + Player.Current.TaxDebt;
+            if (due <= 0)
+                return;
+
+            double tax = Math.Min(due, Math.Max(0, Player.Current.Money));
+            Player.Current.TaxDebt = due - tax;
+            if (Player.Current.TaxDebt > 0)
+                _videoAlerts.Add(String.Format(EnglishStrings.AlertTaxDebt.Translate(), Player.Current.TaxDebt.ToCurrencyString()));
+            if (tax <= 0)
+                return;
+
+            Player.Current.Money -= tax;
+            Player.Current.TotalTaxPaid += tax;
+
+            //Entra na semana que fecha, no dia (Resumo de ontem) e no ano em andamento
+            var extra = new PeriodStats();
+            extra.Spent = tax;
+            extra.TaxCost = tax;
+            week.Add(extra);
+            if (Player.Current.LastDay != null)
+                Player.Current.LastDay.Add(extra);
+            if (Player.Current.CurrentYear == null)
+                Player.Current.CurrentYear = new PeriodStats();
+            Player.Current.CurrentYear.Add(extra);
+
+            _videoAlerts.Add(String.Format(EnglishStrings.AlertTaxPaid.Translate(), tax.ToCurrencyString()));
         }
 
         //Avisos de sorte dos vídeos do último dia (viral, flop, bom)
@@ -198,7 +236,7 @@ namespace TubeStar
             result.Add(earned);
             //Gasto com a origem embaixo (só se o resumo tiver as partes)
             var spent = (StackPanel)CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToShortCurrencyString(), null, stats.Spent.ToCurrencyString());
-            if (stats.LivingCost + stats.VideoCost + stats.VideoPromotionCost + stats.LoanCost > 0)
+            if (stats.LivingCost + stats.VideoCost + stats.VideoPromotionCost + stats.LoanCost + stats.TaxCost > 0)
             {
                 if (stats.LivingCost > 0)
                     spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryLivingCost.Translate(), stats.LivingCost));
@@ -208,6 +246,8 @@ namespace TubeStar
                     spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryPromotionCost.Translate(), stats.VideoPromotionCost));
                 if (stats.LoanCost > 0)
                     spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryLoanCost.Translate(), stats.LoanCost));
+                if (stats.TaxCost > 0)
+                    spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryTaxCost.Translate(), stats.TaxCost));
             }
             result.Add(spent);
             result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToShortCurrencyString(),

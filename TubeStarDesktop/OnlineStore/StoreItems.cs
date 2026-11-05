@@ -32,6 +32,7 @@ namespace TubeStar
 
         public Lawyer Lawyer { get; set; }
         public Consultant Consultant { get; set; }
+        public TaxLawyer TaxLawyer { get; set; }
 
         public Loan Loan { get; set; }
 
@@ -45,6 +46,7 @@ namespace TubeStar
 
                     Consultant,
                     Lawyer,
+                    TaxLawyer,
 
                     EditingSoftwareV,
                     EditingSoftwareIV,
@@ -90,6 +92,7 @@ namespace TubeStar
 
             Lawyer = new Lawyer();
             Consultant = new Consultant();
+            TaxLawyer = new TaxLawyer();
 
             Loan = new Loan();
         }

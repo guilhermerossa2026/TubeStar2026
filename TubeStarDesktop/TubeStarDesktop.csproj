@@ -96,6 +96,8 @@
     <Compile Include="OnlineStore\Items\Consultant.cs" />
     <Compile Include="OnlineStore\Items\Loan.cs" />
     <Compile Include="OnlineStore\Items\Lawyer.cs" />
+    <Compile Include="OnlineStore\Items\TaxLawyer.cs" />
+    <Compile Include="Game\TaxCalculator.cs" />
     <Compile Include="OnlineStore\Items\EditingSoftwareII.cs" />
     <Compile Include="OnlineStore\Items\EditingSoftwareI.cs" />
     <Compile Include="OnlineStore\Items\VideoCameraII.cs" />

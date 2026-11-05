@@ -18,6 +18,7 @@ namespace TubeStar
         public double VideoCost { get; set; }
         public double VideoPromotionCost { get; set; }
         public double LoanCost { get; set; }
+        public double TaxCost { get; set; }
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
         public int VideosPosted { get; set; }
@@ -67,6 +68,7 @@ namespace TubeStar
             VideoCost += other.VideoCost;
             VideoPromotionCost += other.VideoPromotionCost;
             LoanCost += other.LoanCost;
+            TaxCost += other.TaxCost;
             Views += other.Views;
             NewSubscribers += other.NewSubscribers;
             VideosPosted += other.VideosPosted;

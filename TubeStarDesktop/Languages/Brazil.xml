@@ -1638,6 +1638,26 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
     <Text>Empréstimo</Text>
   </CustomText>
   <CustomText>
+    <Id>SummaryTaxCost</Id>
+    <Text>Imposto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertTaxPaid</Id>
+    <Text>Imposto da semana pago: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertTaxDebt</Id>
+    <Text>Dívida fiscal: {0} (cobrada na próxima semana)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TaxLawyerStoreItem</Id>
+    <Text>Advogado Fiscal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>TaxLawyerStoreItemDescription</Id>
+    <Text>Reduz em {0} pontos percentuais o imposto semanal sobre o lucro do canal em todas as faixas (15% vira 10%, 25% vira 20%).</Text>
+  </CustomText>
+  <CustomText>
     <Id>CostOfLivingIncreaseAmount</Id>
     <Text>Custo de vida subiu ${0}/dia (agora ${1}/dia)</Text>
   </CustomText>

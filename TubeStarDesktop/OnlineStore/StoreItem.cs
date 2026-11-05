@@ -17,6 +17,7 @@ namespace TubeStar
     [XmlInclude(typeof(EditingSoftwareV))]
     [XmlInclude(typeof(Lawyer))]
     [XmlInclude(typeof(Consultant))]
+    [XmlInclude(typeof(TaxLawyer))]
     [XmlInclude(typeof(Loan))]
     public abstract class StoreItem
     {

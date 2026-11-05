@@ -62,6 +62,12 @@ namespace TubeStar
 
         public double LoanPayOff { get; set; }
 
+        //Imposto semanal: total já pago (para uma tela fiscal) e última semana cobrada (iteração/7; -1 = nenhuma)
+        public double TotalTaxPaid { get; set; }
+        public int LastTaxWeekIndex { get; set; }
+        //Imposto que o dinheiro não cobriu; entra na cobrança da semana seguinte
+        public double TaxDebt { get; set; }
+
         //Calendário: resumo do último dia e totais da semana e do ano em andamento
         public PeriodStats LastDay { get; set; }
         public PeriodStats CurrentWeek { get; set; }
@@ -148,6 +154,9 @@ namespace TubeStar
             PartTime = false;
             LastShiftChangeDay = -999;
             LoanPayOff = 0;
+            TotalTaxPaid = 0;
+            LastTaxWeekIndex = -1;
+            TaxDebt = 0;
             LastDay = null;
             CurrentWeek = null;
             CurrentYear = null;

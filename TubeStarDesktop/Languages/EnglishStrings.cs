@@ -1093,6 +1093,16 @@ namespace TubeStar
         SummaryPromotionCost,
         [Description("Loan")]
         SummaryLoanCost,
+        [Description("Tax")]
+        SummaryTaxCost,
+        [Description("Weekly tax paid: {0}")]
+        AlertTaxPaid,
+        [Description("Tax debt: {0} (charged next week)")]
+        AlertTaxDebt,
+        [Description("Tax Lawyer")]
+        TaxLawyerStoreItem,
+        [Description("Cuts the weekly channel profit tax by {0} percentage points in every bracket (15% becomes 10%, 25% becomes 20%).")]
+        TaxLawyerStoreItemDescription,
         [Description("Your cost of living went up ${0}/day (now ${1}/day)")]
         CostOfLivingIncreaseAmount,
         [Description("Your cost of living went down ${0}/day (now ${1}/day)")]

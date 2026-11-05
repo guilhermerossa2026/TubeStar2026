@@ -23,24 +23,7 @@ namespace TubeStar
         public AdvertisingStrategy Advertising
         {
             get { return _advertising; }
-            set
-            {
-                _advertising = value;
-                _incomePerView = null;
-            }
-        }
-
-        private double? _incomePerView;
-        public double IncomePerView
-        {
-            get
-            {
-                if (_incomePerView == null)
-                {
-                    _incomePerView = Advertising.GetAttribute<AdvertistingIncomeAttribute>().IncomePerView;
-                }
-                return _incomePerView.Value;
-            }
+            set { _advertising = value; }
         }
 
         public HashSet<Video> Videos { get; set; }

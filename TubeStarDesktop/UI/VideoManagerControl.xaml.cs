@@ -51,7 +51,7 @@ namespace TubeStar
             lblViews.Text = EnglishStrings.VideosTotalViews.Translate().ToUpper();
             lblIncome.Text = EnglishStrings.VideosTotalEarnings.Translate().ToUpper();
             lblSubs.Text = EnglishStrings.Subscribers.Translate().ToUpper();
-            lblRpm.Text = EnglishStrings.ChannelRpm.Translate().ToUpper();
+            lblRpm.Text = EnglishStrings.ChannelRpm.Translate().ToUpper() + " ?";
             lblRank.Text = EnglishStrings.ChannelRank.Translate().ToUpper();
             lblChart.Text = EnglishStrings.ChannelSubscribersChart.Translate().ToUpper();
             txtUnreleasedHint.Text = EnglishStrings.VideosUnreleasedHint.Translate();
@@ -308,8 +308,13 @@ namespace TubeStar
                 txtKpiIncome.Text = channel.Income.ToShortCurrencyString();
                 txtKpiIncome.ToolTip = channel.Income.ToCurrencyString();
                 txtKpiSubs.Text = channel.Subscribers.ToShortNumber();
-                txtKpiRpm.Text = ActiveChannel.GetRpm(channel).ToShortCurrencyString();
-                txtKpiRpm.ToolTip = ActiveChannel.GetRpm(channel).ToCurrencyString();
+                //RPM de hoje (RpmCalculator); a tooltip explica e mostra a média histórica
+                txtKpiRpm.Text = RpmCalculator.ChannelRpm(channel).ToCurrencyString();
+                string rpmTip = EnglishStrings.ChannelRpmTip.Translate();
+                if (totalViews > 0)
+                    rpmTip += "\n" + String.Format(EnglishStrings.ChannelRpmAverage.Translate(), ActiveChannel.GetRpm(channel).ToCurrencyString());
+                txtKpiRpm.ToolTip = rpmTip;
+                lblRpm.ToolTip = rpmTip;
                 Ranking.Current.Refresh(false);
                 var entry = Ranking.Current.Channels.FirstOrDefault(c => c.IsPlayer && c.PlayerChannelId == channel.RankId);
                 txtKpiRank.Text = entry != null && entry.Position > 0 ? "#" + entry.Position : "-";

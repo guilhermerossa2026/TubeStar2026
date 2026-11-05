@@ -29,6 +29,21 @@ namespace TubeStar
             int year = day / 112 + 1;
             txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
 
+            //Época dos anúncios (RPM): alta nas semanas 13-16, fraca nas semanas 1-2
+            string season = RpmCalculator.SeasonLabel(week);
+            if (season == "High")
+            {
+                txtAdSeason.Text = EnglishStrings.CalendarAdSeasonHigh.Translate();
+                txtAdSeason.Foreground = FindBrush("YtRedBrush");
+                txtAdSeason.Visibility = Visibility.Visible;
+            }
+            else if (season == "Low")
+            {
+                txtAdSeason.Text = EnglishStrings.CalendarAdSeasonLow.Translate();
+                txtAdSeason.Foreground = FindBrush("YtTextSecondaryBrush");
+                txtAdSeason.Visibility = Visibility.Visible;
+            }
+
             PopulateWeekDays(dayOfYear);
             PopulateThisWeek();
             PopulateHistory();

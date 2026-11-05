@@ -154,7 +154,8 @@ namespace TubeStar
             qualityViews *= VideoLuck.SearchFloorGradeFactor(video.Quality.Value / 10.0);
             //Concorrência do nicho: nicho lotado recebe menos views de busca e de qualidade
             //Tipo que combina com o nicho: +10% nessas views
-            var iterationViews = (searchEngineViews + qualityViews) * video.Luck * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;
+            //ViewBoost: nichos de RPM baixo ganham mais views de busca e qualidade (não shares nem promovidas)
+            var iterationViews = (searchEngineViews + qualityViews) * RpmCalculator.ViewBoost(video.Category) * video.Luck * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;
 
             //Total de views orgânicas: mesmo laço antigo de pulos de 4 ou 5, só somando (sem ver view por view)
             int organicViews = 0;
@@ -163,9 +164,14 @@ namespace TubeStar
                 organicViews += RandomHelpers.RandomInt(4, 6);
             }
 
-            //Simula em lotes (no máximo ~50 chamadas por vídeo/dia) em vez de view por view
-            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, organicViews, false);
-            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, payedViews, true);
+            //Simula em lotes (no máximo 50 lotes por grupo de views) em vez de view por view
+            //Views de busca/qualidade (com ViewBoost) têm a chance de inscrição compensada; shares não
+            int shareViews = 0;
+            if (iterationViews > 0 && tempShares > 0)
+                shareViews = Math.Min(organicViews, (int)Math.Round(organicViews * (tempShares / iterationViews)));
+            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, organicViews - shareViews, false, true);
+            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, shareViews, false, false);
+            ViewInBatches(channel, video, ref dailyIncome, ref dailyExpenses, payedViews, true, false);
 
             //Desinscrição suave do vídeo (planejada ao postar)
             if (!channel.IsRivalChannel)
@@ -184,7 +190,7 @@ namespace TubeStar
 
         private const int MaxBatches = 50;
 
-        private static void ViewInBatches(Channel channel, Video video, ref double income, ref double expenses, int totalViews, bool payedView)
+        private static void ViewInBatches(Channel channel, Video video, ref double income, ref double expenses, int totalViews, bool payedView, bool boosted)
         {
             if (totalViews <= 0) return;
             int batchSize = Math.Max(1, (int)Math.Ceiling(totalViews / (double)MaxBatches));
@@ -193,7 +199,7 @@ namespace TubeStar
             {
                 //O último lote leva o resto exato
                 int batch = Math.Min(batchSize, remaining);
-                ViewVideo(channel, video, ref income, ref expenses, batch, payedView);
+                ViewVideo(channel, video, ref income, ref expenses, batch, payedView, boosted);
                 remaining -= batch;
             }
         }
@@ -217,7 +223,7 @@ namespace TubeStar
         }
 
         //Um lote de numViews equivale a numViews views independentes: sorteia quantas seguem cada ramo
-        private static void ViewVideo(Channel channel, Video video, ref double income, ref double expenses, int numViews, bool payedView = false)
+        private static void ViewVideo(Channel channel, Video video, ref double income, ref double expenses, int numViews, bool payedView, bool boosted)
         {
             video.Views += numViews;
             income += ViewIncome(channel, video, payedView, numViews);
@@ -245,7 +251,7 @@ namespace TubeStar
             {
                 video.Likes += likes;
 
-                int subs = RandomHelpers.Binomial(likes, SubscriptionProb(channel, video));
+                int subs = RandomHelpers.Binomial(likes, SubscriptionProb(channel, video, boosted));
                 if (video.Attributes.Contains(VideoAttributes.Crowdfunding))
                 {
                     if (!payedView)
@@ -315,10 +321,10 @@ namespace TubeStar
             if (views <= 0 || channel == null)
                 return 0;
             double pLike = ChanceProb(video.GenerateQuality());
-            return (int)Math.Round(views * InterestProb(video) * pLike * SubscriptionProb(channel, video));
+            return (int)Math.Round(views * InterestProb(video) * pLike * SubscriptionProb(channel, video, false));
         }
 
-        private static double SubscriptionProb(Channel channel, Video video)
+        private static double SubscriptionProb(Channel channel, Video video, bool boosted)
         {
             int initialChance = 0;
             switch (channel.Advertising)
@@ -345,22 +351,20 @@ namespace TubeStar
             double p = ChanceProb(initialChance);
             if (!video.IsInNiche(channel))
                 p = Math.Min(1.0, p * 1.3);
+            //Compensa o ViewBoost só nas views de busca/qualidade (shares e promovidas ficam normais)
+            if (boosted)
+                p = p / RpmCalculator.ViewBoost(video.Category);
             return p;
         }
 
         private static double ViewIncome(Channel channel, Video video, bool payedView, int numViews)
         {
-            //Don't get base view payment for payed views
-            var income = payedView ? 0 : channel.IncomePerView;
-            if (Player.Current.ChallengeMode)
-                income = income / 2;
+            //Views promovidas/compradas não pagam anúncio
+            if (payedView)
+                return 0;
 
-            var extraIncome = Math.Sqrt(Math.Max(0, channel.Subscribers) /(Player.Current.ChallengeMode ? 20000.0 : 1000.0)) * 0.01;
-            extraIncome = Math.Min(extraIncome, Player.Current.ChallengeMode ? 0.25 : 0.50);
-            income += extraIncome;
-
-            //RPM do nicho: cada tema paga diferente por view
-            income *= video.Category.GetRpmMultiplier();
+            //Renda = views/1000 x RPM (RpmCalculator já inclui o modo desafio e o merchandising)
+            double income = RpmCalculator.Rpm(channel, video) / 1000.0;
 
             //CTR: no ChallengeMode, Chance(90) && Chance(90 ultra / 50 normal) zera a renda daquela view
             int paidViews = numViews;
@@ -370,14 +374,7 @@ namespace TubeStar
                 paidViews = RandomHelpers.Binomial(numViews, 1 - pZero);
             }
 
-            double total = income * paidViews;
-
-            if (video.Attributes.Contains(VideoAttributes.ProductPlacement))
-            {
-                total += 0.01 * numViews; //Extra 1c
-            }
-
-            return total;
+            return income * paidViews;
         }
 
         private static void Initialize(Video video)

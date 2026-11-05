@@ -164,6 +164,27 @@ namespace TubeStar
             //Igual à prévia: "Dia" é o dia do ano (1 a 112)
             txtDate.Text = String.Format(EnglishStrings.GameDate.Translate(), year, week, dayOfYear);
 
+            //Etiqueta da temporada de anúncios (semanas 13-16 alta, 1-2 fraca)
+            string season = RpmCalculator.SeasonLabel(RpmCalculator.CurrentWeek());
+            if (season == "High")
+            {
+                txtAdSeasonPill.Text = EnglishStrings.HeaderAdsUp.Translate();
+                txtAdSeasonPill.Foreground = (System.Windows.Media.Brush)FindResource("YtRedBrush");
+                adSeasonPill.BorderBrush = (System.Windows.Media.Brush)FindResource("YtRedBrush");
+                adSeasonPill.ToolTip = EnglishStrings.HeaderAdsUpTip.Translate();
+                adSeasonPill.Visibility = Visibility.Visible;
+            }
+            else if (season == "Low")
+            {
+                txtAdSeasonPill.Text = EnglishStrings.HeaderAdsWeak.Translate();
+                txtAdSeasonPill.Foreground = (System.Windows.Media.Brush)FindResource("YtTextSecondaryBrush");
+                adSeasonPill.BorderBrush = (System.Windows.Media.Brush)FindResource("YtDarkBorderBrush");
+                adSeasonPill.ToolTip = EnglishStrings.HeaderAdsWeakTip.Translate();
+                adSeasonPill.Visibility = Visibility.Visible;
+            }
+            else
+                adSeasonPill.Visibility = Visibility.Collapsed;
+
             //Inscritos do canal escolhido no seletor (ou de todos, na Visão geral)
             txtSubscribers.Text = ActiveChannel.Subscribers.ToShortNumber();
             UpdateChannelSelector();

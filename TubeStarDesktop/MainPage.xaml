@@ -123,12 +123,18 @@
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock x:Name="txtSectionTitle" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Schedule" />
                     <!-- Data: clicar abre o Calendário -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button x:Name="btnCalendar" Style="{StaticResource GhostButtonStyle}" HorizontalAlignment="Left" MinHeight="0" Padding="8,3" Margin="-8,2,0,0" Click="btnCalendar_Click">
                         <StackPanel Orientation="Horizontal">
                             <Path Data="{StaticResource IconCalendar}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="2" Stretch="Uniform" Width="13" Height="13" Margin="0,0,7,0" VerticalAlignment="Center" />
                             <TextBlock x:Name="txtDate" FontSize="12" FontWeight="Normal" Foreground="{StaticResource YtTextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
+                    <!-- Temporada de anúncios (só aparece nas semanas 1-2 e 13-16) -->
+                    <Border x:Name="adSeasonPill" Visibility="Collapsed" CornerRadius="10" BorderThickness="1" Padding="8,2" Margin="4,2,0,0" VerticalAlignment="Center" Background="{StaticResource YtDarkBgBrush}">
+                        <TextBlock x:Name="txtAdSeasonPill" FontSize="11" FontWeight="SemiBold" />
+                    </Border>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">

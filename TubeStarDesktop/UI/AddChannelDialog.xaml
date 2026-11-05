@@ -13,7 +13,11 @@
         <WrapPanel x:Name="nicheChips" Margin="0,0,0,2" />
         <TextBlock x:Name="txtNicheInfo" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,0,0,14" />
 
-        <TextBlock x:Name="lblStrategy" Text="Advertising strategy:" Style="{StaticResource DialogLabelStyle}" Margin="0,0,0,6" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+            <TextBlock x:Name="lblStrategy" Text="Ads in videos:" Style="{StaticResource DialogLabelStyle}" />
+            <TextBlock x:Name="lblStrategyHelp" Text="?" FontWeight="Bold" Margin="8,0,0,0" Cursor="Help"
+                       Foreground="{StaticResource YtRedBrush}" VerticalAlignment="Center" />
+        </StackPanel>
         <ComboBox x:Name="cmbAdvertising" FontSize="15" Margin="0,0,0,18" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

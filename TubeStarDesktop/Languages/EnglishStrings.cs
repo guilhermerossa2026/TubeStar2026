@@ -326,7 +326,7 @@ namespace TubeStar
         [Description("Edit channel")]
         EditChannel,
 
-        [Description("Advertising strategy")]
+        [Description("Ads in videos")]
         AdvertisingStrategy,
 
         [Description("Name")]
@@ -1034,7 +1034,7 @@ namespace TubeStar
         NicheLabel,
         [Description("Choose the channel niche. It cannot be changed later.")]
         NicheChooseHint,
-        [Description("Pay per view: {0} · Competition: {1}")]
+        [Description("RPM: {0} / 1,000 views · Competition: {1}")]
         NicheInfo,
         [Description("High")]
         NicheLevelHigh,
@@ -1248,5 +1248,35 @@ namespace TubeStar
 
         [Description("Game saved")]
         GameSaved,
+
+        [Description("RPM now: what the channel earns per 1,000 views, today. It depends on the niche, time of year, ads in videos, video quality and subscribers.")]
+        ChannelRpmTip,
+
+        [Description("Average so far: {0} per 1,000 views")]
+        ChannelRpmAverage,
+
+        [Description("Earned per 1,000 views of this video. RPM now for this channel and video: {0}")]
+        VideoRpmTip,
+
+        [Description("Ad season: high")]
+        CalendarAdSeasonHigh,
+
+        [Description("Ad season: weak")]
+        CalendarAdSeasonLow,
+
+        [Description("Ads up")]
+        HeaderAdsUp,
+
+        [Description("Ads weak")]
+        HeaderAdsWeak,
+
+        [Description("Advertisers pay more at this time (up to +30% RPM)")]
+        HeaderAdsUpTip,
+
+        [Description("Advertisers pay less early in the year (-25% RPM)")]
+        HeaderAdsWeakTip,
+
+        [Description("Ads in videos:\nLow: RPM -15%, 90% of likers subscribe\nNormal: RPM +0%, 70% of likers subscribe\nHigh: RPM +10%, 50% of likers subscribe\nAggressive: RPM +20%, 30% of likers subscribe")]
+        StrategyTable,
     }
 }

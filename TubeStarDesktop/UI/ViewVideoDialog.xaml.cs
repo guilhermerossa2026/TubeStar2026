@@ -42,6 +42,12 @@ namespace TubeStar
             AddKpi(moneyKpis, EnglishStrings.VideoIncome.Translate(), video.Income.ToShortCurrencyString(), null, video.Income.ToCurrencyString());
             AddKpi(moneyKpis, EnglishStrings.VideoProfit.Translate(), profit.ToShortCurrencyString(), FindBrush(profit < 0 ? "YtLossBrush" : "YtGainBrush"), profit.ToCurrencyString());
 
+            //RPM do vídeo: ganho por mil views até agora; a tooltip mostra o RPM de hoje
+            string rpmTip = null;
+            if (channel != null && video.Quality.HasValue)
+                rpmTip = String.Format(EnglishStrings.VideoRpmTip.Translate(), RpmCalculator.Rpm(channel, video).ToCurrencyString());
+            AddKpi(moneyKpis, EnglishStrings.ChannelRpm.Translate(), video.Views > 0 ? (video.Income * 1000.0 / video.Views).ToCurrencyString() : "-", null, rpmTip);
+
             ShowTab(true);
         }
 

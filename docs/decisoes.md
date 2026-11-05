@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-05 — RPM por nicho, compensado com views
+**Decisão:** RPM fixo por nicho (Infantil 15 a Finanças 60) e nichos baratos ganham views a mais (expoente 0,35), sem inscritos a mais. Promover vídeo continua sem lucro: serve para crescer.
+**Motivo:** realismo do YouTube; sem compensação ninguém escolheria nichos baratos. A quantidade de anúncios não faz perder inscritos (perda vem de nota baixa e canal parado); regra nova só se o dono pedir.
+
 ## 2026-11-03 — Promover vídeo caro e sem reembolso
 **Decisão:** campanhas de $500/$1.000/$2.000 (preços inflados pelo dono), views em 3 dias, sem renda de anúncio. Se o canal/vídeo for suspenso, a campanha acaba e o dinheiro não volta.
 **Motivo:** promover deve ser investimento de quem já ganha, não atalho; a suspensão é risco do jogo. As opções "por view" (baratas demais) foram descartadas.

@@ -426,7 +426,7 @@
   </CustomText>
   <CustomText>
     <Id>AdvertisingStrategy</Id>
-    <Text>Estratégia de divulgação</Text>
+    <Text>Anúncios nos vídeos</Text>
   </CustomText>
   <CustomText>
     <Id>Name</Id>
@@ -1491,7 +1491,7 @@
   </CustomText>
   <CustomText>
     <Id>NicheInfo</Id>
-    <Text>Ganho por view: {0} · Concorrência: {1}</Text>
+    <Text>RPM: {0} / mil views · Concorrência: {1}</Text>
   </CustomText>
   <CustomText>
     <Id>NicheLevelHigh</Id>
@@ -1768,5 +1768,49 @@
   <CustomText>
     <Id>ThumbLimitReached</Id>
     <Text>(limite atingido)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelRpmTip</Id>
+    <Text>RPM agora: quanto o canal ganha a cada mil views, hoje. Depende do nicho, da época do ano, dos anúncios nos vídeos, da qualidade do vídeo e dos inscritos.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>ChannelRpmAverage</Id>
+    <Text>Média até agora: {0} por mil views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>VideoRpmTip</Id>
+    <Text>Ganho a cada mil views deste vídeo. RPM agora para este canal e vídeo: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarAdSeasonHigh</Id>
+    <Text>Temporada de anúncios em alta</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CalendarAdSeasonLow</Id>
+    <Text>Temporada de anúncios fraca</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HeaderAdsUp</Id>
+    <Text>Anúncios em alta</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HeaderAdsWeak</Id>
+    <Text>Anúncios fracos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HeaderAdsUpTip</Id>
+    <Text>Anunciantes pagam mais nesta época (até +30% no RPM)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>HeaderAdsWeakTip</Id>
+    <Text>Anunciantes pagam menos no começo do ano (-25% no RPM)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>StrategyTable</Id>
+    <Text>Anúncios nos vídeos:
+Baixa: RPM -15%, 90% de quem curtiu se inscreve
+Normal: RPM +0%, 70% de quem curtiu se inscreve
+Alta: RPM +10%, 50% de quem curtiu se inscreve
+Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   </CustomText>
 </ArrayOfCustomText>

@@ -242,9 +242,9 @@
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\Settings.cs" />
     <Compile Include="Game\VideoLuck.cs" />
+    <Compile Include="Game\RpmCalculator.cs" />
     <Compile Include="Game\VideoViewer.cs" />
     <Compile Include="Helpers\AsyncCacheItem.cs" />
-    <Compile Include="Helpers\Attributes\AdvertistingIncomeAttribute.cs" />
     <Compile Include="Helpers\CategoryHelpers.cs" />
     <Compile Include="Helpers\FormattingHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />

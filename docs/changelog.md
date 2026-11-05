@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-05
+- Etapa 6a: o canal paga por RPM do nicho (Games ~$25/mil views, Finanças $60, Infantil $15), com época do ano, variação semanal, anúncios, qualidade e inscritos (`Game/RpmCalculator.cs`). Era ~$43/mil e subia sem limite.
+- Nichos de RPM baixo ganham mais views (Infantil +20%; Humor/Música/React +8%), sem inscritos a mais. Views promovidas não pagam anúncio.
+- "Estratégia de divulgação" virou "Anúncios nos vídeos", com tabela no "?". RPM no painel do canal, em Ver vídeo e em Criar canal; temporada de anúncios no Calendário e etiqueta "Anúncios em alta/fracos" ao lado da data.
+
 ## 2026-11-04
 - Criar vídeo: botão "×" na lista "Continuar série" tira a série da lista (os vídeos continuam); ela volta se um episódio novo for criado.
 - Miniaturas: buscas na API ficam guardadas (Saves\search_cache.json) e o mesmo título não gasta cota de novo; contador "Buscas hoje: x/100" e aviso certo quando o limite diário do YouTube acaba.

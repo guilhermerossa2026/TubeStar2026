@@ -7,19 +7,15 @@ namespace TubeStar
     public enum AdvertisingStrategy
     {
         [XmlEnum("1")]
-        [AdvertistingIncome(0.02)]
         Low = 1,
 
         [XmlEnum("2")]
-        [AdvertistingIncome(0.04)]
         Normal = 2,
 
         [XmlEnum("3")]
-        [AdvertistingIncome(0.06)]
         High = 3,
 
         [XmlEnum("4")]
-        [AdvertistingIncome(0.08)]
         Aggressive = 4,
     }
 

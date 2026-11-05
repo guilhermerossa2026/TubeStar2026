@@ -54,28 +54,6 @@ namespace TubeStar
             return String.Empty;
         }
 
-        //Quanto cada view paga em relação ao normal (1 = normal): anunciantes pagam mais por Finanças que por Infantil
-        public static double GetRpmMultiplier(this VideoCategory category)
-        {
-            switch (category)
-            {
-                case VideoCategory.Finance: return 1.8;
-                case VideoCategory.Technology: return 1.5;
-                case VideoCategory.Education: return 1.3;
-                case VideoCategory.Beauty: return 1.2;
-                case VideoCategory.Fitness: return 1.2;
-                case VideoCategory.Travel: return 1.1;
-                case VideoCategory.Vlog: return 0.9;
-                case VideoCategory.Mystery: return 0.9;
-                case VideoCategory.Music: return 0.8;
-                case VideoCategory.Comedy: return 0.8;
-                case VideoCategory.Reacts: return 0.7;
-                case VideoCategory.Games: return 0.7;
-                case VideoCategory.Kids: return 0.6;
-            }
-            return 1.0;
-        }
-
         //Concorrência: nicho lotado recebe menos views orgânicas (1 = normal, menor = mais concorrido)
         public static double GetCompetitionMultiplier(this VideoCategory category)
         {

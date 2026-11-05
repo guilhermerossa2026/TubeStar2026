@@ -456,7 +456,7 @@ Click OK to continue, CANCEL to quit</Text>
   </CustomText>
   <CustomText>
     <Id>AdvertisingStrategy</Id>
-    <Text>Advertising strategy</Text>
+    <Text>Ads in videos</Text>
   </CustomText>
   <CustomText>
     <Id>Name</Id>

@@ -54,12 +54,11 @@ namespace TubeStar
             txtNicheInfo.Text = GetNicheInfo(niche);
         }
 
-        //"Ganho por view: Alto · Concorrência: Baixa"
+        //"RPM: $25 / mil views · Concorrência: Baixa"
         public static string GetNicheInfo(VideoCategory niche)
         {
-            double rpm = niche.GetRpmMultiplier();
+            string pay = RpmCalculator.BaseRpm(niche).ToCurrencyString();
             double competition = niche.GetCompetitionMultiplier();
-            string pay = (rpm >= 1.3 ? EnglishStrings.NicheLevelHigh : (rpm >= 0.95 ? EnglishStrings.NicheLevelMedium : EnglishStrings.NicheLevelLow)).Translate();
             string crowd = (competition <= 0.85 ? EnglishStrings.NicheCrowdHigh : (competition <= 0.95 ? EnglishStrings.NicheCrowdMedium : EnglishStrings.NicheCrowdLow)).Translate();
             return String.Format(EnglishStrings.NicheInfo.Translate(), pay, crowd);
         }
@@ -70,6 +69,8 @@ namespace TubeStar
             lblName.Text = EnglishStrings.Name.Translate() + ":";
             lblNiche.Text = EnglishStrings.NicheLabel.Translate() + ":";
             lblStrategy.Text = EnglishStrings.AdvertisingStrategy.Translate() + ":";
+            lblStrategy.ToolTip = EnglishStrings.StrategyTable.Translate();
+            lblStrategyHelp.ToolTip = EnglishStrings.StrategyTable.Translate();
             btnOk.Content = EnglishStrings.Ok.Translate();
             btnCancel.Content = EnglishStrings.Cancel.Translate();
         }
@@ -103,11 +104,8 @@ namespace TubeStar
 
         private string GetEnumString(AdvertisingStrategy strategy)
         {
-            var income = strategy.GetAttribute<AdvertistingIncomeAttribute>().IncomePerView;
-            return String.Format("{0} ({1} {2}) {3}", strategy.GetString(),
-                Player.Current.ChallengeMode ? (income / 2).ToCurrencyString() : income.ToCurrencyString(),
-                EnglishStrings.PerView.Translate(),
-                Player.Current.UltraMode ? "(CTR - 10%)" : (Player.Current.ChallengeMode ? "(CTR - 50%)" : ""));
+            return String.Format("{0} {1}", strategy.GetString(),
+                Player.Current.UltraMode ? "(CTR - 10%)" : (Player.Current.ChallengeMode ? "(CTR - 50%)" : "")).Trim();
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)

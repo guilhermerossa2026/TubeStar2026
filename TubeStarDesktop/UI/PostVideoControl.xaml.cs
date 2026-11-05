@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -196,7 +196,7 @@ namespace TubeStar
             if (option <= 0)
                 return EnglishStrings.None.Translate();
             return String.Format("{0} · ${1:N0} · ~{2} {3}", Promotion.GetName(option), Promotion.Costs[option],
-                ((long)Promotion.Views[option]).ToShortNumber(), EnglishStrings.Views.Translate().ToLower());
+                ((long)Promotion.EstimateViews(_selected, option)).ToShortNumber(), EnglishStrings.Views.Translate().ToLower());
         }
 
         //"≈ 8 mil views em 3 dias · 40 a 90 inscritos"
@@ -204,7 +204,7 @@ namespace TubeStar
         {
             if (_viewsOption <= 0 || _selected == null)
                 return EnglishStrings.PromoteNoneInfo.Translate();
-            int views = Promotion.Views[_viewsOption];
+            int views = Promotion.EstimateViews(_selected, _viewsOption);
             string text = String.Format(EnglishStrings.PromoteEstimateViews.Translate(), ((long)views).ToShortNumber(), Promotion.Days);
             if (_channel != null)
             {
@@ -452,16 +452,16 @@ namespace TubeStar
             }
 
             //Promover vídeo: cobra no dia da postagem (OnceOffCost) e entrega as views em Promotion.Days dias
-            if (_viewsOption > 0)
-            {
-                if (!HasMoney(Promotion.Costs[_viewsOption])) return;
-                Promotion.Start(video, _viewsOption);
-            }
+            if (_viewsOption > 0 && !HasMoney(Promotion.Costs[_viewsOption])) return;
 
             var channel = Settings.LastChannel = _channel;
 
             //A nota precisa existir antes da sorte e das views dos inscritos
             video.GenerateQuality();
+
+            //A promoção usa a nota do vídeo
+            if (_viewsOption > 0)
+                Promotion.Start(video, _viewsOption);
 
             //Sorte do vídeo
             VideoLuck.DrawLuck(video, channel);

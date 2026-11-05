@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfCustomText xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CustomText>
     <Id>Fails</Id>
@@ -1799,7 +1799,7 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
   </CustomText>
   <CustomText>
     <Id>PromoteEstimateViews</Id>
-    <Text>≈ {0} views em {1} dias</Text>
+    <Text>cerca de {0} views em {1} dias</Text>
   </CustomText>
   <CustomText>
     <Id>PromoteEstimateSubs</Id>

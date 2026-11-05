@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -1306,7 +1306,7 @@ namespace TubeStar
         [Description("No promotion: the video only gets organic views.")]
         PromoteNoneInfo,
 
-        [Description("≈ {0} views over {1} days")]
+        [Description("About {0} views over {1} days")]
         PromoteEstimateViews,
 
         [Description("{0} to {1} subscribers")]

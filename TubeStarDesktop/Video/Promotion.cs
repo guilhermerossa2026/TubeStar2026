@@ -25,19 +25,36 @@ namespace TubeStar
             return EnglishStrings.None.Translate();
         }
 
-        //Começa a campanha: total sorteado em ±10% do estimado, entregue em Days dias
+        //Centro da entrega (60% a 130% do estimado), puxado pela nota do vídeo (0-100). Sem nota: 0,95
+        public static double Center(Video video)
+        {
+            if (video == null || !video.Quality.HasValue)
+                return 0.95;
+            double grade = Math.Max(0, Math.Min(100, video.Quality.Value));
+            return 0.6 + 0.7 * (grade / 100.0);
+        }
+
+        //Views esperadas da campanha (centro) para mostrar como "cerca de"
+        public static int EstimateViews(Video video, int level)
+        {
+            if (level <= 0 || level >= Views.Length)
+                return 0;
+            return (int)Math.Round(Views[level] * Center(video));
+        }
+
+        //Começa a campanha: sorteia ±15% em torno do centro (limitado a 60%-130%), entregue em Days dias
         public static void Start(Video video, int level)
         {
             if (level <= 0 || level >= Costs.Length)
                 return;
-            int baseViews = Views[level];
-            int variation = baseViews / 10;
-            video.PromotionViewsLeft = baseViews - variation + RandomHelpers.RandomInt(variation * 2 + 1);
+            double center = Center(video);
+            double factor = center * (0.85 + RandomHelpers.RandomInt(301) / 1000.0);
+            factor = Math.Max(0.6, Math.Min(1.3, factor));
+            video.PromotionViewsLeft = (int)Math.Round(Views[level] * factor);
             video.PromotionDaysLeft = Days;
             video.OnceOffCost += Costs[level];
             video.PromotionCost += Costs[level];
         }
-
         //Views promovidas de hoje (divide o que falta pelos dias restantes)
         public static int TakeTodayViews(Video video)
         {

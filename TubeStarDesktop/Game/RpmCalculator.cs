@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace TubeStar
 {
@@ -12,23 +12,23 @@ namespace TubeStar
         {
             switch (niche)
             {
-                case VideoCategory.Finance: return 60;
-                case VideoCategory.Technology: return 45;
-                case VideoCategory.Education: return 40;
-                case VideoCategory.Travel: return 35;
-                case VideoCategory.Fitness: return 35;
-                case VideoCategory.Cooking: return 30;
-                case VideoCategory.Beauty: return 30;
-                case VideoCategory.Sports: return 30;
-                case VideoCategory.Mystery: return 25;
-                case VideoCategory.Games: return 25;
-                case VideoCategory.Vlog: return 25;
-                case VideoCategory.Comedy: return 20;
-                case VideoCategory.Music: return 20;
-                case VideoCategory.Reacts: return 20;
-                case VideoCategory.Kids: return 15;
+                case VideoCategory.Finance: return 55;
+                case VideoCategory.Technology: return 40;
+                case VideoCategory.Education: return 35;
+                case VideoCategory.Travel: return 30;
+                case VideoCategory.Fitness: return 30;
+                case VideoCategory.Cooking: return 25;
+                case VideoCategory.Beauty: return 25;
+                case VideoCategory.Sports: return 25;
+                case VideoCategory.Mystery: return 20;
+                case VideoCategory.Games: return 20;
+                case VideoCategory.Vlog: return 20;
+                case VideoCategory.Comedy: return 15;
+                case VideoCategory.Music: return 15;
+                case VideoCategory.Reacts: return 15;
+                case VideoCategory.Kids: return 10;
             }
-            return 25; //Sem nicho = Games
+            return 20; //Sem nicho = Games
         }
 
         //Semana do calendário do jogo (ano de 112 dias, semana de 7), mesma conta do CalendarDialog
@@ -68,10 +68,11 @@ namespace TubeStar
             return 0.95 + random.NextDouble() * 0.10;
         }
 
-        //Quanto as views de busca e qualidade sobem em nichos de RPM baixo, para a renda não despencar
+        //(+5 = RPM base antigo, para o boost continuar igual)
+                //Quanto as views de busca e qualidade sobem em nichos de RPM baixo, para a renda não despencar
         public static double ViewBoost(VideoCategory niche)
         {
-            return Math.Max(1.0, Math.Pow(25.0 / BaseRpm(niche), 0.35));
+            return Math.Max(1.0, Math.Pow(25.0 / (BaseRpm(niche) + 5), 0.35));
         }
 
         public static double Rpm(Channel channel, Video video)

@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-05
+- RPM −$5 em todos os nichos (Games $20, Finanças $55, Infantil $10), bônus de views dos nichos baratos mantido. Promover vídeo entrega 60–130% do anunciado, puxado pela nota; a tela mostra "cerca de X views".
 - Etapa 6c: loja mais cara. Câmera e Edição com 5 níveis ($600 a $50.000; +4/+10/+16/+22/+30), vale só o maior nível e a compra segue a ordem; Consultor $10 mil; Advogado $6 mil.
 - Troféus desligados (`TrophyManager.Enabled = false`); código mantido para religar se quiser.
 - Etapa 6b (parte 2): "Gasto" do resumo detalhado (custo de vida, vídeos, promoção de vídeo, empréstimo); aviso de custo de vida mostra o valor ("subiu $20/dia, agora $100/dia"); evento de promoção do emprego saiu do sorteio.

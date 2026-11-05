@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>TubeStar - Prévia da tela Finanças</title>
+<style>
+:root{color-scheme:dark;--bg:#0f0f0f;--panel:#1f1f1f;--panel2:#141414;--field:#1a1a1a;--hover:#262626;--hover2:#2d2d2d;--line:#2d2d2d;--text:#f1f1f1;--muted:#aaa;--accent:#e53935;--gain:#3ea66b;--loss:#e5534b;--warn:#d9a441;--r:10px}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:var(--text);font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;padding:20px;font-variant-numeric:tabular-nums}
+.note{max-width:1366px;margin:0 auto 10px;color:var(--muted);font-size:13px}
+.win{width:1366px;min-height:768px;margin:0 auto 24px;background:var(--bg);display:flex;position:relative;overflow:hidden;border:1px solid var(--line)}
+.side{width:196px;background:var(--panel2);border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:4px;flex:none}
+.logo{display:flex;align-items:center;gap:8px;padding:4px 8px 14px;font-weight:600;font-size:17px}
+.logo i{width:30px;height:22px;background:var(--accent);border-radius:6px;display:grid;place-items:center}
+.nav{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);color:var(--muted);font-weight:500;border:1px solid transparent}
+.nav:hover{background:var(--hover);color:var(--text)}
+.nav.on{background:var(--panel);color:var(--text);border-color:var(--line)}
+.nav.on svg{color:var(--accent)}
+svg{flex:none}
+.nav svg{width:20px;height:20px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.hd{height:64px;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-weight:700}
+.hd b{display:block;font-size:15px}.hd small{color:var(--muted);font-size:12px}
+.stat{padding:4px 12px;border-left:1px solid var(--line);white-space:nowrap}
+.stat small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.stat b{font-size:16px;font-weight:600}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--field);color:var(--text);font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--hover2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:#c62f2c}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.body{padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+h1{margin:0;font-size:24px}
+.subt{color:var(--muted);margin:4px 0 0}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line)}
+.tab{padding:10px 14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;display:flex;gap:8px;align-items:center}
+.tab.on{color:var(--text);border-color:var(--accent)}
+.tab.off{opacity:.6}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:.05em;background:var(--hover);color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 7px}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.sum small{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.sum b{display:block;font-size:22px;margin-top:4px}
+.gain{color:var(--gain)}.loss{color:var(--loss)}
+.inv{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.inv .card{display:flex;flex-direction:column;gap:10px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top h3{margin:0;font-size:16px}
+.badge{font-size:11px;font-weight:600;border-radius:20px;padding:3px 9px;border:1px solid}
+.b-ok{color:var(--gain);border-color:var(--gain)}.b-mid{color:var(--warn);border-color:var(--warn)}.b-low{color:#6aa9e0;border-color:#6aa9e0}
+.desc{color:var(--muted);font-size:13px;margin:0;min-height:36px}
+.bal{font-size:26px;font-weight:700}
+.rows{display:flex;flex-direction:column;gap:5px;font-size:13px}
+.rows div{display:flex;justify-content:space-between}
+.rows span:first-child{color:var(--muted)}
+.pend{background:var(--field);border:1px dashed var(--warn);color:var(--warn);border-radius:8px;padding:6px 10px;font-size:12px}
+.acts{display:flex;gap:8px}.acts .btn{flex:1}
+.min{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:8px;cursor:help}
+.chart{display:flex;flex-direction:column;gap:8px}
+.chart h3{margin:0;font-size:16px}
+.chart p{margin:0;color:var(--muted);font-size:12px}
+.modalbg{background:rgba(0,0,0,.6);position:absolute;inset:0;display:grid;place-items:center}
+.modal{width:440px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.7)}
+.modal .mh{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.modal .mh h3{margin:0;font-size:17px}
+.modal .mb{padding:18px;display:flex;flex-direction:column;gap:12px}
+.modal label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.field{background:var(--panel2);border:1px solid var(--accent);border-radius:var(--r);padding:10px 12px;font-size:18px;font-weight:600;display:flex;justify-content:space-between}
+.field span{color:var(--muted);font-size:13px;font-weight:400;align-self:center}
+.warn{background:var(--field);border:1px solid var(--warn);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13px}
+.quick{display:flex;gap:6px}.quick .btn{padding:4px 10px;font-size:12px;font-weight:500}
+.mf{padding:14px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+.frame2{min-height:460px}
+</style>
+</head>
+<body>
+<p class="note">Prévia visual (só HTML, não é o jogo). Tamanho de referência 1366x768. Abaixo da tela principal, o diálogo "Investir na Poupança".</p>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM8 5v14M16 5v14M3 10h5M3 14h5M16 10h5M16 14h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-fin" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 15l4-4 3 3 5-6M16 8h4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 01-8 0zM8 6H4v1a3 3 0 003 3M16 6h4v1a3 3 0 01-3 3M12 14v4M8 20h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-team" viewBox="0 0 24 24"><path d="M9 11a3 3 0 100-6 3 3 0 000 6zM3 20c0-4 3-6 6-6s6 2 6 6M17 11a3 3 0 000-6M18 14c2 .5 3 2.5 3 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<!-- ========== TELA PRINCIPAL ========== -->
+<div class="win">
+ <aside class="side">
+  <div class="logo"><i><svg width="14" height="14" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z" fill="#fff"/></svg></i>TubeStar</div>
+  <a class="nav"><svg><use href="#i-home"/></svg>Principal</a>
+  <a class="nav"><svg><use href="#i-cal"/></svg>Agenda</a>
+  <a class="nav"><svg><use href="#i-film"/></svg>Meus vídeos</a>
+  <a class="nav"><svg><use href="#i-plus"/></svg>Criar vídeo</a>
+  <a class="nav"><svg><use href="#i-send"/></svg>Postar vídeo</a>
+  <a class="nav"><svg><use href="#i-bag"/></svg>Loja</a>
+  <a class="nav on"><svg><use href="#i-fin"/></svg>Finanças</a>
+  <a class="nav"><svg><use href="#i-trophy"/></svg>Top TubeStars</a>
+  <a class="nav"><svg><use href="#i-cap"/></svg>Universidade</a>
+  <a class="nav"><svg><use href="#i-team"/></svg>Funcionários</a>
+ </aside>
+ <div class="main">
+  <header class="hd">
+   <div class="av">M</div>
+   <div><b>Meu Canal</b><small>Ano 1 · Semana 3 · Dia 18</small></div>
+   <div class="sp"></div>
+   <div class="stat"><small>Dinheiro</small><b>$12.400</b></div>
+   <div class="stat"><small>Inscritos</small><b>6.820</b></div>
+   <button class="btn pri">Próximo dia</button>
+  </header>
+  <div class="body">
+   <div><h1>Finanças</h1><p class="subt">Faça seu dinheiro render enquanto você grava. O rendimento cai uma vez por semana.</p></div>
+   <nav class="tabs">
+    <div class="tab on">Mercado</div>
+    <div class="tab off">Colecionáveis <span class="tag">Em breve</span></div>
+    <div class="tab off">Cripto <span class="tag">Em breve</span></div>
+    <div class="tab off">Negócios <span class="tag">Em breve</span></div>
+    <div class="tab off">Impostos <span class="tag">Em breve</span></div>
+   </nav>
+
+   <section class="sum">
+    <div class="card"><small>Dinheiro disponível</small><b>$12.400</b></div>
+    <div class="card"><small>Total investido</small><b>$53.000</b></div>
+    <div class="card"><small>Rendimento da semana</small><b class="gain">+$214</b></div>
+    <div class="card"><small>Lucro acumulado</small><b class="gain">+$1.386</b></div>
+   </section>
+
+   <section class="inv">
+    <div class="card">
+     <div class="top"><h3>Poupança</h3><span class="badge b-ok">Risco: Nenhum</span></div>
+     <p class="desc">Rende pouco, mas é seguro. Você saca na hora.</p>
+     <div class="bal">$5.000</div>
+     <div class="rows">
+      <div><span>Rendimento médio</span><span>~0,2% por semana</span></div>
+      <div><span>Rendeu na semana</span><span class="gain">+$10</span></div>
+      <div><span>Resgate</span><span>Imediato</span></div>
+     </div>
+     <div class="acts"><button class="btn pri">Investir</button><button class="btn">Resgatar</button></div>
+     <div class="min" title="Você só paga imposto sobre o lucro, nunca sobre o valor que colocou.">Mínimo $1.000 · Imposto 15% sobre o lucro no resgate</div>
+    </div>
+
+    <div class="card">
+     <div class="top"><h3>Ações / Fundo</h3><span class="badge b-mid">Risco: Médio</span></div>
+     <p class="desc">Rende mais, mas oscila: de -5% a +6% por semana.</p>
+     <div class="bal">$8.000</div>
+     <div class="rows">
+      <div><span>Rendimento médio</span><span>~0,5% por semana</span></div>
+      <div><span>Variação da semana</span><span class="gain">+3,2% (+$256)</span></div>
+      <div><span>Semana passada</span><span class="loss">-1,8%</span></div>
+     </div>
+     <div class="acts"><button class="btn pri">Investir</button><button class="btn">Resgatar</button></div>
+     <div class="min" title="Você só paga imposto sobre o lucro, nunca sobre o valor que colocou.">Mínimo $1.000 · Imposto 15% sobre o lucro no resgate</div>
+    </div>
+
+    <div class="card">
+     <div class="top"><h3>Imóvel</h3><span class="badge b-low">Risco: Baixo</span></div>
+     <p class="desc">Aluguel toda semana, mais a valorização. Vender é demorado.</p>
+     <div class="bal">$40.000</div>
+     <div class="rows">
+      <div><span>Aluguel</span><span>~0,4% por semana</span></div>
+      <div><span>Rendeu na semana</span><span class="gain">+$160</span></div>
+      <div><span>Valorização</span><span class="gain">+1,1% no mês</span></div>
+     </div>
+     <div class="pend">Venda em andamento: 2 semanas restantes</div>
+     <div class="acts"><button class="btn pri">Investir</button><button class="btn" disabled>Resgatar</button></div>
+     <div class="min" title="Vender leva de 2 a 4 semanas. O dinheiro cai na conta quando terminar.">Mínimo $1.000 · Imposto 15% sobre o lucro no resgate</div>
+    </div>
+   </section>
+
+   <section class="card chart">
+    <h3>Patrimônio investido nas últimas 8 semanas</h3>
+    <p>Soma de Poupança, Ações e Imóvel. Cresce com novos aportes e com o rendimento.</p>
+    <svg viewBox="0 0 1060 150" width="100%" height="150" preserveAspectRatio="none">
+     <g stroke="#2d2d2d" stroke-width="1"><line x1="40" y1="20" x2="1050" y2="20"/><line x1="40" y1="65" x2="1050" y2="65"/><line x1="40" y1="110" x2="1050" y2="110"/></g>
+     <g fill="#aaa" font-size="11" font-family="Inter,Arial"><text x="0" y="24">$55k</text><text x="0" y="69">$40k</text><text x="0" y="114">$25k</text></g>
+     <path d="M40 120 L186 108 L330 100 L474 82 L618 88 L762 60 L906 48 L1050 38 L1050 130 L40 130 Z" fill="rgba(62,166,107,.15)"/>
+     <path d="M40 120 L186 108 L330 100 L474 82 L618 88 L762 60 L906 48 L1050 38" fill="none" stroke="#3ea66b" stroke-width="2.5" stroke-linejoin="round"/>
+     <g fill="#3ea66b"><circle cx="40" cy="120" r="3.5"/><circle cx="186" cy="108" r="3.5"/><circle cx="330" cy="100" r="3.5"/><circle cx="474" cy="82" r="3.5"/><circle cx="618" cy="88" r="3.5"/><circle cx="762" cy="60" r="3.5"/><circle cx="906" cy="48" r="3.5"/><circle cx="1050" cy="38" r="5" stroke="#fff" stroke-width="1.5"/></g>
+     <g fill="#aaa" font-size="11" font-family="Inter,Arial" text-anchor="middle"><text x="40" y="146">Sem 1</text><text x="186" y="146">Sem 2</text><text x="330" y="146">Sem 3</text><text x="474" y="146">Sem 4</text><text x="618" y="146">Sem 5</text><text x="762" y="146">Sem 6</text><text x="906" y="146">Sem 7</text><text x="1040" y="146">Agora</text></g>
+    </svg>
+   </section>
+  </div>
+ </div>
+</div>
+
+<!-- ========== DIÁLOGO ========== -->
+<p class="note">Diálogo ao clicar em "Investir" na Poupança:</p>
+<div class="win frame2">
+ <div class="modalbg" style="position:absolute">
+  <div class="modal">
+   <div class="mh"><h3>Investir na Poupança</h3><button class="btn" style="padding:2px 10px">X</button></div>
+   <div class="mb">
+    <div style="color:var(--muted);font-size:13px">Disponível: <b style="color:var(--text)">$12.400</b> · Já na Poupança: <b style="color:var(--text)">$5.000</b></div>
+    <label>Valor a investir</label>
+    <div class="field">$ 500 <span>mínimo $1.000</span></div>
+    <div class="warn">O valor mínimo para investir é $1.000. Aumente o valor para continuar.</div>
+    <div class="quick"><button class="btn">$1.000</button><button class="btn">$2.500</button><button class="btn">$5.000</button><button class="btn">Tudo</button></div>
+    <div class="rows">
+     <div><span>Rendimento estimado</span><span class="gain">~0,2% por semana</span></div>
+     <div><span>Imposto no resgate</span><span>15% sobre o lucro</span></div>
+     <div><span>Risco</span><span>Nenhum</span></div>
+    </div>
+   </div>
+   <div class="mf"><button class="btn">Cancelar</button><button class="btn pri" disabled>Confirmar investimento</button></div>
+  </div>
+ </div>
+</div>
+</body>
+</html>

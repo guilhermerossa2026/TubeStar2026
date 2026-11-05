@@ -59,8 +59,31 @@ namespace TubeStar
                     }
 
                     imgVideo.Source = _video.GetThumbnail();
+                    UpdateLuckBadge();
                 }
             }
+        }
+
+        //Selo de sorte no canto da miniatura: so videos do jogador, com pelo menos 1 dia no ar
+        private void UpdateLuckBadge()
+        {
+            luckBadge.Visibility = Visibility.Collapsed;
+            if (_video == null || _channel == null || _channel.IsRivalChannel || _channel == Channel.UnreleasedVideos || _video.Iterations < 1)
+                return;
+
+            string text;
+            string back;
+            string fore = "#FFFFFF";
+            if (_video.LuckTier == 3) { text = "VIRAL"; back = "#E53935"; }
+            else if (_video.LuckTier == 2) { text = "EM ALTA"; back = "#2E7D32"; }
+            else if (_video.LuckTier == 1) { text = "FLOPOU"; back = "#3A3A3A"; fore = "#CFCFCF"; }
+            else return;
+
+            BrushConverter conv = new BrushConverter();
+            txtLuckBadge.Text = text;
+            txtLuckBadge.Foreground = (Brush)conv.ConvertFromString(fore);
+            luckBadge.Background = (Brush)conv.ConvertFromString(back);
+            luckBadge.Visibility = Visibility.Visible;
         }
 
         private bool _subscribed;

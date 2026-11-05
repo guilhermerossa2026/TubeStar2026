@@ -11,7 +11,7 @@ namespace TubeStar
         public const int TierViral = 3;
 
         //Nota (0 a 10) -> % dos inscritos que assistem no dia da postagem (interpolado)
-        private static readonly double[] ReachByGrade = { 1, 1, 1, 3, 5, 8, 11, 15, 20, 25, 30 };
+        private static readonly double[] ReachByGrade = { 0.5, 0.5, 0.5, 3, 5, 8, 11, 15, 20, 25, 30 };
 
         //Devolve a fração (0,01 a 0,30)
         public static double ReachPercent(double grade)
@@ -37,7 +37,8 @@ namespace TubeStar
         public static double Draw(double grade, double momentum, int subscribers, double r, double u, double u2, out int tier)
         {
             double flop, good, viral;
-            if (grade < 5) { flop = 0.30; good = 0.045; viral = 0.005; }
+            if (grade < 3) { flop = 0.60; good = 0.02; viral = 0.002; }
+            else if (grade < 5) { flop = 0.40; good = 0.045; viral = 0.005; }
             else if (grade < 7) { flop = 0.20; good = 0.08; viral = 0.02; }
             else if (grade < 9) { flop = 0.12; good = 0.11; viral = 0.03; }
             else { flop = 0.08; good = 0.13; viral = 0.04; }
@@ -151,6 +152,16 @@ namespace TubeStar
         {
             if (subscribers >= 2000) return 0;
             return 80.0 * (1.0 - subscribers / 2000.0);
+        }
+
+        //Fator da nota no empurrão: nota >= 7 = 1, cai por faixas até 0 na nota 2
+        public static double SearchFloorGradeFactor(double grade)
+        {
+            if (grade >= 7) return 1;
+            if (grade >= 5) return 0.6 + 0.4 * (grade - 5) / 2.0;
+            if (grade >= 3) return 0.25 + 0.35 * (grade - 3) / 2.0;
+            if (grade > 2) return 0.25 * (grade - 2);
+            return 0;
         }
     }
 }

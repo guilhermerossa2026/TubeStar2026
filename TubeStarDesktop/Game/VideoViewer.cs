@@ -148,8 +148,10 @@ namespace TubeStar
             double searchEngineViews = video.Views / (50 * video.Iterations);
             //Empurrão: nos primeiros dias canais pequenos têm um mínimo de views de busca
             if (video.Iterations <= VideoLuck.SearchFloorDays && !channel.IsRivalChannel)
-                searchEngineViews = Math.Max(searchEngineViews, VideoLuck.SearchFloor(channel.Subscribers));
+                searchEngineViews = Math.Max(searchEngineViews, VideoLuck.SearchFloor(channel.Subscribers) * VideoLuck.SearchFloorGradeFactor(video.Quality.Value / 10.0));
             var qualityViews = Math.Max(0, ((video.Quality.Value - Math.Pow(video.Iterations, Player.Current.ChallengeMode ? 2 : 1)) * video.Quality.Value) / Math.Max((Player.Current.ChallengeMode ? 2 : 1), (100 - video.Quality.Value) / 2));
+            //Cauda de busca também cai com nota baixa (nota 7+ inteira, nota 2 ou menos zero)
+            qualityViews *= VideoLuck.SearchFloorGradeFactor(video.Quality.Value / 10.0);
             //Concorrência do nicho: nicho lotado recebe menos views de busca e de qualidade
             //Tipo que combina com o nicho: +10% nessas views
             var iterationViews = (searchEngineViews + qualityViews) * video.Luck * video.Category.GetCompetitionMultiplier() * video.GetTypeMultiplier() + tempShares;

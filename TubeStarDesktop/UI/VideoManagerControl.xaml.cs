@@ -292,6 +292,7 @@ namespace TubeStar
 
             panelKpis.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelChart.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
+            panelMonetization.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelChannelButtons.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelOverview.Visibility = _overview ? Visibility.Visible : Visibility.Collapsed;
             txtUnreleasedHint.Visibility = unreleased ? Visibility.Visible : Visibility.Collapsed;
@@ -309,12 +310,17 @@ namespace TubeStar
                 txtKpiIncome.ToolTip = channel.Income.ToCurrencyString();
                 txtKpiSubs.Text = channel.Subscribers.ToShortNumber();
                 //RPM de hoje (RpmCalculator); a tooltip explica e mostra a média histórica
-                txtKpiRpm.Text = RpmCalculator.ChannelRpm(channel).ToCurrencyString();
+                txtKpiRpm.Text = channel.CanEarnAds() ? RpmCalculator.ChannelRpm(channel).ToCurrencyString() : (0.0).ToCurrencyString();
                 string rpmTip = EnglishStrings.ChannelRpmTip.Translate();
+                if (!channel.CanEarnAds())
+                    rpmTip += "\n" + EnglishStrings.MonetizationLockedTip.Translate();
                 if (totalViews > 0)
                     rpmTip += "\n" + String.Format(EnglishStrings.ChannelRpmAverage.Translate(), ActiveChannel.GetRpm(channel).ToCurrencyString());
                 txtKpiRpm.ToolTip = rpmTip;
                 lblRpm.ToolTip = rpmTip;
+                iconRpmLock.Visibility = channel.CanEarnAds() ? Visibility.Collapsed : Visibility.Visible;
+                iconRpmLock.ToolTip = EnglishStrings.NotMonetizedShort.Translate();
+                UpdateMonetization(channel);
                 Ranking.Current.Refresh(false);
                 var entry = Ranking.Current.Channels.FirstOrDefault(c => c.IsPlayer && c.PlayerChannelId == channel.RankId);
                 txtKpiRank.Text = entry != null && entry.Position > 0 ? "#" + entry.Position : "-";
@@ -544,6 +550,56 @@ namespace TubeStar
         {
             if (PostRequested != null)
                 PostRequested(video);
+        }
+
+        //Bloco de monetização do canal escolhido
+        private void UpdateMonetization(Channel channel)
+        {
+            lblMonetization.Text = EnglishStrings.MonetizationTitle.Translate().ToUpper();
+            long views = channel.TotalViews();
+            bool approved = channel.MonetizationState >= 2;
+            panelMonetizationGoal.Visibility = approved ? Visibility.Collapsed : Visibility.Visible;
+            if (approved)
+            {
+                iconMonetization.Data = (System.Windows.Media.Geometry)FindResource("IconCheck");
+                iconMonetization.Stroke = (System.Windows.Media.Brush)FindResource("YtGainBrush");
+            }
+            else
+            {
+                iconMonetization.Data = (System.Windows.Media.Geometry)FindResource("IconLock");
+                if (channel.MonetizationState == 1)
+                    iconMonetization.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xD9, 0xA4, 0x41));
+                else
+                    iconMonetization.Stroke = (System.Windows.Media.Brush)FindResource("YtTextSecondaryBrush");
+            }
+
+            txtMonSubs.Text = String.Format(EnglishStrings.MonetizationSubs.Translate(), channel.Subscribers.ToNumberString(), Channel.MonetizationSubsGoal.ToNumberString());
+            barMonSubs.Value = Math.Min(1.0, channel.Subscribers / (double)Channel.MonetizationSubsGoal);
+            txtMonViews.Text = String.Format(EnglishStrings.MonetizationViews.Translate(), views.ToNumberString(), Channel.MonetizationViewsGoal.ToNumberString());
+            barMonViews.Value = Math.Min(1.0, views / (double)Channel.MonetizationViewsGoal);
+
+            bool canRequest = channel.MonetizationState == 0 && channel.MonetizationGoalReached() && !channel.IsSuspended;
+            btnMonRequest.Content = EnglishStrings.MonetizationRequest.Translate();
+            btnMonRequest.Visibility = canRequest ? Visibility.Visible : Visibility.Collapsed;
+
+            if (approved)
+                txtMonStatus.Text = EnglishStrings.MonetizationApproved.Translate();
+            else if (channel.MonetizationState == 1)
+                txtMonStatus.Text = String.Format(EnglishStrings.MonetizationReview.Translate(), Math.Max(1, channel.MonetizationReviewEndDay - Player.Current.Iterations));
+            else
+                txtMonStatus.Text = "";
+            txtMonStatus.Visibility = txtMonStatus.Text.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+            panelMonetization.ToolTip = approved ? null : EnglishStrings.MonetizationLockedTip.Translate();
+        }
+
+        private void btnMonRequest_Click(object sender, RoutedEventArgs e)
+        {
+            var channel = _currentChannel;
+            if (channel == null || channel.MonetizationState != 0 || !channel.MonetizationGoalReached())
+                return;
+            channel.MonetizationState = 1;
+            channel.MonetizationReviewEndDay = Player.Current.Iterations + RandomHelpers.RandomInt(3, 8);
+            UpdateMonetization(channel);
         }
 
         private void btnStats_Click(object sender, RoutedEventArgs e)

@@ -45,7 +45,7 @@ namespace TubeStar
             //RPM do vídeo: ganho por mil views até agora; a tooltip mostra o RPM de hoje
             string rpmTip = null;
             if (channel != null && video.Quality.HasValue)
-                rpmTip = String.Format(EnglishStrings.VideoRpmTip.Translate(), RpmCalculator.Rpm(channel, video).ToCurrencyString());
+                rpmTip = channel.CanEarnAds() ? String.Format(EnglishStrings.VideoRpmTip.Translate(), RpmCalculator.Rpm(channel, video).ToCurrencyString()) : EnglishStrings.MonetizationLockedTip.Translate();
             AddKpi(moneyKpis, EnglishStrings.ChannelRpm.Translate(), video.Views > 0 ? (video.Income * 1000.0 / video.Views).ToCurrencyString() : "-", null, rpmTip);
 
             ShowTab(true);

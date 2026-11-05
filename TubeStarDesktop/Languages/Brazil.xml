@@ -1898,6 +1898,50 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
     <Text>RPM agora: quanto o canal ganha a cada mil views, hoje. Depende do nicho, da época do ano, dos anúncios nos vídeos, da qualidade do vídeo e dos inscritos.</Text>
   </CustomText>
   <CustomText>
+    <Id>MonetizationTitle</Id>
+    <Text>Monetização</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationSubs</Id>
+    <Text>Inscritos {0} / {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationViews</Id>
+    <Text>Views {0} / {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationRequest</Id>
+    <Text>Pedir monetização</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationReview</Id>
+    <Text>Em análise (resposta em até {0} dias)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationApproved</Id>
+    <Text>Monetizado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NotMonetizedShort</Id>
+    <Text>Não monetizado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationLockedTip</Id>
+    <Text>Sem monetização: os anúncios pagam $0 até chegar a 5.000 inscritos e 160.000 views e ser aprovado. O financiamento coletivo continua funcionando.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MonetizationNotMonetized</Id>
+    <Text>$0 (não monetizado)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertMonetizationApproved</Id>
+    <Text>Canal "{0}" aprovado na monetização! Agora recebe dos anúncios.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>AlertMonetizationGoal</Id>
+    <Text>Canal "{0}" atingiu a meta de monetização: peça no painel do canal.</Text>
+  </CustomText>
+  <CustomText>
     <Id>ChannelRpmAverage</Id>
     <Text>Média até agora: {0} por mil views</Text>
   </CustomText>

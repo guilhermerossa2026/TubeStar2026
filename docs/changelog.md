@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-05
+- Meta de monetização: canal só recebe de anúncios depois de 5 mil inscritos + 160 mil views, pedido no painel e análise de 3 a 7 dias. Bloco "Monetização" com barras, cadeado cinza (âmbar em análise) e check verde ao aprovar; Crowdfunding funciona antes.
 - Etapa 6d: imposto semanal progressivo sobre o lucro do canal (até $500 isento, 15% até $5 mil, 25% acima), cobrado ao fechar a semana; sem dinheiro vira dívida fiscal cobrada na semana seguinte; Advogado Fiscal ($50 mil) tira 5 pontos.
 - RPM −$5 em todos os nichos (Games $20, Finanças $55, Infantil $10), bônus de views dos nichos baratos mantido. Promover vídeo entrega 60–130% do anunciado, puxado pela nota; a tela mostra "cerca de X views".
 - Etapa 6c: loja mais cara. Câmera e Edição com 5 níveis ($600 a $50.000; +4/+10/+16/+22/+30), vale só o maior nível e a compra segue a ordem; Consultor $10 mil; Advogado $6 mil.

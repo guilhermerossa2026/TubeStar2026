@@ -363,6 +363,10 @@ namespace TubeStar
             if (payedView)
                 return 0;
 
+            //Sem monetização aprovada não há renda de anúncios (crowdfunding fica de fora)
+            if (!channel.CanEarnAds())
+                return 0;
+
             //Renda = views/1000 x RPM (RpmCalculator já inclui o modo desafio e o merchandising)
             double income = RpmCalculator.Rpm(channel, video) / 1000.0;
 

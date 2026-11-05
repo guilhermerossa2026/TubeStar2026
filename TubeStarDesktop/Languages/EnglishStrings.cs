@@ -1331,6 +1331,39 @@ namespace TubeStar
         [Description("RPM now: what the channel earns per 1,000 views, today. It depends on the niche, time of year, ads in videos, video quality and subscribers.")]
         ChannelRpmTip,
 
+        [Description("Monetization")]
+        MonetizationTitle,
+
+        [Description("Subscribers {0} / {1}")]
+        MonetizationSubs,
+
+        [Description("Views {0} / {1}")]
+        MonetizationViews,
+
+        [Description("Request monetization")]
+        MonetizationRequest,
+
+        [Description("Under review (answer within {0} days)")]
+        MonetizationReview,
+
+        [Description("Monetized")]
+        MonetizationApproved,
+
+        [Description("Not monetized: ads pay $0 until you reach 5,000 subscribers and 160,000 views and are approved. Crowdfunding still works.")]
+        MonetizationLockedTip,
+
+        [Description("Not monetized")]
+        NotMonetizedShort,
+
+        [Description("$0 (not monetized)")]
+        MonetizationNotMonetized,
+
+        [Description("Channel \"{0}\" was approved for monetization! It now earns from ads.")]
+        AlertMonetizationApproved,
+
+        [Description("Channel \"{0}\" reached the monetization goal: request it in the channel panel.")]
+        AlertMonetizationGoal,
+
         [Description("Average so far: {0} per 1,000 views")]
         ChannelRpmAverage,
 

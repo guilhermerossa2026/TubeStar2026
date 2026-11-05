@@ -19,6 +19,32 @@ namespace TubeStar
         //Fração de inscrito da perda por ficar parado, guardada até somar 1
         public double IdleUnsubsFraction { get; set; }
 
+        //Monetização: 0 = bloqueado, 1 = em análise, 2 = aprovado (saves antigos começam bloqueados)
+        public int MonetizationState { get; set; }
+        //Dia (Player.Iterations) em que a análise termina; -1 = sem análise
+        public int MonetizationReviewEndDay { get; set; }
+        //Já avisou que o canal bateu a meta
+        public bool MonetizationGoalAnnounced { get; set; }
+
+        public const int MonetizationSubsGoal = 5000;
+        public const long MonetizationViewsGoal = 160000;
+
+        //Canais de rival não passam pela monetização
+        public bool CanEarnAds()
+        {
+            return IsRivalChannel || MonetizationState >= 2;
+        }
+
+        public long TotalViews()
+        {
+            return Videos.Sum(v => (long)v.Views);
+        }
+
+        public bool MonetizationGoalReached()
+        {
+            return Subscribers >= MonetizationSubsGoal && TotalViews() >= MonetizationViewsGoal;
+        }
+
         private AdvertisingStrategy _advertising;
         public AdvertisingStrategy Advertising
         {
@@ -42,6 +68,7 @@ namespace TubeStar
             : base()
         {
             Momentum = 1;
+            MonetizationReviewEndDay = -1;
             Videos = new HashSet<Video>();
             Advertising = AdvertisingStrategy.Normal;
             IncomeOverTime = new List<double>();

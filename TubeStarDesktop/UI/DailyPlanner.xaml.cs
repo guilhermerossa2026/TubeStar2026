@@ -847,6 +847,21 @@ namespace TubeStar
                             }
                         }
 
+                        //Monetização: análise termina e aviso de meta batida (só canais do jogador)
+                        if (!channel.IsRivalChannel)
+                        {
+                            if (channel.MonetizationState == 1 && Player.Current.Iterations >= channel.MonetizationReviewEndDay)
+                            {
+                                channel.MonetizationState = 2;
+                                _videoAlerts.Add(String.Format(EnglishStrings.AlertMonetizationApproved.Translate(), channel.Name));
+                            }
+                            else if (channel.MonetizationState == 0 && !channel.IsSuspended && !channel.MonetizationGoalAnnounced && channel.MonetizationGoalReached())
+                            {
+                                channel.MonetizationGoalAnnounced = true;
+                                _videoAlerts.Add(String.Format(EnglishStrings.AlertMonetizationGoal.Translate(), channel.Name));
+                            }
+                        }
+
                         //Momento e canal parado (só canais do jogador com vídeos)
                         if (!channel.IsRivalChannel && !channel.IsSuspended && channel.Videos.Count > 0)
                         {

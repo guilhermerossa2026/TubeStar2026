@@ -81,9 +81,28 @@
                             <TextBlock x:Name="lblSubs" Style="{StaticResource KpiLabelStyle}" />
                             <TextBlock x:Name="txtKpiSubs" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
                             <TextBlock x:Name="lblRpm" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                <Path x:Name="iconRpmLock" Data="{StaticResource IconLock}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stretch="Uniform" Width="12" Height="12" Margin="6,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" />
+                            </StackPanel>
                             <TextBlock x:Name="lblRank" Style="{StaticResource KpiLabelStyle}" />
                             <TextBlock x:Name="txtKpiRank" Style="{StaticResource KpiValueStyle}" />
+                        </StackPanel>
+
+                        <!-- monetização (canal escolhido) -->
+                        <StackPanel x:Name="panelMonetization" Margin="0,12,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Path x:Name="iconMonetization" Data="{StaticResource IconLock}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stretch="Uniform" Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center" />
+                                <TextBlock x:Name="lblMonetization" Style="{StaticResource KpiLabelStyle}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel x:Name="panelMonetizationGoal">
+                                <TextBlock x:Name="txtMonSubs" Style="{StaticResource MutedTextStyle}" FontSize="11" Margin="0,4,0,2" />
+                                <ProgressBar x:Name="barMonSubs" Height="6" Minimum="0" Maximum="1" BorderThickness="0" Background="{StaticResource YtDarkBorderBrush}" Foreground="{StaticResource YtRedBrush}" />
+                                <TextBlock x:Name="txtMonViews" Style="{StaticResource MutedTextStyle}" FontSize="11" Margin="0,6,0,2" />
+                                <ProgressBar x:Name="barMonViews" Height="6" Minimum="0" Maximum="1" BorderThickness="0" Background="{StaticResource YtDarkBorderBrush}" Foreground="{StaticResource YtRedBrush}" />
+                            </StackPanel>
+                            <TextBlock x:Name="txtMonStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                            <Button x:Name="btnMonRequest" Style="{StaticResource PrimaryButtonStyle}" Margin="0,8,0,0" Click="btnMonRequest_Click" />
                         </StackPanel>
 
                         <TextBlock x:Name="lblVideos" Style="{StaticResource KpiLabelStyle}" />

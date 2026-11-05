@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-05 — Meta de monetização mais alta que a real
+**Decisão:** 5 mil inscritos + 160 mil views (real: 1 mil + 4 mil horas), com análise de 3 a 7 dias. Saves antigos começam bloqueados (dono começou jogo novo).
+**Motivo:** escolha do dono para o canal não ganhar desde o primeiro vídeo e o começo ser mais desafiador. Rever se o início ficar arrastado.
+
 ## 2026-11-05 — Equipamento: vale só o melhor nível
 **Decisão:** Câmera/Edição contam só o maior nível comprado e exigem o anterior. Troféus desligados.
 **Motivo:** somar os 5 níveis levava a nota média a 8,7 (66% dos vídeos ≥9); com o maior nível fica ~5,3. Alternativa descartada: manter soma com bônus menores. Troféus nunca funcionaram para o dono e não agregam agora.

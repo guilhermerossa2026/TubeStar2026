@@ -34,7 +34,11 @@ namespace TubeStar
         {
             if (RandomHelpers.Chance(25))
             {
-                RandomEvent randomEvent = (RandomEvent)(RandomHelpers.RandomInt(Enum.GetValues(typeof(RandomEvent)).Length) + 1);
+                RandomEvent randomEvent;
+                do
+                {
+                    randomEvent = (RandomEvent)(RandomHelpers.RandomInt(Enum.GetValues(typeof(RandomEvent)).Length) + 1);
+                } while (randomEvent == RandomEvent.Promotion); //Promoção removida: não sorteia mais
 
                 switch (randomEvent)
                 {
@@ -85,8 +89,9 @@ namespace TubeStar
                         break;
                     case RandomEvent.CostOfLivingIncrease:
                         {
-                            Player.Current.CostOfLivingExtra += 20;
-                            ShowMessage(EnglishStrings.CostOfLivingIncrease.Translate(), MessagePicture.Money);
+                            //Save antigo podia ter extra negativo: começa do zero
+                            Player.Current.CostOfLivingExtra = Math.Max(0, Player.Current.CostOfLivingExtra) + 20;
+                            ShowMessage(String.Format(EnglishStrings.CostOfLivingIncreaseAmount.Translate(), 20, 80 + Player.Current.CostOfLivingExtra), MessagePicture.Money);
                         }
                         break;
                     case RandomEvent.LoseJob:
@@ -207,8 +212,11 @@ namespace TubeStar
                         break;
                     case RandomEvent.CostOfLivingDrops:
                         {
-                            Player.Current.CostOfLivingExtra -= 20;
-                            ShowMessage(EnglishStrings.CostOfLivingDecreased.Translate(), MessagePicture.Money);
+                            //Nunca abaixo de 0: sem crédito negativo escondido
+                            int oldExtra = Math.Max(0, Player.Current.CostOfLivingExtra);
+                            Player.Current.CostOfLivingExtra = Math.Max(0, oldExtra - 20);
+                            if (oldExtra > 0)
+                                ShowMessage(String.Format(EnglishStrings.CostOfLivingDecreaseAmount.Translate(), oldExtra - Player.Current.CostOfLivingExtra, 80 + Player.Current.CostOfLivingExtra), MessagePicture.Money);
                         }
                         break;
                     case RandomEvent.FreeClass:

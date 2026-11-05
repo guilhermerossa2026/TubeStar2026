@@ -1046,6 +1046,18 @@ namespace TubeStar
         SummaryChannel,
         [Description("Other")]
         SummaryOther,
+        [Description("Living cost")]
+        SummaryLivingCost,
+        [Description("Videos")]
+        SummaryVideoCost,
+        [Description("Video promotion")]
+        SummaryPromotionCost,
+        [Description("Loan")]
+        SummaryLoanCost,
+        [Description("Your cost of living went up ${0}/day (now ${1}/day)")]
+        CostOfLivingIncreaseAmount,
+        [Description("Your cost of living went down ${0}/day (now ${1}/day)")]
+        CostOfLivingDecreaseAmount,
         [Description("Subscribers gained")]
         VideoSubscribersGained,
         [Description("Niche")]

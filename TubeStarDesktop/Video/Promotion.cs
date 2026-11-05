@@ -35,6 +35,7 @@ namespace TubeStar
             video.PromotionViewsLeft = baseViews - variation + RandomHelpers.RandomInt(variation * 2 + 1);
             video.PromotionDaysLeft = Days;
             video.OnceOffCost += Costs[level];
+            video.PromotionCost += Costs[level];
         }
 
         //Views promovidas de hoje (divide o que falta pelos dias restantes)

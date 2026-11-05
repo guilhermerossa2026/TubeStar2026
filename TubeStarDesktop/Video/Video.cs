@@ -52,6 +52,8 @@ namespace TubeStar
 
         public double CostPerView { get; set; }
         public double OnceOffCost { get; set; }
+        //Parte do OnceOffCost que foi da promoção (para o resumo; 0 em saves antigos)
+        public double PromotionCost { get; set; }
 
         public List<VideoAttribute> Attributes { get; set; }
 

@@ -196,7 +196,20 @@ namespace TubeStar
             if (stats.OtherEarned > 0)
                 earned.Children.Add(CreateEarnedLine(EnglishStrings.SummaryOther.Translate(), stats.OtherEarned));
             result.Add(earned);
-            result.Add(CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToShortCurrencyString(), null, stats.Spent.ToCurrencyString()));
+            //Gasto com a origem embaixo (só se o resumo tiver as partes)
+            var spent = (StackPanel)CreateKpi(EnglishStrings.SummarySpent.Translate(), stats.Spent.ToShortCurrencyString(), null, stats.Spent.ToCurrencyString());
+            if (stats.LivingCost + stats.VideoCost + stats.VideoPromotionCost + stats.LoanCost > 0)
+            {
+                if (stats.LivingCost > 0)
+                    spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryLivingCost.Translate(), stats.LivingCost));
+                if (stats.VideoCost > 0)
+                    spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryVideoCost.Translate(), stats.VideoCost));
+                if (stats.VideoPromotionCost > 0)
+                    spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryPromotionCost.Translate(), stats.VideoPromotionCost));
+                if (stats.LoanCost > 0)
+                    spent.Children.Add(CreateEarnedLine(EnglishStrings.SummaryLoanCost.Translate(), stats.LoanCost));
+            }
+            result.Add(spent);
             result.Add(CreateKpi(EnglishStrings.SummaryBalance.Translate(), stats.Balance.ToShortCurrencyString(),
                 FindBrush(stats.Balance < 0 ? "YtLossBrush" : "YtGainBrush"), stats.Balance.ToCurrencyString()));
             result.Add(CreateKpi(EnglishStrings.Views.Translate(), stats.Views.ToShortNumber(), null));
@@ -684,12 +697,14 @@ namespace TubeStar
             Player.Current.Money -= 80; //Living Expenses
             Player.Current.Money -= Math.Max(0, Player.Current.CostOfLivingExtra);
             today.Spent += 80 +Math.Max(0, Player.Current.CostOfLivingExtra);
+            today.LivingCost += 80 + Math.Max(0, Player.Current.CostOfLivingExtra);
 
             if(StoreItems.Current.Loan.Purchased)
             {
                 Player.Current.LoanPayOff -= StoreItems.Current.Loan.AdditionalCost;
                 Player.Current.Money -= StoreItems.Current.Loan.AdditionalCost;
                 today.Spent += StoreItems.Current.Loan.AdditionalCost;
+                today.LoanCost += StoreItems.Current.Loan.AdditionalCost;
 
                 if (Player.Current.LoanPayOff <= 0)
                 {
@@ -764,6 +779,9 @@ namespace TubeStar
                             {
                                 dailyExpenses += video.Cost;
                                 dailyExpenses += video.OnceOffCost;
+                                double promoCost = Math.Min(video.PromotionCost, video.OnceOffCost);
+                                today.VideoPromotionCost += promoCost;
+                                today.VideoCost += video.Cost + video.OnceOffCost - promoCost;
                                 today.VideosPosted++;
                             }
 

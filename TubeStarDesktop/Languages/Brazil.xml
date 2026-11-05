@@ -1570,6 +1570,30 @@ Vale a partir de amanhã, e só dá para trocar de novo depois de 7 dias.</Text>
     <Text>Outros</Text>
   </CustomText>
   <CustomText>
+    <Id>SummaryLivingCost</Id>
+    <Text>Custo de vida</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryVideoCost</Id>
+    <Text>Vídeos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryPromotionCost</Id>
+    <Text>Promoção de vídeo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>SummaryLoanCost</Id>
+    <Text>Empréstimo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CostOfLivingIncreaseAmount</Id>
+    <Text>Custo de vida subiu ${0}/dia (agora ${1}/dia)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>CostOfLivingDecreaseAmount</Id>
+    <Text>Custo de vida caiu ${0}/dia (agora ${1}/dia)</Text>
+  </CustomText>
+  <CustomText>
     <Id>VideoSubscribersGained</Id>
     <Text>Inscritos que trouxe</Text>
   </CustomText>

@@ -41,9 +41,7 @@ Decisões de 30/10/2026. A ordem abaixo é a ordem de discussão.
 - Observação do dono (03/11/2026): só trabalhando juntou $9 mil (salário $100 − custo $50 = +$50/dia) e a loja inteira custa $9 mil; o RPM "só aumenta".
 - **Plano aprovado em 03/11/2026** (substitui a proposta 6a anterior). Uma etapa por vez, com teste do dono em cada uma:
   - **6a RPM por nicho e época: feita em 05/11/2026** (ver changelog e decisões).
-  - **6b Emprego só paga as contas**: salário $100 (promoção $150); custo de vida $80/dia (promoção soma +$30); sobra ~$20/dia. Meio período: 4h por $50. Gasto detalhado nos resumos (custo de vida, vídeos, promoção, empréstimo), e aviso claro quando um evento aumenta o custo de vida (hoje +$20/dia acumulativo, sem mostrar na tela).
-    - **Decisões do dono (05/11/2026):** botão "Meio período / Período integral" no cartão do Emprego, ao lado de "Deixar seu trabalho"; troca no máximo 1×/semana; **promoção removida** (integral sempre $100, meio $50; saves promovidos voltam a $100); sair do emprego continua sem volta. Eventos de custo de vida seguem +$20 sem teto (dificuldade), mas o aviso mostra o valor; hora extra igual no meio período; troca vale no dia seguinte; demissão do modo desafio continua; troféu GiveAndTake vira "demitido em período integral".
-    - Plano técnico (05/11/2026): parte 1 = promoção fora, custo $80, meio período + botão (parar para teste); parte 2 = gasto detalhado no resumo e aviso do custo de vida com valores (parar para teste).
+  - **6b Emprego só paga as contas: feita em 05/11/2026** (ver changelog).
 - **Pendência (05/11/2026):** o dono nunca recebeu troféus em anos de jogo; investigar se `Game/Trophies/TrophyManager.cs` funciona e onde aparecem (depois da 6b).
   - **6c Loja mais cara**: Câmera e Edição com 5 níveis ($600, $2.500, $8.000, $20.000, $50.000); Consultor $10 mil; Advogado $6 mil. Saves antigos mantêm o que compraram.
   - **6d Imposto semanal**: 15% sobre o lucro da semana (salário + canal), no resumo da semana; semana com prejuízo não paga.

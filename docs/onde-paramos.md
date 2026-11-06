@@ -45,6 +45,14 @@ Decisões do dono para esta etapa:
 - Os troféus `RobotMasters` e `RebelLeader` e o campo `Player.RobotRulers` ficaram mantidos por compatibilidade com saves antigos.
 - `docs/visao-geral.md` está desatualizado: ainda cita GameJolt e mods.
 
+## Pendentes da revisão de 06/11/2026 (`docs/revisoes/2026-11-06.md`)
+Pacote 1 (save seguro) feito. Faltam, nesta ordem:
+2. Cliques e dinheiro: reservar custo dos vídeos (M1), clique duplo no empréstimo (M2) e no estudo (M3), evento queda do computador (M5), piso fantasma de views (E1).
+3. Save leve e memória: `DecodePixelWidth` (M7), `Formatting.None`, miniaturas fora do save (M6), resumos enxutos (M8).
+4. Acabamento visual: M11 a M16, cores soltas, ToolTips "Em breve".
+5. Feedback ao jogador: aviso de horas livres, toasts, loja (M17), vídeo suspenso (M18), "Próxima meta".
+6. Equilíbrio do começo (discutir antes): estudos, custo de vida, degrau da nota 97, empréstimo/promoção. Simulação Python não rodou (sem Python na máquina).
+
 ## Como retomar
 1. Fazer `git pull`.
 2. Ler o `CLAUDE.md` e este arquivo.

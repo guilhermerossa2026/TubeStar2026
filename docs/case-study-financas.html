@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case study Finanças</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F0F0F;--card:#1A1A1A;--card2:#141414;--head:#1F1F1F;--hov:#262626;--line:#2D2D2D;--txt:#F1F1F1;--sub:#AAAAAA;--mute:#717171;--red:#E53935;--gain:#4CAF50;--amber:#D9A441}
+*{box-sizing:border-box;margin:0}
+body{background:#0A0A0A;color:var(--txt);font-family:Inter,sans-serif;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1320px;margin:0 auto}
+h1{font-size:28px;font-weight:800;letter-spacing:-.5px}.lead{color:var(--sub);margin:8px 0 32px;line-height:1.55;max-width:900px}
+.opt{margin-bottom:64px}
+.opt h2{font-size:20px;font-weight:700;display:flex;gap:10px;align-items:center}
+.tag{background:var(--red);font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600}
+.why{color:var(--sub);font-size:14px;margin:6px 0 16px;line-height:1.5}
+.scroll{overflow-x:auto;padding-bottom:6px}
+/* janela do jogo 1280x720 */
+.screen{width:1280px;min-height:720px;background:var(--bg);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.top{background:var(--head);height:52px;padding:0 20px;display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--line);flex:none}
+.top .name{font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
+.tabs{display:flex;gap:4px;height:100%}
+.tab{display:flex;align-items:center;padding:0 14px;font-size:13px;font-weight:500;color:var(--sub);border-bottom:2px solid transparent}
+.tab.on{color:var(--txt);border-color:var(--red)}
+.tab.off{color:var(--mute)}.tab small{font-size:10px;background:var(--hov);color:var(--sub);padding:2px 6px;border-radius:99px;margin-left:8px;font-weight:600}
+.top .coin{margin-left:auto;font-size:13px;color:var(--sub);display:flex;align-items:center;gap:6px}.top .coin b{color:var(--txt);font-weight:600}
+.body{padding:20px;display:grid;gap:16px;flex:1;align-content:start}
+.c{background:var(--card);border:1px solid #222;border-radius:12px;padding:18px;min-width:0}
+.c.alt{background:var(--head)}
+.lbl{color:var(--sub);font-size:12px;font-weight:500}
+.big{font-size:24px;font-weight:700;margin-top:6px;letter-spacing:-.3px}
+.huge{font-size:48px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-top:6px}
+.n,.big,.huge,.v,.row,.pill,.legend b{font-variant-numeric:tabular-nums}
+.up{color:var(--gain)}.dn{color:var(--red)}.warn{color:var(--amber)}
+.i{width:18px;height:18px;flex:none;vertical-align:middle}
+.ico{width:34px;height:34px;border-radius:10px;background:var(--hov);display:grid;place-items:center;color:var(--sub)}
+.ico.up{background:rgba(76,175,80,.14);color:var(--gain)}.ico.dn{background:rgba(229,57,53,.14);color:var(--red)}
+.stat{display:flex;gap:14px;align-items:center}.stat .big{margin-top:2px}
+.ttl{font-weight:600;font-size:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ttl>span:first-child{display:flex;align-items:center;gap:8px}
+.ttl .i{color:var(--sub)}
+.row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;font-size:13px;padding:9px 6px;margin:0 -6px;border-bottom:1px solid var(--line);border-radius:6px}
+.row.nb{grid-template-columns:1fr auto}
+.row:hover{background:rgba(255,255,255,.03)}
+.row:last-child{border-bottom:0}
+.row .v{text-align:right;font-weight:600;min-width:72px}
+.row .ri{width:28px;height:28px;border-radius:8px;background:var(--hov);display:grid;place-items:center;color:var(--sub)}
+.row .ri .i{width:15px;height:15px}
+.row small{color:var(--mute);font-size:11px;display:block;margin-top:1px}
+.row.ext{grid-template-columns:1fr 1fr auto;}
+.row.ext .v{min-width:80px}
+.pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;background:var(--hov);color:var(--sub);display:inline-flex;gap:6px;align-items:center}
+.pill.on{background:var(--red);color:#fff}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(76,175,80,.14);color:var(--gain)}
+.chip .i{width:13px;height:13px}
+.bar{height:8px;border-radius:4px;background:var(--hov);overflow:hidden;display:flex;gap:2px;margin-bottom:6px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--sub);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.legend b{color:var(--txt);font-weight:600;margin-left:4px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g2{display:grid;gap:16px}
+.status{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:1px}
+.status.u{background:rgba(76,175,80,.14);color:var(--gain)}.status.d{background:rgba(229,57,53,.14);color:var(--red)}
+svg text{font-family:Inter,sans-serif;fill:var(--mute);font-size:10px}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;font-size:13px;color:var(--sub);line-height:1.5;max-width:1280px}
+.notes b{color:var(--txt)}
+</style></head><body><div class="wrap">
+<h1>Tela Finanças: 4 caminhos</h1>
+<p class="lead">Visão geral do dinheiro do jogador. Investimentos detalhados ficam em <b>Finanças › Investimentos</b>; compra e venda no <b>Mercado</b>. Sem metas; extrato por semana. Patrimônio = dinheiro + investimentos (valor atual) − empréstimo − dívida fiscal; equipamentos não contam. Valores de exemplo.</p>
+
+<!-- Ícones estilo Phosphor (linha, traço 1.5, pontas redondas) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<style>.p{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}</style>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path class="p" d="M3.5 7.5v10a2 2 0 0 0 2 2h13a1.5 1.5 0 0 0 1.5-1.5V9a1.5 1.5 0 0 0-1.5-1.5h-14a1.5 1.5 0 0 1 0-3H17"/><circle class="p" cx="16" cy="13.5" r="1"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path class="p" d="M3 20.5h18M4 15l5-5 4 3.5L20 6M15 6h5v5"/></symbol>
+<symbol id="i-in" viewBox="0 0 24 24"><path class="p" d="M18 6 6 18M6 9v9h9"/></symbol>
+<symbol id="i-out" viewBox="0 0 24 24"><path class="p" d="M6 18 18 6M9 6h9v9"/></symbol>
+<symbol id="i-bank" viewBox="0 0 24 24"><path class="p" d="M3 9.5 12 4l9 5.5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20.5h18"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect class="p" x="3.5" y="5" width="17" height="15.5" rx="2"/><path class="p" d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path class="p" d="M5 3.5h14v17l-2.3-1.6-2.4 1.6-2.3-1.6-2.4 1.6-2.3-1.6L5 20.5zM8.5 8.5h7M8.5 12.5h7"/></symbol>
+<symbol id="i-loan" viewBox="0 0 24 24"><circle class="p" cx="12" cy="9" r="5.5"/><path class="p" d="M12 6.5v5M10.3 8.2c0-.8.8-1.4 1.7-1.4s1.7.5 1.7 1.3-.8 1.2-1.7 1.4-1.7.6-1.7 1.4.8 1.3 1.7 1.3 1.7-.6 1.7-1.4M3 20.5c2-3 5-3.5 9-3.5s7 .5 9 3.5"/></symbol>
+<symbol id="i-ads" viewBox="0 0 24 24"><rect class="p" x="3" y="5" width="18" height="14" rx="3"/><path class="p" d="m10.5 9.5 4 2.5-4 2.5z"/></symbol>
+<symbol id="i-job" viewBox="0 0 24 24"><rect class="p" x="3" y="7.5" width="18" height="12" rx="2"/><path class="p" d="M8.5 7.5V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v1.5M3 13h18"/></symbol>
+<symbol id="i-coins" viewBox="0 0 24 24"><ellipse class="p" cx="9" cy="8" rx="5.5" ry="3"/><path class="p" d="M3.5 8v4c0 1.7 2.5 3 5.5 3M3.5 12v4c0 1.7 2.5 3 5.5 3 1.5 0 2.9-.3 4-.9M14.5 10.2c3-.1 6 1 6 2.8s-2.5 3-5.5 3M20.5 13v4c0 1.7-2.500 3-5.500 3"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path class="p" d="M4 10.5 12 4l8 6.500V19a1 1 0 0 1-1 1h-4v-5.500h-6V20H5a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-pct" viewBox="0 0 24 24"><path class="p" d="M19 5 5 19"/><circle class="p" cx="7.500" cy="7.500" r="2.500"/><circle class="p" cx="16.500" cy="16.500" r="2.500"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect class="p" x="3.500" y="4.500" width="17" height="15" rx="2"/><path class="p" d="M8 4.500v15M16 4.500v15M3.500 9.500H8M16 9.500h4.500M3.500 14.500H8M16 14.500h4.500"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle class="p" cx="12" cy="12" r="8.500"/><path class="p" d="M12 7.500V12l3 2"/></symbol>
+<symbol id="i-pie" viewBox="0 0 24 24"><path class="p" d="M12 3.500v8.500h8.500A8.500 8.500 0 1 1 12 3.500z"/><path class="p" d="M15 3.800A8.500 8.500 0 0 1 20.200 9H15z"/></symbol>
+<symbol id="i-bars" viewBox="0 0 24 24"><path class="p" d="M3 20.500h18M6.500 20.500V12M12 20.500V5M17.500 20.500v-6"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path class="p" d="m12 4 2.400 5 5.400.7-4 3.800 1 5.400L12 16.200 7.200 18.900l1-5.400-4-3.800 5.400-.7z"/></symbol>
+</defs></svg>
+
+<!-- A -->
+<section class="opt"><h2>A · Extrato bancário</h2>
+<p class="why">Base UnityBank. Números no topo, gráfico de entradas x saídas, extrato semanal. A mais simples de ler.</p>
+<div class="scroll"><div class="screen">
+ <div class="top"><div class="name"><svg class="i"><use href="#i-bank"/></svg>Finanças</div>
+  <div class="tabs"><div class="tab on">Visão geral</div><div class="tab off">Investimentos<small>em breve</small></div></div>
+  <div class="coin">Semana <b>12</b> · Ano 1</div></div>
+ <div class="body">
+  <div class="g4">
+   <div class="c stat"><span class="ico"><svg class="i"><use href="#i-wallet"/></svg></span><div><div class="lbl">Disponível</div><div class="big">$12.400</div></div></div>
+   <div class="c stat"><span class="ico"><svg class="i"><use href="#i-trend"/></svg></span><div><div class="lbl">Patrimônio</div><div class="big">$65.400</div></div></div>
+   <div class="c stat"><span class="ico up"><svg class="i"><use href="#i-in"/></svg></span><div><div class="lbl">Entradas na semana</div><div class="big up">+$2.140</div></div></div>
+   <div class="c stat"><span class="ico dn"><svg class="i"><use href="#i-out"/></svg></span><div><div class="lbl">Saídas na semana</div><div class="big dn">−$1.310</div></div></div>
+  </div>
+  <div class="g2" style="grid-template-columns:2fr 1fr">
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-bars"/></svg>Entradas x Saídas</span><span class="pill">Últimas 8 semanas</span></div>
+    <svg viewBox="0 0 520 190" width="100%">
+     <g stroke="#262626"><line x1="44" y1="146" x2="520" y2="146"/><line x1="44" y1="95" x2="520" y2="95" stroke-dasharray="3 4"/><line x1="44" y1="43" x2="520" y2="43" stroke-dasharray="3 4"/></g>
+     <text x="34" y="149" text-anchor="end">$0</text><text x="34" y="98" text-anchor="end">$1k</text><text x="34" y="46" text-anchor="end">$2k</text>
+     <g fill="#4CAF50"><rect x="60" y="86" width="16" height="60" rx="3"/><rect x="118" y="76" width="16" height="70" rx="3"/><rect x="176" y="96" width="16" height="50" rx="3"/><rect x="234" y="61" width="16" height="85" rx="3"/><rect x="292" y="66" width="16" height="80" rx="3"/><rect x="350" y="51" width="16" height="95" rx="3"/><rect x="408" y="46" width="16" height="100" rx="3"/><rect x="466" y="36" width="16" height="110" rx="3"/></g>
+     <g fill="#E53935"><rect x="78" y="106" width="16" height="40" rx="3"/><rect x="136" y="101" width="16" height="45" rx="3"/><rect x="194" y="96" width="16" height="50" rx="3"/><rect x="252" y="101" width="16" height="45" rx="3"/><rect x="310" y="91" width="16" height="55" rx="3"/><rect x="368" y="96" width="16" height="50" rx="3"/><rect x="426" y="86" width="16" height="60" rx="3"/><rect x="484" y="84" width="16" height="62" rx="3"/></g>
+     <g text-anchor="middle"><text x="77" y="164">S5</text><text x="135" y="164">S6</text><text x="193" y="164">S7</text><text x="251" y="164">S8</text><text x="309" y="164">S9</text><text x="367" y="164">S10</text><text x="425" y="164">S11</text><text x="483" y="164" style="fill:#F1F1F1;font-weight:600">S12</text></g></svg>
+    <div class="legend" style="margin-top:6px"><span><i style="background:#4CAF50"></i>Entradas</span><span><i style="background:#E53935"></i>Saídas</span></div></div>
+   <div class="c alt"><div class="lbl">Saldo da conta</div><div class="huge" style="font-size:36px">$12.400</div>
+    <div style="margin-top:22px">
+     <div class="row nb"><span class="lbl">Dívida fiscal</span><span class="v dn">$0</span></div>
+     <div class="row nb"><span class="lbl">Empréstimo</span><span class="v">$3.000</span></div>
+     <div class="row nb"><span class="lbl">Parcelas restantes</span><span class="v">6</span></div></div></div>
+  </div>
+  <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-receipt"/></svg>Extrato da semana 12</span><span class="pill">‹ Semana 11</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-ads"/></svg></span><span>Anúncios (2 canais)</span><span class="v up">+$1.640</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-job"/></svg></span><span>Emprego meio período</span><span class="v up">+$350</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-coins"/></svg></span><span>Rendimento dos investimentos</span><span class="v up">+$150</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-home"/></svg></span><span>Custo de vida</span><span class="v dn">−$700</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-pct"/></svg></span><span>Imposto semanal</span><span class="v dn">−$310</span></div>
+   <div class="row"><span class="ri"><svg class="i"><use href="#i-film"/></svg></span><span>Produção de vídeos</span><span class="v dn">−$300</span></div></div>
+ </div>
+</div></div>
+<div class="notes"><div><b>A favor:</b> direto, pouca coisa para manter, cabe bem no notebook.</div><div><b>Contra:</b> não dá sensação de "fortuna"; patrimônio vira só mais um número.</div></div>
+</section>
+
+<!-- B -->
+<section class="opt"><h2>B · Patrimônio em destaque</h2>
+<p class="why">Base Moneed. A fortuna é a estrela: número enorme e variação. Entradas e saídas ganham divisão por fonte.</p>
+<div class="scroll"><div class="screen">
+ <div class="top"><div class="name"><svg class="i"><use href="#i-bank"/></svg>Finanças</div>
+  <div class="tabs"><div class="tab on">Visão geral</div><div class="tab off">Investimentos<small>em breve</small></div></div>
+  <div class="coin">Semana <b>12</b> · Ano 1</div></div>
+ <div class="body">
+  <div class="g2" style="grid-template-columns:1.6fr 1fr 1fr">
+   <div class="c"><div class="lbl">Patrimônio total</div><div class="huge">$65.400</div>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:8px;font-size:13px"><span class="chip"><svg class="i"><use href="#i-trend"/></svg>+8,2%</span><span class="lbl">nas últimas 4 semanas</span></div>
+    <div class="legend" style="margin-top:22px;gap:10px"><span class="pill">Dinheiro <b>$12.400</b></span><span class="pill">Investido <b>$53.000</b></span><span class="pill">Dívidas <b>−$0</b></span></div></div>
+   <div class="c"><div class="ttl"><span>Entradas</span><span class="up n">+$2.140</span></div>
+    <div class="bar"><span style="width:77%;background:#4CAF50;border-radius:4px"></span><span style="width:16%;background:#81C784;border-radius:4px"></span><span style="width:7%;background:#C8E6C9;border-radius:4px"></span></div>
+    <div class="row nb" style="margin-top:6px"><span class="legend"><span><i style="background:#4CAF50"></i>Anúncios</span></span><span class="v">$1.640</span></div><div class="row nb"><span class="legend"><span><i style="background:#81C784"></i>Emprego</span></span><span class="v">$350</span></div><div class="row nb"><span class="legend"><span><i style="background:#C8E6C9"></i>Rendimentos</span></span><span class="v">$150</span></div></div>
+   <div class="c"><div class="ttl"><span>Saídas</span><span class="dn n">−$1.310</span></div>
+    <div class="bar"><span style="width:53%;background:#E53935;border-radius:4px"></span><span style="width:24%;background:#EF7A77;border-radius:4px"></span><span style="width:23%;background:#F5B7B5;border-radius:4px"></span></div>
+    <div class="row nb" style="margin-top:6px"><span class="legend"><span><i style="background:#E53935"></i>Custo de vida</span></span><span class="v">$700</span></div><div class="row nb"><span class="legend"><span><i style="background:#EF7A77"></i>Imposto</span></span><span class="v">$310</span></div><div class="row nb"><span class="legend"><span><i style="background:#F5B7B5"></i>Vídeos</span></span><span class="v">$300</span></div></div>
+  </div>
+  <div class="g2" style="grid-template-columns:1.6fr 1fr">
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-trend"/></svg>Evolução do patrimônio</span><span class="pill">Ano 1</span></div>
+    <svg viewBox="0 0 520 190" width="100%"><defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E53935" stop-opacity=".35"/><stop offset="1" stop-color="#E53935" stop-opacity="0"/></linearGradient></defs>
+     <g stroke="#262626"><line x1="46" y1="150" x2="510" y2="150"/><line x1="46" y1="100" x2="510" y2="100" stroke-dasharray="3 4"/><line x1="46" y1="50" x2="510" y2="50" stroke-dasharray="3 4"/></g>
+     <text x="38" y="153" text-anchor="end">$0</text><text x="38" y="103" text-anchor="end">$30k</text><text x="38" y="53" text-anchor="end">$60k</text>
+     <path d="M46 140 L104 132 L162 124 L220 128 L278 98 L336 88 L394 66 L452 52 L510 28 L510 150 L46 150Z" fill="url(#gB)"/><path d="M46 140 L104 132 L162 124 L220 128 L278 98 L336 88 L394 66 L452 52 L510 28" fill="none" stroke="#E53935" stroke-width="2.5" stroke-linejoin="round"/>
+     <circle cx="510" cy="28" r="5" fill="#E53935" stroke="#1A1A1A" stroke-width="2"/>
+     <g><rect x="396" y="2" width="96" height="24" rx="6" fill="#262626" stroke="#2D2D2D"/><text x="444" y="18" text-anchor="middle" style="fill:#F1F1F1;font-weight:600;font-size:11px">Sem. 12 · $65.400</text></g>
+     <g text-anchor="middle"><text x="46" y="170">S1</text><text x="162" y="170">S3</text><text x="278" y="170">S6</text><text x="394" y="170">S9</text><text x="510" y="170" style="fill:#F1F1F1;font-weight:600">S12</text></g></svg>
+    <div class="legend" style="margin-top:4px"><span><i style="background:#E53935"></i>Patrimônio total</span></div></div>
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-receipt"/></svg>Extrato</span><span class="lbl">resultado da semana</span></div>
+    <div class="row ext"><span>Semana 12</span><span class="lbl"><span class="status u">Positiva</span></span><span class="v up">+$830</span></div>
+    <div class="row ext"><span>Semana 11</span><span class="lbl"><span class="status u">Positiva</span></span><span class="v up">+$610</span></div>
+    <div class="row ext"><span>Semana 10</span><span class="lbl"><span class="status d">Negativa</span></span><span class="v dn">−$1.900</span></div>
+    <div class="row ext"><span>Semana 9</span><span class="lbl"><span class="status u">Positiva</span></span><span class="v up">+$420</span></div></div>
+  </div>
+ </div>
+</div></div>
+<div class="notes"><div><b>A favor:</b> passa a sensação de riqueza; casa com o futuro ranking dos mais ricos.</div><div><b>Contra:</b> extrato só com saldo da semana (detalhe abre ao clicar).</div></div>
+</section>
+
+<!-- C -->
+<section class="opt"><h2>C · Controle e próximas cobranças</h2>
+<p class="why">Base Motween. Foco em planejar: o que vai sair nos próximos dias e para onde vai o dinheiro.</p>
+<div class="scroll"><div class="screen">
+ <div class="top"><div class="name"><svg class="i"><use href="#i-bank"/></svg>Finanças</div>
+  <div class="tabs"><div class="tab on">Visão geral</div><div class="tab off">Investimentos<small>em breve</small></div></div>
+  <div class="coin">Semana <b>12</b> · Ano 1</div></div>
+ <div class="body">
+  <div class="g2" style="grid-template-columns:1.4fr 1fr">
+   <div class="c"><div class="lbl">Disponível agora</div><div class="huge">$12.400</div>
+    <div class="g2" style="grid-template-columns:1fr 1fr;margin-top:20px;gap:12px">
+     <div class="stat"><span class="ico up"><svg class="i"><use href="#i-in"/></svg></span><div><div class="lbl">Entrou na semana</div><div class="big up" style="font-size:20px">+$2.140</div></div></div>
+     <div class="stat"><span class="ico dn"><svg class="i"><use href="#i-out"/></svg></span><div><div class="lbl">Saiu na semana</div><div class="big dn" style="font-size:20px">−$1.310</div></div></div></div></div>
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-cal"/></svg>Próximas cobranças</span><span class="lbl">total ~$910</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-home"/></svg></span><span>Custo de vida<small>amanhã</small></span><span class="v">$100</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-pct"/></svg></span><span>Imposto semanal<small>em 3 dias · valor estimado</small></span><span class="v warn">~$310</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-loan"/></svg></span><span>Parcela do empréstimo<small>em 5 dias</small></span><span class="v">$500</span></div></div>
+  </div>
+  <div class="g2" style="grid-template-columns:1fr 1.4fr">
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-pie"/></svg>Para onde vai o dinheiro</span><span class="pill">Semana 12</span></div>
+    <div style="display:flex;align-items:center;gap:24px;margin-top:6px">
+     <svg viewBox="0 0 120 120" width="140" height="140" style="flex:none"><g fill="none" stroke-width="16" transform="rotate(-90 60 60)"><circle cx="60" cy="60" r="40" stroke="#E53935" stroke-dasharray="132.9 251.3"/><circle cx="60" cy="60" r="40" stroke="#EF7A77" stroke-dasharray="59.7 251.3" stroke-dashoffset="-134.9"/><circle cx="60" cy="60" r="40" stroke="#F5B7B5" stroke-dasharray="56.7 251.3" stroke-dashoffset="-196.6"/></g>
+      <text x="60" y="58" text-anchor="middle" style="fill:#F1F1F1;font-size:15px;font-weight:700">$1.310</text><text x="60" y="73" text-anchor="middle">saiu</text></svg>
+     <div style="flex:1">
+      <div class="row nb"><span class="legend"><span><i style="background:#E53935"></i>Custo de vida</span></span><span class="v">53%</span></div>
+      <div class="row nb"><span class="legend"><span><i style="background:#EF7A77"></i>Imposto</span></span><span class="v">24%</span></div>
+      <div class="row nb"><span class="legend"><span><i style="background:#F5B7B5"></i>Vídeos</span></span><span class="v">23%</span></div></div></div></div>
+   <div class="c alt"><div class="ttl"><span><svg class="i"><use href="#i-clock"/></svg>Últimas semanas</span><span class="lbl">resultado</span></div>
+    <div class="row nb"><span>Semana 12</span><span class="v up">+$830</span></div>
+    <div class="row nb"><span>Semana 11</span><span class="v up">+$610</span></div>
+    <div class="row nb"><span>Semana 10<small>comprou Câmera III</small></span><span class="v dn">−$1.900</span></div></div>
+  </div>
+ </div>
+</div></div>
+<div class="notes"><div><b>A favor:</b> o jogador evita ficar sem saldo (lembra que saldo negativo encerra o jogo).</div><div><b>Contra:</b> patrimônio some da tela; menos "status".</div></div>
+</section>
+
+<!-- D -->
+<section class="opt"><h2>D · Painel do criador <span class="tag">Recomendada</span></h2>
+<p class="why">Mistura: os números da A, o patrimônio grande da B e as próximas cobranças da C. Sem metas.</p>
+<div class="scroll"><div class="screen">
+ <div class="top"><div class="name"><svg class="i"><use href="#i-bank"/></svg>Finanças</div>
+  <div class="tabs"><div class="tab on">Visão geral</div><div class="tab off">Investimentos<small>em breve</small></div></div>
+  <div class="coin">Semana <b>12</b> · Ano 1</div></div>
+ <div class="body" style="gap:14px">
+  <div class="g4">
+   <div class="c stat"><span class="ico"><svg class="i"><use href="#i-trend"/></svg></span><div><div class="lbl">Patrimônio</div><div class="big">$65.400</div><div style="margin-top:4px"><span class="chip"><svg class="i"><use href="#i-trend"/></svg>8,2%</span> <span class="lbl">em 4 sem.</span></div></div></div>
+   <div class="c stat"><span class="ico"><svg class="i"><use href="#i-wallet"/></svg></span><div><div class="lbl">Disponível</div><div class="big">$12.400</div></div></div>
+   <div class="c stat"><span class="ico up"><svg class="i"><use href="#i-cal"/></svg></span><div><div class="lbl">Resultado da semana</div><div class="big up">+$830</div></div></div>
+   <div class="c stat"><span class="ico up"><svg class="i"><use href="#i-bars"/></svg></span><div><div class="lbl">Lucro no ano</div><div class="big up">+$9.870</div></div></div>
+  </div>
+  <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-trend"/></svg>Evolução do patrimônio</span><span style="display:flex;gap:6px"><span class="pill">Ano</span><span class="pill on">Tudo</span></span></div>
+   <svg viewBox="0 0 1200 170" width="100%" style="display:block"><defs><linearGradient id="gD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E53935" stop-opacity=".35"/><stop offset="1" stop-color="#E53935" stop-opacity="0"/></linearGradient></defs>
+    <g stroke="#262626"><line x1="50" y1="140" x2="1190" y2="140"/><line x1="50" y1="95" x2="1190" y2="95" stroke-dasharray="3 4"/><line x1="50" y1="50" x2="1190" y2="50" stroke-dasharray="3 4"/></g>
+    <text x="42" y="143" text-anchor="end">$0</text><text x="42" y="98" text-anchor="end">$30k</text><text x="42" y="53" text-anchor="end">$60k</text>
+    <path d="M50 128 L220 122 L390 114 L560 117 L730 90 L900 78 L1000 58 L1100 44 L1160 18 L1160 140 L50 140Z" fill="url(#gD)"/><path d="M50 128 L220 122 L390 114 L560 117 L730 90 L900 78 L1000 58 L1100 44 L1160 18" fill="none" stroke="#E53935" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="1160" cy="18" r="5" fill="#E53935" stroke="#1A1A1A" stroke-width="2"/>
+    <rect x="1020" y="2" width="124" height="26" rx="6" fill="#262626" stroke="#2D2D2D"/><text x="1082" y="19" text-anchor="middle" style="fill:#F1F1F1;font-weight:600;font-size:11px">Sem. 12 · $65.400</text>
+    <g text-anchor="middle"><text x="50" y="162">S1</text><text x="390" y="162">S4</text><text x="730" y="162">S8</text><text x="1160" y="162" style="fill:#F1F1F1;font-weight:600">S12</text></g></svg>
+   <div class="legend" style="margin-top:2px"><span><i style="background:#E53935"></i>Patrimônio total (dinheiro + investimentos − dívidas)</span></div></div>
+  <div class="g2" style="grid-template-columns:1fr 1fr 1fr">
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-in"/></svg>Entradas</span><span class="up n">+$2.140</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-ads"/></svg></span><span>Anúncios</span><span class="v">$1.640</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-job"/></svg></span><span>Emprego</span><span class="v">$350</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-coins"/></svg></span><span>Rendimentos</span><span class="v">$150</span></div></div>
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-out"/></svg>Saídas</span><span class="dn n">−$1.310</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-home"/></svg></span><span>Custo de vida</span><span class="v">$700</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-pct"/></svg></span><span>Imposto</span><span class="v">$310</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-film"/></svg></span><span>Vídeos</span><span class="v">$300</span></div></div>
+   <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-cal"/></svg>Próximas cobranças</span></div>
+    <div class="row"><span class="ri"><svg class="i"><use href="#i-home"/></svg></span><span>Custo de vida<small>amanhã</small></span><span class="v">$100</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-pct"/></svg></span><span>Imposto<small>em 3 dias</small></span><span class="v warn">~$310</span></div><div class="row"><span class="ri"><svg class="i"><use href="#i-loan"/></svg></span><span>Empréstimo<small>em 5 dias</small></span><span class="v">$500</span></div></div>
+  </div>
+  <div class="c"><div class="ttl"><span><svg class="i"><use href="#i-receipt"/></svg>Extrato por semana</span><span class="lbl">role para ver mais</span></div>
+   <div class="row ext"><span>Semana 12</span><span class="lbl">Entrou $2.140 · Saiu $1.310</span><span class="v up">+$830</span></div>
+   <div class="row ext"><span>Semana 11</span><span class="lbl">Entrou $1.900 · Saiu $1.290</span><span class="v up">+$610</span></div>
+   <div class="row ext"><span>Semana 10</span><span class="lbl">Entrou $1.700 · Saiu $3.600</span><span class="v dn">−$1.900</span></div></div>
+ </div>
+</div></div>
+<div class="notes"><div><b>A favor:</b> responde tudo numa olhada: quanto valho, quanto ganhei, o que vai sair. Gráfico de patrimônio pronto para o ranking.</div><div><b>Contra:</b> é a mais alta; no notebook o extrato fica com rolagem.</div></div>
+</section>
+</div></body></html>

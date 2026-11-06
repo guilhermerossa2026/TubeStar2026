@@ -101,10 +101,6 @@
                         <TextBlock x:Name="txtFinance" Text="Finances" VerticalAlignment="Center" />
                     </ToggleButton>
 
-                    <ToggleButton x:Name="btnRivals" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconTrophy}" Click="btnRivals_Click">
-                        <TextBlock x:Name="txtRivals" Text="Top TubeStars" VerticalAlignment="Center" />
-                    </ToggleButton>
-
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconCap}">
                         <DockPanel LastChildFill="True">
                             <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon4" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
@@ -117,6 +113,11 @@
                             <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon5" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
                             <TextBlock x:Name="txtNavEmployees" Text="Employees" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
                         </DockPanel>
+                    </ToggleButton>
+
+                    <!-- Top TubeStars é sempre o último item do menu -->
+                    <ToggleButton x:Name="btnRivals" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconTrophy}" Click="btnRivals_Click">
+                        <TextBlock x:Name="txtRivals" Text="Top TubeStars" VerticalAlignment="Center" />
                     </ToggleButton>
                 </StackPanel>
                 </ScrollViewer>

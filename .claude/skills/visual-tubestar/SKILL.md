@@ -53,6 +53,7 @@ Nunca: `LightGray`, `DodgerBlue`, cores soltas (`#xxxxxx` direto na tela) quando
 ## 7. Decisões fixas do dono (não "corrigir")
 - Dinheiro em **dólar, formato americano** ($1,030.00).
 - Abas Twitch (roxo) e Podcast (azul) no Top TubeStars são de propósito.
+- **Top TubeStars é sempre o último item do menu lateral**; itens novos (ex.: Mercado financeiro, abaixo de Finanças) entram antes dele.
 - Textos novos: EnglishStrings + `Brazil.xml` (Ids idênticos ao enum; Id inexistente quebra o idioma inteiro).
 - Selo de texto (VIRAL / EM ALTA / FLOPOU), sem emoji.
 

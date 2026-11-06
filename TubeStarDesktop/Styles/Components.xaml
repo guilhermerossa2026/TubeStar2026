@@ -233,6 +233,41 @@
         </Style.Triggers>
     </Style>
 
+    <!-- .sg / .sg.on (alternador discreto: periodos, abas dentro de um cartao). Conteudo: TextBlock com InheritTextStyle -->
+    <Style x:Key="SegButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextSecondaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="12,4" />
+        <Setter Property="Margin" Value="0,0,4,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{StaticResource YtDisabledTextBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SegButtonActiveStyle" TargetType="Button" BasedOn="{StaticResource SegButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource YtDarkCardHoverBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource YtTextPrimaryBrush}" />
+    </Style>
+
     <!-- .kpi (rotulo pequeno + valor grande) -->
     <Style x:Key="KpiLabelStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource YtFontFamily}" />

@@ -16,12 +16,15 @@ namespace TubeStar
         public int LastDay { get; set; }
         //Gancho para crash do mercado (M5)
         public List<int> CrashDaysLeft { get; set; }
+        //Tickers favoritados (lista simples para o save)
+        public List<string> Favorites { get; set; }
 
         public Market()
         {
             Assets = new List<AssetState>();
             LastDay = -1;
             CrashDaysLeft = new List<int>();
+            Favorites = new List<string>();
         }
 
         //Mercado do jogo atual (fica no Player, então vai junto no save)
@@ -48,6 +51,10 @@ namespace TubeStar
         {
             if (Assets == null) Assets = new List<AssetState>();
             if (CrashDaysLeft == null) CrashDaysLeft = new List<int>();
+            if (Favorites == null) Favorites = new List<string>();
+            for (int i = Favorites.Count - 1; i >= 0; i--)
+                if (AssetDef.Find(Favorites[i]) == null)
+                    Favorites.RemoveAt(i);
 
             for (int i = Assets.Count - 1; i >= 0; i--)
                 if (Assets[i] == null || AssetDef.Find(Assets[i].Ticker) == null)
@@ -74,6 +81,17 @@ namespace TubeStar
                 if (state.Price <= 0) state.Price = def.StartPrice;
                 if (state.TrendLine <= 0) state.TrendLine = state.Price;
             }
+        }
+
+        public bool IsFavorite(string ticker)
+        {
+            return Favorites.Contains(ticker);
+        }
+
+        public void ToggleFavorite(string ticker)
+        {
+            if (!Favorites.Remove(ticker) && AssetDef.Find(ticker) != null)
+                Favorites.Add(ticker);
         }
 
         public AssetState Get(string ticker)

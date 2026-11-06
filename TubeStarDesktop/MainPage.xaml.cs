@@ -97,6 +97,9 @@ namespace TubeStar
                 if (finance.Visibility == System.Windows.Visibility.Visible)
                     finance.Update();
 
+                if (market.Visibility == System.Windows.Visibility.Visible)
+                    market.Update();
+
                 CheckTrophies();
 
                 //Fim de semana/ano: resumo do período
@@ -142,6 +145,7 @@ namespace TubeStar
             txtVideoPlanner.Text = EnglishStrings.NavMyVideos.Translate();
             txtOnlineStore.Text = EnglishStrings.NavStore.Translate();
             txtFinance.Text = EnglishStrings.NavFinance.Translate();
+            txtMarket.Text = EnglishStrings.NavMarket.Translate();
             txtRivals.Text = EnglishStrings.TopTubeStars.Translate();
             txtNavHome.Text = EnglishStrings.NavHome.Translate();
             txtNavCreate.Text = EnglishStrings.NavCreateVideo.Translate();
@@ -355,11 +359,11 @@ namespace TubeStar
         //Marca o item do menu, mostra só a tela dele e troca o título da seção
         private void ShowSection(ToggleButton navButton, UIElement screen, string title)
         {
-            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnFinance, btnRivals };
+            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnFinance, btnMarket, btnRivals };
             foreach (var button in buttons)
                 button.IsChecked = button == navButton;
 
-            UIElement[] screens = { dailyPlanner, videoManager, createVideo, postVideo, onlineStore, finance, rivalViewer };
+            UIElement[] screens = { dailyPlanner, videoManager, createVideo, postVideo, onlineStore, finance, market, rivalViewer };
             foreach (var s in screens)
                 s.Visibility = s == screen ? Visibility.Visible : Visibility.Collapsed;
 
@@ -400,6 +404,12 @@ namespace TubeStar
         {
             ShowSection(btnFinance, finance, txtFinance.Text);
             finance.Update();
+        }
+
+        private void btnMarket_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSection(btnMarket, market, txtMarket.Text);
+            market.Update();
         }
 
         private void btnRivals_Click(object sender, RoutedEventArgs e)

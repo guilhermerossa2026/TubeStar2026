@@ -200,6 +200,9 @@
     <Compile Include="UI\OnlineStoreControl.xaml.cs">
       <DependentUpon>OnlineStoreControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MarketControl.xaml.cs">
+      <DependentUpon>MarketControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\RivalControl.xaml.cs">
       <DependentUpon>RivalControl.xaml</DependentUpon>
     </Compile>
@@ -360,6 +363,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\OnlineStoreControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MarketControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

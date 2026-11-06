@@ -1534,5 +1534,248 @@ namespace TubeStar
 
         [Description("Week {0} · Year {1}")]
         FinanceWeekYearNumber,
+
+        [Description("Oil")]
+        MarketSectorOil,
+
+        [Description("Mining")]
+        MarketSectorMining,
+
+        [Description("Banks")]
+        MarketSectorBanks,
+
+        [Description("Industry")]
+        MarketSectorIndustry,
+
+        [Description("Beverages")]
+        MarketSectorBeverages,
+
+        [Description("Energy")]
+        MarketSectorEnergy,
+
+        [Description("Car rental")]
+        MarketSectorCarRental,
+
+        [Description("Retail")]
+        MarketSectorRetail,
+
+        [Description("Tech")]
+        MarketSectorTech,
+
+        [Description("Chips")]
+        MarketSectorChips,
+
+        [Description("Cars")]
+        MarketSectorCars,
+
+        [Description("Media")]
+        MarketSectorMedia,
+
+        [Description("Crypto")]
+        MarketSectorCrypto,
+
+        [Description("Meme crypto")]
+        MarketSectorMemeCrypto,
+
+        [Description("Index fund")]
+        MarketSectorIndexFund,
+
+        [Description("Real estate fund")]
+        MarketSectorRealEstateFund,
+
+        [Description("Fixed income")]
+        MarketSectorFixedIncome,
+
+        [Description("S&P 500 Fund")]
+        MarketNameSp500,
+
+        [Description("Brazil Index Fund")]
+        MarketNameBova,
+
+        [Description("Warehouse Real Estate Fund")]
+        MarketNameHglg,
+
+        [Description("Treasury Selic")]
+        MarketNameSelic,
+
+        [Description("CDB Big Bank")]
+        MarketNameCdbBig,
+
+        [Description("CDB Mid Bank")]
+        MarketNameCdbMid,
+
+        [Description("Stock")]
+        MarketTypeStock,
+
+        [Description("Crypto")]
+        MarketTypeCrypto,
+
+        [Description("Fund")]
+        MarketTypeFund,
+
+        [Description("Fixed income")]
+        MarketTypeFixed,
+
+        [Description("Financial market")]
+        NavMarket,
+
+        [Description("Follow prices, buy and sell assets and see how your portfolio is doing.")]
+        MarketLead,
+
+        [Description("Portfolio")]
+        MarketTabPortfolio,
+
+        [Description("You don't have any investments yet. Purchases arrive in the next stage.")]
+        MarketPortfolioEmpty,
+
+        [Description("Biggest moves of the day")]
+        MarketMovers,
+
+        [Description("Top gainers")]
+        MarketGainers,
+
+        [Description("Top losers")]
+        MarketLosers,
+
+        [Description("Sector performance")]
+        MarketSectors,
+
+        [Description("today")]
+        MarketTodayNote,
+
+        [Description("Daily news")]
+        MarketNews,
+
+        [Description("News arriving soon")]
+        MarketNewsSoon,
+
+        [Description("Assets")]
+        MarketAssets,
+
+        [Description("Brazil stocks")]
+        MarketTabStockBR,
+
+        [Description("US stocks")]
+        MarketTabStockUS,
+
+        [Description("Crypto")]
+        MarketTabCrypto,
+
+        [Description("Funds")]
+        MarketTabFunds,
+
+        [Description("Fixed income")]
+        MarketTabFixed,
+
+        [Description("ASSET")]
+        MarketColAsset,
+
+        [Description("SECTOR")]
+        MarketColSector,
+
+        [Description("PRICE")]
+        MarketColPrice,
+
+        [Description("DAY CHANGE")]
+        MarketColDay,
+
+        [Description("7 DAYS")]
+        MarketCol7Days,
+
+        [Description("ANNUAL RATE")]
+        MarketColRate,
+
+        [Description("Risky")]
+        MarketRisky,
+
+        [Description("Back")]
+        MarketBack,
+
+        [Description("Favorites")]
+        MarketFavorites,
+
+        [Description("{0} assets")]
+        MarketFavoritesCount,
+
+        [Description("Tap the star to favorite")]
+        MarketFavoritesHint,
+
+        [Description("Favorite")]
+        MarketFavorite,
+
+        [Description("Favorited")]
+        MarketFavorited,
+
+        [Description("Sector: {0}")]
+        MarketSectorLabel,
+
+        [Description("{0} today")]
+        MarketChangeToday,
+
+        [Description("{0} in {1}")]
+        MarketChangePeriod,
+
+        [Description("All")]
+        MarketPeriodAll,
+
+        [Description("Not enough data yet")]
+        MarketChartNoData,
+
+        [Description("Trade {0}")]
+        MarketTrade,
+
+        [Description("Buy")]
+        MarketBuy,
+
+        [Description("Sell")]
+        MarketSell,
+
+        [Description("Amount")]
+        MarketAmount,
+
+        [Description("Quantity")]
+        MarketQuantity,
+
+        [Description("Buy {0}")]
+        MarketBuyAsset,
+
+        [Description("Sell {0}")]
+        MarketSellAsset,
+
+        [Description("Buying and selling arrive in the next stage.")]
+        MarketTradeSoon,
+
+        [Description("Trade")]
+        MarketNegotiate,
+
+        [Description("Invest")]
+        MarketApply,
+
+        [Description("Tip of the week")]
+        MarketTipTitle,
+
+        [Description("Spread your money across different assets. Do not put everything in one place.")]
+        MarketTip1,
+
+        [Description("Fixed income is the safest choice: the rate is known and the price never drops.")]
+        MarketTip2,
+
+        [Description("Crypto swings a lot. Only invest what you can afford to see go up and down.")]
+        MarketTip3,
+
+        [Description("Think long term. Prices bounce every day, but good assets tend to grow over time.")]
+        MarketTip4,
+
+        [Description("Be careful with meme coins: they can jump and crash in a single day.")]
+        MarketTip5,
+
+        [Description("Some assets pay dividends, a share of the profit, just for holding them.")]
+        MarketTip6,
+
+        [Description("Never invest the money you need for your living costs.")]
+        MarketTip7,
+
+        [Description("Buying a little at a time smooths out your average price.")]
+        MarketTip8,
     }
 }

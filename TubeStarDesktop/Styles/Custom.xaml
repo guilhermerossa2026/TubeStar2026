@@ -31,6 +31,10 @@
     <SolidColorBrush x:Key="YtLossBrush" Color="{StaticResource YtLossColor}" />
     <SolidColorBrush x:Key="YtTwitchBrush" Color="{StaticResource YtTwitchColor}" />
     <SolidColorBrush x:Key="YtOnAccentBrush" Color="{StaticResource YtOnAccentColor}" />
+    <!-- Estrela de favorito (Mercado financeiro) -->
+    <SolidColorBrush x:Key="YtFavoriteBrush" Color="#F5C518" />
+    <SolidColorBrush x:Key="YtDisabledBrush" Color="#2A2A2A" />
+    <SolidColorBrush x:Key="YtDisabledTextBrush" Color="#6B6B6B" />
 
     <SolidColorBrush x:Key="YtButtonHoverBrush" Color="#555555" />
     <SolidColorBrush x:Key="YtButtonPressedBrush" Color="#404040" />

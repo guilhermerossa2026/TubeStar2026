@@ -9,23 +9,11 @@
                 <TextBlock x:Name="txtTitle" Text="Finances" Style="{StaticResource PageTitleStyle}" />
                 <TextBlock x:Name="txtLead" Text="Your money, your results and where it goes." Style="{StaticResource PageLeadStyle}" />
 
-                <!-- Abas: só a Visão geral existe por enquanto -->
+                <!-- Abas: Visão geral e Colecionáveis (em breve) -->
                 <Border BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,14">
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource TabActiveBorderStyle}">
                             <TextBlock x:Name="txtTabOverview" Text="Overview" Style="{StaticResource TabTextStyle}" Foreground="{StaticResource YtTextPrimaryBrush}" />
-                        </Border>
-                        <Border Style="{StaticResource TabBorderStyle}" Opacity="0.6">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="txtTabInvestments" Text="Investments" Style="{StaticResource TabTextStyle}" />
-                                <Border Style="{StaticResource PillStyle}" Margin="8,0,0,0"><TextBlock x:Name="txtSoon1" Text="Soon" FontSize="10" /></Border>
-                            </StackPanel>
-                        </Border>
-                        <Border Style="{StaticResource TabBorderStyle}" Opacity="0.6">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="txtTabMarket" Text="Market" Style="{StaticResource TabTextStyle}" />
-                                <Border Style="{StaticResource PillStyle}" Margin="8,0,0,0"><TextBlock x:Name="txtSoon2" Text="Soon" FontSize="10" /></Border>
-                            </StackPanel>
                         </Border>
                         <Border Style="{StaticResource TabBorderStyle}" Opacity="0.6">
                             <StackPanel Orientation="Horizontal">

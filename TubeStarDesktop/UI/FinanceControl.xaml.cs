@@ -31,12 +31,8 @@ namespace TubeStar
             txtTitle.Text = EnglishStrings.NavFinance.Translate();
             txtLead.Text = EnglishStrings.FinanceLead.Translate();
             txtTabOverview.Text = EnglishStrings.FinanceTabOverview.Translate();
-            txtTabInvestments.Text = EnglishStrings.FinanceTabInvestments.Translate();
-            txtTabMarket.Text = EnglishStrings.FinanceTabMarket.Translate();
             txtTabCollectibles.Text = EnglishStrings.FinanceTabCollectibles.Translate();
             string soon = EnglishStrings.Soon.Translate();
-            txtSoon1.Text = soon;
-            txtSoon2.Text = soon;
             txtSoon3.Text = soon;
             txtCashLabel.Text = EnglishStrings.FinanceCash.Translate();
             txtInvestedLabel.Text = EnglishStrings.FinanceInvested.Translate();

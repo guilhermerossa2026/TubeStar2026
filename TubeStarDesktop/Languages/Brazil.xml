@@ -2173,4 +2173,328 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
     <Id>FinanceWeekYearNumber</Id>
     <Text>Semana {0} · Ano {1}</Text>
   </CustomText>
+  <CustomText>
+    <Id>MarketSectorOil</Id>
+    <Text>Petróleo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorMining</Id>
+    <Text>Mineração</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorBanks</Id>
+    <Text>Bancos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorIndustry</Id>
+    <Text>Indústria</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorBeverages</Id>
+    <Text>Bebidas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorEnergy</Id>
+    <Text>Energia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorCarRental</Id>
+    <Text>Locação de carros</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorRetail</Id>
+    <Text>Varejo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorTech</Id>
+    <Text>Tecnologia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorChips</Id>
+    <Text>Chips</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorCars</Id>
+    <Text>Carros</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorMedia</Id>
+    <Text>Mídia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorCrypto</Id>
+    <Text>Cripto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorMemeCrypto</Id>
+    <Text>Cripto (meme)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorIndexFund</Id>
+    <Text>Fundo de índice</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorRealEstateFund</Id>
+    <Text>Fundo imob.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorFixedIncome</Id>
+    <Text>Renda fixa</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameSp500</Id>
+    <Text>Fundo S&amp;P 500</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameBova</Id>
+    <Text>Fundo Índice Brasil</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameHglg</Id>
+    <Text>Fundo Imobiliário de Galpões</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameSelic</Id>
+    <Text>Tesouro Selic</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameCdbBig</Id>
+    <Text>CDB Banco Grande</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNameCdbMid</Id>
+    <Text>CDB Banco Médio</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTypeStock</Id>
+    <Text>Ação</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTypeCrypto</Id>
+    <Text>Cripto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTypeFund</Id>
+    <Text>Fundo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTypeFixed</Id>
+    <Text>Renda fixa</Text>
+  </CustomText>
+  <CustomText>
+    <Id>NavMarket</Id>
+    <Text>Mercado financeiro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketLead</Id>
+    <Text>Acompanhe os preços, compre e venda ativos e veja como está a sua carteira.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabPortfolio</Id>
+    <Text>Carteira</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketPortfolioEmpty</Id>
+    <Text>Você ainda não tem investimentos. As compras chegam na próxima etapa.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketMovers</Id>
+    <Text>Maiores movimentos do dia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketGainers</Id>
+    <Text>Maiores altas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketLosers</Id>
+    <Text>Maiores baixas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectors</Id>
+    <Text>Desempenho por setor</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTodayNote</Id>
+    <Text>hoje</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNews</Id>
+    <Text>Notícias do dia</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNewsSoon</Id>
+    <Text>Notícias chegam em breve</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketAssets</Id>
+    <Text>Ativos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabStockBR</Id>
+    <Text>Ações BR</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabStockUS</Id>
+    <Text>Ações EUA</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabCrypto</Id>
+    <Text>Cripto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabFunds</Id>
+    <Text>Fundos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTabFixed</Id>
+    <Text>Renda fixa</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColAsset</Id>
+    <Text>ATIVO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColSector</Id>
+    <Text>SETOR</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColPrice</Id>
+    <Text>PREÇO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColDay</Id>
+    <Text>VARIAÇÃO DIA</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketCol7Days</Id>
+    <Text>7 DIAS</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColRate</Id>
+    <Text>TAXA AO ANO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketRisky</Id>
+    <Text>Arriscada</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketBack</Id>
+    <Text>Voltar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFavorites</Id>
+    <Text>Favoritos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFavoritesCount</Id>
+    <Text>{0} ativos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFavoritesHint</Id>
+    <Text>Toque na estrela para favoritar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFavorite</Id>
+    <Text>Favoritar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFavorited</Id>
+    <Text>Favorito</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSectorLabel</Id>
+    <Text>Setor: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketChangeToday</Id>
+    <Text>{0} hoje</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketChangePeriod</Id>
+    <Text>{0} em {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketPeriodAll</Id>
+    <Text>Tudo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketChartNoData</Id>
+    <Text>Ainda sem dados suficientes</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTrade</Id>
+    <Text>Negociar {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketBuy</Id>
+    <Text>Comprar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSell</Id>
+    <Text>Vender</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketAmount</Id>
+    <Text>Valor</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketQuantity</Id>
+    <Text>Quantidade</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketBuyAsset</Id>
+    <Text>Comprar {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSellAsset</Id>
+    <Text>Vender {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTradeSoon</Id>
+    <Text>Comprar e vender chegam na próxima etapa.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNegotiate</Id>
+    <Text>Negociar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketApply</Id>
+    <Text>Aplicar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTipTitle</Id>
+    <Text>Dica da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip1</Id>
+    <Text>Divida seu dinheiro em ativos diferentes. Não coloque tudo no mesmo lugar.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip2</Id>
+    <Text>Renda fixa é a escolha mais segura: a taxa é conhecida e o preço nunca cai.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip3</Id>
+    <Text>Cripto oscila muito. Invista só o que você aguenta ver subir e descer.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip4</Id>
+    <Text>Pense no longo prazo. O preço muda todo dia, mas bons ativos tendem a crescer com o tempo.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip5</Id>
+    <Text>Cuidado com moedas meme: podem disparar e despencar no mesmo dia.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip6</Id>
+    <Text>Alguns ativos pagam dividendos, uma parte do lucro, só por você segurá-los.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip7</Id>
+    <Text>Nunca invista o dinheiro de que você precisa para o custo de vida.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketTip8</Id>
+    <Text>Comprar um pouco de cada vez ajuda a equilibrar o seu preço médio.</Text>
+  </CustomText>
 </ArrayOfCustomText>

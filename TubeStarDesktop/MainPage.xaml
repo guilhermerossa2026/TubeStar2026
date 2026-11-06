@@ -101,6 +101,10 @@
                         <TextBlock x:Name="txtFinance" Text="Finances" VerticalAlignment="Center" />
                     </ToggleButton>
 
+                    <ToggleButton x:Name="btnMarket" Style="{StaticResource NavItemStyle}" Tag="{StaticResource IconChartLineUp}" Click="btnMarket_Click">
+                        <TextBlock x:Name="txtMarket" Text="Financial market" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                    </ToggleButton>
+
                     <ToggleButton Style="{StaticResource NavSoonStyle}" Tag="{StaticResource IconCap}">
                         <DockPanel LastChildFill="True">
                             <Border DockPanel.Dock="Right" Style="{StaticResource SoonBadgeStyle}"><TextBlock x:Name="txtSoon4" Text="Soon" Style="{StaticResource SoonTextStyle}" /></Border>
@@ -176,6 +180,7 @@
         <local:PostVideoControl Grid.Column="1" Grid.Row="1" x:Name="postVideo" Visibility="Collapsed" />
         <local:OnlineStoreControl Grid.Column="1" Grid.Row="1" x:Name="onlineStore" Visibility="Collapsed" />
         <local:FinanceControl Grid.Column="1" Grid.Row="1" x:Name="finance" Visibility="Collapsed" />
+        <local:MarketControl Grid.Column="1" Grid.Row="1" x:Name="market" Visibility="Collapsed" />
         <local:RivalControl Grid.Column="1" Grid.Row="1" x:Name="rivalViewer" Visibility="Collapsed" />
     </Grid>
 

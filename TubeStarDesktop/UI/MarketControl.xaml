@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="TubeStar.MarketControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TubeStar" >
+
+    <Grid Background="{StaticResource YtDarkBgBrush}">
+        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="24,20,24,20">
+            <StackPanel MaxWidth="1400" HorizontalAlignment="Stretch">
+                <TextBlock x:Name="txtTitle" Text="Financial market" Style="{StaticResource PageTitleStyle}" />
+                <TextBlock x:Name="txtLead" Text="" Style="{StaticResource PageLeadStyle}" />
+
+                <!-- Abas: Mercado e Carteira (somem na tela do ativo) -->
+                <Border x:Name="tabsBar" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,14">
+                    <StackPanel Orientation="Horizontal">
+                        <Border x:Name="tabMarket" Style="{StaticResource TabActiveBorderStyle}" Cursor="Hand" MouseLeftButtonUp="TabMarket_Click">
+                            <TextBlock x:Name="txtTabMarket" Style="{StaticResource TabTextStyle}" Foreground="{StaticResource YtTextPrimaryBrush}" />
+                        </Border>
+                        <Border x:Name="tabWallet" Style="{StaticResource TabBorderStyle}" Cursor="Hand" MouseLeftButtonUp="TabWallet_Click">
+                            <TextBlock x:Name="txtTabWallet" Style="{StaticResource TabTextStyle}" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== Aba Mercado ===== -->
+                <StackPanel x:Name="pageMarket">
+                    <!-- Faixa de cotações -->
+                    <UniformGrid x:Name="tickerGrid" Columns="6" Margin="-5,0,-5,12" />
+
+                    <!-- Maiores movimentos, setores e notícias -->
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Padding="0,0,0,6" Margin="0,0,6,0">
+                            <StackPanel>
+                                <TextBlock x:Name="txtMoversTitle" FontWeight="Bold" FontSize="14" Margin="16,12,16,8" />
+                                <StackPanel Orientation="Horizontal" Margin="12,0,12,4">
+                                    <Button x:Name="btnGainers" Style="{StaticResource SegButtonActiveStyle}" Click="Gainers_Click"><TextBlock x:Name="txtGainers" Style="{StaticResource InheritTextStyle}" /></Button>
+                                    <Button x:Name="btnLosers" Style="{StaticResource SegButtonStyle}" Click="Losers_Click"><TextBlock x:Name="txtLosers" Style="{StaticResource InheritTextStyle}" /></Button>
+                                </StackPanel>
+                                <StackPanel x:Name="moversPanel" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}" Padding="16" Margin="6,0,6,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Margin="0,0,0,8">
+                                    <TextBlock x:Name="txtSectorsTitle" FontWeight="Bold" FontSize="14" />
+                                    <TextBlock x:Name="txtSectorsNote" Style="{StaticResource MutedTextStyle}" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <Grid x:Name="sectorsGrid" Grid.Row="1" />
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" Padding="16" Margin="6,0,0,0">
+                            <StackPanel>
+                                <TextBlock x:Name="txtNewsTitle" FontWeight="Bold" FontSize="14" Margin="0,0,0,8" />
+                                <TextBlock x:Name="txtNewsSoon" Style="{StaticResource MutedTextStyle}" FontSize="12" TextWrapping="Wrap" />
+                                <Border Height="1" Background="{StaticResource YtDarkBorderBrush}" Margin="0,14,0,14" />
+                                <TextBlock x:Name="txtTipTitle" FontWeight="Bold" FontSize="13" Margin="0,0,0,6" />
+                                <TextBlock x:Name="txtTipText" Style="{StaticResource MutedTextStyle}" FontSize="13" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Tabela de ativos -->
+                    <Border Style="{StaticResource CardBorderStyle}" Padding="0,0,0,6" Margin="0,0,0,12">
+                        <StackPanel>
+                            <Grid Margin="16,12,12,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="txtAssetsTitle" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
+                                <WrapPanel x:Name="assetTabsPanel" Grid.Column="1" Orientation="Horizontal" />
+                            </Grid>
+                            <Border x:Name="tableHeader" Style="{StaticResource TableHeaderRowStyle}" Padding="12,0" Height="32" />
+                            <StackPanel x:Name="tablePanel" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ===== Aba Carteira ===== -->
+                <StackPanel x:Name="pageWallet" Visibility="Collapsed">
+                    <Border Style="{StaticResource CardBorderStyle}" Padding="24">
+                        <TextBlock x:Name="txtWalletEmpty" Style="{StaticResource MutedTextStyle}" FontSize="14" TextWrapping="Wrap" />
+                    </Border>
+                </StackPanel>
+
+                <!-- ===== Tela do ativo ===== -->
+                <StackPanel x:Name="pageAsset" Visibility="Collapsed">
+                    <Button x:Name="btnBack" Style="{StaticResource SmallButtonStyle}" HorizontalAlignment="Left" Margin="0,0,0,12" Click="Back_Click">
+                        <TextBlock x:Name="txtBack" Style="{StaticResource InheritTextStyle}" />
+                    </Button>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240" />
+                            <ColumnDefinition Width="*" MinWidth="360" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Favoritos -->
+                        <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Padding="0,0,0,6" Margin="0,0,6,0" VerticalAlignment="Top">
+                            <StackPanel>
+                                <Grid Margin="16,12,16,8">
+                                    <TextBlock x:Name="txtFavTitle" FontWeight="Bold" FontSize="14" />
+                                    <TextBlock x:Name="txtFavCount" Style="{StaticResource MutedTextStyle}" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </Grid>
+                                <StackPanel x:Name="favList" />
+                                <TextBlock x:Name="txtFavHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="16,4,16,12" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Cabeçalho e gráfico -->
+                        <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}" Padding="16" Margin="6,0,6,0" VerticalAlignment="Top">
+                            <StackPanel>
+                                <WrapPanel Orientation="Horizontal">
+                                    <Border x:Name="avatarHost" Margin="0,0,12,8" VerticalAlignment="Center" />
+                                    <StackPanel Margin="0,0,16,8" VerticalAlignment="Center">
+                                        <TextBlock x:Name="txtAssetName" FontWeight="Bold" FontSize="18" />
+                                        <TextBlock x:Name="txtAssetSub" Style="{StaticResource MutedTextStyle}" />
+                                    </StackPanel>
+                                    <Button x:Name="btnFav" Click="Fav_Click" Margin="0,0,16,8" VerticalAlignment="Center">
+                                        <TextBlock x:Name="txtFavBtn" Style="{StaticResource InheritTextStyle}" />
+                                    </Button>
+                                    <TextBlock x:Name="txtAssetPrice" FontWeight="Bold" FontSize="28" Margin="0,0,12,8" VerticalAlignment="Center" />
+                                    <Border x:Name="pillToday" Style="{StaticResource PillStyle}" Margin="0,0,8,8"><TextBlock x:Name="txtPillToday" Style="{StaticResource InheritTextStyle}" /></Border>
+                                    <Border x:Name="pillPeriod" Style="{StaticResource PillStyle}" Margin="0,0,16,8"><TextBlock x:Name="txtPillPeriod" Style="{StaticResource InheritTextStyle}" /></Border>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8" VerticalAlignment="Center">
+                                        <Button x:Name="btnP7" Tag="0" Style="{StaticResource SegButtonStyle}" Click="Period_Click"><TextBlock Text="7d" Style="{StaticResource InheritTextStyle}" /></Button>
+                                        <Button x:Name="btnP28" Tag="1" Style="{StaticResource SegButtonActiveStyle}" Click="Period_Click"><TextBlock Text="28d" Style="{StaticResource InheritTextStyle}" /></Button>
+                                        <Button x:Name="btnP112" Tag="2" Style="{StaticResource SegButtonStyle}" Click="Period_Click"><TextBlock Text="112d" Style="{StaticResource InheritTextStyle}" /></Button>
+                                        <Button x:Name="btnPAll" Tag="3" Style="{StaticResource SegButtonStyle}" Click="Period_Click"><TextBlock x:Name="txtPAll" Style="{StaticResource InheritTextStyle}" /></Button>
+                                    </StackPanel>
+                                </WrapPanel>
+                                <WrapPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Border x:Name="pillSector" Style="{StaticResource PillSoftStyle}" Margin="0,0,8,0"><TextBlock x:Name="txtPillSector" Style="{StaticResource InheritTextStyle}" /></Border>
+                                    <Border x:Name="pillRisky" Style="{StaticResource PillLossStyle}" Margin="0,0,8,0"><TextBlock x:Name="txtPillRisky" Style="{StaticResource InheritTextStyle}" /></Border>
+                                </WrapPanel>
+                                <Grid Height="280">
+                                    <Canvas x:Name="assetChart" ClipToBounds="True" SizeChanged="AssetChart_SizeChanged" />
+                                    <TextBlock x:Name="txtChartEmpty" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Comprar / Vender (só para olhar nesta etapa) -->
+                        <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" Padding="16" Margin="6,0,0,0" VerticalAlignment="Top">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBlock x:Name="txtTradeTitle" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
+                                    <Border Style="{StaticResource PillStyle}" HorizontalAlignment="Right"><TextBlock x:Name="txtTradeSoon" Style="{StaticResource InheritTextStyle}" /></Border>
+                                </Grid>
+                                <StackPanel x:Name="tradePanel" IsEnabled="False">
+                                    <Border Background="{StaticResource YtDarkSurfaceBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="3">
+                                        <UniformGrid Columns="2">
+                                            <Button x:Name="btnBuy" Style="{StaticResource SegButtonActiveStyle}" Margin="0,0,3,0"><TextBlock x:Name="txtBuy" Style="{StaticResource InheritTextStyle}" /></Button>
+                                            <Button x:Name="btnSell" Style="{StaticResource SegButtonStyle}" Margin="0"><TextBlock x:Name="txtSell" Style="{StaticResource InheritTextStyle}" /></Button>
+                                        </UniformGrid>
+                                    </Border>
+                                    <TextBlock x:Name="txtAmountLabel" Style="{StaticResource MutedTextStyle}" Margin="0,12,0,4" />
+                                    <TextBox x:Name="boxAmount" Height="34" VerticalContentAlignment="Center" />
+                                    <TextBlock x:Name="txtQtyLabel" Style="{StaticResource MutedTextStyle}" Margin="0,12,0,4" />
+                                    <TextBox x:Name="boxQty" Height="34" VerticalContentAlignment="Center" />
+                                    <Button x:Name="btnTrade" Style="{StaticResource PrimaryButtonStyle}" Margin="0,16,0,0" Height="40">
+                                        <TextBlock x:Name="txtTradeBtn" />
+                                    </Button>
+                                </StackPanel>
+                                <TextBlock x:Name="txtTradeNote" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,12,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

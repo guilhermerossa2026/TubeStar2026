@@ -74,6 +74,9 @@ namespace TubeStar
         [Description("Something went horribly wrong!\nOr maybe only slightly wrong...\nAnyway, sorry! I couldn't load the game!")]
         LoadFail,
 
+        [Description("The main save was corrupted. We loaded the previous copy.")]
+        SaveRestoredFromBackup,
+
         [Description("Channel '{0}' has been suspended due to a suspected violation of the terms and conditions!")]
         ChannelSuspended,
 

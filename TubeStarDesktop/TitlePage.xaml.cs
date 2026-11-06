@@ -131,7 +131,8 @@ namespace TubeStar
 
         public void Refresh()
         {
-            btnContinue.IsEnabled = System.IO.File.Exists(SaveLoadHelper.SaveFile);
+            btnContinue.IsEnabled = System.IO.File.Exists(SaveLoadHelper.SaveFile)
+                || System.IO.File.Exists(SaveLoadHelper.SaveFile + ".bak");
             Translate();
         }
 

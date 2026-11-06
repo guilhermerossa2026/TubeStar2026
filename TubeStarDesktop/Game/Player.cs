@@ -228,6 +228,7 @@ namespace TubeStar
             Studies.Current = null;
             StoreItems.Current = null;
             Rivals.Current = null;
+            Settings.LastChannel = null; //Aponta para canal do jogo anterior
         }
     }
 }

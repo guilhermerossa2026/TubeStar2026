@@ -89,6 +89,10 @@
     <Text>Aconteceu algo terrivelmente errado! Ou talvez apenas um pouco errado... De qualquer forma, desculpe! Eu não consegui carregar o jogo!</Text>
   </CustomText>
   <CustomText>
+    <Id>SaveRestoredFromBackup</Id>
+    <Text>O save principal estava corrompido. Carregamos a cópia anterior.</Text>
+  </CustomText>
+  <CustomText>
     <Id>ChannelSuspended</Id>
     <Text>O canal '{0}' foi suspenso devido a uma suspeita de violação dos termos e condições!</Text>
   </CustomText>

@@ -145,8 +145,14 @@ namespace TubeStar
             Player.Current.Reset();
             DailyPlanner.SetAgendaToRestore(null, null); //O Load preenche se o save tiver agenda
             this.IsEnabled = false;
-            SaveLoadHelper.Load(SaveLoadHelper.SaveFile);
+            bool loaded = SaveLoadHelper.Load(SaveLoadHelper.SaveFile);
             this.IsEnabled = true;
+            if (!loaded)
+            {
+                //Fica na tela inicial, sem criar a MainPage nem salvar nada
+                _titlePage.Refresh();
+                return;
+            }
 
             _mainPage = new MainPage();
             _mainPage.GameLose += MainPage_GameLose;

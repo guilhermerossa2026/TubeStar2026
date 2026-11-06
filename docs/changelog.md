@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-06
+- Save seguro (pacote 1 da revisão): grava em `.tmp` e troca mantendo `save.tss.bak`; se o save estiver ilegível carrega o `.bak` com aviso; se os dois falharem, renomeia para `save_corrompido_<data>.tss` e fica na tela inicial (nunca abre jogo novo por engano). Ao carregar, edições, gravações e estudos em andamento voltam a apontar para o vídeo/estudo real; canal "fantasma" no Postar vídeo corrigido.
 - Ajustes visuais: todas as telas com a mesma largura (máx. 1400, centralizadas); título só na página (barra de cima mostra só data e anúncios); botões desativados em cinza; painel do canal sem o gráfico de inscritos por dia, números em 2 colunas; Criar vídeo cabe em 1080p sem rolar; Finanças com eixo do gráfico sem rótulos repetidos e extrato com cabeçalho e "Semana N".
 - Escala: o jogo se ajusta a notebook e monitor grande (painel do canal e menu com rolagem, colunas de vídeos variáveis, janela mínima 900×560, diálogos com altura da janela).
 - Polimento visual: ícones Phosphor (MIT) em tamanho uniforme, texto em tons de cinza mais firme, barras de rolagem escuras, botões vermelhos sem halo escuro nos cantos.

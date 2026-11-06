@@ -168,8 +168,8 @@ namespace TubeStar
                 _channel = null;
                 if (channels.Count == 1)
                     _channel = channels[0];
-                else if (Settings.LastChannel != null && channels.Contains(Settings.LastChannel))
-                    _channel = Settings.LastChannel;
+                else if (Settings.LastChannel != null)
+                    _channel = channels.FirstOrDefault(c => c.Id == Settings.LastChannel.Id);
             }
 
             noChannelPanel.Visibility = channels.Count == 0 ? Visibility.Visible : Visibility.Collapsed;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-06
+- Escala: o jogo se ajusta a notebook e monitor grande (painel do canal e menu com rolagem, colunas de vídeos variáveis, janela mínima 900×560, diálogos com altura da janela).
+- Polimento visual: ícones Phosphor (MIT) em tamanho uniforme, texto em tons de cinza mais firme, barras de rolagem escuras, botões vermelhos sem halo escuro nos cantos.
+- Etapa 6e: tela Finanças (Visão geral; Investimentos, Mercado e Colecionáveis "em breve"): dinheiro, resultado da semana, lucro acumulado, gráfico do patrimônio (dinheiro − dívida fiscal − empréstimo), entradas por canal, saídas agrupadas, extrato das últimas 8 semanas. Loja, estudos e advogado passam a contar nos resumos; empréstimo recebido não conta como entrada.
+
 ## 2026-11-05
 - Meta de monetização: canal só recebe de anúncios depois de 5 mil inscritos + 160 mil views, pedido no painel e análise de 3 a 7 dias. Bloco "Monetização" com barras, cadeado cinza (âmbar em análise) e check verde ao aprovar; Crowdfunding funciona antes.
 - Etapa 6d: imposto semanal progressivo sobre o lucro do canal (até $500 isento, 15% até $5 mil, 25% acima), cobrado ao fechar a semana; sem dinheiro vira dívida fiscal cobrada na semana seguinte; Advogado Fiscal ($50 mil) tira 5 pontos.

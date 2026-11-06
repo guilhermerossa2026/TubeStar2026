@@ -10,7 +10,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
                 <!-- Logo: retangulo vermelho com play + nome -->
                 <Border Width="92" Height="64" CornerRadius="18" Background="{StaticResource YtRedBrush}" HorizontalAlignment="Center">
-                    <Path Data="{StaticResource IconPlay}" Fill="{StaticResource YtOnAccentBrush}" Stroke="{StaticResource YtOnAccentBrush}" StrokeThickness="2" StrokeLineJoin="Round" Width="34" Height="34" Stretch="Uniform" Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Viewbox Width="34" Height="34" Margin="4,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconPlay}" Fill="{StaticResource YtOnAccentBrush}" Stretch="None" /></Canvas></Viewbox>
                 </Border>
                 <TextBlock Text="TubeStar" FontSize="62" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,10,0,4" />
                 <TextBlock x:Name="txtTagline" Text="Your path from zero to YouTube star" FontSize="15" Foreground="{StaticResource YtTextSecondaryBrush}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="460" />

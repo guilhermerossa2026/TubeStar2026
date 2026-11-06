@@ -142,6 +142,7 @@ namespace TubeStar
             //A semana sempre vai para o histórico (a última do ano também)
             var week = Player.Current.CurrentWeek ?? new PeriodStats();
             ChargeWeeklyTax(week, day);
+            week.NetWorthEnd = Player.Current.GetNetWorth();
             week.Title = String.Format(EnglishStrings.SummaryWeekTitle.Translate(), (day - 1) % 112 / 7 + 1, (day - 1) / 112 + 1);
             Player.Current.PastSummaries.Add(week);
             Player.Current.CurrentWeek = null;
@@ -149,6 +150,7 @@ namespace TubeStar
             if (day % 112 == 0)
             {
                 var year = Player.Current.CurrentYear ?? new PeriodStats();
+                year.IsYear = true;
                 year.Title = String.Format(EnglishStrings.SummaryYearTitle.Translate(), day / 112);
                 Player.Current.PastSummaries.Add(year);
                 Player.Current.CurrentYear = null;
@@ -524,19 +526,18 @@ namespace TubeStar
             iconBox.Margin = new Thickness(0, 0, 10, 0);
             var icon = new Path();
             icon.Data = (Geometry)FindResource(IconKey(task));
-            icon.Stroke = FindBrush("YtOnAccentBrush");
-            icon.StrokeThickness = 2;
-            icon.StrokeLineJoin = PenLineJoin.Round;
-            icon.StrokeStartLineCap = PenLineCap.Round;
-            icon.StrokeEndLineCap = PenLineCap.Round;
+            icon.Fill = FindBrush("YtOnAccentBrush");
+            icon.Stretch = Stretch.None;
             var iconCanvas = new Canvas();
-            iconCanvas.Width = 24;
-            iconCanvas.Height = 24;
+            iconCanvas.Width = 256;
+            iconCanvas.Height = 256;
             iconCanvas.Children.Add(icon);
             var viewbox = new Viewbox();
             viewbox.Width = 18;
             viewbox.Height = 18;
             viewbox.Child = iconCanvas;
+            viewbox.SnapsToDevicePixels = true;
+            viewbox.UseLayoutRounding = true;
             iconBox.Child = viewbox;
             DockPanel.SetDock(iconBox, Dock.Left);
             header.Children.Add(iconBox);
@@ -812,8 +813,11 @@ namespace TubeStar
                             //Crowdfunding entra direto no dinheiro, fora do dailyIncome
                             double crowdfunding = Math.Max(0, Player.Current.Money - moneyBefore);
                             today.Earned += crowdfunding;
+                            channelToday.Earned += crowdfunding;
                             video.Income += (dailyIncome - incomeBefore) + crowdfunding;
                             video.Expenses += dailyExpenses - expensesBefore;
+                            //Views pagas: já estão em Spent (via dailyExpenses); aqui só entram na categoria Promoção
+                            today.VideoPromotionCost += dailyExpenses - expensesBefore;
                             video.SubscribersGained += channel.Subscribers - videoSubscribersBefore;
                             if (video.Iterations == 1)
                             {
@@ -894,6 +898,7 @@ namespace TubeStar
                         today.UnsubsWeakVideos += channelToday.UnsubsWeakVideos;
                         today.UnsubsIdle += channelToday.UnsubsIdle;
                         today.Earned += dailyIncome;
+                        channelToday.Earned += dailyIncome;
                         today.Spent += dailyExpenses;
                     }
                 }

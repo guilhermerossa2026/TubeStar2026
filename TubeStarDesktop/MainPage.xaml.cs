@@ -61,6 +61,15 @@ namespace TubeStar
                     long subscribersBefore = TotalSubscribers();
                     RandomEvents.RunEvent();
                     Player.Current.RecordEvent(Player.Current.Money - moneyBefore, TotalSubscribers() - subscribersBefore);
+                    //Se a semana fechou hoje, o patrimônio final considera o evento
+                    var past = Player.Current.PastSummaries;
+                    if (Player.Current.Iterations % 7 == 0 && past != null && past.Count > 0)
+                    {
+                        var lastClosed = past[past.Count - 1];
+                        if (lastClosed.IsYear && past.Count > 1)
+                            lastClosed = past[past.Count - 2];
+                        lastClosed.NetWorthEnd = Player.Current.GetNetWorth();
+                    }
                     dailyPlanner.Update();
                 }
 
@@ -75,6 +84,9 @@ namespace TubeStar
 
                 if (eventDay || rivalViewer.Visibility == System.Windows.Visibility.Visible)
                     rivalViewer.Update();
+
+                if (finance.Visibility == System.Windows.Visibility.Visible)
+                    finance.Update();
 
                 CheckTrophies();
 
@@ -120,6 +132,7 @@ namespace TubeStar
             txtDailyPlanner.Text = EnglishStrings.NavSchedule.Translate();
             txtVideoPlanner.Text = EnglishStrings.NavMyVideos.Translate();
             txtOnlineStore.Text = EnglishStrings.NavStore.Translate();
+            txtFinance.Text = EnglishStrings.NavFinance.Translate();
             txtRivals.Text = EnglishStrings.TopTubeStars.Translate();
             txtNavHome.Text = EnglishStrings.NavHome.Translate();
             txtNavCreate.Text = EnglishStrings.NavCreateVideo.Translate();
@@ -333,11 +346,11 @@ namespace TubeStar
         //Marca o item do menu, mostra só a tela dele e troca o título da seção
         private void ShowSection(ToggleButton navButton, UIElement screen, string title)
         {
-            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnRivals };
+            ToggleButton[] buttons = { btnDailyPlanner, btnVideoPlanner, btnCreateVideo, btnOnlineStore, btnFinance, btnRivals };
             foreach (var button in buttons)
                 button.IsChecked = button == navButton;
 
-            UIElement[] screens = { dailyPlanner, videoManager, createVideo, postVideo, onlineStore, rivalViewer };
+            UIElement[] screens = { dailyPlanner, videoManager, createVideo, postVideo, onlineStore, finance, rivalViewer };
             foreach (var s in screens)
                 s.Visibility = s == screen ? Visibility.Visible : Visibility.Collapsed;
 
@@ -372,6 +385,12 @@ namespace TubeStar
         {
             ShowSection(btnOnlineStore, onlineStore, txtOnlineStore.Text);
             onlineStore.Update();
+        }
+
+        private void btnFinance_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSection(btnFinance, finance, txtFinance.Text);
+            finance.Update();
         }
 
         private void btnRivals_Click(object sender, RoutedEventArgs e)

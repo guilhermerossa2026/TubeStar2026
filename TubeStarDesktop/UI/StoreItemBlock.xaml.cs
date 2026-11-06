@@ -84,12 +84,14 @@ namespace TubeStar
                     if (result == true)
                     {
                         Player.Current.Money -= _storeItem.Cost;
+                        Player.Current.RecordSpending(_storeItem.Cost, Player.SpendStore);
                         _storeItem.Purchased = true;
 
                         if (_storeItem == StoreItems.Current.Loan)
                         {
                             Player.Current.LoanPayOff = (StoreItems.Current.Loan.Payout * (100 + StoreItems.Current.Loan.Interest) / 100);
                             Player.Current.Money += StoreItems.Current.Loan.Payout;
+                            Player.Current.RecordLoanReceived(StoreItems.Current.Loan.Payout);
                         }
 
                         if (PurchaseMade != null)

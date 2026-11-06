@@ -16,6 +16,7 @@ namespace TubeStar
         public RankProfileDialog(RankChannel channel)
         {
             InitializeComponent();
+            Loaded += delegate { ChannelStatsDialog.FitBody(bodyScroll); };
             Caption = channel.Name;
             btnOk.Content = EnglishStrings.Ok.Translate();
 

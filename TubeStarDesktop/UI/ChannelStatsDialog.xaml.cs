@@ -18,8 +18,20 @@ namespace TubeStar
         public ChannelStatsDialog(Channel channel)
         {
             InitializeComponent();
+            Loaded += delegate { ChannelStatsDialog.FitBody(bodyScroll); };
             Translate();
             Populate(channel);
+        }
+
+        // Ajusta a altura máxima do corpo do diálogo à altura da janela (sem rolagem em tela grande)
+        internal static void FitBody(ScrollViewer body)
+        {
+            Window w = Application.Current.MainWindow;
+            double h = (w != null) ? w.ActualHeight : 0;
+            if (h > 0)
+            {
+                body.MaxHeight = Math.Max(300, h - 230);
+            }
         }
 
         private void Translate()

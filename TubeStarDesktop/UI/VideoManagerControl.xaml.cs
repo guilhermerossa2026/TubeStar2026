@@ -397,6 +397,14 @@ namespace TubeStar
             chartCanvas.Children.Add(line);
         }
 
+        //Colunas da grade conforme a largura disponível (cartão ~270)
+        private void gridViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int cols = Math.Max(1, (int)(e.NewSize.Width / 270));
+            if (videoPanelGrid.Columns != cols)
+                videoPanelGrid.Columns = cols;
+        }
+
         private void chartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DrawChart();
@@ -527,6 +535,7 @@ namespace TubeStar
                             v.IsSuspended = false;
                         }
                         Player.Current.Money -= StoreItems.Current.Lawyer.AdditionalCost;
+                        Player.Current.RecordSpending(StoreItems.Current.Lawyer.AdditionalCost, Player.SpendStudy);
                         Update();
                     }
                 });
@@ -539,6 +548,7 @@ namespace TubeStar
                     {
                         video.IsSuspended = false;
                         Player.Current.Money -= StoreItems.Current.Lawyer.AdditionalCost;
+                        Player.Current.RecordSpending(StoreItems.Current.Lawyer.AdditionalCost, Player.SpendStudy);
                         Update();
                     }
                 });
@@ -562,15 +572,15 @@ namespace TubeStar
             if (approved)
             {
                 iconMonetization.Data = (System.Windows.Media.Geometry)FindResource("IconCheck");
-                iconMonetization.Stroke = (System.Windows.Media.Brush)FindResource("YtGainBrush");
+                iconMonetization.Fill = (System.Windows.Media.Brush)FindResource("YtGainBrush");
             }
             else
             {
                 iconMonetization.Data = (System.Windows.Media.Geometry)FindResource("IconLock");
                 if (channel.MonetizationState == 1)
-                    iconMonetization.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xD9, 0xA4, 0x41));
+                    iconMonetization.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xD9, 0xA4, 0x41));
                 else
-                    iconMonetization.Stroke = (System.Windows.Media.Brush)FindResource("YtTextSecondaryBrush");
+                    iconMonetization.Fill = (System.Windows.Media.Brush)FindResource("YtTextSecondaryBrush");
             }
 
             txtMonSubs.Text = String.Format(EnglishStrings.MonetizationSubs.Translate(), channel.Subscribers.ToNumberString(), Channel.MonetizationSubsGoal.ToNumberString());

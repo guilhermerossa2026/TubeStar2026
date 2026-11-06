@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +14,7 @@ namespace TubeStar
         public PeriodSummaryDialog(string title, PeriodStats stats)
         {
             InitializeComponent();
+            Loaded += delegate { ChannelStatsDialog.FitBody(bodyScroll); };
             Translate();
             Caption = title;
             Populate(stats);

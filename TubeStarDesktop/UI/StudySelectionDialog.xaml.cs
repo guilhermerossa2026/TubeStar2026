@@ -52,6 +52,7 @@ namespace TubeStar
 
                     ChosenStudy = study;
                     Player.Current.Money -= studyCost;
+                    Player.Current.RecordSpending(studyCost, Player.SpendStudy);
                     DialogResult = true;
                 };
 

@@ -1390,5 +1390,131 @@ namespace TubeStar
 
         [Description("Ads in videos:\nLow: RPM -15%, 90% of likers subscribe\nNormal: RPM +0%, 70% of likers subscribe\nHigh: RPM +10%, 50% of likers subscribe\nAggressive: RPM +20%, 30% of likers subscribe")]
         StrategyTable,
+
+        [Description("Finances")]
+        NavFinance,
+
+        [Description("Your money, your results and where it goes.")]
+        FinanceLead,
+
+        [Description("Overview")]
+        FinanceTabOverview,
+
+        [Description("Investments")]
+        FinanceTabInvestments,
+
+        [Description("Market")]
+        FinanceTabMarket,
+
+        [Description("Collectibles")]
+        FinanceTabCollectibles,
+
+        [Description("Available cash")]
+        FinanceCash,
+
+        [Description("Total invested")]
+        FinanceInvested,
+
+        [Description("Market coming soon")]
+        FinanceInvestedNote,
+
+        [Description("Week result")]
+        FinanceWeekResult,
+
+        [Description("Income minus spending")]
+        FinanceWeekResultNote,
+
+        [Description("Accumulated profit")]
+        FinanceProfitYear,
+
+        [Description("Sum of this year's weekly results")]
+        FinanceProfitYearNote,
+
+        [Description("Net worth by week")]
+        FinanceNetWorth,
+
+        [Description("The chart appears after the first full week")]
+        FinanceChartEmpty,
+
+        [Description("Composition")]
+        FinanceComposition,
+
+        [Description("Cash")]
+        FinanceCompCash,
+
+        [Description("Loan")]
+        FinanceCompLoan,
+
+        [Description("Tax debt")]
+        FinanceCompTax,
+
+        [Description("Income this week")]
+        FinanceIncomeWeek,
+
+        [Description("Spending this week")]
+        FinanceSpendingWeek,
+
+        [Description("Income")]
+        FinanceIncome,
+
+        [Description("Spending")]
+        FinanceSpending,
+
+        [Description("Result")]
+        FinanceResult,
+
+        [Description("Job")]
+        FinanceJob,
+
+        [Description("Part-time job")]
+        FinancePartTime,
+
+        [Description("Other (events)")]
+        FinanceEvents,
+
+        [Description("Channels")]
+        FinanceChannelsTotal,
+
+        [Description("Fixed costs")]
+        FinanceFixed,
+
+        [Description("Cost of living")]
+        FinanceFixedLiving,
+
+        [Description("Taxes")]
+        FinanceFixedTax,
+
+        [Description("Loan payments")]
+        FinanceFixedLoan,
+
+        [Description("Channel")]
+        FinanceChannelGroup,
+
+        [Description("Video production")]
+        FinanceVideoCost,
+
+        [Description("Promotion and views")]
+        FinancePromotion,
+
+        [Description("Store")]
+        FinanceStoreGroup,
+
+        [Description("Studies and services")]
+        FinanceStudiesGroup,
+
+        [Description("Other")]
+        FinanceOther,
+
+        [Description("Statement · last 8 weeks")]
+        FinanceStatement,
+
+        [Description("No week closed yet.")]
+        FinanceNoWeeks,
+
+        [Description("Loan received")]
+        FinanceLoanReceived,
+
+        [Description("No movement")]
+        FinanceNoMovement,
     }
 }

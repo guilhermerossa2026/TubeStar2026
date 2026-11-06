@@ -134,6 +134,61 @@ namespace TubeStar
             }
         }
 
+        public const string SpendStore = "store";
+        public const string SpendStudy = "study";
+        public const string SpendOther = "other";
+
+        //Gasto fora do ciclo do dia (loja, estudos, advogado): soma no dia, semana e ano
+        public void RecordSpending(double value, string category)
+        {
+            if (value <= 0)
+                return;
+
+            var extra = new PeriodStats();
+            extra.Spent = value;
+            if (category == SpendStore)
+                extra.StoreCost = value;
+            else if (category == SpendStudy)
+                extra.StudyCost = value;
+            else
+                extra.OtherCost = value;
+
+            //Não soma em LastDay: o "Resumo de ontem" não muda
+            if (CurrentWeek == null)
+                CurrentWeek = new PeriodStats();
+            CurrentWeek.Add(extra);
+            if (CurrentYear == null)
+                CurrentYear = new PeriodStats();
+            CurrentYear.Add(extra);
+        }
+
+        //Empréstimo recebido: registrado à parte, não conta como entrada
+        public void RecordLoanReceived(double value)
+        {
+            if (value <= 0)
+                return;
+            if (CurrentWeek == null)
+                CurrentWeek = new PeriodStats();
+            CurrentWeek.LoanReceived += value;
+            if (CurrentYear == null)
+                CurrentYear = new PeriodStats();
+            CurrentYear.LoanReceived += value;
+        }
+
+        //Saldo devedor do empréstimo (0 se não há empréstimo ativo)
+        public double GetLoanBalance()
+        {
+            if (StoreItems.Current.Loan.Purchased)
+                return Math.Max(0, LoanPayOff);
+            return 0;
+        }
+
+        //Patrimônio = dinheiro - imposto atrasado - saldo devedor do empréstimo
+        public double GetNetWorth()
+        {
+            return Money - TaxDebt - GetLoanBalance();
+        }
+
         public Player()
         {
             Reset();

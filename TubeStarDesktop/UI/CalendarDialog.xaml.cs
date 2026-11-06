@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +15,7 @@ namespace TubeStar
         public CalendarDialog()
         {
             InitializeComponent();
+            Loaded += delegate { ChannelStatsDialog.FitBody(bodyScroll); };
             Caption = EnglishStrings.CalendarTitle.Translate();
             txtThisWeek.Text = EnglishStrings.CalendarThisWeek.Translate();
             txtHistory.Text = EnglishStrings.CalendarPastSummaries.Translate();

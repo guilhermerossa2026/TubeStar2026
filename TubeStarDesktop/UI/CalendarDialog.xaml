@@ -1,4 +1,4 @@
-<xctk:ChildWindow x:Class="TubeStar.CalendarDialog"
+﻿<xctk:ChildWindow x:Class="TubeStar.CalendarDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -6,6 +6,8 @@
         WindowStartupLocation="Center">
 
     <StackPanel Width="720">
+        <ScrollViewer x:Name="bodyScroll" MaxHeight="440" VerticalScrollBarVisibility="Auto" BorderThickness="0">
+        <StackPanel>
         <TextBlock x:Name="txtDate" FontSize="16" FontWeight="Bold" />
         <TextBlock x:Name="txtAdSeason" FontSize="12" FontWeight="SemiBold" Margin="0,2,0,0" Visibility="Collapsed" />
 
@@ -31,6 +33,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
+        </StackPanel>
+        </ScrollViewer>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
             <Button x:Name="btnOk" IsDefault="True" IsCancel="True" MinWidth="100" Content="OK" Style="{StaticResource PrimaryButtonStyle}" Click="OKButton_Click" />

@@ -7,6 +7,8 @@
 
     <!-- Perfil do canal (P1): banner, avatar, tema e números -->
     <StackPanel Width="560">
+        <ScrollViewer x:Name="bodyScroll" MaxHeight="440" VerticalScrollBarVisibility="Auto" BorderThickness="0">
+        <StackPanel>
         <Border x:Name="banner" Height="90" CornerRadius="8" />
 
         <Grid Margin="0,12,0,0">
@@ -29,6 +31,8 @@
         </Border>
 
         <TextBlock x:Name="txtBestAndDistance" Style="{StaticResource MutedTextStyle}" Margin="0,12,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+        </ScrollViewer>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
             <Button x:Name="btnOk" Content="OK" MinWidth="100" IsDefault="True" IsCancel="True" Style="{StaticResource PrimaryButtonStyle}" Click="OKButton_Click" />

@@ -19,6 +19,16 @@ namespace TubeStar
         public double VideoPromotionCost { get; set; }
         public double LoanCost { get; set; }
         public double TaxCost { get; set; }
+        //Gastos da tela Finanças: loja, estudos/advogado e outros (resumos antigos têm 0)
+        public double StoreCost { get; set; }
+        public double StudyCost { get; set; }
+        public double OtherCost { get; set; }
+        //Empréstimo recebido: não é entrada (fica fora de Earned e do Resultado)
+        public double LoanReceived { get; set; }
+        //Patrimônio no fechamento da semana (nulo = semana antiga ou período em andamento)
+        public double? NetWorthEnd { get; set; }
+        //Marca o resumo do ano no histórico
+        public bool IsYear { get; set; }
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
         public int VideosPosted { get; set; }
@@ -69,6 +79,10 @@ namespace TubeStar
             VideoPromotionCost += other.VideoPromotionCost;
             LoanCost += other.LoanCost;
             TaxCost += other.TaxCost;
+            StoreCost += other.StoreCost;
+            StudyCost += other.StudyCost;
+            OtherCost += other.OtherCost;
+            LoanReceived += other.LoanReceived;
             Views += other.Views;
             NewSubscribers += other.NewSubscribers;
             VideosPosted += other.VideosPosted;
@@ -79,6 +93,7 @@ namespace TubeStar
             foreach (var otherChannel in other.Channels)
             {
                 var channel = GetChannel(otherChannel.Name);
+                channel.Earned += otherChannel.Earned;
                 channel.Views += otherChannel.Views;
                 channel.NewSubscribers += otherChannel.NewSubscribers;
                 channel.UnsubsWeakVideos += otherChannel.UnsubsWeakVideos;
@@ -92,6 +107,8 @@ namespace TubeStar
     public class ChannelPeriodStats
     {
         public string Name { get; set; }
+        //Renda do canal no período (resumos antigos têm 0)
+        public double Earned { get; set; }
         public long Views { get; set; }
         public long NewSubscribers { get; set; }
         public long UnsubsWeakVideos { get; set; }

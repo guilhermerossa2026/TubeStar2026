@@ -1981,4 +1981,172 @@ Normal: RPM +0%, 70% de quem curtiu se inscreve
 Alta: RPM +10%, 50% de quem curtiu se inscreve
 Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   </CustomText>
+  <CustomText>
+    <Id>NavFinance</Id>
+    <Text>Finanças</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceLead</Id>
+    <Text>Seu dinheiro, seus resultados e para onde ele vai.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTabOverview</Id>
+    <Text>Visão geral</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTabInvestments</Id>
+    <Text>Investimentos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTabMarket</Id>
+    <Text>Mercado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTabCollectibles</Id>
+    <Text>Colecionáveis</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceCash</Id>
+    <Text>Dinheiro disponível</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvested</Id>
+    <Text>Total investido</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestedNote</Id>
+    <Text>Mercado em breve</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceWeekResult</Id>
+    <Text>Resultado da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceWeekResultNote</Id>
+    <Text>Entrou menos o que saiu</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceProfitYear</Id>
+    <Text>Lucro acumulado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceProfitYearNote</Id>
+    <Text>Soma dos resultados semanais do ano</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceNetWorth</Id>
+    <Text>Patrimônio por semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceChartEmpty</Id>
+    <Text>O gráfico aparece depois da primeira semana completa</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceComposition</Id>
+    <Text>Composição</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceCompCash</Id>
+    <Text>Dinheiro</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceCompLoan</Id>
+    <Text>Empréstimo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceCompTax</Id>
+    <Text>Dívida fiscal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceIncomeWeek</Id>
+    <Text>Entradas da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceSpendingWeek</Id>
+    <Text>Saídas da semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceIncome</Id>
+    <Text>Entradas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceSpending</Id>
+    <Text>Saídas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceResult</Id>
+    <Text>Resultado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceJob</Id>
+    <Text>Emprego</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinancePartTime</Id>
+    <Text>Meio período</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceEvents</Id>
+    <Text>Outros (eventos)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceChannelsTotal</Id>
+    <Text>Canais</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceFixed</Id>
+    <Text>Contas fixas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceFixedLiving</Id>
+    <Text>Custo de vida</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceFixedTax</Id>
+    <Text>Impostos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceFixedLoan</Id>
+    <Text>Parcelas do empréstimo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceChannelGroup</Id>
+    <Text>Canal</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceVideoCost</Id>
+    <Text>Produção de vídeos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinancePromotion</Id>
+    <Text>Promoção e views</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceStoreGroup</Id>
+    <Text>Loja</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceStudiesGroup</Id>
+    <Text>Estudos e serviços</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceOther</Id>
+    <Text>Outros</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceStatement</Id>
+    <Text>Extrato · últimas 8 semanas</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceNoWeeks</Id>
+    <Text>Nenhuma semana fechada ainda.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceLoanReceived</Id>
+    <Text>Empréstimo recebido</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceNoMovement</Id>
+    <Text>Sem movimento</Text>
+  </CustomText>
 </ArrayOfCustomText>

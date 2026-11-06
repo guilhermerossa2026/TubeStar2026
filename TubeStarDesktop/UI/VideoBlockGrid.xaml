@@ -36,13 +36,13 @@
                 <!-- likes, dislikes, comentarios e dias no ar: sempre numa linha; encolhe em vez de quebrar -->
                 <Viewbox x:Name="panelStats" Stretch="Uniform" StretchDirection="DownOnly" HorizontalAlignment="Left" Margin="0,8,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <Path Data="{StaticResource IconThumbUp}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <Viewbox Width="13" Height="13"  VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconThumbUp}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
                     <TextBlock x:Name="txtLikes" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
-                    <Path Data="{StaticResource IconThumbDown}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <Viewbox Width="13" Height="13"  VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconThumbDown}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
                     <TextBlock x:Name="txtDislikes" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
-                    <Path Data="{StaticResource IconComment}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <Viewbox Width="13" Height="13"  VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconComment}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
                     <TextBlock x:Name="txtComments" Style="{StaticResource MutedTextStyle}" Margin="5,0,12,0" VerticalAlignment="Center" />
-                    <Path Data="{StaticResource IconCalendar}" Stroke="{StaticResource YtTextSecondaryBrush}" StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center" />
+                    <Viewbox Width="13" Height="13"  VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconCalendar}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
                     <TextBlock x:Name="txtDays" Style="{StaticResource MutedTextStyle}" Margin="5,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
                 </Viewbox>
@@ -60,7 +60,7 @@
         <Grid x:Name="SuspendedAdorner" Visibility="Collapsed" MouseLeftButtonDown="SuspendedAdorner_MouseLeftButtonDown">
             <Border Background="Black" Opacity="0.7" CornerRadius="{StaticResource YtCornerRadius}" />
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Source="../Resources/Sad_icon.png" Height="36" Margin="3,0,3,4" />
+                <Viewbox Width="36" Height="36" Margin="3,0,3,4"  SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconSad}" Fill="{StaticResource YtTextPrimaryBrush}" Stretch="None" /></Canvas></Viewbox>
                 <TextBlock x:Name="txtSuspended" Text="SUSPENDED" FontSize="20" FontWeight="Bold" Foreground="{StaticResource YtLossBrush}" TextAlignment="Center" />
                 <TextBlock x:Name="txtSuspendedSub" Text="(Click to Hire Lawyer)" FontSize="13" Foreground="{StaticResource YtTextPrimaryBrush}" TextAlignment="Center" />
             </StackPanel>

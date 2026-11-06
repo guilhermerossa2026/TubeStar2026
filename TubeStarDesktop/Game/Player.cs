@@ -76,6 +76,8 @@ namespace TubeStar
         public List<PeriodStats> PastSummaries { get; set; }
         //Top TubeStars (rivais só com números)
         public Ranking Ranking { get; set; }
+        //Mercado financeiro (preços dos ativos)
+        public Market Market { get; set; }
         //Séries removidas da lista "Continuar série" (chave da série -> último número quando foi removida)
         [XmlIgnore] //Dictionary não é aceito pelo leitor de saves XML antigos
         public Dictionary<string, int> HiddenSeries { get; set; }
@@ -217,6 +219,7 @@ namespace TubeStar
             CurrentYear = null;
             PastSummaries = new List<PeriodStats>();
             Ranking = null;
+            Market = null;
             HiddenSeries = null;
 
             TasksInProgress = new List<Task>();

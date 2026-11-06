@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-06
+- Mercado financeiro, etapa M1 (sem tela): motor de preços em `Game/Market/` com 29 ativos (ações BR/EUA, cripto, fundos, renda fixa). Preço log-normal com tendência, humor do mercado, cauda rara, puxada de volta e limites; ações/fundos só em dias úteis (5 de 7), cripto todo dia, renda fixa com juros diários. Histórico de 112 dias + semanal no save (`Player.Market`); save antigo ganha mercado novo. Modo de teste: `market_debug.txt` ao lado do exe gera `market_sim.csv` (2 anos).
 - Save seguro (pacote 1 da revisão): grava em `.tmp` e troca mantendo `save.tss.bak`; se o save estiver ilegível carrega o `.bak` com aviso; se os dois falharem, renomeia para `save_corrompido_<data>.tss` e fica na tela inicial (nunca abre jogo novo por engano). Ao carregar, edições, gravações e estudos em andamento voltam a apontar para o vídeo/estudo real; canal "fantasma" no Postar vídeo corrigido.
 - Ajustes visuais: todas as telas com a mesma largura (máx. 1400, centralizadas); título só na página (barra de cima mostra só data e anúncios); botões desativados em cinza; painel do canal sem o gráfico de inscritos por dia, números em 2 colunas; Criar vídeo cabe em 1080p sem rolar; Finanças com eixo do gráfico sem rótulos repetidos e extrato com cabeçalho e "Semana N".
 - Escala: o jogo se ajusta a notebook e monitor grande (painel do canal e menu com rolagem, colunas de vídeos variáveis, janela mínima 900×560, diálogos com altura da janela).

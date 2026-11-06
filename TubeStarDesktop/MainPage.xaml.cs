@@ -42,6 +42,14 @@ namespace TubeStar
                     hostWindow.PreviewKeyDown -= Window_PreviewKeyDown;
                     hostWindow.PreviewKeyDown += Window_PreviewKeyDown;
                 }
+                //Teste de balanço do Mercado: só roda se existir market_debug.txt ao lado do exe
+                try
+                {
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    if (File.Exists(Path.Combine(baseDir, "market_debug.txt")))
+                        Market.SimulateCsv(224, Path.Combine(baseDir, "market_sim.csv"));
+                }
+                catch (Exception) { }
             };
             ActiveChannel.Changed += ActiveChannel_Changed;
 
@@ -52,6 +60,7 @@ namespace TubeStar
 
                 //Top TubeStars: rivais crescem e as posições do dia são calculadas
                 Ranking.Current.NewDay(Player.Current.Iterations);
+                Market.Current.NewDay(Player.Current.Iterations);
 
                 //A cada 3 dias roda um evento; depois dele, tudo é atualizado (uma vez só)
                 bool eventDay = Player.Current.Iterations > 1 && Player.Current.Iterations % 3 == 0;

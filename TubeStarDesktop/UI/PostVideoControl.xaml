@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TubeStar.PostVideoControl"
+<UserControl x:Class="TubeStar.PostVideoControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TubeStar">
@@ -48,8 +48,8 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
-        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,16,20">
-            <StackPanel>
+        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,24,20">
+            <StackPanel MaxWidth="1400" HorizontalAlignment="Stretch">
                 <Button x:Name="btnBack" Style="{StaticResource GhostButtonStyle}" HorizontalAlignment="Left" Content="‹ My videos" Margin="0,0,0,10" Click="btnBack_Click" />
                 <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Post video" />
                 <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" Text="" />

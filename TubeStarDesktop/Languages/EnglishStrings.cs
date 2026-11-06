@@ -1433,7 +1433,7 @@ namespace TubeStar
         [Description("Net worth by week")]
         FinanceNetWorth,
 
-        [Description("The chart appears after the first full week")]
+        [Description("More points appear every closed week")]
         FinanceChartEmpty,
 
         [Description("Composition")]
@@ -1516,5 +1516,20 @@ namespace TubeStar
 
         [Description("No movement")]
         FinanceNoMovement,
+
+        [Description("Week")]
+        FinanceColWeek,
+
+        [Description("In")]
+        FinanceColIn,
+
+        [Description("Out")]
+        FinanceColOut,
+
+        [Description("Week {0}")]
+        FinanceWeekNumber,
+
+        [Description("Week {0} · Year {1}")]
+        FinanceWeekYearNumber,
     }
 }

@@ -1,10 +1,19 @@
-﻿<UserControl x:Class="TubeStar.VideoManagerControl"
+<UserControl x:Class="TubeStar.VideoManagerControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TubeStar" >
 
+        <UserControl.Resources>
+        <!-- Rótulo e número do painel do canal (mesmo tamanho em todos os blocos) -->
+        <Style x:Key="PanelKpiLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource KpiLabelStyle}">
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+        <Style x:Key="PanelKpiValueStyle" TargetType="TextBlock" BasedOn="{StaticResource KpiValueStyle}">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
-        <Grid Margin="24,20,24,12">
+        <Grid Margin="24,20,24,12" MaxWidth="1400" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -74,45 +83,67 @@
                         <TextBlock x:Name="txtPanelNiche" Style="{StaticResource MutedTextStyle}" Margin="0,2,0,0" />
                         <TextBlock x:Name="txtPanelStatus" Style="{StaticResource MutedTextStyle}" Foreground="{StaticResource YtLossBrush}" FontWeight="Bold" Margin="0,4,0,0" Visibility="Collapsed" />
 
-                        <StackPanel x:Name="panelKpis">
-                            <TextBlock x:Name="lblViews" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiViews" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
-                            <TextBlock x:Name="lblIncome" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiIncome" Style="{StaticResource KpiValueStyle}" Foreground="{StaticResource YtGainBrush}" TextTrimming="CharacterEllipsis" />
-                            <TextBlock x:Name="lblSubs" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiSubs" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" />
-                            <TextBlock x:Name="lblRpm" Style="{StaticResource KpiLabelStyle}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="txtKpiRpm" Style="{StaticResource KpiValueStyle}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                                <Viewbox Width="12" Height="12" Margin="6,0,0,0" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=iconRpmLock}" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path x:Name="iconRpmLock" Data="{StaticResource IconLock}" Fill="{StaticResource YtTextSecondaryBrush}" Visibility="Collapsed" Stretch="None" /></Canvas></Viewbox>
-                            </StackPanel>
-                            <TextBlock x:Name="lblRank" Style="{StaticResource KpiLabelStyle}" />
-                            <TextBlock x:Name="txtKpiRank" Style="{StaticResource KpiValueStyle}" />
+                        <StackPanel x:Name="panelKpis" Margin="0,2,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,12,8,0">
+                                    <TextBlock x:Name="lblViews" Style="{StaticResource PanelKpiLabelStyle}" />
+                                    <TextBlock x:Name="txtKpiViews" Style="{StaticResource PanelKpiValueStyle}" TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,12,0,0">
+                                    <TextBlock x:Name="lblIncome" Style="{StaticResource PanelKpiLabelStyle}" />
+                                    <TextBlock x:Name="txtKpiIncome" Style="{StaticResource PanelKpiValueStyle}" Foreground="{StaticResource YtGainBrush}" TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,12,8,0">
+                                    <TextBlock x:Name="lblSubs" Style="{StaticResource PanelKpiLabelStyle}" />
+                                    <TextBlock x:Name="txtKpiSubs" Style="{StaticResource PanelKpiValueStyle}" TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,12,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="lblRpm" Style="{StaticResource PanelKpiLabelStyle}" VerticalAlignment="Center" />
+                                        <Border x:Name="rpmHelp" Width="13" Height="13" CornerRadius="7" Margin="5,0,0,2" BorderBrush="{StaticResource YtTextSecondaryBrush}" BorderThickness="1" Background="Transparent" VerticalAlignment="Center" Cursor="Help">
+                                            <TextBlock Text="?" FontSize="9" FontWeight="Bold" Foreground="{StaticResource YtTextSecondaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="txtKpiRpm" Style="{StaticResource PanelKpiValueStyle}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                        <Viewbox Width="12" Height="12" Margin="6,0,0,0" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=iconRpmLock}" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path x:Name="iconRpmLock" Data="{StaticResource IconLock}" Fill="{StaticResource YtTextSecondaryBrush}" Visibility="Collapsed" Stretch="None" /></Canvas></Viewbox>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,12,8,0">
+                                    <TextBlock x:Name="lblRank" Style="{StaticResource PanelKpiLabelStyle}" />
+                                    <TextBlock x:Name="txtKpiRank" Style="{StaticResource PanelKpiValueStyle}" />
+                                </StackPanel>
+                            </Grid>
                         </StackPanel>
 
                         <!-- monetização (canal escolhido) -->
-                        <StackPanel x:Name="panelMonetization" Margin="0,12,0,0">
+                        <StackPanel x:Name="panelMonetization" Margin="0,14,0,0">
                             <StackPanel Orientation="Horizontal">
                                 <Viewbox Width="12" Height="12" Margin="0,0,6,0" VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path x:Name="iconMonetization" Data="{StaticResource IconLock}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
-                                <TextBlock x:Name="lblMonetization" Style="{StaticResource KpiLabelStyle}" VerticalAlignment="Center" />
+                                <TextBlock x:Name="lblMonetization" Style="{StaticResource KpiLabelStyle}" Margin="0" VerticalAlignment="Center" />
                             </StackPanel>
                             <StackPanel x:Name="panelMonetizationGoal">
-                                <TextBlock x:Name="txtMonSubs" Style="{StaticResource MutedTextStyle}" FontSize="11" Margin="0,4,0,2" />
+                                <TextBlock x:Name="txtMonSubs" Style="{StaticResource MutedTextStyle}" FontSize="11" Margin="0,6,0,2" />
                                 <ProgressBar x:Name="barMonSubs" Height="6" Minimum="0" Maximum="1" BorderThickness="0" Background="{StaticResource YtDarkBorderBrush}" Foreground="{StaticResource YtRedBrush}" />
                                 <TextBlock x:Name="txtMonViews" Style="{StaticResource MutedTextStyle}" FontSize="11" Margin="0,6,0,2" />
                                 <ProgressBar x:Name="barMonViews" Height="6" Minimum="0" Maximum="1" BorderThickness="0" Background="{StaticResource YtDarkBorderBrush}" Foreground="{StaticResource YtRedBrush}" />
                             </StackPanel>
-                            <TextBlock x:Name="txtMonStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                            <TextBlock x:Name="txtMonStatus" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,6,0,0" />
                             <Button x:Name="btnMonRequest" Style="{StaticResource PrimaryButtonStyle}" Margin="0,8,0,0" Click="btnMonRequest_Click" />
                         </StackPanel>
 
-                        <TextBlock x:Name="lblVideos" Style="{StaticResource KpiLabelStyle}" />
-                        <TextBlock x:Name="txtKpiVideos" Style="{StaticResource KpiValueStyle}" />
-
-                        <!-- gráfico de inscritos (canal escolhido) -->
-                        <StackPanel x:Name="panelChart" Margin="0,12,0,0">
-                            <TextBlock x:Name="lblChart" Style="{StaticResource KpiLabelStyle}" />
-                            <Canvas x:Name="chartCanvas" Height="70" Margin="0,6,0,0" ClipToBounds="True" SizeChanged="chartCanvas_SizeChanged" />
+                        <StackPanel Margin="0,14,0,0">
+                            <TextBlock x:Name="lblVideos" Style="{StaticResource PanelKpiLabelStyle}" />
+                            <TextBlock x:Name="txtKpiVideos" Style="{StaticResource PanelKpiValueStyle}" />
                         </StackPanel>
 
                         <!-- Visão geral: uma linha por canal -->
@@ -120,10 +151,10 @@
 
                         <TextBlock x:Name="txtUnreleasedHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="0,12,0,0" />
 
-                        <StackPanel x:Name="panelChannelButtons" Margin="0,16,0,0">
+                        <StackPanel x:Name="panelChannelButtons" Margin="0,14,0,0">
                             <Button x:Name="btnStats" Style="{StaticResource SmallButtonStyle}" Padding="9,6" Content="Statistics" Click="btnStats_Click" />
-                            <Button x:Name="btnEdit" Style="{StaticResource SmallButtonStyle}" Padding="9,6" Margin="0,8,0,0" Content="Edit channel" Click="btnEdit_Click" />
-                            <Button x:Name="btnDeleteChannel" Style="{StaticResource GhostButtonStyle}" Padding="9,6" Margin="0,8,0,0" Content="Delete channel" Click="btnDeleteChannel_Click" />
+                            <Button x:Name="btnEdit" Style="{StaticResource SmallButtonStyle}" Padding="9,6" Margin="0,6,0,0" Content="Edit channel" Click="btnEdit_Click" />
+                            <Button x:Name="btnDeleteChannel" Style="{StaticResource GhostButtonStyle}" Padding="9,6" Margin="0,6,0,0" Content="Delete channel" Click="btnDeleteChannel_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Border>

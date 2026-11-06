@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TubeStar.MainPage"
+<UserControl x:Class="TubeStar.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -127,17 +127,17 @@
         <Border Grid.Column="1" Grid.Row="0" Background="{StaticResource YtDarkCardBrush}" BorderBrush="{StaticResource YtDarkBorderBrush}" BorderThickness="0,0,0,1" Padding="20,0,12,0">
             <Grid>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock x:Name="txtSectionTitle" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Schedule" />
+                    <TextBlock x:Name="txtSectionTitle" FontSize="18" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" Text="Schedule" Visibility="Collapsed" />
                     <!-- Data: clicar abre o Calendário -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="btnCalendar" Style="{StaticResource GhostButtonStyle}" HorizontalAlignment="Left" MinHeight="0" Padding="8,3" Margin="-8,2,0,0" Click="btnCalendar_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button x:Name="btnCalendar" Style="{StaticResource GhostButtonStyle}" HorizontalAlignment="Left" MinHeight="0" Padding="8,3" Margin="-8,0,0,0" Click="btnCalendar_Click">
                         <StackPanel Orientation="Horizontal">
                             <Viewbox Width="13" Height="13" Margin="0,0,7,0" VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True"><Canvas Width="256" Height="256"><Path Data="{StaticResource IconCalendar}" Fill="{StaticResource YtTextSecondaryBrush}" Stretch="None" /></Canvas></Viewbox>
                             <TextBlock x:Name="txtDate" FontSize="12" FontWeight="Normal" Foreground="{StaticResource YtTextSecondaryBrush}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <!-- Temporada de anúncios (só aparece nas semanas 1-2 e 13-16) -->
-                    <Border x:Name="adSeasonPill" Visibility="Collapsed" CornerRadius="10" BorderThickness="1" Padding="8,2" Margin="4,2,0,0" VerticalAlignment="Center" Background="{StaticResource YtDarkBgBrush}">
+                    <Border x:Name="adSeasonPill" Visibility="Collapsed" CornerRadius="10" BorderThickness="1" Padding="8,2" Margin="4,0,0,0" VerticalAlignment="Center" Background="{StaticResource YtDarkBgBrush}">
                         <TextBlock x:Name="txtAdSeasonPill" FontSize="11" FontWeight="SemiBold" />
                     </Border>
                     </StackPanel>

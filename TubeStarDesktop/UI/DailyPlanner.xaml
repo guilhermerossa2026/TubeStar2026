@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:TubeStar" >
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20,16">
-            <StackPanel MaxWidth="980" HorizontalAlignment="Stretch">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="24,20,24,20">
+            <StackPanel MaxWidth="1400" HorizontalAlignment="Stretch">
                 <TextBlock x:Name="txtTitle" Text="Schedule" Style="{StaticResource PageTitleStyle}" />
                 <TextBlock x:Name="txtLead" Text="Distribute the hours of the day." Style="{StaticResource PageLeadStyle}" />
 
@@ -31,7 +31,7 @@
                 </Border>
 
                 <!-- Cartões de tarefa -->
-                <UniformGrid x:Name="tasksPanel" Columns="2" Margin="-6,0,-6,0" />
+                <UniformGrid x:Name="tasksPanel" Columns="3" Margin="-6,0,-6,0" />
 
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                     <Button x:Name="btnAddTask" Style="{StaticResource PrimaryButtonStyle}" Click="AddTask_Click">

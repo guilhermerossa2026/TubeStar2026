@@ -77,11 +77,26 @@
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Padding" Value="13,6" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource YtRedHoverBrush}" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="BtnBorder" CornerRadius="8" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter x:Name="contentPresenter" RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource YtRedHoverBrush}" />
+                        </Trigger>
+                        <!-- Desativado: cinza-escuro (#2A2A2A) com texto cinza (~#6B6B6B), não vermelho apagado -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BtnBorder" Property="Background" Value="#2A2A2A" />
+                            <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#2A2A2A" />
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- .thumb em (selo da miniatura) -->

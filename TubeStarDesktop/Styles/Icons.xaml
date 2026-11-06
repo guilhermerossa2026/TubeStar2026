@@ -100,14 +100,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="bd" Background="{DynamicResource YtRedBrush}" CornerRadius="10" Padding="16,9">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <ContentPresenter x:Name="cp" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="bd" Property="Background" Value="{DynamicResource YtRedHoverBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="bd" Property="Opacity" Value="0.6" />
+                            <!-- Desativado: cinza-escuro (#2A2A2A) com texto cinza (~#6B6B6B), não vermelho apagado -->
+                            <Setter TargetName="bd" Property="Background" Value="#2A2A2A" />
+                            <Setter TargetName="cp" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

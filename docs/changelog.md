@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-06
+- Ajustes visuais: todas as telas com a mesma largura (máx. 1400, centralizadas); título só na página (barra de cima mostra só data e anúncios); botões desativados em cinza; painel do canal sem o gráfico de inscritos por dia, números em 2 colunas; Criar vídeo cabe em 1080p sem rolar; Finanças com eixo do gráfico sem rótulos repetidos e extrato com cabeçalho e "Semana N".
 - Escala: o jogo se ajusta a notebook e monitor grande (painel do canal e menu com rolagem, colunas de vídeos variáveis, janela mínima 900×560, diálogos com altura da janela).
 - Polimento visual: ícones Phosphor (MIT) em tamanho uniforme, texto em tons de cinza mais firme, barras de rolagem escuras, botões vermelhos sem halo escuro nos cantos.
 - Etapa 6e: tela Finanças (Visão geral; Investimentos, Mercado e Colecionáveis "em breve"): dinheiro, resultado da semana, lucro acumulado, gráfico do patrimônio (dinheiro − dívida fiscal − empréstimo), entradas por canal, saídas agrupadas, extrato das últimas 8 semanas. Loja, estudos e advogado passam a contar nos resumos; empréstimo recebido não conta como entrada.

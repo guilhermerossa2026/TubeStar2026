@@ -51,9 +51,8 @@ namespace TubeStar
             lblViews.Text = EnglishStrings.VideosTotalViews.Translate().ToUpper();
             lblIncome.Text = EnglishStrings.VideosTotalEarnings.Translate().ToUpper();
             lblSubs.Text = EnglishStrings.Subscribers.Translate().ToUpper();
-            lblRpm.Text = EnglishStrings.ChannelRpm.Translate().ToUpper() + " ?";
+            lblRpm.Text = EnglishStrings.ChannelRpm.Translate().ToUpper();
             lblRank.Text = EnglishStrings.ChannelRank.Translate().ToUpper();
-            lblChart.Text = EnglishStrings.ChannelSubscribersChart.Translate().ToUpper();
             txtUnreleasedHint.Text = EnglishStrings.VideosUnreleasedHint.Translate();
             btnStats.Content = EnglishStrings.VideosStatistics.Translate();
             btnEdit.Content = EnglishStrings.VideosEditChannel.Translate();
@@ -291,7 +290,6 @@ namespace TubeStar
             txtPanelStatus.Text = EnglishStrings.Suspended.Translate().ToUpper();
 
             panelKpis.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
-            panelChart.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelMonetization.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelChannelButtons.Visibility = single ? Visibility.Visible : Visibility.Collapsed;
             panelOverview.Visibility = _overview ? Visibility.Visible : Visibility.Collapsed;
@@ -318,13 +316,13 @@ namespace TubeStar
                     rpmTip += "\n" + String.Format(EnglishStrings.ChannelRpmAverage.Translate(), ActiveChannel.GetRpm(channel).ToCurrencyString());
                 txtKpiRpm.ToolTip = rpmTip;
                 lblRpm.ToolTip = rpmTip;
+                rpmHelp.ToolTip = rpmTip;
                 iconRpmLock.Visibility = channel.CanEarnAds() ? Visibility.Collapsed : Visibility.Visible;
                 iconRpmLock.ToolTip = EnglishStrings.NotMonetizedShort.Translate();
                 UpdateMonetization(channel);
                 Ranking.Current.Refresh(false);
                 var entry = Ranking.Current.Channels.FirstOrDefault(c => c.IsPlayer && c.PlayerChannelId == channel.RankId);
                 txtKpiRank.Text = entry != null && entry.Position > 0 ? "#" + entry.Position : "-";
-                DrawChart();
             }
 
             if (_overview)
@@ -368,35 +366,6 @@ namespace TubeStar
             return new Border { BorderBrush = (Brush)FindResource("YtDarkBorderBrush"), BorderThickness = new Thickness(0, total ? 1 : 0, 0, 0), Padding = new Thickness(0, total ? 6 : 0, 0, 0), Child = grid };
         }
 
-        //2A: inscritos dia a dia (histórico que o canal já guarda)
-        private void DrawChart()
-        {
-            chartCanvas.Children.Clear();
-            var channel = _currentChannel;
-            if (channel == null || _overview || channel == Channel.UnreleasedVideos)
-                return;
-
-            var data = channel.SubscribersOverTime;
-            double width = chartCanvas.ActualWidth, height = chartCanvas.Height;
-            if (data == null || data.Count < 2 || width <= 0)
-            {
-                chartCanvas.Children.Add(new TextBlock { Text = EnglishStrings.ChannelChartEmpty.Translate(), Style = (Style)FindResource("MutedTextStyle"), FontSize = 11 });
-                return;
-            }
-
-            double max = Math.Max(1, data.Max()), min = data.Min();
-            double range = Math.Max(1, max - min);
-            var line = new Polyline { Stroke = (Brush)FindResource("YtRedBrush"), StrokeThickness = 2 };
-            for (int i = 0; i < data.Count; i++)
-            {
-                double x = width * i / (data.Count - 1);
-                double y = height - 4 - (height - 8) * (data[i] - min) / range;
-                line.Points.Add(new Point(x, y));
-            }
-            chartCanvas.Children.Add(new Line { X1 = 0, X2 = width, Y1 = height - 1, Y2 = height - 1, Stroke = (Brush)FindResource("YtDarkBorderBrush"), StrokeThickness = 1 });
-            chartCanvas.Children.Add(line);
-        }
-
         //Colunas da grade conforme a largura disponível (cartão ~270)
         private void gridViewer_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -404,12 +373,6 @@ namespace TubeStar
             if (videoPanelGrid.Columns != cols)
                 videoPanelGrid.Columns = cols;
         }
-
-        private void chartCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            DrawChart();
-        }
-
 
         private void UpdateFilterChips()
         {

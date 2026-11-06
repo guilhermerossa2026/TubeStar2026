@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TubeStar.RivalControl"
+<UserControl x:Class="TubeStar.RivalControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +9,7 @@
 
         <!-- Ranking: destaques da semana + abas + tabela paginada -->
         <ScrollViewer x:Name="rankingView" BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,24,20">
-            <StackPanel>
+            <StackPanel MaxWidth="1400" HorizontalAlignment="Stretch">
                 <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Top TubeStars" />
                 <TextBlock x:Name="txtLead" Style="{StaticResource PageLeadStyle}" />
 

@@ -2039,7 +2039,7 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   </CustomText>
   <CustomText>
     <Id>FinanceChartEmpty</Id>
-    <Text>O gráfico aparece depois da primeira semana completa</Text>
+    <Text>Mais pontos aparecem a cada semana fechada</Text>
   </CustomText>
   <CustomText>
     <Id>FinanceComposition</Id>
@@ -2148,5 +2148,25 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   <CustomText>
     <Id>FinanceNoMovement</Id>
     <Text>Sem movimento</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceColWeek</Id>
+    <Text>Semana</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceColIn</Id>
+    <Text>Entrou</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceColOut</Id>
+    <Text>Saiu</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceWeekNumber</Id>
+    <Text>Semana {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceWeekYearNumber</Id>
+    <Text>Semana {0} · Ano {1}</Text>
   </CustomText>
 </ArrayOfCustomText>

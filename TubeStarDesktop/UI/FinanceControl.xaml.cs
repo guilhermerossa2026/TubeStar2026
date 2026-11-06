@@ -154,7 +154,9 @@ namespace TubeStar
 
             double width = chartCanvas.ActualWidth;
             double height = chartCanvas.ActualHeight;
-            if (!_hasHistory || _chartValues.Count < 2 || width < 120 || height < 60)
+            //Sem semana fechada: o texto "mais pontos aparecem..." fica embaixo e o gráfico mostra só o ponto de agora
+            txtChartEmpty.Visibility = _hasHistory ? Visibility.Collapsed : Visibility.Visible;
+            if (_chartValues.Count < 1 || width < 120 || height < 60)
                 return;
 
             double min = _chartValues[0];
@@ -164,12 +166,14 @@ namespace TubeStar
                 if (value < min) min = value;
                 if (value > max) max = value;
             }
-            //Valores iguais: abre uma faixa para a linha ficar no meio (sem divisão por zero)
+            //Faixa mínima (±5% do valor ou ±$100) e limites "bonitos" para os rótulos não se repetirem
             double range = max - min;
-            if (range < 1)
+            double minRange = Math.Max(Math.Abs(max) * 0.1, 200);
+            if (range < minRange)
             {
-                min -= 1;
-                max += 1;
+                double middle = (min + max) / 2;
+                min = middle - minRange / 2;
+                max = middle + minRange / 2;
             }
             else
             {
@@ -177,6 +181,11 @@ namespace TubeStar
                 min -= pad;
                 max += pad;
             }
+            double step = NiceStep((max - min) / 3);
+            while (Math.Floor(min / step) * step + step * 3 < max)
+                step = NiceStep(step * 1.01);
+            min = Math.Floor(min / step) * step;
+            max = min + step * 3;
             range = max - min;
 
             double left = 70, right = 12, top = 10, bottom = 10;
@@ -201,7 +210,7 @@ namespace TubeStar
             double lastX = 0, lastY = 0;
             for (int i = 0; i < _chartValues.Count; i++)
             {
-                double x = left + plotWidth * i / (_chartValues.Count - 1);
+                double x = _chartValues.Count == 1 ? left + plotWidth / 2 : left + plotWidth * i / (_chartValues.Count - 1);
                 double y = top + plotHeight * (max - _chartValues[i]) / range;
                 polyline.Points.Add(new Point(x, y));
                 lastX = x;
@@ -214,6 +223,19 @@ namespace TubeStar
             Canvas.SetLeft(dot, lastX - 4);
             Canvas.SetTop(dot, lastY - 4);
             chartCanvas.Children.Add(dot);
+        }
+
+        //Menor passo "bonito" (1, 2 ou 5 x 10^n) que seja maior ou igual ao valor
+        private static double NiceStep(double raw)
+        {
+            double magnitude = Math.Pow(10, Math.Floor(Math.Log10(raw)));
+            double[] bases = { 1, 2, 5, 10 };
+            foreach (double b in bases)
+            {
+                if (b * magnitude >= raw)
+                    return b * magnitude;
+            }
+            return 10 * magnitude;
         }
 
         //Barra de composição: dinheiro, empréstimo e dívida fiscal (os dois últimos só se existirem)
@@ -408,23 +430,68 @@ namespace TubeStar
             statementPanel.Children.Clear();
             txtNoWeeks.Visibility = closed.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 
+            if (closed.Count > 0)
+                statementPanel.Children.Add(CreateStatementColumns());
+
             int shown = 0;
             for (int i = closed.Count - 1; i >= 0 && shown < StatementWeeks; i--, shown++)
                 statementPanel.Children.Add(CreateStatementItem(closed[i]));
+        }
+
+        private static Grid CreateStatementGrid()
+        {
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(24) });
+            return grid;
+        }
+
+        //Cabeçalho das colunas do extrato (mesmas colunas e margens das linhas)
+        private static UIElement CreateStatementColumns()
+        {
+            var header = CreateStatementGrid();
+            var week = new TextBlock { Text = EnglishStrings.FinanceColWeek.Translate(), VerticalAlignment = VerticalAlignment.Center };
+            header.Children.Add(week);
+            AddHeaderCell(header, 1, EnglishStrings.FinanceColIn.Translate(), FindBrush("YtTextSecondaryBrush"), false);
+            AddHeaderCell(header, 2, EnglishStrings.FinanceColOut.Translate(), FindBrush("YtTextSecondaryBrush"), false);
+            AddHeaderCell(header, 3, EnglishStrings.FinanceResult.Translate(), FindBrush("YtTextSecondaryBrush"), false);
+            week.Foreground = FindBrush("YtTextSecondaryBrush");
+            foreach (UIElement child in header.Children)
+            {
+                var text = child as TextBlock;
+                if (text != null)
+                    text.FontSize = 12;
+            }
+            return new Border { Child = header, Height = 28, Padding = new Thickness(10, 0, 10, 0), BorderBrush = FindBrush("YtDarkBorderBrush"), BorderThickness = new Thickness(0, 0, 0, 1) };
+        }
+
+        //"Semana N" (o ano só aparece se for de um ano anterior); se não achar os números, usa o título salvo
+        private static string StatementWeekTitle(PeriodStats week)
+        {
+            if (String.IsNullOrEmpty(week.Title))
+                return "-";
+            var match = System.Text.RegularExpressions.Regex.Match(week.Title, @"(\d+)\D+(\d+)");
+            if (!match.Success)
+                return week.Title;
+            int weekNumber = Int32.Parse(match.Groups[1].Value, Culture);
+            int yearNumber = Int32.Parse(match.Groups[2].Value, Culture);
+            int day = Player.Current.Iterations;
+            int currentYear = day > 0 ? (day - 1) / 112 + 1 : 1;
+            if (yearNumber < currentYear)
+                return String.Format(EnglishStrings.FinanceWeekYearNumber.Translate(), weekNumber, yearNumber);
+            return String.Format(EnglishStrings.FinanceWeekNumber.Translate(), weekNumber);
         }
 
         private UIElement CreateStatementItem(PeriodStats week)
         {
             var item = new StackPanel();
 
-            var header = new Grid();
-            header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
-            header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
-            header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(110) });
-            header.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(24) });
+            var header = CreateStatementGrid();
 
-            var title = new TextBlock { Text = String.IsNullOrEmpty(week.Title) ? "-" : week.Title, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center };
+            var title = new TextBlock { Text = StatementWeekTitle(week), FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center };
             header.Children.Add(title);
             AddHeaderCell(header, 1, Money(week.Earned), FindBrush("YtGainBrush"), false);
             AddHeaderCell(header, 2, Money(week.Spent), FindBrush("YtTextPrimaryBrush"), false);

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TubeStar.OnlineStoreControl"
+<UserControl x:Class="TubeStar.OnlineStoreControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:TubeStar" >
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource YtDarkBgBrush}">
-        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,10,20">
-            <StackPanel>
+        <ScrollViewer BorderThickness="0" VerticalScrollBarVisibility="Auto" Padding="24,20,24,20">
+            <StackPanel MaxWidth="1400" HorizontalAlignment="Stretch">
                 <TextBlock x:Name="txtTitle" Style="{StaticResource PageTitleStyle}" Text="Online Store" />
                 <TextBlock x:Name="txtMoney" Style="{StaticResource PageLeadStyle}" />
                 <WrapPanel x:Name="itemPanel" />

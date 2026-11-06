@@ -39,7 +39,7 @@
 
             <Grid Grid.Row="1">
                 <TextBlock x:Name="txtPrice" FontSize="15" FontWeight="Bold" Foreground="{StaticResource YtTextPrimaryBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                <Button x:Name="btnBuy" Content="Buy" Style="{StaticResource SmallPrimaryButtonStyle}" HorizontalAlignment="Right" Click="btnBuy_Click" />
+                <Button x:Name="btnBuy" Content="Buy" Style="{StaticResource SmallPrimaryButtonStyle}" HorizontalAlignment="Right" ToolTipService.ShowOnDisabled="True" Click="btnBuy_Click" />
                 <Border x:Name="pillPurchased" Style="{StaticResource PillGainStyle}" HorizontalAlignment="Right" Visibility="Collapsed">
                     <TextBlock x:Name="txtPurchased" Style="{StaticResource InheritTextStyle}" Text="Purchased" />
                 </Border>

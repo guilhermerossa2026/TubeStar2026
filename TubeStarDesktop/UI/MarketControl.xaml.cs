@@ -98,12 +98,24 @@ namespace TubeStar
             txtPAll.Text = EnglishStrings.MarketPeriodAll.Translate();
             txtPillRisky.Text = EnglishStrings.MarketRisky.Translate();
             txtChartEmpty.Text = EnglishStrings.MarketChartNoData.Translate();
-            txtTradeSoon.Text = EnglishStrings.Soon.Translate();
             txtBuy.Text = EnglishStrings.MarketBuy.Translate();
             txtSell.Text = EnglishStrings.MarketSell.Translate();
-            txtAmountLabel.Text = EnglishStrings.MarketAmount.Translate();
-            txtQtyLabel.Text = EnglishStrings.MarketQuantity.Translate();
-            txtTradeNote.Text = EnglishStrings.MarketTradeSoon.Translate();
+            txtGrossLabel.Text = EnglishStrings.MarketGross.Translate();
+            txtFeeLabel.Text = EnglishStrings.FinanceInvestFee.Translate();
+            txtTaxLabel.Text = EnglishStrings.FinanceInvestTax.Translate();
+            txtPosTitle.Text = EnglishStrings.MarketYourPosition.Translate();
+            txtPosQtyLabel.Text = EnglishStrings.MarketQuantity.Translate();
+            txtPosAvgLabel.Text = EnglishStrings.MarketAvgPrice.Translate();
+            txtPosInvestedLabel.Text = EnglishStrings.MarketInvested.Translate();
+            txtPosChangeLabel.Text = EnglishStrings.MarketSinceBuy.Translate();
+            btnBuy.Click += delegate { SetMode(false); };
+            btnSell.Click += delegate { SetMode(true); };
+            btnPct25.Click += Pct_Click;
+            btnPct50.Click += Pct_Click;
+            btnPct75.Click += Pct_Click;
+            btnPct100.Click += Pct_Click;
+            btnTrade.Click += Trade_Click;
+            boxAmount.TextChanged += BoxAmount_TextChanged;
         }
 
         //---------- Utilidades ----------
@@ -319,6 +331,8 @@ namespace TubeStar
         private void OpenAsset(string ticker)
         {
             _current = ticker;
+            SetMode(false);
+            txtTradeNote.Visibility = Visibility.Collapsed;
             SetView(View.Asset);
             Update();
         }
@@ -806,6 +820,8 @@ namespace TubeStar
         private void FavItem_Click(object sender, MouseButtonEventArgs e)
         {
             _current = (string)((FrameworkElement)sender).Tag;
+            SetMode(false);
+            txtTradeNote.Visibility = Visibility.Collapsed;
             RefreshAsset(Market.Current);
         }
 
@@ -880,9 +896,225 @@ namespace TubeStar
             DrawChart();
 
             txtTradeTitle.Text = String.Format(EnglishStrings.MarketTrade.Translate(), def.Ticker);
-            txtTradeBtn.Text = String.Format(EnglishStrings.MarketBuyAsset.Translate(), def.Ticker);
+            ApplyModeTexts(def);
+            RefreshPosition(def, state);
+            Recalc();
 
             RefreshFavorites(m);
+        }
+
+        //---------- Comprar / Vender ----------
+
+        private bool _sellMode;
+        private bool _busy;
+        private TradeQuote _quote;
+        private string _sellAllText; //texto posto pelo botão 100% da venda (vende a posição inteira)
+
+        private static string FormatQty(double qty)
+        {
+            return qty.ToString("0.########", CultureInfo.InvariantCulture);
+        }
+
+        //Textos que dependem do modo (comprar/vender) e do ativo
+        private void ApplyModeTexts(AssetDef def)
+        {
+            SetSeg(btnBuy, !_sellMode);
+            SetSeg(btnSell, _sellMode);
+            txtAmountLabel.Text = (_sellMode ? EnglishStrings.MarketQuantity : EnglishStrings.MarketAmountUsd).Translate();
+            txtTotalLabel.Text = (_sellMode ? EnglishStrings.MarketReceive : EnglishStrings.MarketPay).Translate();
+            rowTax.Visibility = _sellMode ? Visibility.Visible : Visibility.Collapsed;
+            txtTradeBtn.Text = String.Format((_sellMode ? EnglishStrings.MarketSellAsset : EnglishStrings.MarketBuyAsset).Translate(), def.Ticker);
+
+            Holding h = Market.Current.GetHolding(def.Ticker);
+            if (_sellMode)
+                txtAvailable.Text = String.Format(EnglishStrings.MarketYouHave.Translate(), FormatQty(h == null ? 0 : h.Quantity) + " " + def.Ticker);
+            else
+                txtAvailable.Text = String.Format(EnglishStrings.MarketAvailableCash.Translate(), Player.Current.Money.ToCurrencyString());
+        }
+
+        private void SetMode(bool sell)
+        {
+            _sellMode = sell;
+            _sellAllText = null;
+            boxAmount.Text = "";
+            txtTradeNote.Visibility = Visibility.Collapsed;
+            var def = AssetDef.Find(_current);
+            if (def != null)
+                ApplyModeTexts(def);
+            Recalc();
+        }
+
+        private void BoxAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtTradeNote.Visibility = Visibility.Collapsed;
+            Recalc();
+        }
+
+        private void ClearSummary()
+        {
+            _quote = null;
+            txtGross.Text = "—";
+            txtFee.Text = "—";
+            txtTax.Text = "—";
+            txtTotal.Text = "—";
+            txtQtyPreview.Text = "";
+            btnTrade.IsEnabled = false;
+        }
+
+        private void ShowTradeError(string text)
+        {
+            txtTradeError.Text = text;
+            txtTradeError.Visibility = Visibility.Visible;
+        }
+
+        private void Recalc()
+        {
+            var def = AssetDef.Find(_current);
+            if (def == null || Market.Current.Get(_current) == null)
+                return;
+
+            Holding h = Market.Current.GetHolding(_current);
+            bool locked = Trading.IsLocked(def);
+            bool noPosition = _sellMode && h == null;
+            bool pctOn = !locked && !noPosition;
+            tradePanel.IsEnabled = !locked;
+            btnPct25.IsEnabled = pctOn;
+            btnPct50.IsEnabled = pctOn;
+            btnPct75.IsEnabled = pctOn;
+            btnPct100.IsEnabled = pctOn;
+            txtTradeError.Visibility = Visibility.Collapsed;
+            ClearSummary();
+
+            if (locked)
+            {
+                ShowTradeError(EnglishStrings.MarketErrLocked.Translate());
+                return;
+            }
+            if (noPosition)
+            {
+                ShowTradeError(String.Format(EnglishStrings.MarketNoHolding.Translate(), def.Ticker));
+                return;
+            }
+
+            double value;
+            string text = boxAmount.Text.Trim().Replace(',', '.');
+            if (text.Length == 0 || !Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+                return;
+            if (Double.IsNaN(value) || Double.IsInfinity(value) || value <= 0)
+                return;
+
+            TradeQuote q;
+            if (!_sellMode)
+                q = Trading.QuoteBuyByValue(_current, value);
+            else if (_sellAllText != null && boxAmount.Text == _sellAllText)
+                q = Trading.QuoteSellAll(_current);
+            else
+                q = Trading.QuoteSell(_current, value);
+
+            if (q.Quantity > 0)
+            {
+                txtGross.Text = q.Gross.ToCurrencyString();
+                txtFee.Text = q.Fee.ToCurrencyString();
+                txtTax.Text = q.Tax.ToCurrencyString();
+                txtTotal.Text = q.Total.ToCurrencyString();
+                if (!_sellMode)
+                    txtQtyPreview.Text = String.Format(EnglishStrings.MarketEstQty.Translate(), FormatQty(q.Quantity), def.Ticker);
+            }
+            if (q.Error != TradeError.None)
+            {
+                ShowTradeError(q.ErrorText());
+                return;
+            }
+            _quote = q;
+            btnTrade.IsEnabled = true;
+        }
+
+        private void Pct_Click(object sender, RoutedEventArgs e)
+        {
+            int pct = Int32.Parse(((Button)sender).Tag.ToString(), CultureInfo.InvariantCulture);
+            string text;
+            _sellAllText = null;
+            if (_sellMode)
+            {
+                Holding h = Market.Current.GetHolding(_current);
+                if (h == null)
+                    return;
+                double qty = pct == 100 ? h.Quantity : Math.Floor(h.Quantity * pct / 100 * 1e8 + 1e-6) / 1e8;
+                if (qty <= 0)
+                    return;
+                text = FormatQty(qty);
+                if (pct == 100)
+                    _sellAllText = text;
+            }
+            else
+            {
+                double money = Player.Current.Money;
+                if (money <= 0)
+                    return;
+                //Arredonda para baixo em centavos para nunca passar do caixa
+                double value = Math.Floor(money * pct / 100 * 100 + 1e-6) / 100;
+                text = value.ToString("0.00", CultureInfo.InvariantCulture);
+            }
+            boxAmount.Text = text;
+            Recalc();
+        }
+
+        private void Trade_Click(object sender, RoutedEventArgs e)
+        {
+            if (_busy)
+                return;
+            _busy = true;
+            btnTrade.IsEnabled = false;
+            try
+            {
+                TradeQuote quote = _quote;
+                if (quote == null)
+                    return;
+                var def = AssetDef.Find(quote.Ticker);
+                TradeQuote r = quote.IsBuy ? Trading.Buy(quote) : Trading.Sell(quote);
+                if (r.Error == TradeError.None)
+                {
+                    //O dinheiro do topo muda sozinho: Player.Money dispara MoneyChanged, que o MainPage escuta
+                    _sellAllText = null;
+                    boxAmount.Text = "";
+                    RefreshAsset(Market.Current);
+                    string tickerName = def == null ? r.Ticker : def.Ticker;
+                    txtTradeNote.Text = String.Format((r.IsBuy ? EnglishStrings.MarketBuyDone : EnglishStrings.MarketSellDone).Translate(),
+                        FormatQty(r.Quantity), tickerName, r.Total.ToCurrencyString());
+                    txtTradeNote.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    RefreshAsset(Market.Current);
+                    ShowTradeError(r.ErrorText());
+                }
+            }
+            finally
+            {
+                _busy = false;
+            }
+        }
+
+        //---------- Sua posição ----------
+
+        private void RefreshPosition(AssetDef def, AssetState state)
+        {
+            Holding h = Market.Current.GetHolding(def.Ticker);
+            if (h == null)
+            {
+                posDetails.Visibility = Visibility.Collapsed;
+                txtNoPosition.Visibility = Visibility.Visible;
+                txtNoPosition.Text = String.Format(EnglishStrings.MarketNoHolding.Translate(), def.Ticker);
+                return;
+            }
+            posDetails.Visibility = Visibility.Visible;
+            txtNoPosition.Visibility = Visibility.Collapsed;
+            txtPosQty.Text = FormatQty(h.Quantity) + " " + def.Ticker;
+            txtPosAvg.Text = FormatPrice(h.AvgPrice, def.Class == AssetClass.FixedIncome);
+            txtPosInvested.Text = h.TotalInvested.ToCurrencyString();
+            double change = h.AvgPrice > 0 ? (state.Price / h.AvgPrice - 1) * 100 : 0;
+            txtPosChange.Text = FormatPct(change);
+            posChangePill.Style = FindStyle(ChangeStyleKey(change));
         }
 
         private void RefreshFavorites(Market m)

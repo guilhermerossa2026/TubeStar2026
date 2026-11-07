@@ -1824,5 +1824,47 @@ namespace TubeStar
 
         [Description("Coming soon")]
         MarketComingSoon,
+
+        [Description("Amount (US$)")]
+        MarketAmountUsd,
+
+        [Description("Available: {0}")]
+        MarketAvailableCash,
+
+        [Description("You have: {0}")]
+        MarketYouHave,
+
+        [Description("Asset value")]
+        MarketGross,
+
+        [Description("Total to pay")]
+        MarketPay,
+
+        [Description("You receive")]
+        MarketReceive,
+
+        [Description("About {0} {1}")]
+        MarketEstQty,
+
+        [Description("Purchase done: {0} {1} for {2}")]
+        MarketBuyDone,
+
+        [Description("Sale done: {0} {1} for {2}")]
+        MarketSellDone,
+
+        [Description("You do not own any {0} yet")]
+        MarketNoHolding,
+
+        [Description("Your position")]
+        MarketYourPosition,
+
+        [Description("Average price")]
+        MarketAvgPrice,
+
+        [Description("Total invested")]
+        MarketInvested,
+
+        [Description("Change since purchase")]
+        MarketSinceBuy,
     }
 }

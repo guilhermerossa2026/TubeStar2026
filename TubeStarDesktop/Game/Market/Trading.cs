@@ -118,7 +118,20 @@ namespace TubeStar
             else gross = total - StockFee;
             if (gross <= 0) return Fail(ticker, true, TradeError.BelowMinimum);
 
-            return BuildBuy(def, Floor8(gross / price), price);
+            double qty = Floor8(gross / price);
+            TradeQuote bq = BuildBuy(def, qty, price);
+
+            //Arredondamentos separados podem passar o Total em 1 centavo; reduz a quantidade até caber
+            double step = Math.Max(1e-8, 0.01 / price);
+            //(só roda se o único problema é o excesso de Total; outros erros ficam como estão)
+            for (int i = 0; i < 100 && qty > 0 && bq.Quantity > 0 && bq.Total > total + 1e-9
+                && (bq.Error == TradeError.None || bq.Error == TradeError.NotEnoughMoney); i++)
+            {
+                qty = Floor8(qty - step);
+                if (qty <= 0) break;
+                bq = BuildBuy(def, qty, price);
+            }
+            return bq;
         }
 
         public static TradeQuote QuoteBuyByQuantity(string ticker, double qty)
@@ -164,12 +177,11 @@ namespace TubeStar
 
             Market market = Market.Current;
             Holding h = market.GetHolding(ticker);
-            qty = Floor8(qty);
-            if (qty <= 0) return Fail(ticker, false, TradeError.InvalidAmount);
-
-            //Venda de 100% da posição: o mínimo de $10 não vale
+            //Venda de 100% da posição: decide antes do Floor8, usa a quantidade exata; o mínimo de $10 não vale
             bool all = h != null && Math.Abs(qty - h.Quantity) <= 1e-9;
             if (all) qty = h.Quantity;
+            else qty = Floor8(qty);
+            if (qty <= 0) return Fail(ticker, false, TradeError.InvalidAmount);
 
             double price = market.Get(ticker).Price;
             if (IsBad(price) || price <= 0) return Fail(ticker, false, TradeError.InvalidAmount);
@@ -397,6 +409,29 @@ namespace TubeStar
                 Check(sb, "Comprar $100 BTC", r.Error == TradeError.None && Near(r.Fee, 0.5, 0.011) && Decimals(r.Quantity) == 0 && Near(Player.Current.Money, 900, 0.011),
                     "erro=" + r.Error + " fee=" + N(r.Fee) + " qty=" + N(r.Quantity) + " caixa=" + N(Player.Current.Money));
 
+                //3b. Cripto: Total nunca passa do valor pedido
+                foreach (double want in new double[] { 11.05, 31.15 })
+                {
+                    Fresh();
+                    Player.Current.Money = want;
+                    q = QuoteBuyByValue("BTC", want);
+                    Check(sb, "BTC por " + N(want) + " com caixa igual",
+                        q.Error == TradeError.None && q.Total <= want + 1e-9, "erro=" + q.Error + " total=" + N(q.Total));
+                }
+                Fresh();
+                q = QuoteBuyByValue("BTC", 1.00);
+                Check(sb, "BTC por 1,00 -> BelowMinimum", q.Error == TradeError.BelowMinimum, "erro=" + q.Error);
+                int cryptoFails = 0;
+                for (int cents = 1000; cents <= 20000; cents++)
+                {
+                    double want = cents / 100.0;
+                    Fresh();
+                    Player.Current.Money = want;
+                    q = QuoteBuyByValue("BTC", want);
+                    if (q.Error != TradeError.None || q.Total > want + 1e-9) cryptoFails++;
+                }
+                Check(sb, "BTC de 10,00 a 200,00 centavo a centavo", cryptoFails == 0, "falhas=" + cryptoFails);
+
                 //4. Selic: 112 dias
                 Fresh();
                 r = Buy(QuoteBuyByValue("SELIC", 100));
@@ -471,6 +506,24 @@ namespace TubeStar
                 Buy(QuoteBuyByValue("AAPL", 100));
                 q = QuoteSell("AAPL", 5);
                 Check(sb, "Vender mais do que tem -> NotEnoughQuantity", q.Error == TradeError.NotEnoughQuantity, "erro=" + q.Error);
+
+                //10. Comprar por valor e vender 100%: nao pode sobrar poeira
+                foreach (string tk in new string[] { "DOGE", "PEPE" })
+                {
+                    int dust = 0, errs = 0;
+                    for (int cents = 1000; cents <= 20000; cents++)
+                    {
+                        double want = cents / 100.0;
+                        Fresh();
+                        Player.Current.Money = 1000000;
+                        r = Buy(QuoteBuyByValue(tk, want));
+                        if (r.Error != TradeError.None) { errs++; continue; }
+                        r = Sell(QuoteSellAll(tk));
+                        if (r.Error != TradeError.None) errs++;
+                        if (Market.Current.GetHolding(tk) != null) dust++;
+                    }
+                    Check(sb, tk + " compra 10,00 a 200,00 e vende 100%: sem sobra", dust == 0 && errs == 0, "sobras=" + dust + " erros=" + errs);
+                }
             }
             catch (Exception ex)
             {

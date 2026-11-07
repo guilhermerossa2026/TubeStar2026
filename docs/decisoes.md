@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-07 — Painel Comprar/Vender (M3 P5)
+**Decisão:** compra só por valor em $, venda só por quantidade (com 25/50/75/100%); sucesso em texto verde no painel; vírgula e ponto valem como decimal.
+**Motivo:** o jogador pensa em quanto gastar ao comprar e em quanto do que tem ao vender; descartados os dois modos em cada lado (tela mais cheia) e a janela de aviso (clique a mais).
+
 ## 2026-11-07 — Finanças com o Mercado (M3 P4)
 **Decisão:** linha "Lucro bruto em investimentos" (antes da corretagem da venda); transferências só no detalhe do extrato; carteira em roxo (#9575CD) na barra.
 **Motivo:** "Lucro" sozinho confundia quando a alta é menor que a taxa; painel da semana fica limpo.

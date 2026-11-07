@@ -2561,4 +2561,60 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
     <Id>MarketComingSoon</Id>
     <Text>Em breve</Text>
   </CustomText>
+  <CustomText>
+    <Id>MarketAmountUsd</Id>
+    <Text>Valor (US$)</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketAvailableCash</Id>
+    <Text>Disponível: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketYouHave</Id>
+    <Text>Você tem: {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketGross</Id>
+    <Text>Valor do ativo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketPay</Id>
+    <Text>Total a pagar</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketReceive</Id>
+    <Text>Você recebe</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketEstQty</Id>
+    <Text>Cerca de {0} {1}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketBuyDone</Id>
+    <Text>Compra feita: {0} {1} por {2}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSellDone</Id>
+    <Text>Venda feita: {0} {1} por {2}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketNoHolding</Id>
+    <Text>Você ainda não tem {0}</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketYourPosition</Id>
+    <Text>Sua posição</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketAvgPrice</Id>
+    <Text>Preço médio</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketInvested</Id>
+    <Text>Total investido</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketSinceBuy</Id>
+    <Text>Variação desde a compra</Text>
+  </CustomText>
 </ArrayOfCustomText>

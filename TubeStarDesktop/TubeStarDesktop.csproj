@@ -255,7 +255,9 @@
     <Compile Include="Game\Market\AssetClass.cs" />
     <Compile Include="Game\Market\AssetDef.cs" />
     <Compile Include="Game\Market\AssetState.cs" />
+    <Compile Include="Game\Market\Holding.cs" />
     <Compile Include="Game\Market\Market.cs" />
+    <Compile Include="Game\Market\MarketTrade.cs" />
     <Compile Include="Game\Market\PriceModel.cs" />
     <Compile Include="Game\ActiveChannel.cs" />
     <Compile Include="Game\Player.cs" />

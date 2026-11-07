@@ -19,12 +19,34 @@ namespace TubeStar
         //Tickers favoritados (lista simples para o save)
         public List<string> Favorites { get; set; }
 
+        //Posições do jogador
+        public List<Holding> Holdings { get; set; }
+        //Histórico de operações (só as mais recentes)
+        public List<MarketTrade> Trades { get; set; }
+        public const int MaxTrades = 200;
+
         public Market()
         {
             Assets = new List<AssetState>();
             LastDay = -1;
             CrashDaysLeft = new List<int>();
             Favorites = new List<string>();
+            Holdings = new List<Holding>();
+            Trades = new List<MarketTrade>();
+        }
+
+        public Holding GetHolding(string ticker)
+        {
+            for (int i = 0; i < Holdings.Count; i++)
+                if (Holdings[i].Ticker == ticker) return Holdings[i];
+            return null;
+        }
+
+        public void AddTrade(MarketTrade t)
+        {
+            Trades.Add(t);
+            if (Trades.Count > MaxTrades)
+                Trades.RemoveRange(0, Trades.Count - MaxTrades);
         }
 
         //Mercado do jogo atual (fica no Player, então vai junto no save)
@@ -52,6 +74,17 @@ namespace TubeStar
             if (Assets == null) Assets = new List<AssetState>();
             if (CrashDaysLeft == null) CrashDaysLeft = new List<int>();
             if (Favorites == null) Favorites = new List<string>();
+            if (Holdings == null) Holdings = new List<Holding>();
+            if (Trades == null) Trades = new List<MarketTrade>();
+            for (int i = Holdings.Count - 1; i >= 0; i--)
+                if (Holdings[i] == null)
+                    Holdings.RemoveAt(i);
+            for (int i = Trades.Count - 1; i >= 0; i--)
+                if (Trades[i] == null)
+                    Trades.RemoveAt(i);
+            if (Trades.Count > MaxTrades)
+                Trades.RemoveRange(0, Trades.Count - MaxTrades);
+            //P7: ativo removido com posição
             for (int i = Favorites.Count - 1; i >= 0; i--)
                 if (AssetDef.Find(Favorites[i]) == null)
                     Favorites.RemoveAt(i);

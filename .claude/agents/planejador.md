@@ -1,6 +1,6 @@
 ---
 name: planejador
-description: Parceiro de brainstorm e planejamento do TubeStar. Use proactively sempre que o usuário estiver trocando ideias, pedindo uma feature ou mecânica nova, perguntando "e se o jogo tivesse...", querendo avaliar prós, contras e dificuldade, ou organizando prioridades e o roadmap (docs/roadmap.md). Exemplos: "queria ter Lives no jogo", "o que acha de um sistema de cancelamento?", "o que fazer primeiro?". Planeja antes de qualquer código; ele mesmo nunca escreve código.
+description: 'Parceiro de brainstorm e planejamento do TubeStar. Use proactively sempre que o usuário estiver trocando ideias, pedindo uma feature ou mecânica nova, perguntando "e se o jogo tivesse...", querendo avaliar prós, contras e dificuldade, ou organizando prioridades e o roadmap (docs/roadmap.md). Exemplos: "queria ter Lives no jogo", "o que acha de um sistema de cancelamento?", "o que fazer primeiro?". Planeja antes de qualquer código; ele mesmo nunca escreve código.'
 tools: Read, Glob, Grep, Write, Edit
 ---
 

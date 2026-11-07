@@ -38,6 +38,18 @@
     <SolidColorBrush x:Key="YtDisabledBrush" Color="#2A2A2A" />
     <SolidColorBrush x:Key="YtDisabledTextBrush" Color="#6B6B6B" />
 
+    <!-- Classes de ativo na rosca da Carteira (Mercado financeiro) -->
+    <Color x:Key="AssetClassBrStockColor">#5B9BD5</Color>
+    <Color x:Key="AssetClassUsStockColor">#4DD0E1</Color>
+    <Color x:Key="AssetClassCryptoColor">#F2A93B</Color>
+    <Color x:Key="AssetClassFundColor">#D96CA8</Color>
+    <Color x:Key="AssetClassFixedIncomeColor">#C9B28A</Color>
+    <SolidColorBrush x:Key="AssetClassBrStockBrush" Color="{StaticResource AssetClassBrStockColor}" />
+    <SolidColorBrush x:Key="AssetClassUsStockBrush" Color="{StaticResource AssetClassUsStockColor}" />
+    <SolidColorBrush x:Key="AssetClassCryptoBrush" Color="{StaticResource AssetClassCryptoColor}" />
+    <SolidColorBrush x:Key="AssetClassFundBrush" Color="{StaticResource AssetClassFundColor}" />
+    <SolidColorBrush x:Key="AssetClassFixedIncomeBrush" Color="{StaticResource AssetClassFixedIncomeColor}" />
+
     <SolidColorBrush x:Key="YtButtonHoverBrush" Color="#555555" />
     <SolidColorBrush x:Key="YtButtonPressedBrush" Color="#404040" />
     <SolidColorBrush x:Key="YtDropHighlightBrush" Color="{StaticResource YtRedColor}" Opacity="0.35" />

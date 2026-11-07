@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-07 — Aba Carteira (M3 P6)
+**Decisão:** lucro total já desconta o imposto; rentabilidade = lucro total ÷ tudo o que já foi aplicado; peso de cada ativo sempre sobre a carteira inteira; lucro realizado e total aplicado guardados em campos acumulados (não recalculados dos Trades, que guardam só 200).
+**Motivo:** mostra o que de fato entrou no bolso e continua fazendo sentido depois de vender tudo; os Trades perdem o histórico antigo.
+
 ## 2026-11-07 — Painel Comprar/Vender (M3 P5)
 **Decisão:** compra só por valor em $, venda só por quantidade (com 25/50/75/100%); sucesso em texto verde no painel; vírgula e ponto valem como decimal.
 **Motivo:** o jogador pensa em quanto gastar ao comprar e em quanto do que tem ao vender; descartados os dois modos em cada lado (tela mais cheia) e a janela de aviso (clique a mais).

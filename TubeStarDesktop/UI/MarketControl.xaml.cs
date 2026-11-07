@@ -53,6 +53,8 @@ namespace TubeStar
         }
 
         private View _view = View.Market;
+        private View _returnView = View.Market; //tela para onde o botão Voltar do ativo leva
+        private int _walletFilter = -1; //-1 = todos, senão o número do AssetClass
         private int _assetTab;
         private bool _showGainers = true;
         private bool _tableDirty = true;
@@ -71,6 +73,7 @@ namespace TubeStar
             Translate();
             BuildTickerCards();
             BuildAssetTabs();
+            BuildWalletFilters();
             UpdateTabStyles();
         }
 
@@ -81,6 +84,22 @@ namespace TubeStar
             txtTabMarket.Text = EnglishStrings.FinanceTabMarket.Translate();
             txtTabWallet.Text = EnglishStrings.MarketTabPortfolio.Translate();
             txtWalletEmpty.Text = EnglishStrings.MarketPortfolioEmpty.Translate();
+            txtWalletGoMarket.Text = EnglishStrings.MarketWalletGoMarket.Translate();
+            btnWalletGoMarket.Click += delegate { TabMarket_Click(null, null); };
+            txtWalletInvestedLabel.Text = EnglishStrings.MarketWalletInvested.Translate();
+            txtWalletProfitLabel.Text = EnglishStrings.MarketWalletProfit.Translate();
+            txtWalletDividendsLabel.Text = EnglishStrings.MarketWalletDividends.Translate();
+            txtWalletReturnLabel.Text = EnglishStrings.MarketWalletReturn.Translate();
+            txtWalletByClass.Text = EnglishStrings.MarketWalletByClass.Translate();
+            txtDonutCaption.Text = EnglishStrings.MarketWalletTotal.Translate();
+            txtWalletMyAssets.Text = EnglishStrings.MarketWalletMyAssets.Translate();
+            txtWalletColAsset.Text = EnglishStrings.MarketColAsset.Translate();
+            txtWalletColQty.Text = EnglishStrings.MarketColQty.Translate();
+            txtWalletColAvg.Text = EnglishStrings.MarketColAvgPrice.Translate();
+            txtWalletColPrice.Text = EnglishStrings.MarketColPriceNow.Translate();
+            txtWalletColValue.Text = EnglishStrings.MarketColValueNow.Translate();
+            txtWalletColResult.Text = EnglishStrings.MarketColResult.Translate();
+            txtWalletColWeight.Text = EnglishStrings.MarketColWeight.Translate();
 
             txtMoversTitle.Text = EnglishStrings.MarketMovers.Translate();
             txtGainers.Text = EnglishStrings.MarketGainers.Translate();
@@ -326,10 +345,13 @@ namespace TubeStar
         private void TabWallet_Click(object sender, MouseButtonEventArgs e)
         {
             SetView(View.Wallet);
+            Update();
         }
 
         private void OpenAsset(string ticker)
         {
+            if (_view != View.Asset)
+                _returnView = _view;
             _current = ticker;
             SetMode(false);
             txtTradeNote.Visibility = Visibility.Collapsed;
@@ -339,7 +361,7 @@ namespace TubeStar
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            SetView(View.Market);
+            SetView(_returnView);
             Update();
         }
 
@@ -356,6 +378,10 @@ namespace TubeStar
                 if (_tableDirty)
                     BuildTable();
                 RefreshTable(m);
+            }
+            else if (_view == View.Wallet)
+            {
+                RefreshWallet(m);
             }
             else if (_view == View.Asset)
             {
@@ -800,6 +826,256 @@ namespace TubeStar
         private void Row_Click(object sender, MouseButtonEventArgs e)
         {
             OpenAsset((string)((FrameworkElement)sender).Tag);
+        }
+
+        //---------- Carteira ----------
+
+        private readonly List<Button> _walletFilterButtons = new List<Button>();
+
+        private static Brush ClassBrush(AssetClass cls)
+        {
+            switch (cls)
+            {
+                case AssetClass.StockBR: return FindBrush("AssetClassBrStockBrush");
+                case AssetClass.StockUS: return FindBrush("AssetClassUsStockBrush");
+                case AssetClass.Crypto: return FindBrush("AssetClassCryptoBrush");
+                case AssetClass.Fund: return FindBrush("AssetClassFundBrush");
+                default: return FindBrush("AssetClassFixedIncomeBrush");
+            }
+        }
+
+        //Filtro 0 = Todos; 1..5 = classes do enum AssetClass
+        private void BuildWalletFilters()
+        {
+            for (int i = 0; i <= AssetTabNames.Length; i++)
+            {
+                var name = i == 0 ? EnglishStrings.MarketFilterAll : AssetTabNames[i - 1];
+                var button = new Button { Tag = i - 1, Style = FindStyle(i - 1 == _walletFilter ? "SegButtonActiveStyle" : "SegButtonStyle") };
+                button.Content = new TextBlock { Text = name.Translate(), Style = FindStyle("InheritTextStyle") };
+                button.Click += WalletFilter_Click;
+                walletFilters.Children.Add(button);
+                _walletFilterButtons.Add(button);
+            }
+        }
+
+        private void WalletFilter_Click(object sender, RoutedEventArgs e)
+        {
+            _walletFilter = (int)((Button)sender).Tag;
+            RefreshWallet(Market.Current);
+        }
+
+        private void RefreshWallet(Market m)
+        {
+            //Pega só posições que ainda existem no catálogo
+            var items = new List<Holding>();
+            foreach (var h in m.Holdings)
+            {
+                if (h.Quantity > 0 && AssetDef.Find(h.Ticker) != null && m.Get(h.Ticker) != null)
+                    items.Add(h);
+            }
+
+            //Sem posições: só o painel vazio (os cartões ficam dentro de walletContent)
+            bool empty = items.Count == 0;
+            walletEmptyPanel.Visibility = empty ? Visibility.Visible : Visibility.Collapsed;
+            walletContent.Visibility = empty ? Visibility.Collapsed : Visibility.Visible;
+            if (empty)
+                return;
+
+            double portfolio = m.GetPortfolioValue();
+            double dividends = 0; //chega na M4
+            double profit = (portfolio - m.GetInvestedOpen()) + m.RealizedProfit + dividends;
+
+            txtWalletInvested.Text = portfolio.ToCurrencyString();
+            txtWalletProfit.Text = profit.ToCurrencyString();
+            txtWalletProfit.Foreground = FindBrush(profit >= 0 ? "YtGainBrush" : "YtLossBrush");
+            txtWalletDividends.Text = dividends.ToCurrencyString();
+            if (m.TotalApplied < 0.01)
+            {
+                txtWalletReturn.Text = "—";
+                txtWalletReturn.Foreground = FindBrush("YtTextPrimaryBrush");
+            }
+            else
+            {
+                double ret = profit / m.TotalApplied * 100;
+                txtWalletReturn.Text = FormatPct(ret);
+                txtWalletReturn.Foreground = FindBrush(ret >= 0 ? "YtGainBrush" : "YtLossBrush");
+            }
+
+            DrawDonut(m, items, portfolio);
+
+            for (int i = 0; i < _walletFilterButtons.Count; i++)
+                SetSeg(_walletFilterButtons[i], i - 1 == _walletFilter);
+            BuildWalletRows(m, items, portfolio);
+        }
+
+        private class ClassSlice
+        {
+            public AssetClass Class;
+            public double Value;
+        }
+
+        private static Point DonutPoint(double angle, double radius)
+        {
+            return new Point(130 + radius * Math.Cos(angle), 130 + radius * Math.Sin(angle));
+        }
+
+        //Fatia de rosca entre dois ângulos (radianos, no máximo 180 graus ou mais com IsLargeArc)
+        private static Path DonutSlice(double a0, double a1, Brush fill)
+        {
+            const double outer = 120, inner = 78;
+            bool large = (a1 - a0) > Math.PI;
+            var figure = new PathFigure { StartPoint = DonutPoint(a0, outer), IsClosed = true };
+            figure.Segments.Add(new ArcSegment(DonutPoint(a1, outer), new Size(outer, outer), 0, large, SweepDirection.Clockwise, true));
+            figure.Segments.Add(new LineSegment(DonutPoint(a1, inner), true));
+            figure.Segments.Add(new ArcSegment(DonutPoint(a0, inner), new Size(inner, inner), 0, large, SweepDirection.Counterclockwise, true));
+            var geometry = new PathGeometry();
+            geometry.Figures.Add(figure);
+            return new Path { Data = geometry, Fill = fill };
+        }
+
+        private void DrawDonut(Market m, List<Holding> items, double portfolio)
+        {
+            walletDonut.Children.Clear();
+            walletLegend.Children.Clear();
+            txtDonutTotal.Text = portfolio.ToCurrencyString();
+
+            var slices = new List<ClassSlice>();
+            for (int c = 0; c < AssetTabNames.Length; c++)
+            {
+                double sum = 0;
+                foreach (var h in items)
+                {
+                    if ((int)AssetDef.Find(h.Ticker).Class == c)
+                        sum += m.GetHoldingValue(h);
+                }
+                if (sum > 0 && !Double.IsNaN(sum) && !Double.IsInfinity(sum))
+                    slices.Add(new ClassSlice { Class = (AssetClass)c, Value = sum });
+            }
+            double total = 0;
+            foreach (var s in slices)
+                total += s.Value;
+
+            if (total <= 0)
+            {
+                walletDonut.Children.Add(DonutSlice(-Math.PI / 2, Math.PI / 2, FindBrush("YtDarkCardHoverBrush")));
+                walletDonut.Children.Add(DonutSlice(Math.PI / 2, Math.PI * 1.5, FindBrush("YtDarkCardHoverBrush")));
+                return;
+            }
+
+            double angle = -Math.PI / 2;
+            foreach (var s in slices)
+            {
+                double share = s.Value / total;
+                double sweep = share * Math.PI * 2;
+                Brush brush = ClassBrush(s.Class);
+                if (share >= 0.9999)
+                {
+                    //Um arco de 360 graus não existe: duas metades
+                    walletDonut.Children.Add(DonutSlice(angle, angle + Math.PI, brush));
+                    walletDonut.Children.Add(DonutSlice(angle + Math.PI, angle + Math.PI * 2, brush));
+                }
+                else
+                {
+                    walletDonut.Children.Add(DonutSlice(angle, angle + sweep, brush));
+                }
+                angle += sweep;
+
+                var line = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 3, 0, 3) };
+                line.Children.Add(new Ellipse { Width = 10, Height = 10, Fill = brush, Margin = new Thickness(0, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center });
+                var name = Text(AssetTabNames[(int)s.Class].Translate(), 13, FontWeights.Normal, null);
+                name.Width = 110;
+                line.Children.Add(name);
+                line.Children.Add(Text(Math.Round(share * 100, 1).ToString("0.0", Culture) + "%", 13, FontWeights.SemiBold, FindBrush("YtTextSecondaryBrush")));
+                walletLegend.Children.Add(line);
+            }
+        }
+
+        private static void AddWalletColumns(Grid grid)
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MinWidth = 160 });
+            double[] widths = { 90, 100, 100, 110, 120, 80 };
+            foreach (double w in widths)
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(w) });
+        }
+
+        private static TextBlock WalletCell(Grid grid, int column, string text, Brush brush, FontWeight weight)
+        {
+            var block = Text(text, 13, weight, brush);
+            block.HorizontalAlignment = HorizontalAlignment.Right;
+            Grid.SetColumn(block, column);
+            grid.Children.Add(block);
+            return block;
+        }
+
+        private void BuildWalletRows(Market m, List<Holding> items, double portfolio)
+        {
+            walletRows.Children.Clear();
+
+            //Do maior valor para o menor
+            var sorted = new List<Holding>();
+            foreach (var h in items)
+            {
+                if (_walletFilter < 0 || (int)AssetDef.Find(h.Ticker).Class == _walletFilter)
+                    sorted.Add(h);
+            }
+            sorted.Sort((a, b) => m.GetHoldingValue(b).CompareTo(m.GetHoldingValue(a)));
+
+            double sumValue = 0;
+            double sumInvested = 0;
+            foreach (var h in sorted)
+            {
+                var def = AssetDef.Find(h.Ticker);
+                var state = m.Get(h.Ticker);
+                bool index = def.Class == AssetClass.FixedIncome;
+                double value = m.GetHoldingValue(h);
+                double result = value - h.TotalInvested;
+                sumValue += value;
+                sumInvested += h.TotalInvested;
+
+                var grid = new Grid();
+                AddWalletColumns(grid);
+
+                var asset = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
+                asset.Children.Add(new Ellipse { Width = 10, Height = 10, Margin = new Thickness(0, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center, Fill = (Brush)new BrushConverter().ConvertFromString(def.Color) });
+                var names = MakeNames(def, false);
+                asset.Children.Add(names);
+                grid.Children.Add(asset);
+
+                WalletCell(grid, 1, FormatQty(h.Quantity), null, FontWeights.Normal);
+                WalletCell(grid, 2, FormatPrice(h.AvgPrice, index), null, FontWeights.Normal);
+                WalletCell(grid, 3, FormatPrice(state.Price, index), null, FontWeights.Normal);
+                WalletCell(grid, 4, value.ToCurrencyString(), null, FontWeights.SemiBold);
+
+                double resultPct = h.TotalInvested > 0 ? result / h.TotalInvested * 100 : 0;
+                var res = new StackPanel { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Center };
+                Brush resBrush = TrendBrush(Math.Round(result, 2));
+                var resMoney = Text(result.ToCurrencyString(), 13, FontWeights.SemiBold, resBrush);
+                resMoney.HorizontalAlignment = HorizontalAlignment.Right;
+                var resPct = Text(h.TotalInvested > 0 ? FormatPct(resultPct) : "—", 11, FontWeights.Normal, resBrush);
+                resPct.HorizontalAlignment = HorizontalAlignment.Right;
+                res.Children.Add(resMoney);
+                res.Children.Add(resPct);
+                Grid.SetColumn(res, 5);
+                grid.Children.Add(res);
+
+                double weight = portfolio > 0 ? value / portfolio * 100 : 0;
+                WalletCell(grid, 6, Math.Round(weight, 1).ToString("0.0", Culture) + "%", FindBrush("YtTextSecondaryBrush"), FontWeights.Normal);
+
+                var row = new Border { Style = FindStyle("TableRowStyle"), Padding = new Thickness(12, 7, 12, 7), Cursor = Cursors.Hand, Child = grid, Tag = h.Ticker };
+                row.MouseLeftButtonUp += Row_Click;
+                walletRows.Children.Add(row);
+            }
+
+            if (sorted.Count == 0)
+            {
+                var none = Text(EnglishStrings.MarketWalletNoClass.Translate(), 13, FontWeights.Normal, FindBrush("YtTextSecondaryBrush"));
+                none.Margin = new Thickness(16, 14, 16, 14);
+                walletRows.Children.Add(none);
+            }
+
+            double sumResult = sumValue - sumInvested;
+            string pct = sumInvested > 0 ? FormatPct(sumResult / sumInvested * 100) : "—";
+            txtWalletSummary.Text = String.Format(EnglishStrings.MarketWalletSummary.Translate(), sorted.Count, sumValue.ToCurrencyString(), sumResult.ToCurrencyString(), pct);
         }
 
         //---------- Tela do ativo ----------

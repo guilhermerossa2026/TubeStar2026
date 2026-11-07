@@ -1646,7 +1646,7 @@ namespace TubeStar
         [Description("Portfolio")]
         MarketTabPortfolio,
 
-        [Description("You don't have any investments yet. Purchases arrive in the next stage.")]
+        [Description("You haven't invested yet")]
         MarketPortfolioEmpty,
 
         [Description("Biggest moves of the day")]
@@ -1866,5 +1866,56 @@ namespace TubeStar
 
         [Description("Change since purchase")]
         MarketSinceBuy,
+
+        [Description("Invested assets")]
+        MarketWalletInvested,
+
+        [Description("Total profit")]
+        MarketWalletProfit,
+
+        [Description("Dividends received")]
+        MarketWalletDividends,
+
+        [Description("Return")]
+        MarketWalletReturn,
+
+        [Description("By type")]
+        MarketWalletByClass,
+
+        [Description("My assets")]
+        MarketWalletMyAssets,
+
+        [Description("All")]
+        MarketFilterAll,
+
+        [Description("QUANTITY")]
+        MarketColQty,
+
+        [Description("AVG PRICE")]
+        MarketColAvgPrice,
+
+        [Description("PRICE TODAY")]
+        MarketColPriceNow,
+
+        [Description("VALUE TODAY")]
+        MarketColValueNow,
+
+        [Description("RESULT")]
+        MarketColResult,
+
+        [Description("WEIGHT")]
+        MarketColWeight,
+
+        [Description("{0} assets · value {1} · result {2} ({3})")]
+        MarketWalletSummary,
+
+        [Description("No assets of this type")]
+        MarketWalletNoClass,
+
+        [Description("Go to the Market")]
+        MarketWalletGoMarket,
+
+        [Description("Total")]
+        MarketWalletTotal,
     }
 }

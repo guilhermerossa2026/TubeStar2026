@@ -25,6 +25,13 @@ namespace TubeStar
         public List<MarketTrade> Trades { get; set; }
         public const int MaxTrades = 200;
 
+        //Lucro realizado acumulado (líquido de imposto)
+        public double RealizedProfit { get; set; }
+        //Soma de todas as compras (com corretagem)
+        public double TotalApplied { get; set; }
+        //Os totais acima já foram iniciados a partir dos Trades (saves antigos vêm false)
+        public bool StatsSeeded { get; set; }
+
         public Market()
         {
             Assets = new List<AssetState>();
@@ -48,14 +55,27 @@ namespace TubeStar
             Sync(); //repara save corrompido (listas/itens nulos) antes de calcular
             double total = 0;
             for (int i = 0; i < Holdings.Count; i++)
-            {
-                Holding h = Holdings[i];
-                AssetState a = Get(h.Ticker);
-                if (a == null || double.IsNaN(a.Price) || double.IsInfinity(a.Price) || a.Price <= 0)
-                    total += h.TotalInvested;
-                else
-                    total += h.Quantity * a.Price;
-            }
+                total += GetHoldingValue(Holdings[i]);
+            return total;
+        }
+
+        //Valor de uma posição a preço de mercado (sem preço válido, usa o investido)
+        public double GetHoldingValue(Holding h)
+        {
+            Sync();
+            AssetState a = Get(h.Ticker);
+            if (a == null || double.IsNaN(a.Price) || double.IsInfinity(a.Price) || a.Price <= 0)
+                return h.TotalInvested;
+            return h.Quantity * a.Price;
+        }
+
+        //Soma do valor investido nas posições abertas
+        public double GetInvestedOpen()
+        {
+            Sync();
+            double total = 0;
+            for (int i = 0; i < Holdings.Count; i++)
+                total += Holdings[i].TotalInvested;
             return total;
         }
 
@@ -101,6 +121,17 @@ namespace TubeStar
                     Trades.RemoveAt(i);
             if (Trades.Count > MaxTrades)
                 Trades.RemoveRange(0, Trades.Count - MaxTrades);
+            //Totais da carteira: saves antigos (StatsSeeded false) começam a partir dos Trades, uma vez só.
+            //Jogo novo tem Trades vazio, então o seed não soma nada.
+            if (!StatsSeeded)
+            {
+                for (int i = 0; i < Trades.Count; i++)
+                {
+                    if (Trades[i].Kind == TradeKind.Sell) RealizedProfit += Trades[i].Profit - Trades[i].Tax;
+                    else if (Trades[i].Kind == TradeKind.Buy) TotalApplied += Trades[i].Total;
+                }
+                StatsSeeded = true;
+            }
             //P7: ativo removido com posição
             for (int i = Favorites.Count - 1; i >= 0; i--)
                 if (AssetDef.Find(Favorites[i]) == null)

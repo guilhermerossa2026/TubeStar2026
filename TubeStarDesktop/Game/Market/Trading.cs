@@ -218,6 +218,7 @@ namespace TubeStar
             Player player = Player.Current;
             Market market = Market.Current;
             player.Money -= q.Total;
+            market.TotalApplied += q.Total;
 
             Holding h = market.GetHolding(q.Ticker);
             if (h == null)
@@ -250,6 +251,7 @@ namespace TubeStar
             bool all = Math.Abs(q.Quantity - h.Quantity) <= 1e-9;
 
             player.Money += q.Total;
+            market.RealizedProfit += q.Profit - q.Tax;
             //O preço médio não muda na venda
             h.TotalInvested = Round2(h.TotalInvested - q.Quantity * h.AvgPrice);
             h.Quantity -= q.Quantity;
@@ -524,6 +526,29 @@ namespace TubeStar
                     }
                     Check(sb, tk + " compra 10,00 a 200,00 e vende 100%: sem sobra", dust == 0 && errs == 0, "sobras=" + dust + " erros=" + errs);
                 }
+
+                //11. Totais da carteira (Carteira)
+                Fresh();
+                r = Buy(QuoteBuyByValue("AAPL", 100));
+                m = Market.Current;
+                Check(sb, "Compra soma TotalApplied", Near(m.TotalApplied, r.Total, 0.001) && m.RealizedProfit == 0 && m.StatsSeeded,
+                    "applied=" + N(m.TotalApplied) + " total=" + N(r.Total));
+                m.Get("AAPL").Price *= 1.5;
+                r = Sell(QuoteSellAll("AAPL"));
+                Check(sb, "Venda soma RealizedProfit = Profit - Tax", r.Profit > 0 && Near(m.RealizedProfit, r.Profit - r.Tax, 0.001) && Near(m.TotalApplied, 100, 0.011),
+                    "realizado=" + N(m.RealizedProfit) + " profit=" + N(r.Profit) + " tax=" + N(r.Tax));
+
+                //Seed a partir dos Trades de um save antigo: roda so uma vez
+                Market old = new Market();
+                old.Trades.Add(new MarketTrade { Kind = TradeKind.Buy, Ticker = "AAPL", Total = 100 });
+                old.Trades.Add(new MarketTrade { Kind = TradeKind.Sell, Ticker = "AAPL", Profit = 50, Tax = 7.5, Total = 142.5 });
+                old.Trades.Add(new MarketTrade { Kind = TradeKind.Returned, Ticker = "AAPL", Total = 999 });
+                old.StatsSeeded = false;
+                old.Sync();
+                old.Sync();
+                Check(sb, "Seed dos Trades roda uma vez", old.StatsSeeded && Near(old.RealizedProfit, 42.5, 0.001) && Near(old.TotalApplied, 100, 0.001),
+                    "realizado=" + N(old.RealizedProfit) + " applied=" + N(old.TotalApplied));
+                Check(sb, "GetHoldingValue e GetInvestedOpen", Near(Market.Create().GetInvestedOpen(), 0, 0.001), "ok");
             }
             catch (Exception ex)
             {

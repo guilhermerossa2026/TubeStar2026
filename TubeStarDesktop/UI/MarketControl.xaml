@@ -89,9 +89,92 @@
 
                 <!-- ===== Aba Carteira ===== -->
                 <StackPanel x:Name="pageWallet" Visibility="Collapsed">
-                    <Border Style="{StaticResource CardBorderStyle}" Padding="24">
-                        <TextBlock x:Name="txtWalletEmpty" Style="{StaticResource MutedTextStyle}" FontSize="14" TextWrapping="Wrap" />
+                    <!-- Vazio (nenhuma posição) -->
+                    <Border x:Name="walletEmptyPanel" Style="{StaticResource CardBorderStyle}" Padding="24" Visibility="Collapsed">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock x:Name="txtWalletEmpty" Style="{StaticResource MutedTextStyle}" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,16" />
+                            <Button x:Name="btnWalletGoMarket" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Center" Height="40" Padding="24,0">
+                                <TextBlock x:Name="txtWalletGoMarket" />
+                            </Button>
+                        </StackPanel>
                     </Border>
+
+                    <!-- Conteúdo da carteira -->
+                    <StackPanel x:Name="walletContent">
+                        <UniformGrid Columns="4" Margin="-5,0,-5,12">
+                            <Border Style="{StaticResource CardBorderStyle}" Padding="16" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="txtWalletInvestedLabel" Style="{StaticResource MutedTextStyle}" />
+                                    <TextBlock x:Name="txtWalletInvested" FontWeight="Bold" FontSize="22" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardBorderStyle}" Padding="16" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="txtWalletProfitLabel" Style="{StaticResource MutedTextStyle}" />
+                                    <TextBlock x:Name="txtWalletProfit" FontWeight="Bold" FontSize="22" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardBorderStyle}" Padding="16" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="txtWalletDividendsLabel" Style="{StaticResource MutedTextStyle}" />
+                                    <TextBlock x:Name="txtWalletDividends" FontWeight="Bold" FontSize="22" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardBorderStyle}" Padding="16" Margin="5,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="txtWalletReturnLabel" Style="{StaticResource MutedTextStyle}" />
+                                    <TextBlock x:Name="txtWalletReturn" FontWeight="Bold" FontSize="22" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <!-- Rosca por classe -->
+                        <Border Style="{StaticResource CardBorderStyle}" Padding="16" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="txtWalletByClass" FontWeight="Bold" FontSize="14" Margin="0,0,0,12" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Grid Width="260" Height="260" Margin="0,0,32,0" VerticalAlignment="Center">
+                                        <Canvas x:Name="walletDonut" Width="260" Height="260" />
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                                            <TextBlock x:Name="txtDonutCaption" Style="{StaticResource MutedTextStyle}" HorizontalAlignment="Center" />
+                                            <TextBlock x:Name="txtDonutTotal" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <StackPanel x:Name="walletLegend" MinWidth="220" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Meus ativos -->
+                        <Border Style="{StaticResource CardBorderStyle}" Padding="0,0,0,6" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="txtWalletMyAssets" FontWeight="Bold" FontSize="14" Margin="16,12,16,8" />
+                                <WrapPanel x:Name="walletFilters" Orientation="Horizontal" Margin="12,0,12,8" />
+                                <Border Style="{StaticResource TableHeaderRowStyle}" Padding="12,0" Height="32">
+                                    <Grid x:Name="walletHeader">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" MinWidth="160" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="txtWalletColAsset" Grid.Column="0" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" />
+                                        <TextBlock x:Name="txtWalletColQty" Grid.Column="1" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock x:Name="txtWalletColAvg" Grid.Column="2" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock x:Name="txtWalletColPrice" Grid.Column="3" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock x:Name="txtWalletColValue" Grid.Column="4" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock x:Name="txtWalletColResult" Grid.Column="5" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <TextBlock x:Name="txtWalletColWeight" Grid.Column="6" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </Border>
+                                <StackPanel x:Name="walletRows" />
+                                <TextBlock x:Name="txtWalletSummary" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" Margin="16,10,16,6" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- ===== Tela do ativo ===== -->

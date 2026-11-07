@@ -2323,7 +2323,7 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   </CustomText>
   <CustomText>
     <Id>MarketPortfolioEmpty</Id>
-    <Text>Você ainda não tem investimentos. As compras chegam na próxima etapa.</Text>
+    <Text>Você ainda não investiu</Text>
   </CustomText>
   <CustomText>
     <Id>MarketMovers</Id>
@@ -2616,5 +2616,73 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   <CustomText>
     <Id>MarketSinceBuy</Id>
     <Text>Variação desde a compra</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletInvested</Id>
+    <Text>Patrimônio investido</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletProfit</Id>
+    <Text>Lucro total</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletDividends</Id>
+    <Text>Dividendos recebidos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletReturn</Id>
+    <Text>Rentabilidade</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletByClass</Id>
+    <Text>Por tipo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletMyAssets</Id>
+    <Text>Meus ativos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketFilterAll</Id>
+    <Text>Todos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColQty</Id>
+    <Text>QUANTIDADE</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColAvgPrice</Id>
+    <Text>PREÇO MÉDIO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColPriceNow</Id>
+    <Text>PREÇO HOJE</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColValueNow</Id>
+    <Text>VALOR HOJE</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColResult</Id>
+    <Text>RESULTADO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketColWeight</Id>
+    <Text>PESO</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletSummary</Id>
+    <Text>{0} ativos · valor {1} · resultado {2} ({3})</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletNoClass</Id>
+    <Text>Nenhum ativo desta classe</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletGoMarket</Id>
+    <Text>Ir para o Mercado</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketWalletTotal</Id>
+    <Text>Total</Text>
   </CustomText>
 </ArrayOfCustomText>

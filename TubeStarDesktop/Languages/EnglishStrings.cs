@@ -1418,8 +1418,29 @@ namespace TubeStar
         [Description("Total invested")]
         FinanceInvested,
 
-        [Description("Market coming soon")]
+        [Description("Today's value of the portfolio")]
         FinanceInvestedNote,
+
+        [Description("Investment profit")]
+        FinanceInvestGain,
+
+        [Description("Investments")]
+        FinanceInvestGroup,
+
+        [Description("Loss")]
+        FinanceInvestLoss,
+
+        [Description("Brokerage fee")]
+        FinanceInvestFee,
+
+        [Description("Tax")]
+        FinanceInvestTax,
+
+        [Description("Transfer to investments")]
+        FinanceTransferOut,
+
+        [Description("Investment withdrawal")]
+        FinanceTransferIn,
 
         [Description("Week result")]
         FinanceWeekResult,

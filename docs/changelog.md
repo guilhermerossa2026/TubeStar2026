@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-07
+- Mercado financeiro, M3 passo P4: tela Finanças mostra o Mercado: "Lucro bruto em investimentos" nas Entradas, grupo "Investimentos" (prejuízo, corretagem, imposto) nas Saídas, transferências em cinza no detalhe da semana do extrato, cartão "Total investido" com o valor da carteira e fatia roxa na barra de patrimônio.
 - Mercado financeiro, M3 passo P3 (sem tela nova): compras/vendas registradas na Finanças (compra e principal = transferência; lucro em Entradas; prejuízo, corretagem e imposto em Saídas, fora de "Outros"); patrimônio soma a carteira; imposto semanal do canal ignora o lucro do Mercado; valor da carteira gravado por semana.
 - Mercado financeiro, M3 passo P2 (sem tela): regras de compra/venda em `Game/Market/Trading.cs` (corretagem $2 / 0,5% cripto / 0 renda fixa, mínimo $10, fração 8 casas, imposto 15% só no lucro na venda, CDB Banco Médio bloqueado, proteção contra ordem repetida). Autoteste com `trading_debug.txt` ao lado do exe gera `trading_selftest.txt`.
 - Mercado financeiro, M3 passo P1 (sem tela): dados da carteira (`Holding`) e do histórico de ordens (`MarketTrade`, até 200) dentro de `Player.Market`; save antigo e "Novo jogo" começam com carteira vazia.

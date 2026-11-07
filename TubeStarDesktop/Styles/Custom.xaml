@@ -15,6 +15,7 @@
     <Color x:Key="YtTextSecondaryColor">#AAAAAA</Color>
     <Color x:Key="YtGainColor">#3EA66B</Color>
     <Color x:Key="YtLossColor">#E5534B</Color>
+    <Color x:Key="YtInvestColor">#9575CD</Color>
     <Color x:Key="YtTwitchColor">#9B7BD6</Color>
     <Color x:Key="YtOnAccentColor">#FFFFFF</Color>
 
@@ -29,6 +30,7 @@
     <SolidColorBrush x:Key="YtTextSecondaryBrush" Color="{StaticResource YtTextSecondaryColor}" />
     <SolidColorBrush x:Key="YtGainBrush" Color="{StaticResource YtGainColor}" />
     <SolidColorBrush x:Key="YtLossBrush" Color="{StaticResource YtLossColor}" />
+    <SolidColorBrush x:Key="YtInvestBrush" Color="{StaticResource YtInvestColor}" />
     <SolidColorBrush x:Key="YtTwitchBrush" Color="{StaticResource YtTwitchColor}" />
     <SolidColorBrush x:Key="YtOnAccentBrush" Color="{StaticResource YtOnAccentColor}" />
     <!-- Estrela de favorito (Mercado financeiro) -->

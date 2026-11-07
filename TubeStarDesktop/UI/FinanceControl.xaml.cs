@@ -104,7 +104,7 @@ namespace TubeStar
                 week = closed.Count > 0 ? closed[closed.Count - 1] : new PeriodStats();
 
             txtCash.Text = Money(player.Money);
-            txtInvested.Text = Money(0);
+            txtInvested.Text = Money(player.Market == null ? 0 : player.Market.GetPortfolioValue());
 
             double result = week.Balance;
             txtWeek.Text = Money(result);
@@ -252,6 +252,14 @@ namespace TubeStar
             values.Add(Math.Abs(player.Money));
             brushes.Add(FindBrush(negativeCash ? "YtLossBrush" : "YtGainBrush"));
 
+            double invested = player.Market == null ? 0 : player.Market.GetPortfolioValue();
+            if (invested > 0)
+            {
+                names.Add(EnglishStrings.FinanceInvestGroup.Translate());
+                values.Add(invested);
+                brushes.Add(FindBrush("YtInvestBrush"));
+            }
+
             double loan = player.GetLoanBalance();
             if (loan > Epsilon)
             {
@@ -364,6 +372,11 @@ namespace TubeStar
                 AddPlain(panel, EnglishStrings.FinanceEvents.Translate(), week.OtherEarned, false);
                 rows++;
             }
+            if (week.InvestGain > Epsilon)
+            {
+                AddPlain(panel, EnglishStrings.FinanceInvestGain.Translate(), week.InvestGain, false);
+                rows++;
+            }
             if (rows == 0)
                 AddEmpty(panel);
 
@@ -407,6 +420,15 @@ namespace TubeStar
             if (week.StudyCost > Epsilon)
             {
                 AddGroup(panel, EnglishStrings.FinanceStudiesGroup.Translate(), week.StudyCost);
+                groups++;
+            }
+            double invest = week.InvestFee + week.InvestTax + week.InvestLoss;
+            if (invest > Epsilon)
+            {
+                AddGroup(panel, EnglishStrings.FinanceInvestGroup.Translate(), invest);
+                if (week.InvestLoss > Epsilon) AddPlain(panel, EnglishStrings.FinanceInvestLoss.Translate(), week.InvestLoss, true);
+                if (week.InvestFee > Epsilon) AddPlain(panel, EnglishStrings.FinanceInvestFee.Translate(), week.InvestFee, true);
+                if (week.InvestTax > Epsilon) AddPlain(panel, EnglishStrings.FinanceInvestTax.Translate(), week.InvestTax, true);
                 groups++;
             }
             if (other > Epsilon)
@@ -529,6 +551,14 @@ namespace TubeStar
             header.Children.Add(cell);
         }
 
+        //Linha cinza que não entra nas colunas Entra/Sai (empréstimo, transferências)
+        private static void AddNeutralRow(Panel panel, string label, double value)
+        {
+            var row = MakeRow(label, value, FindBrush("YtTextSecondaryBrush"), false, false, false);
+            System.Windows.Documents.TextElement.SetForeground((DependencyObject)row, FindBrush("YtTextSecondaryBrush"));
+            panel.Children.Add(row);
+        }
+
         //Detalhe da semana: mesmo agrupamento das saídas, empréstimo recebido como linha neutra
         private static UIElement CreateDetail(PeriodStats week)
         {
@@ -550,13 +580,14 @@ namespace TubeStar
             columns.Children.Add(spending);
             root.Children.Add(columns);
 
-            if (week.LoanReceived > Epsilon)
-            {
+            if (week.LoanReceived > Epsilon || week.InvestBought > Epsilon || week.InvestReturned > Epsilon)
                 root.Children.Add(new Border { Height = 1, Background = FindBrush("YtDarkBorderBrush"), Margin = new Thickness(0, 10, 0, 6) });
-                var loanRow = MakeRow(EnglishStrings.FinanceLoanReceived.Translate(), week.LoanReceived, FindBrush("YtTextSecondaryBrush"), false, false, false);
-                System.Windows.Documents.TextElement.SetForeground((DependencyObject)loanRow, FindBrush("YtTextSecondaryBrush"));
-                root.Children.Add(loanRow);
-            }
+            if (week.LoanReceived > Epsilon)
+                AddNeutralRow(root, EnglishStrings.FinanceLoanReceived.Translate(), week.LoanReceived);
+            if (week.InvestBought > Epsilon)
+                AddNeutralRow(root, EnglishStrings.FinanceTransferOut.Translate(), week.InvestBought);
+            if (week.InvestReturned > Epsilon)
+                AddNeutralRow(root, EnglishStrings.FinanceTransferIn.Translate(), week.InvestReturned);
             return root;
         }
     }

@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-07 — Finanças com o Mercado (M3 P4)
+**Decisão:** linha "Lucro bruto em investimentos" (antes da corretagem da venda); transferências só no detalhe do extrato; carteira em roxo (#9575CD) na barra.
+**Motivo:** "Lucro" sozinho confundia quando a alta é menor que a taxa; painel da semana fica limpo.
+
 ## 2026-11-07 — Mercado na Finanças (M3 P3)
 **Decisão:** corretagem da compra só aparece na venda (embutida no lucro/prejuízo); imposto do Mercado fica fora do total de impostos pagos do canal.
 **Motivo:** evita contar a corretagem duas vezes (já está no preço médio) e mantém o imposto do canal separado do de investimentos.

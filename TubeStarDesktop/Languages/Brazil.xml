@@ -2019,7 +2019,35 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
   </CustomText>
   <CustomText>
     <Id>FinanceInvestedNote</Id>
-    <Text>Mercado em breve</Text>
+    <Text>Valor de hoje da carteira</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestGain</Id>
+    <Text>Lucro bruto em investimentos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestGroup</Id>
+    <Text>Investimentos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestLoss</Id>
+    <Text>Prejuízo</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestFee</Id>
+    <Text>Corretagem</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceInvestTax</Id>
+    <Text>Imposto</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTransferOut</Id>
+    <Text>Transferência para investimentos</Text>
+  </CustomText>
+  <CustomText>
+    <Id>FinanceTransferIn</Id>
+    <Text>Resgate de investimentos</Text>
   </CustomText>
   <CustomText>
     <Id>FinanceWeekResult</Id>

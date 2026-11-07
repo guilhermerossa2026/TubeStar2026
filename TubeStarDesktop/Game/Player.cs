@@ -188,7 +188,40 @@ namespace TubeStar
         //Patrimônio = dinheiro - imposto atrasado - saldo devedor do empréstimo
         public double GetNetWorth()
         {
-            return Money - TaxDebt - GetLoanBalance();
+            return Money + (Market == null ? 0 : Market.GetPortfolioValue()) - TaxDebt - GetLoanBalance();
+        }
+
+        //Compra/venda no Mercado: soma nos totais da semana e do ano (nunca mexe em Money)
+        public void RecordInvestment(MarketTrade t)
+        {
+            if (t == null)
+                return;
+
+            var extra = new PeriodStats();
+            if (t.Kind == TradeKind.Buy)
+                extra.InvestBought = t.Total;
+            else if (t.Kind == TradeKind.Sell)
+            {
+                double gross = Math.Round(t.Quantity * t.Price, 2, MidpointRounding.AwayFromZero);
+                double cost = Math.Round(gross - t.Fee - t.Profit, 2, MidpointRounding.AwayFromZero);
+                extra.InvestReturned = cost;
+                extra.InvestGain = Math.Max(0, gross - cost);
+                extra.InvestLoss = Math.Max(0, cost - gross);
+                extra.InvestFee = gross - t.Total - t.Tax;
+                extra.InvestTax = t.Tax;
+                extra.Earned = extra.InvestGain;
+                extra.Spent = extra.InvestFee + extra.InvestTax + extra.InvestLoss;
+            }
+            else
+                return;
+
+            //Não soma em LastDay: o "Resumo de ontem" não muda
+            if (CurrentWeek == null)
+                CurrentWeek = new PeriodStats();
+            CurrentWeek.Add(extra);
+            if (CurrentYear == null)
+                CurrentYear = new PeriodStats();
+            CurrentYear.Add(extra);
         }
 
         public Player()

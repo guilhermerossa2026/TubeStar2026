@@ -27,6 +27,15 @@ namespace TubeStar
         public double LoanReceived { get; set; }
         //Patrimônio no fechamento da semana (nulo = semana antiga ou período em andamento)
         public double? NetWorthEnd { get; set; }
+        //Mercado: valor da carteira no fechamento da semana (nulo = semana antiga ou em andamento)
+        public double? InvestedEnd { get; set; }
+        //Mercado: compras, principal devolvido nas vendas, lucro/prejuízo, corretagem e imposto das vendas
+        public double InvestBought { get; set; }
+        public double InvestReturned { get; set; }
+        public double InvestGain { get; set; }
+        public double InvestFee { get; set; }
+        public double InvestTax { get; set; }
+        public double InvestLoss { get; set; }
         //Marca o resumo do ano no histórico
         public bool IsYear { get; set; }
         public long Views { get; set; }
@@ -52,7 +61,7 @@ namespace TubeStar
         [Newtonsoft.Json.JsonIgnore]
         public double ChannelEarned
         {
-            get { return Earned - Salary - OtherEarned; }
+            get { return Earned - Salary - OtherEarned - InvestGain; }
         }
 
         public ChannelPeriodStats GetChannel(string name)
@@ -83,6 +92,12 @@ namespace TubeStar
             StudyCost += other.StudyCost;
             OtherCost += other.OtherCost;
             LoanReceived += other.LoanReceived;
+            InvestBought += other.InvestBought;
+            InvestReturned += other.InvestReturned;
+            InvestGain += other.InvestGain;
+            InvestFee += other.InvestFee;
+            InvestTax += other.InvestTax;
+            InvestLoss += other.InvestLoss;
             Views += other.Views;
             NewSubscribers += other.NewSubscribers;
             VideosPosted += other.VideosPosted;

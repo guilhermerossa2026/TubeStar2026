@@ -268,7 +268,7 @@ namespace TubeStar
 
         private static void AfterTrade(MarketTrade t)
         {
-            // P3: registrar na Finanças aqui (Transferência do principal; Profit>0 -> Lucro em investimentos; prejuízo/Fee/Tax -> grupo Investimentos)
+            Player.Current.RecordInvestment(t);
         }
 
         // ---------------- Autoteste (sem tela) ----------------
@@ -279,6 +279,8 @@ namespace TubeStar
             p.Money = 1000;
             p.Iterations = 0;
             p.Market = Market.Create();
+            p.CurrentWeek = new PeriodStats();
+            p.CurrentYear = new PeriodStats();
             Player.Current = p;
         }
 
@@ -322,6 +324,56 @@ namespace TubeStar
                 Check(sb, "Comprar $100 AAPL", r.Error == TradeError.None && Near(r.Fee, 2, 0.001) && Near(Player.Current.Money, 900, 0.011) && h != null && Near(h.TotalInvested, 100, 0.011),
                     "erro=" + r.Error + " fee=" + N(r.Fee) + " caixa=" + N(Player.Current.Money) + " invest=" + (h == null ? "-" : N(h.TotalInvested)));
                 Check(sb, "Compra gerou 1 linha em Trades", m.Trades.Count == 1 && m.Trades[0].Kind == TradeKind.Buy, "trades=" + m.Trades.Count);
+
+                //1b. Contabilidade na Finanças
+                {
+                    PeriodStats w = Player.Current.CurrentWeek;
+                    PeriodStats y = Player.Current.CurrentYear;
+                    Check(sb, "Fin: compra -> InvestBought 100, Earned 0, Spent 0, caixa 900",
+                        Near(w.InvestBought, 100, 0.011) && w.Earned == 0 && w.Spent == 0 && Near(Player.Current.Money, 900, 0.011) && Near(y.InvestBought, 100, 0.011),
+                        "bought=" + N(w.InvestBought) + " earned=" + N(w.Earned) + " spent=" + N(w.Spent));
+                    Check(sb, "Fin: patrimonio = caixa + carteira logo apos a compra",
+                        Near(Player.Current.GetNetWorth(), Player.Current.Money + Market.Current.GetPortfolioValue(), 0.001) && Near(Market.Current.GetPortfolioValue(), 98, 0.011),
+                        "pat=" + N(Player.Current.GetNetWorth()) + " carteira=" + N(Market.Current.GetPortfolioValue()));
+                    Check(sb, "Fin: invariante apos a compra", Near(w.Earned - w.Spent - w.InvestBought + w.InvestReturned, Player.Current.Money - 1000, 0.01), "caixa=" + N(Player.Current.Money));
+
+                    //Venda com lucro
+                    m.Get("AAPL").Price *= 1.5;
+                    r = Sell(QuoteSellAll("AAPL"));
+                    double gross = Math.Round(r.Quantity * r.Price, 2, MidpointRounding.AwayFromZero);
+                    double cost = Math.Round(gross - r.Fee - r.Profit, 2, MidpointRounding.AwayFromZero);
+                    Check(sb, "Fin: venda com lucro",
+                        r.Error == TradeError.None && r.Profit > 0 && Near(w.InvestGain, Math.Round(gross - cost, 2, MidpointRounding.AwayFromZero), 0.011) && Near(w.InvestFee, 2, 0.011)
+                        && Near(w.InvestTax, r.Tax, 0.001) && Near(w.ChannelEarned, 0, 0.001) && w.InvestLoss == 0 && Near(w.InvestReturned, 100, 0.011),
+                        "gain=" + N(w.InvestGain) + " fee=" + N(w.InvestFee) + " tax=" + N(w.InvestTax) + " canal=" + N(w.ChannelEarned) + " devolvido=" + N(w.InvestReturned));
+                    Check(sb, "Fin: invariante apos venda com lucro", Near(w.Earned - w.Spent - w.InvestBought + w.InvestReturned, Player.Current.Money - 1000, 0.01) && Near(y.Earned, w.Earned, 0.001),
+                        "caixa=" + N(Player.Current.Money));
+                    Check(sb, "Fin: imposto do mercado nao toca TaxDebt/TotalTaxPaid", Player.Current.TaxDebt == 0 && Player.Current.TotalTaxPaid == 0 && w.TaxCost == 0,
+                        "debt=" + N(Player.Current.TaxDebt) + " pago=" + N(Player.Current.TotalTaxPaid));
+                    Check(sb, "Fin: LastDay nao muda", Player.Current.LastDay == null, "lastday=" + (Player.Current.LastDay == null ? "null" : "preenchido"));
+
+                    //Venda com prejuizo
+                    Fresh();
+                    Buy(QuoteBuyByValue("AAPL", 100));
+                    Market.Current.Get("AAPL").Price *= 0.5;
+                    r = Sell(QuoteSellAll("AAPL"));
+                    w = Player.Current.CurrentWeek;
+                    Check(sb, "Fin: venda com prejuizo",
+                        r.Error == TradeError.None && r.Profit < 0 && Near(w.InvestLoss + w.InvestFee, -r.Profit, 0.011) && w.InvestGain == 0
+                        && Near(w.Earned - w.Spent - w.InvestBought + w.InvestReturned, Player.Current.Money - 1000, 0.01),
+                        "loss=" + N(w.InvestLoss) + " fee=" + N(w.InvestFee) + " profit=" + N(r.Profit) + " caixa=" + N(Player.Current.Money));
+
+                    //Venda 100% minuscula com Total travado em 0
+                    Fresh();
+                    Buy(QuoteBuyByValue("KO", 100));
+                    Market.Current.Get("KO").Price *= 0.01;
+                    r = Sell(QuoteSellAll("KO"));
+                    w = Player.Current.CurrentWeek;
+                    Check(sb, "Fin: venda minuscula com Total 0 fecha a conta",
+                        r.Error == TradeError.None && r.Total == 0 && w.InvestGain == 0 && Near(w.Spent, w.InvestFee + w.InvestTax + w.InvestLoss, 0.001)
+                        && Near(w.Earned - w.Spent - w.InvestBought + w.InvestReturned, Player.Current.Money - 1000, 0.01),
+                        "total=" + N(r.Total) + " loss=" + N(w.InvestLoss) + " fee=" + N(w.InvestFee) + " caixa=" + N(Player.Current.Money));
+                }
 
                 //2. Abaixo do mínimo, sem dinheiro, bloqueado, desconhecido
                 Fresh();

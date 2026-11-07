@@ -380,7 +380,8 @@ namespace TubeStar
         {
             double fixedCosts = week.LivingCost + week.TaxCost + week.LoanCost;
             double channelCosts = week.VideoCost + week.VideoPromotionCost;
-            double other = week.Spent - fixedCosts - channelCosts - week.StoreCost - week.StudyCost;
+            double other = week.Spent - fixedCosts - channelCosts - week.StoreCost - week.StudyCost
+                - week.InvestFee - week.InvestTax - week.InvestLoss;
 
             int groups = 0;
             if (fixedCosts > Epsilon)

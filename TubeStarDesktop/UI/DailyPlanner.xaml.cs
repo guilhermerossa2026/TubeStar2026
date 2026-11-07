@@ -143,6 +143,7 @@ namespace TubeStar
             var week = Player.Current.CurrentWeek ?? new PeriodStats();
             ChargeWeeklyTax(week, day);
             week.NetWorthEnd = Player.Current.GetNetWorth();
+            week.InvestedEnd = Player.Current.Market == null ? 0 : Player.Current.Market.GetPortfolioValue();
             week.Title = String.Format(EnglishStrings.SummaryWeekTitle.Translate(), (day - 1) % 112 / 7 + 1, (day - 1) / 112 + 1);
             Player.Current.PastSummaries.Add(week);
             Player.Current.CurrentWeek = null;

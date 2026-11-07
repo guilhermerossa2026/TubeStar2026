@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-07 — Mercado na Finanças (M3 P3)
+**Decisão:** corretagem da compra só aparece na venda (embutida no lucro/prejuízo); imposto do Mercado fica fora do total de impostos pagos do canal.
+**Motivo:** evita contar a corretagem duas vezes (já está no preço médio) e mantém o imposto do canal separado do de investimentos.
+
 ## 2026-11-07 — Regras de compra/venda do Mercado (M3 P2)
 **Decisão:** comprar/vender liberado no fim de semana (preço de sexta); corretagem entra no preço médio; mínimo de $10 vale o valor digitado (com corretagem).
 **Motivo:** fechar no fim de semana não evitaria nenhuma vantagem e deixaria o jogo mais chato; preço médio com corretagem é como numa corretora real.

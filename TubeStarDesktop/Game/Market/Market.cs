@@ -42,6 +42,23 @@ namespace TubeStar
             return null;
         }
 
+        //Valor da carteira a preço de mercado (sem preço válido, usa o investido)
+        public double GetPortfolioValue()
+        {
+            Sync(); //repara save corrompido (listas/itens nulos) antes de calcular
+            double total = 0;
+            for (int i = 0; i < Holdings.Count; i++)
+            {
+                Holding h = Holdings[i];
+                AssetState a = Get(h.Ticker);
+                if (a == null || double.IsNaN(a.Price) || double.IsInfinity(a.Price) || a.Price <= 0)
+                    total += h.TotalInvested;
+                else
+                    total += h.Quantity * a.Price;
+            }
+            return total;
+        }
+
         public void AddTrade(MarketTrade t)
         {
             Trades.Add(t);

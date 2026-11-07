@@ -73,16 +73,18 @@ namespace TubeStar
                     long subscribersBefore = TotalSubscribers();
                     RandomEvents.RunEvent();
                     Player.Current.RecordEvent(Player.Current.Money - moneyBefore, TotalSubscribers() - subscribersBefore);
-                    //Se a semana fechou hoje, o patrimônio final considera o evento
-                    var past = Player.Current.PastSummaries;
-                    if (Player.Current.Iterations % 7 == 0 && past != null && past.Count > 0)
-                    {
-                        var lastClosed = past[past.Count - 1];
-                        if (lastClosed.IsYear && past.Count > 1)
-                            lastClosed = past[past.Count - 2];
-                        lastClosed.NetWorthEnd = Player.Current.GetNetWorth();
-                    }
                     dailyPlanner.Update();
+                }
+
+                //Se a semana fechou hoje, o patrimônio final considera o mercado de hoje e o evento
+                var past = Player.Current.PastSummaries;
+                if (Player.Current.Iterations % 7 == 0 && past != null && past.Count > 0)
+                {
+                    var lastClosed = past[past.Count - 1];
+                    if (lastClosed.IsYear && past.Count > 1)
+                        lastClosed = past[past.Count - 2];
+                    lastClosed.NetWorthEnd = Player.Current.GetNetWorth();
+                    lastClosed.InvestedEnd = Player.Current.Market == null ? 0 : Player.Current.Market.GetPortfolioValue();
                 }
 
                 //Depois do evento: ele pode mudar inscritos sem mexer no dinheiro

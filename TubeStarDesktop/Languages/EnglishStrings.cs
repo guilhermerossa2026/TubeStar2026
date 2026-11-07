@@ -1777,5 +1777,31 @@ namespace TubeStar
 
         [Description("Buying a little at a time smooths out your average price.")]
         MarketTip8,
+
+        [Description("Asset not found.")]
+        MarketErrUnknown,
+
+        [Description("Coming soon")]
+        MarketErrLocked,
+
+        [Description("Invalid amount.")]
+        MarketErrInvalid,
+
+        [Description("The minimum order is $10.")]
+        MarketErrMinimum,
+
+        [Description("Not enough money.")]
+        MarketErrNoMoney,
+
+        [Description("You do not own that quantity.")]
+        MarketErrNoQuantity,
+
+        [Description("You do not own this asset.")]
+        MarketErrNoPosition,
+        [Description("Order already sent.")]
+        MarketErrSent,
+
+        [Description("Coming soon")]
+        MarketComingSoon,
     }
 }

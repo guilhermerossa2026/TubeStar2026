@@ -48,6 +48,9 @@ namespace TubeStar
                     string baseDir = AppDomain.CurrentDomain.BaseDirectory;
                     if (File.Exists(Path.Combine(baseDir, "market_debug.txt")))
                         Market.SimulateCsv(224, Path.Combine(baseDir, "market_sim.csv"));
+                    //Autoteste das regras de compra/venda: só roda se existir trading_debug.txt ao lado do exe
+                    if (File.Exists(Path.Combine(baseDir, "trading_debug.txt")))
+                        Trading.SelfTest(Path.Combine(baseDir, "trading_selftest.txt"));
                 }
                 catch (Exception) { }
             };

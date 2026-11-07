@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-07
+- Mercado financeiro, M3 passo P2 (sem tela): regras de compra/venda em `Game/Market/Trading.cs` (corretagem $2 / 0,5% cripto / 0 renda fixa, mínimo $10, fração 8 casas, imposto 15% só no lucro na venda, CDB Banco Médio bloqueado, proteção contra ordem repetida). Autoteste com `trading_debug.txt` ao lado do exe gera `trading_selftest.txt`.
 - Mercado financeiro, M3 passo P1 (sem tela): dados da carteira (`Holding`) e do histórico de ordens (`MarketTrade`, até 200) dentro de `Player.Market`; save antigo e "Novo jogo" começam com carteira vazia.
 
 ## 2026-11-06

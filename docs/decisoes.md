@@ -1,5 +1,9 @@
 # Decisões
 
+## 2026-11-07 — Regras de compra/venda do Mercado (M3 P2)
+**Decisão:** comprar/vender liberado no fim de semana (preço de sexta); corretagem entra no preço médio; mínimo de $10 vale o valor digitado (com corretagem).
+**Motivo:** fechar no fim de semana não evitaria nenhuma vantagem e deixaria o jogo mais chato; preço médio com corretagem é como numa corretora real.
+
 ## 2026-11-05 — Meta de monetização mais alta que a real
 **Decisão:** 5 mil inscritos + 160 mil views (real: 1 mil + 4 mil horas), com análise de 3 a 7 dias. Saves antigos começam bloqueados (dono começou jogo novo).
 **Motivo:** escolha do dono para o canal não ganhar desde o primeiro vídeo e o começo ser mais desafiador. Rever se o início ficar arrastado.

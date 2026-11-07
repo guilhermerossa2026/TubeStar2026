@@ -111,8 +111,8 @@ namespace TubeStar
                     state.Daily.RemoveRange(0, state.Daily.Count - PriceModel.MaxDaily);
                 if (state.Weekly.Count > PriceModel.MaxWeekly)
                     state.Weekly.RemoveRange(0, state.Weekly.Count - PriceModel.MaxWeekly);
-                if (state.Price <= 0) state.Price = def.StartPrice;
-                if (state.TrendLine <= 0) state.TrendLine = state.Price;
+                if (!(state.Price > 0) || double.IsInfinity(state.Price)) state.Price = def.StartPrice;
+                if (!(state.TrendLine > 0) || double.IsInfinity(state.TrendLine)) state.TrendLine = state.Price;
             }
         }
 

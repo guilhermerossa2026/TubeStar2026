@@ -2497,4 +2497,40 @@ Agressiva: RPM +20%, 30% de quem curtiu se inscreve</Text>
     <Id>MarketTip8</Id>
     <Text>Comprar um pouco de cada vez ajuda a equilibrar o seu preço médio.</Text>
   </CustomText>
+  <CustomText>
+    <Id>MarketErrUnknown</Id>
+    <Text>Ativo não encontrado.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrLocked</Id>
+    <Text>Em breve</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrInvalid</Id>
+    <Text>Valor inválido.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrMinimum</Id>
+    <Text>A ordem mínima é de $10.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrNoMoney</Id>
+    <Text>Dinheiro insuficiente.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrNoQuantity</Id>
+    <Text>Você não tem essa quantidade.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrNoPosition</Id>
+    <Text>Você não tem esse ativo.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketErrSent</Id>
+    <Text>Ordem já enviada.</Text>
+  </CustomText>
+  <CustomText>
+    <Id>MarketComingSoon</Id>
+    <Text>Em breve</Text>
+  </CustomText>
 </ArrayOfCustomText>
